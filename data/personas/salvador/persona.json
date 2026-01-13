@@ -1,0 +1,67 @@
+{
+  "name": "Salvador",
+  "role": "Líder de Investigación de Mercados – Servicios Financieros",
+  "city": "Ciudad de México",
+  "demographics": [
+    "Profesional senior con más de 14 años de experiencia en mercadotecnia e investigación de mercados",
+    "Trayectoria previa en HSBC, Telefónica y Movistar",
+    "Perfil técnico y pragmático; combina análisis cualitativo y cuantitativo",
+    "Dirige a dos analistas dentro de la Gerencia de Servicios Financieros",
+    "Alta capacidad para validar tablas, gráficas y consistencia metodológica",
+    "Estilo directo, orientado a ejecución ágil y credibilidad interna"
+  ],
+  "business": [
+    "Lidera la investigación de mercados para productos financieros de Coppel (ahorro, inversiones, tarjetas, remesas, Afore)",
+    "Recibe solicitudes de áreas comerciales, mercadotecnia e innovación",
+    "Estandariza briefs internos con objetivos, hipótesis y perfiles",
+    "Define metodologías ad hoc y coordina levantamientos principalmente con agencias externas",
+    "Asegura calidad de datos, tiempos de entrega y utilidad ejecutiva de los resultados"
+  ],
+  "goals": [
+    "Reducir tiempos de entrega sin sacrificar calidad ni rigor",
+    "Aumentar la agilidad del campo y del cierre analítico",
+    "Evitar errores de datos, gráficas o diferencias significativas",
+    "Mantener credibilidad frente a clientes internos y dirección",
+    "Modernizar reportes hacia formatos ejecutivos de lectura rápida (≤40 minutos)"
+  ],
+  "pains": [
+    "Retrasos en levantamientos y cierres de campo",
+    "Perfiles difíciles de reclutar (clientes Coppel específicos)",
+    "Reportes extensos y poco accionables",
+    "Agencias que no se involucran lo suficiente en el brief",
+    "Avisos tardíos sobre errores detectados en datos o análisis"
+  ],
+  "objections": [
+    "Incumplimiento de tiempos comprometidos",
+    "Errores en porcentajes, gráficas o diferencias significativas",
+    "Presentaciones largas sin síntesis ejecutiva",
+    "Falta de flexibilidad ante cambios de último momento",
+    "Agencias que no levantan alertas a tiempo"
+  ],
+  "motivations": [
+    "Trabajar con agencias empáticas y profundamente involucradas en el negocio",
+    "Contar con aliados rigurosos en QA y ejecución de campo",
+    "Recibir recomendaciones claras para siguientes pasos",
+    "Consolidar proveedores con conocimiento acumulado del producto",
+    "Explorar IA como apoyo bajo esquemas seguros y controlados"
+  ],
+  "channels": [
+    "Relación directa con agencias especializadas en investigación",
+    "Benchmarking con estudios institucionales y experiencia previa",
+    "Aprendizaje práctico a partir de proyectos y validación empírica",
+    "Sesiones de arranque y seguimiento continuo con proveedores"
+  ],
+  "quotes": [
+    "Hoy más que el costo, buscamos agencias que entreguen en el menor tiempo posible sin perder calidad.",
+    "Las presentaciones largas ya no son viables; necesitamos reportes ágiles.",
+    "Cualquier error en porcentajes o gráficas nos hace dudar del expertise.",
+    "La agencia debe levantar la mano antes, no cuando ya presenta resultados.",
+    "La IA es útil, pero la información que manejamos es altamente confidencial."
+  ],
+  "regionalNotes": [
+    "Contexto corporativo financiero en México con alta sensibilidad de datos",
+    "Presencia nacional y proyectos binacionales (México, Argentina, EE. UU.)",
+    "Alta presión por velocidad y exactitud en decisiones financieras"
+  ]
+  
+}

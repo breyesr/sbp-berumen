@@ -1,0 +1,67 @@
+{
+  "name": "Mauricio",
+  "role": "Jefe de Investigación de Mercados",
+  "city": "Nuevo León",
+  "demographics": [
+    "Profesional analítico con perfil tranquilo y colaborativo",
+    "Poco tiempo en el rol actual (≈2 años), en etapa de consolidación",
+    "Reporta directamente a la Dirección de Marketing",
+    "No cuenta con equipo interno; opera principalmente con agencias externas",
+    "Prioriza claridad metodológica y calidad por encima del precio",
+    "Estilo de comunicación paciente, claro y orientado a acuerdos"
+  ],
+  "business": [
+    "Traduce necesidades abiertas de directores de carrera en objetivos claros de investigación",
+    "Opera investigación como soporte directo a decisiones dentro del ciclo académico",
+    "Define briefs, alcances y tiempos, trabajando casi exclusivamente con agencias",
+    "Evalúa propuestas por alineación a objetivos, claridad metodológica y confiabilidad",
+    "Busca posicionar la investigación como una función estratégica dentro de la universidad"
+  ],
+  "goals": [
+    "Entregar resultados a tiempo para que influyan en decisiones académicas clave",
+    "Elevar la interpretación de los estudios hacia insights accionables",
+    "Profesionalizar y visibilizar el área de investigación dentro de la institución",
+    "Construir relaciones estables con agencias confiables y flexibles",
+    "Explorar el uso de IA para análisis de audiencias sin riesgos de datos sensibles"
+  ],
+  "pains": [
+    "Errores por falta de atención al detalle en estudios",
+    "Rigidez de agencias ante cambios o ajustes de último momento",
+    "Entregables que priorizan formato sobre interpretación",
+    "Retrasos que invalidan el uso de resultados dentro del calendario académico",
+    "Dependencia total de agencias sin margen de corrección interna"
+  ],
+  "objections": [
+    "Incidencias graves como inconsistencias o invención de datos",
+    "Propuestas que no responden fielmente a los objetivos solicitados",
+    "Baja flexibilidad ante cambios de alcance",
+    "Entregables extensos sin conclusiones claras",
+    "Falta de comunicación durante el desarrollo del estudio"
+  ],
+  "motivations": [
+    "Trabajar con agencias que actúen como aliados estratégicos",
+    "Recibir acompañamiento cercano y confiable durante todo el proyecto",
+    "Contar con interpretaciones profundas que vayan más allá del reporte pregunta–respuesta",
+    "Posicionar la investigación como insumo clave en la toma de decisiones institucionales",
+    "Aprovechar herramientas nuevas (IA) para ganar eficiencia y profundidad analítica"
+  ],
+  "channels": [
+    "Relación directa con agencias especializadas",
+    "Benchmarks del sector educativo",
+    "Aprendizaje práctico a través de proyectos y colaboración con proveedores",
+    "Reuniones formales y seguimiento continuo durante los estudios"
+  ],
+  "quotes": [
+    "El éxito del estudio tiene que ver con los tiempos; si llegamos tarde, ya no sirve.",
+    "Valoro más que la propuesta responda exactamente a los objetivos que el precio.",
+    "Una incidencia grave, como inventar resultados, sería motivo para dejar de trabajar con una agencia.",
+    "Las agencias deben ayudar a interpretar, no solo a responder preguntas.",
+    "La IA tiene mucho potencial aquí porque no manejamos información sensible."
+  ],
+  "regionalNotes": [
+    "Contexto educativo privado en México: los ciclos académicos definen la urgencia",
+    "Las decisiones dependen de ventanas de tiempo muy claras",
+    "La investigación compite por relevancia frente a otras prioridades institucionales"
+  ]
+  
+}

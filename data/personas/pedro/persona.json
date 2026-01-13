@@ -1,0 +1,68 @@
+{
+  "name": "Pedro",
+  "role": "Gerente de Mercadotecnia e Insights",
+  "city": "Ciudad de México",
+  "demographics": [
+    "Profesional senior con más de 15 años de experiencia en investigación de mercados, analytics y machine learning",
+    "Trayectoria en consumo masivo, tabaco, agricultura y pharma",
+    "Perfil híbrido: research tradicional + analítica avanzada",
+    "Actualmente cursa un máster en Big Data y Machine Learning (Universidad Complutense de Madrid)",
+    "Estilo autodidacta, técnico y pragmático",
+    "Alta sensibilidad hacia la seguridad y confidencialidad de datos"
+  ],
+  "business": [
+    "Lidera la transición de research descriptivo a inteligencia predictiva en Electrolit",
+    "Combina estudios tradicionales con modelos analíticos y big data",
+    "Busca estructurar y limpiar grandes volúmenes de información interna",
+    "Define hipersegmentaciones para campañas altamente focalizadas",
+    "Evalúa constantemente qué capacidades desarrollar in-house vs. tercerizar"
+  ],
+  "goals": [
+    "Consolidar una base de datos limpia, homogénea y confiable",
+    "Implementar modelos predictivos y de hipersegmentación",
+    "Acelerar la activación de insights en decisiones de marketing",
+    "Posicionar su área como el centro de inteligencia del consumidor",
+    "Evolucionar la investigación hacia inteligencia comercial aplicada"
+  ],
+  "pains": [
+    "Mala calidad y desorden de datos internos",
+    "Gran parte del tiempo se va en limpieza y homologación de bases",
+    "Falta de claridad sobre qué tecnologías adoptar",
+    "Poca proactividad de agencias en proponer análisis adicionales",
+    "Dificultad para que otros niveles entiendan el valor estratégico de la analítica"
+  ],
+  "objections": [
+    "Agencias que solo ejecutan el brief sin criterio propio",
+    "Falta de anticipación ante outliers o distorsiones de datos",
+    "Propuestas analíticas sin claridad sobre seguridad de la información",
+    "Servicios de IA poco diferenciados o rápidamente obsoletos",
+    "Poca conexión entre resultados y decisiones de negocio"
+  ],
+  "motivations": [
+    "Trabajar con socios que piensen estratégicamente junto con él",
+    "Recibir propuestas proactivas y lecturas alternativas",
+    "Explorar IA y analytics bajo esquemas seguros e híbridos",
+    "Traducir data compleja en decisiones claras y rápidas",
+    "Construir una relación consultiva de largo plazo con proveedores"
+  ],
+  "channels": [
+    "YouTube (fuente principal de aprendizaje técnico)",
+    "Educación en línea y certificaciones asincrónicas",
+    "Cursos y entrenamientos de Google (Vertex, Copilot, Cloud)",
+    "Seguimiento de creadores de contenido especializados en IA y analytics",
+    "Uso bajo de libros tradicionales"
+  ],
+  "quotes": [
+    "Hoy paso más tiempo limpiando datos que haciendo modelos.",
+    "El modelo existe; el problema es la calidad de la información.",
+    "Yo te pedí A, pero agradecería que también me dieras B.",
+    "Todos están aprendiendo IA; nadie es realmente experto todavía.",
+    "La información que manejamos es altamente sensible."
+  ],
+  "regionalNotes": [
+    "Contexto corporativo de consumo masivo en México",
+    "Alta presión por velocidad y activación comercial",
+    "Fuerte escrutinio legal y regulatorio sobre manejo de datos"
+  ]
+  
+}

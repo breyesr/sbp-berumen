@@ -1,0 +1,67 @@
+{
+  "name": "Julia",
+  "role": "Jefa de Investigación de Mercados",
+  "city": "Ciudad de México",
+  "demographics": [
+    "Profesional senior en investigación y marketing, con más de 10 años en Berel y trayectoria consolidada en pinturas y recubrimientos",
+    "Formación: Licenciatura en Mercadotecnia",
+    "Estilo de trabajo: metódica, organizada y colaborativa; combina planeación con ejecución detallada",
+    "Equipo interno pequeño (3 personas), lo que obliga a priorizar y distribuir proyectos con cuidado",
+    "Evita ser contactada comercialmente por LinkedIn; lo usa principalmente para seguimiento pasivo"
+  ],
+  "business": [
+    "Diseña el plan anual de investigación y detona proyectos con un año de anticipación",
+    "Decide qué proyectos se realizan internamente vs. con agencias, optimizando recursos sin sacrificar calidad",
+    "Evalúa proveedores (trayectoria, propuesta, tiempos, costo y mejoras metodológicas) y busca relaciones de largo plazo con flexibilidad ante urgencias",
+    "Articula necesidades internas (mercadotecnia, innovación, producto, comercial) con requerimientos del mercado externo (distribuidores, usuarios finales, profesionales)",
+    "Asegura que los hallazgos se traduzcan en decisiones prácticas para producto, pricing, promoción y ventas"
+  ],
+  "goals": [
+    "Entregables confiables, claros y ejecutables, sin retrabajos",
+    "Balancear investigación interna y externa para maximizar impacto con capacidad limitada",
+    "Mejorar la comunicación y adopción interna de resultados para decisiones estratégicas",
+    "Modernizar investigación (p. ej., paneles online) de forma gradual y controlada",
+    "Explorar IA como herramienta de apoyo con pilotos pequeños y control de calidad, combinando datos reales + apoyo sintético + criterio humano"
+  ],
+  "pains": [
+    "Carga operativa alta por tamaño de equipo y demanda interna",
+    "Formatos de entrega poco visuales y con exceso de texto (dificultan compartir y activar)",
+    "Proveedores poco proactivos (ejecutan el brief, pero no aportan mejoras o recomendaciones)",
+    "Procesos de compra rígidos que pueden frenar velocidad y ajustes",
+    "Falta de madurez digital en procesos/metodologías a lo largo de la organización"
+  ],
+  "objections": [
+    "Señales de baja confiabilidad: resultados que no se sostienen o no se ven consistentes",
+    "Entregables que requieren retrabajo (por estructura, claridad o jerarquía visual deficiente)",
+    "Propuestas poco estructuradas o difíciles de comparar",
+    "Proveedores inflexibles ante cambios o necesidades extraordinarias durante el año",
+    "Uso de IA sin controles: sin datos reales, sin criterio humano, o sin resguardos"
+  ],
+  "motivations": [
+    "Construir relaciones de largo plazo con proveedores (no rotar por rotar), siempre que el servicio se sostenga",
+    "Tener proveedores flexibles que puedan apoyar en picos de demanda o proyectos extraordinarios",
+    "Recibir recomendaciones consultivas que mejoren la metodología o agreguen valor sin pedírselo explícitamente",
+    "Entregables modernos, compartibles y accionables que faciliten la toma de decisiones en distintas áreas",
+    "Avanzar hacia investigación más moderna e híbrida sin perder rigor"
+  ],
+  "channels": [
+    "AMAI para ubicar agencias y proveedores confiables",
+    "Fuentes institucionales: INEGI, México ¿Cómo Vamos?, White Paper (contexto y datos macro)",
+    "Medios de referencia: El Norte, El Universal, Merca 2.0",
+    "LinkedIn para seguimiento pasivo de agencias y expertos (evita contacto comercial por ese medio)",
+    "Recomendaciones personales de excolegas de la industria",
+    "Reuniones y llamadas con proveedores (más frecuentes cuando son nuevos)"
+  ],
+  "quotes": [
+    "Partimos del diseño del plan de trabajo… un año antes ya estamos trabajando el plan del siguiente año.",
+    "No busco estar cambiando a cada rato… salvo que hubiera un mal servicio.",
+    "Lo que buscamos es desarrollar una relación laboral y de equipo con los diferentes proveedores.",
+    "La mayor exigencia… que los resultados sean confiables, claros y ejecutables, sin necesidad de retrabajos.",
+    "La IA es prometedora, pero sensible; debe combinar datos reales y criterio humano, con pilotos pequeños y control de calidad."
+  ],
+  "regionalNotes": [
+    "Contexto corporativo en México: compras/procesos pueden ser rígidos; es clave entregar propuestas comparables y claras",
+    "Ecosistema de proveedores frecuentemente validado vía AMAI y referencias personales",
+    "La investigación debe traducirse a decisiones para funciones comerciales y de marketing (producto, pricing, promoción, ventas)"
+  ]
+}
