@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import OpenAI from "openai";
 import { randomUUID } from "crypto";
-import { getPersona, Persona } from "@/lib/personaProvider";
+import { getPersona } from "@/lib/personaProvider";
 import { getChallengeLevel, ChallengeLevel } from "@/lib/challengeLevels";
-import { buildStressUserMessage, describeFocus } from "./prompt";
+import { buildStressSystemPrompt, buildStressUserMessage, describeFocus } from "./prompt";
 import { db } from "@/lib/clients";
 
 export const runtime = "nodejs";
@@ -20,57 +20,16 @@ const Body = z.object({
 
 // 1. The Output Schema (as a Zod schema)
 const SimulationResultSchema = z.object({
+  personaReaction: z.string(),
+  triggeredRedFlags: z.array(z.string()),
   confidenceScore: z.number().int().min(1).max(100),
   verdict: z.string(),
   strengths: z.array(z.string()),
   gaps: z.array(z.string()),
   actionPlan: z.array(z.string()),
   followUpQuestions: z.array(z.string()),
+  presentation: z.string(),
 });
-
-// 2. The New System Prompt (with the "Competence" Patch included)
-function buildSystemPrompt(persona: Persona, challengeLevelData: ChallengeLevel): string {
-  const challengeLevel = challengeLevelData.intensity;
-  const levelNames = { 1: 'low', 2: 'medium', 3: 'high' } as const;
-  const level = levelNames[challengeLevel as keyof typeof levelNames] || 'medium';
-
-  let toneDescription = challengeLevelData.tone;
-  if (typeof toneDescription === 'object' && toneDescription !== null) {
-    toneDescription = (toneDescription as { style?: string }).style ?? JSON.stringify(toneDescription);
-  }
-
-  // Using persona context for expertise as a placeholder
-  const expertise = persona.context.split('\n').slice(0, 2).join(', ');
-
-  return `You are ${persona.name}, a ${persona.role}.
-Your areas of expertise include: ${expertise}.
-CHALLENGE LEVEL: ${challengeLevel} (${level} intensity)
-Your tone should be: ${toneDescription}
-
-You will analyze a business idea and provide structured, honest feedback from your expert perspective.
-
-CRITICAL INSTRUCTIONS:
-1. Stay in character - speak as ${persona.name} would
-2. Focus on areas within your expertise
-3. Be specific and actionable in your feedback
-4. Adjust your critical intensity based on the challenge level
-5. Generate natural, grammatically correct responses (no template-like language)
-6. If the idea is outside your expertise, acknowledge that while still providing relevant insights
-7. SCORING RUBRIC: Penalize vague ideas lacking specificity in budget, timeline, target audience, and measurable outcomes. If the plan is not concrete, default confidence should sit in the 30–50 range; only exceed 50 when those elements are clear.
-// 8. SCORING CAP (commented for testing): If confidenceScore would exceed 70, require at least two concrete strengths tied to audience/budget/timeline; otherwise cap at 60.
-
-Your response MUST be a valid JSON object with this exact structure:
-{
-  "confidenceScore": <number 1-100, where higher = more viable/confident in the idea>,
-  "verdict": "<2-3 sentences summarizing your professional assessment>",
-  "strengths": ["<specific strength 1>", "<specific strength 2>", "<specific strength 3>"],
-  "gaps": ["<critical gap 1>", "<critical gap 2>", "<critical gap 3>", "<critical gap 4 if challenge level is high>"],
-  "actionPlan": ["<actionable step 1>", "<actionable step 2>", "<actionable step 3>", "<actionable step 4>"],
-  "followUpQuestions": ["<probing question 1>", "<probing question 2>", "<probing question 3>"]
-}
-
-CRITICAL: Return ONLY the JSON object. No markdown formatting, no code blocks.`;
-}
 
 const MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
@@ -132,9 +91,13 @@ export async function POST(req: Request) {
 
     const openai = new OpenAI({ apiKey });
     const focusMeta = describeFocus(body.evaluationFocus);
-    
-    // Use the new system prompt
-    const system = buildSystemPrompt(persona, challengeLevel);
+
+    const system = buildStressSystemPrompt({
+      personaName: persona.name,
+      personaContext: persona.context,
+      level: challengeLevel,
+      focusLabel: focusMeta.label,
+    });
     
     const user = buildStressUserMessage({
       idea: body.idea,
@@ -144,7 +107,7 @@ export async function POST(req: Request) {
 
     const completion = await openai.chat.completions.create({
       model: MODEL,
-      temperature: 0.2,
+      temperature: 0.6,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: system },
@@ -153,7 +116,20 @@ export async function POST(req: Request) {
     });
 
     const raw = completion.choices[0]?.message?.content ?? "{}";
-    const parsed = SimulationResultSchema.safeParse(JSON.parse(raw));
+    let parsed = SimulationResultSchema.safeParse(JSON.parse(raw));
+    if (!parsed.success) {
+      const retry = await openai.chat.completions.create({
+        model: MODEL,
+        temperature: 0.3,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: `${system}\n\nReturn valid JSON only. Fix the prior formatting issues.` },
+          { role: "user", content: user },
+        ],
+      });
+      const retryRaw = retry.choices[0]?.message?.content ?? "{}";
+      parsed = SimulationResultSchema.safeParse(JSON.parse(retryRaw));
+    }
 
     if (!parsed.success) {
       return NextResponse.json(
@@ -173,11 +149,14 @@ export async function POST(req: Request) {
       challengeLabel: challengeLevel.name,
       challengeDetail: challengeLevel.detail,
       focus: focusMeta.label,
+      personaReaction: parsed.data.personaReaction,
+      triggeredRedFlags: parsed.data.triggeredRedFlags,
       summary: parsed.data.verdict,
       strengths: parsed.data.strengths,
       gaps: parsed.data.gaps,
       improvements: parsed.data.actionPlan,
       questions: parsed.data.followUpQuestions,
+      presentation: parsed.data.presentation,
       confidence: confidenceScore,
       // tone is part of prompt now, not response
     };

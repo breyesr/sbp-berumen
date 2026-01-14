@@ -1,0 +1,313 @@
+
+1_1 Entrevista Pedro García B...25_09_01 08_58 CST - Recording
+Sun, Oct 12, 2025 8:42PM • 1:03:50
+SUMMARY KEYWORDS
+investigación de mercados, Analytics, modelos predictivos, machine learning, Big Data, calidad de información, proactividad, cercanía, eficiencia, hipersegmentación, tecnología emergente, Google, educación en línea, estrategia de marketing.
+SPEAKERS
+Speaker 1, Speaker 2
+
+Speaker 1  00:00
+Para aventarnos la hora sin problema este y y también son oh te voy a platicar los temas para que más o menos sepas por dónde van perfecto son el contexto del rol entender responsabilidades a quién reportas presiones y demás proceso de compra como investigador de mercados con ese enfoque, conocer cómo evalúas decides contratar, cómo descartas agencias. Hablaremos de dolores y frustraciones en este caso
+
+00:36
+temas que hoy, como en tu rol,
+
+Speaker 1  00:40
+genera más desgaste o más motivación como ejemplo pues a mí nunca me ha gustado presentar es algo muy personal me gusta más la parte de apreciar de generar el proyecto y a la hora de las presentaciones sí me desgasto un poco acabo cansado esos días expectativa hacia Berumen esa pues aquí es donde viene La la parte imparcial y y entre más directo y honesto pues mejor para el proyecto perfecto y finalmente ya vendríamos hablando de medios de consulta programas cámaras en donde estás tú congregado que te ayude a nos ayude a entender cómo un researchers o Un experto en marketing hoy hoy consume información y prácticamente va por ahí. Ahí estaríamos ya concluyendo.
+
+01:26
+Perfecto. Sí, de acuerdo. Bien,
+
+Speaker 1  01:29
+vamos a comenzar con el contexto del rol. Si estás de acuerdo, te voy a decir el el tema son tres preguntas y ahí las vamos discutiendo es cómo es tu día en en tu trabajo para ahí entender un poco el el tu dinámica, cómo gestionas equipos y demás. La segunda es ¿Qué lugar ocupa la investigación de mercados en tus prioridades? Y la tercera, ¿Cuáles son tus principales usuarios de resultados cuando generas investigación? Vale,
+
+Speaker 2  01:57
+bueno, pues empezamos con lo de un día normal digamos en en mi rol no este yo te diría al final estamos como evolucionando entre investigación de mercados y analytics o nuevas herramientas entonces yo apenas tengo tres meses en la compañía tampoco son tantos y yo tengo una experiencia mucho mayor, digamos, haciendo Research tradicional, que decíamos estudios de mercado cuantitativos, cualitativos más cercanos al consumidor y en diferentes industrias. He estado en consumo masivo en tabaco, en agricultura, en Pharma. Entonces, al final es un poco de todo, pero mi evolución profesional ha sido en los últimos años hacia un tema más de analisis. Entonces, yo ya llevo varios estudios o varios análisis haciendo modelos predictivos, modelos de machine learning usando un poco de inteligencia artificial o un poco más más con con Big Data teniendo mucha más cantidad de información ver qué se puede hacer con ellos no qué es lo que estamos haciendo como área de customer insights acá en en Electrolit estamos como combinando ese tipo esas dos tipos de de nuevas informaciones no hoy estamos con un montón de información que no se está procesando o no se está procesando correctamente debería de quizá de procesarse mejor también porque viene con muchos muchos huecos en la en las series de tiempo hay mucha mucha información que está incorrecta o mucha información que simplemente está incompleta no entonces eso es lo que hoy no hoy por hoy nos está tomando mucho más tiempo en en cómo actualiza la información de dónde viene que la información sea correcta más que haciendo modelos como tal entonces yo yo me imagino que esto es como como los primeros pasos de de nuevas tecnologías siempre son cuando tocó el internet la salida del internet también todo el mundo quería el mundo quería hacer cosas pero faltaban muchas herramientas o entrenamiento en en estas herramientas para que saliera mejor no eso me imagino que fue en los noventas no todavía no trabajamos pero pero supongo que algo así pero me llama me
+
+Speaker 1  04:16
+llamó mucho la atención que pasas De quali qanti a una evolución más de Analytics ¿Cómo se dio o qué cómo te convertiste? Cómo evolucionó tu estilo a esta parte porque pues tuviste que haber aprendido algunos lenguajes.
+
+Speaker 2  04:32
+Claro claro fueron tanto factores personales como de negocio no en lo personal pues yo siempre he sido más yo siempre tenía un perfil he tenido un perfil más cuanti no pero después de eso yo tenía siempre intereses hacia hacia nuevas tecnologías nuevas metodologías y el mercado también evolucionó un poco hacia ese sentido como como que los clientes internos. Nos empezaban a pedir más de ese tipo de información y entonces como iniciativa propia y también te digo de negocio, empecé a tomar cursos, empecé a capacitarme más en ese sentido y evolucionó mi perfil hacia hacia allá. Dame 1 s , se está cortando un poquito, voy a quitar la cámara y pero sigo aquí. Entonces te decía el el el así así evolucionó un poco mi mi perfil nada nada como como decirlo nada fue como impuesto sino como fue dándose un poco a poco por por ambos lados no tanto de de mi parte como de parte
+
+Speaker 1  05:37
+del negocio claro sí Entonces, Pedro, en esta entrevista vamos a tener que proyectar tus respuestas hacia esta parte donde tuviste este expertise como comprador también de investigación, pero sí me interesa también que le agregues Esta evolución, no para que esté enriquecida la entrevista perfecto nos puedas dar pues tú vas a representar un poco un perfil que ya evoluciona hacia más allá de hacer una encuesta una entrevista un estudio a usar
+
+06:14
+modelos predictivos y
+
+06:15
+demás no
+
+Speaker 2  06:16
+perfecto pues entonces bueno así fue o sea te digo yo tengo más de 15 años de experiencia en general en diferentes puestos de Research y te digo en los últimos años más como de de Analytics of the machine learning.
+
+06:32
+Y bueno, así fue evolucionando, no sé,
+
+Speaker 1  06:34
+pero en en este sentido manejas ya a este tiempo algún lenguaje R Python que con el que te estás apoyando para para los modelos?
+
+Speaker 2  06:47
+Correcto. Yo creo que todos los todos estamos modelando principalmente en Python, pero generalmente es así, pero puede ser también un poco en R y pues para la mayoría de estos modelos ya lo lo interesante de esto también es que la mayoría de los modelos ya están están como generados ya ya se ya se puede ya tienes por ahí en alguna en algún entrenamiento o algo parecido ya tienes el el programa que Te hace un este un decision trío un random Forest no sé no sé algo así y lo lo interesante de esto es conseguir como como será como decirlo como tareas dentro de la empresa que cumplan lo lo necesario para que los puedas usar entonces te va a decir queremos encontrar cuál es la mejor, el mejor perfil que podríamos enfocar nuestras campañas publicitarias. Y quizá lo que necesitamos es hacer un modelo como de Random Forest. El tema acá es que necesitas mucha información y de esa información la necesitas que sea buena de calidad. Entonces, lo que quiero decir es que el modelo como tal es un programa que ya existe en Python, que ya lo tienes listo para ejecutar, por así decirlo. El problema es que la calidad de la información que se tiene que te va a servir para hacer este modelo es la que tal vez es deficiente, no tiene justo la calidad que necesitarías sin huecos, sin sin información errónea, mucha, mucha de esta información la meten a mano. Entonces no está a veces está está mal claro, ahí es
+
+Speaker 1  08:35
+donde empiezan las limpiezas y homolozarse 1000 y otros le pusieron un K y se hace todo un tema no sí
+
+Speaker 2  08:44
+tiene un nombre o sea por ejemplo hay cosas como que son en el día a día no entonces hay cosas que Oxxo tiene para que se hablen para que se hablen las bases tienes que tener algún vínculo entre ellas entonces podría ser algo muy fácil como de bueno el código de cliente de tienda existe sí entonces bueno yo podría entender en diferentes bases de que tengamos cuál es el código de la tienda que que realmente aplica para para esto pero en una base viene el código de tienda que son seis caracteres viene separado entre los tres primeros y los 3 s 3 s porque los tres primeros hablan de la región o de la zona de lomos y en los tres los tres que siguen son como ya la clave de la tienda entonces en una base de datos lo tengo separado en dos columnas y en otra base de datos lo tengo en una sola eso es un ejemplo que real no entonces pues no es que sea imposible pero son esas pequeñas complicaciones que puedes llegar a tener y esa es tal vez la más sencilla de de arreglar porque pues si ya ubicaste cuál es pues ya simplemente las las juntas de encuentro una con otra pero son muchas veces retrabajos manuales que te quitan. El tiempo para hacer esto más,
+
+Speaker 1  10:02
+pues es que sí, decía un compañero una analogía decía, pues es es como pintar la casa. Es bien, es bien, es bien fácil no agarrar el rodillo y echarle a la pared, pero hay que empapelar, tapar muebles, mover muebles y cuidarlo. Es un buen ejemplo. Sí, listo. Eso que que acabas de mencionar es una talachota que que requiere tiempo horas y pues ya aventar el el la data al modelo al al al que vayas a usar pues eso pues este es pasar la brochita no a todo mundo queremos pintar
+
+Speaker 2  10:34
+ahí de hecho yo creo que hoy por hoy es mucho más el tiempo limpiando ajustando bases que el por
+
+10:45
+hoy es mucho más eso
+
+Speaker 1  10:47
+y habrá atajos, vendrán atajos el día de mañana. La necesidad va evolucionando mucho, incluso la necesidad de usar modelos y demás ya van a venir empaquetados, ya vienen empaquetados como bien lo dices y van a seguir este los códigos ya tienes un problema con un código complicado no corre o algo
+
+Speaker 2  11:06
+si te lo arregla entonces sí sí sí y rápido además
+
+Speaker 1  11:10
+y rápido sí y y yo lo que he notado ahorita es que muchas personas mencionan justo eso o sea que tengo un PDF con 20 formas de bueno tengo 20 PDFs, todos quieren decir lo mismo, pero tienen distintas formas de que se escribieron. Busco algo que me los homologue y demás, ahí donde hay mucha necesidad ahorita de que es la parte de la limpieza. Correcto. Bien, Pedro, hablando ahora de Research,
+
+11:39
+¿qué lugar crees que ocupa la investigación de mercado
+
+Speaker 1  11:44
+en una industria no ahora sí pensando en a lo mejor en otro en el anterior empleo lo que sea qué lugar crees tú que ocupa la investigación de mercado en las prioridades mira yo te Te lo voy a manejar como
+
+11:59
+en dos opciones generales
+
+Speaker 2  12:03
+en general primero. Bueno, un pasito antes. En general, las las empresas que buscan crecer estratégicamente son las que más piensan en en investigación y mercados y y te lo voy a decir ahora ya un poco más particular. Creo que aunque las empresas saben de la importancia que puede llegar a tener esta estas herramientas de pronto si tenemos un mal año o las cosas no pintan bien en general para los próximos años, a veces se recorta este tipo de cosas y es, desde mi punto de vista, un gran error estratégico que pueden llegar a ser las empresas no entonces no entonces creo que es prioridad para aquellas empresas que tienen líderes que conocen la importancia estratégica de lo que hacemos pero al mismo tiempo puede darse el caso que que si que si hay presiones si es un mal año en particular, es un es un rubro que se puede recortar. No y a nosotros como investigadores nos cortan las manos por así decirlo. O sea, tú tienes un presupuesto que probablemente planteaste o planeaste desde inicios de año por así decirlo y si a mediados de año te te recortan presupuesto te recortan opciones para para seguir haciendo Research pues medio medio te medio sobra no sé cómo decirlo si si le suene tan feo pero eh digamos nosotros necesitamos presupuestos para hacer investigación investigaciones y al mismo tiempo si esto se se recorta pues nos quitas ese potencial. Claro entonces sin embargo hay que hay otra otro tipo de empresas que aunque vean la dificultad en en el en el mediano plazo pues saben que justo este tipo de de herramientas nos genera pues un norte por así llamarlo de hacia dónde queremos ir hacia dónde queremos llegar como como Marta y como empresa entonces yo yo te diría que depende mucho de los líderes y de la situación actual de la empresa no
+
+14:21
+Sí claro. De acuerdo contigo, Pedro.
+
+Speaker 1  14:25
+En tu experiencia como investigador, ¿quién consideras que son los usuarios de los de los resultados?
+
+Speaker 2  14:34
+Pues hay de todo. No hay clientes internos que te piden detalle de la información al mayor de los detalles. Hay gente que solamente utiliza la el research como para decir que lo hicieron. Yo digo que los principales los principales clientes son más bien los principales usuarios son aquellos que le que literal te hacen preguntas que literal usan tu formación para. A definir estrategias campañas ajustan a la a la mitad si si es necesario a la mitad del plano del proyecto y te hacen preguntas de algo que te decía mucha gente me ha tocado es se hace una investigación, se hace un brief, se hace una se planea, se se se lleva a cabo, se presentan resultados y no hay no hay, no hay preguntas, ¿sabes cuando se entregan resultados? Entonces eso es una mala señal de que no te están haciendo caso y y yo entiendo que las prioridades pueden cambiar del momento en el que se planteó el la investigación al al momento final que entregaste resultados, pero eso es un indicador de que tu información se se guardó en un cajón y ya no se va a usar. No y es una tristeza porque es una inversión, una mala inversión obviamente no entonces aquel usuario que es el principal es el que te hace preguntas, el que te te reta no hay muchas veces que tú como investigador, aunque conozcas del mercado, hay cruces que tú no has entendido, que tú no has visto, y creo que la mejor investigación es aquella que se retroalimenta y encuentra una mejor forma de ser usado.
+
+16:15
+Es un gran punto y estoy también de acuerdísimo
+
+16:19
+contigo, Pedro.
+
+Speaker 1  16:21
+Estas personas son equipo comercial, son planning dónde podrías profundizarlo?
+
+Speaker 2  16:27
+Principalmente es marketing, pero si lo amplias un poquito más puede ser marketing y ventas en mi en mi percepción Claro. Han habido estudios que hacemos para cualquier área. No hemos hecho estudios para desde llama bueno desde logística hasta relaciones públicas por así decirlo puede ser de cualquier área pero principalmente sería marketing
+
+Speaker 1  16:54
+y ventas ya cuando dices ventas me queda claro marketing lo divides en áreas es como el área de que
+
+Speaker 2  17:00
+sí bueno dentro de marketing hemos hecho estudios para marketing Brand o branding por así llamarlo a los demás son estudios de de pues sanidad de Marta este trackings de marca UASE cosas así pero eh también hemos hecho estudios para para trade marketing dentro del Del punto de venta, qué es lo que se percibe? ¿Qué cosas son las las que podríamos invertir más dentro ya un poco más a la parte de Analytics, que es te digo lo lo que últimamente hemos hecho, estamos haciendo marketing milésimo noveno models saber dónde deberíamos invertir en vez de de simplemente mantener históricos. No y eso es eso cabe un poquito más tal vez entre trade marketing poco más de trai marketing pero también poca marketing pero a lo que voy con esto es que también puede ser otras subáreas dentro de
+
+17:53
+marketing claro listo
+
+Speaker 1  17:57
+Pedro ahora en En el tema de las propuestas de investigación un poco qué es lo primero que revisas cuando te la envían?
+
+Speaker 2  18:07
+Mira, nosotros creo que un un error muy común que que nos ha pasado. Tampoco te digo que que somos perfectos, por así decirlo, es que no tenemos un un brief. El famoso brief te ayuda a entender ah bueno y además un brief que haya sido retroalimentado no el famoso brief te ayuda a entender cuáles son las expectativas de todos en tiempos en alcances en en insights que se buscan entonces es importante tener un documento escrito donde tengamos toda la la información que queremos alcanzar encontrar con tiempos, programas, etcétera. Entonces con base en eso es el el primer paso para para procesar cualquier cualquier estudio de mercado. Entonces eso involucra tanto los Research tradicionales hasta los pues más más enfocados en datos no entonces una vez que ya tienes este este primer escalón se se se debe a ver te digo como te decía es importante que haya feedback porque si solo se manda un brief bueno ya sabes o sea si es si es un estudio recurrente pues tal vez no necesitas todo todo ese detalle pero sobre todo si es un estudio que es por primera vez si es importante tener un un feedback no sobre todo en tiempos y en alcances porque muchas veces es yo esperaba tener esto a mediados de año porque quería tomar una decisión a mediados de año si tú me lo entregas a final de año pues ya no ya tuve que tomar las decisiones entonces no me va a servir aunque se haya hecho bien por así decirlo y por el otro lado si no se alcanzan los insights que se quieren buscar o se están buscando literal pues pues no no no es como no tener carnita para sacarle a esto no. Entonces yo creo que esos son los primeros pasos no sé no sé qué
+
+Speaker 1  20:05
+recuérdame la pregunta no sí está bien o sea con base en este brief cuando ya te llega la propuesta de una agencia de risas que que es lo primero que evalúas revisas
+
+Speaker 2  20:15
+ah bueno lo lo más fácil es evaluar el precio no porque en teoría todos estamos en igualdad de circunstancias generalmente las propuestas no son 100 % comparables entonces el precio es lo lo lo primero que uno revisa pero también si si te quedas solo con el precio muchas veces la más barata es porque tiene menos cosas o menos alcances entonces no es evaluación 100 % cuantitativa, por así decirlo, se tiene que revisar a profundidad cada una de las propuestas de las agencias. Muchas veces te decía una una máscara es porque tiene un mayor alcance, un un giro de tuerca que puede resultar interesante. Entonces tratando de ser lo más justo posible tratas de de ver los pros y cons de cada una donde no solo es el precio no ya tienes un un análisis comparativo entre ventajas y desventajas lo que muchas veces pasa es que hay una segunda ronda con dos o tres finalistas máximo no si si tienes tal vez cotizaste con más eh pero te quedas ya al final con dos o tres y les vuelves a pedir una una segunda ronda de ajuste para entender eh o de alguna forma igualar no entonces oye perdón me me subiste aquí la muestra por eso es más caro pero yo yo no tengo el presupuesto o estás fuera de presupuesto, pero me interesó tu tu enfoque. Entonces no es no es una no es un tema 100 % monetario. Entonces, ajustando y hacerlas comparables las las dos otras propuestas finales. Revisamos cuál es la mejor después de esta segunda ronda y nos vamos por una siempre hay un factor que de de conocimiento de experiencia que puede que eso es más intangible quizá tú has trabajado con la misma agencia otras otras veces haciendo estudios iguales o similares entonces eso es un factor que puede puede inclinar la balanza hacia hacia un sentido pero en en general tratamos de de ser lo más justos posible por así decirlo con con nuestras propuestas
+
+Speaker 1  22:30
+sí claro y va a ver recapitulando un poco entonces el el precio lo ves para decir si es muy caro quiero ver por qué a ver qué Qué giro el duelo por estar ofreciendo correcto muy barato también porque puede que se le esté escapando al algo de lo que le pediste y no lo esté considerando no después de ahí evalúas esta oferta de valor que da el el proveedor y entran factores y ya lo conoces tiene cierto peso De decir bueno ya sé cómo trabajan y si no pues tiene otra desventaja que a lo mejor hay que evaluar si hay riesgo en contratarlos correcto
+
+Speaker 2  23:09
+entonces una vez ya seleccionada pues empieza empieza el proceso no bien
+
+Speaker 1  23:17
+ahora en extremos Pedro cuando o sea qué qué te ha hecho hay varias opciones, hay
+
+Speaker 2  23:33
+muchas opciones, hay hay veces que tú desde que ves la propuesta que te mandan tú tú ves que no tienen experiencia, que están fuera de foco. Todas las agencias recibieron el mismo brief. Fue el mismo, la misma solicitud de cotización y aún así te puede ser que una te envíe algo que no o sea, nada que ver, por así decirlo. Entonces, desde ahí ya es un punto rojo, aunque el precio sea el mejor. Entonces si si no eso eso te puede reflejar que no tienen experiencia en el proceso o en el en en lo que tú estás pidiendo entonces eso puede ser un factor de rechazo rápido o sea eso sería un factor probablemente para ni siquiera considerarla en una segunda ronda incluso aunque tengan un mejor precio eso es una obviamente el precio pues ya sería tal vez la segunda la segunda opción hay hay veces que que tal vez por por temor a una incidencia muy muy muy complicada las mismas agencias se se se cubren un poquito pensando en que va a ser muy difícil encontrar cierto perfil o algo parecido. Entonces, por así decirlo desde un principio si si si me están dando un precio muy alto unitario por entrevista por así llamarlo, me da una idea de que otra vez tal vez no tienen experiencia suficiente en entender el target que nosotros estamos buscando y se están cubriendo pensando en que. Que será mucho más difícil de que otras que otras este que otros perfiles y te das cuenta ahí con el precio unitario no comparándolo con otros o con con otras propuestas o con otros estudios anteriores y y bueno se podría decir que por último el el la experiencia que hay dentro de la empresa no de la de decir muchas veces sobre todo se va construyendo experiencia con otros proyectos o con o conociendo a las al principal encargado de la investigación si tiene experiencia en tu industria entonces te voy a decir un ejemplo tal vez no No 100 % que pasó pero similar o sea tú cotizaste con una agencia tienes dos pero tienes dos propuestas finales pero en una sabes que hay una persona que va a liderar el proyecto que además tiene experiencia en la industria de bebidas que es la nuestra no entonces tú ya sabes que aunque los precios sean similares la persona que llevará a cabo el el ejercicio en el caso de la agencia a tiene experiencia haciendo estudios para coca cola para Gatorade para algo un poco un poco particular hacia hacia lo que nosotros queremos mientras que la agencia B pues probablemente tiene experiencia pero no en tu industria entonces eso es tú sabes es un lenguaje diferenciado dependiendo de la industria de los intereses etcétera el consumidor que que se va a entrevistar y eso podría ser un factor también para para definir al final
+
+26:37
+me queda clarísimo
+
+26:41
+Pedro vamos al punto de Berumen.
+
+Speaker 1  26:46
+En este punto, pues ya si es un Sumin hacia la agencia. Y también traigo tres preguntas. No, la primera es ¿Qué dirías que Berumen hace bien frente a otras agencias?
+
+Speaker 2  27:01
+Mira, hace muy bien la parte de cercanía yo creo que te digo yo tengo pocos meses en esta posición y han han tratado de de hacerme sentir un cliente valioso no este creo que es un principal atributo saben que nosotros como una empresa familiar Electrolit pisa como tal ha crecido de una empresa familiar y tenemos valores familiares o sea de cercanía de honestidad de ese sentido y creo que eso no sé si es algo que que hacen a propósito por así decirlo algo que está en su en su día a día pues le sale natural pero eso es un factor importante que hace que que sean considerados no o sea la cercanía que tratan de de implantar con con cada proceso que hacen sí yo creo que sería su principal atributo
+
+Speaker 1  27:59
+dando un doble clic en cercanía qué es esa cercanía están contigo te hablan te acompañan
+
+Speaker 2  28:05
+sí exacto o sea es eh le dan seguimiento muy cercano a las a los requerimientos que nosotros les pedimos no o sea más allá de de de o sea lo que yo he visto con otras agencias es las dos pueden trabajar igual las dos pueden trabajar relativamente similar por así decirlo, pero Berumen le trata de dar ese esa cercanía en el sentido de te sirvió. ¿Necesitas algo más esto Esto puede ayudarte en en explicar tal cosa? No O sea, no se quedan solamente con el ten bien la información que probablemente es correcta y ya no sino que se se preocupan porque esa información realmente haya sido valiosa interna claro
+
+Speaker 1  28:52
+me queda claro la parte de la cercanía y y esta fortaleza que busca
+
+28:57
+que percibes de sí de
+
+28:59
+Berumen este
+
+Speaker 1  29:03
+además de esa cercanía Pedro, ¿qué qué más podríamos digo sin forzarlo? Por supuesto, no,
+
+Speaker 2  29:08
+no te entiendo. Es que yo creo que es el principal atributo. Pero claro que son son buenos haciendo lo que hacen. O sea, yo yo creo que tienen todos los conocimientos atrás de un equipo estadístico digamos de la de la vieja guardia no o sea de de conocen lo que hacen entonces eso también es dentro de todo es una tranquilidad importante pero no te la no te la mencioné como una fortaleza antes porque siento que una cosa que les falla es justo ese cómo decirlo? Esa proactividad. O sea, yo sé que si yo les pido algo me van a ayudar y lo van a hacer bien. Entonces eso es una fortaleza pero pero también es algo que también es un un given que tú esperas que lo vayan a hacer pero podría no darse el caso. O podría ser que no te entiendan quizá el. La petición. Entonces se podría decir que en 1 s lugar la eficiencia que ellos tienen, pero te digo que eso puede caer en un poco en falta de proactividad de que debió de haber sido así desde el principio. Quizá no sé cómo decirlo. Yo no te lo tenía que haber sugerido, sino tú me lo tenías que haber sugerido antes. Pero pero bueno, sé que lo hacen bien o sea ese no es un problema
+
+Speaker 1  30:23
+claro este y bueno ya entramos en estas eh comentarios así es platícame en en estas partes de oportunidades y y lo vamos a ir
+
+Speaker 2  30:34
+platicando mira pues ya ya estábamos hablando de eso no yo siento que es falta de proactividad en
+
+30:41
+en cosas a veces sencillas. O sea,
+
+Speaker 2  30:45
+han habido cosas. Han habido veces que con mi experiencias previas para mí ya eran algo normal ver ver, por ejemplo, diferencias significativas, diferentes formas de presentar las cosas. Hay veces que que te digo un un ejemplo tal vez es sencillo entonces oye se me está ocurriendo ver este análisis de esta forma cruza esto con esto listo lo hacen bien lo hacen rápido lo hacen eficiente no pero pues sabes que ya de ver el dato que me estás compartiendo yo te puedo decir que hay que quitar este dato que que es un este como digamos un outlayer que tal vez no es un outplayer sino en la industria de bebidas cuando tú comparas con con agua embotellada o con Coca Cola pues son tan grandes que muchas veces los gráficos o las la información que se comparte se distorsiona Un poco por por por su poder económico que tienen por así decirlo entonces pues pues no me pongas Coca Cola porque me va a nublar toda mi mi gráfica y no puedo ver el análisis de los diferentes bebidas deportivas o por las diferentes bebidas listas para tomar o vetas sabemos algo una subdivisión entonces eso es lo que yo siento que les falta. No sé cómo explicarlo mejor. Yo lo entiendo totalmente. Ah, perfecto. Entonces yo siento que eso ese detalle que que que yo espero de una agencia que tiene tanta experiencia como Berumen, no se los tenga que decirlo. Incluso podría darse el caso que me digan, mira, tú me pediste esto te lo estoy dejando en un slide así como me lo pediste pero yo después de revisarla creo que hice hice un análisis más profundo y creo que podrías verlo así y entonces se cumpliría todo el todo el este todo el espectro no o sea yo te pedía pero tú ya analizaste y me estás dando A y B entonces yo te o sea Yo como tu agencia te doy las dos opciones y usar la que más te te sirva la mayoría de las veces podría decirte no yo yo usé a yo no sé yo te pedía y yo voy a usar a pero bueno estuvo interesante tu tu análisis B en el que este trataste de darme un un adicional esa proactividad entonces yo he tratado como de de impulsarla pero no siempre me se ha dado sabes o sea como que siento que les falta esa ese esa característica y y
+
+Speaker 1  33:10
+digo te entendí muy bien es te lo voy a dar en un ejemplo no inventado por supuesto si yo le pido un análisis y y le digo crúzame no sé quién compró más cemento del albañil el arquitecto y el contratista pues a lo mejor o más bien si yo le digo dame el cruce del puro albañil y el albañil solamente fue el 5 % no me detectan que a lo mejor había un 70 % y me dan el del albañil como tal se los pedimos. Sí correcto. Sí, sí, creo que esa parte es como esa ese razonamiento lógico del pedido el el pedido te lo dan en el tiempo y te lo hacen bien pero sí correcto para que te grabe y a la hora de la transcripción quede este ejemplo como
+
+Speaker 2  34:00
+claro y sabes que es la si si si fuera el caso de es la primera vez que estamos haciendo el estudio donde no conocemos la industria o el perfil que estamos buscando te la compro estamos aprendiendo los dos lados pero una una empresa como Berumen que tiene tantos años haciendo estudios similares para nosotros yo espero ya ese ese plus no entonces también tiene que ver con eso o sea con con la experiencia que usted que tiene Berumen con con este tipo de estudios con nosotros
+
+34:33
+sí creo que es muy valioso esa parte
+
+Speaker 1  34:37
+y y y hay dolor ahí es o sea es un área
+
+34:40
+de oportunidad a tratarse
+
+Speaker 1  34:43
+bien Pedro en en este mismo punto. Bueno, yo creo que de Berumen aquí ya es todo. Ahorita si sale algo pues ya en la práctica lo agregamos, pero estoy configurándola porque como mencionabas que ahorita también estás en la parte analítica. ¿Qué proveedores se usan en esta área? O si es que no hay o ¿Cómo es? Mira,
+
+Speaker 2  35:06
+exacto. Es lo que te iba a decir. Todo mundo quiere hacerlo, pero pasa, como te digo, con otras tecnologías nuevas. Estoy seguro que así fue con el internet. No todo mundo te quiere vender algo de AI hoy hoy todo el mundo te quiere vender modelos y siendo honestos, pasa que nadie sabe bien cómo usarlos. No? Y también entiendo el otro lado en el sentido de, oye, yo te ofrecí esto hace tres meses y además, bueno, eso eso es tal vez una particularidad nuestra o no sé si sea de todos que no somos tan rápidos como quisiéramos. Entonces yo te ofrecí hace tres meses una tecnología para ser un agente que lea un montón de información y entonces se vuelva un agente para que tú lo consultes para cierto tema que es este complicado, tal vez regulatorio o tal vez capacidades de de saber si tu campaña nueva va a ser un éxito. No. Entonces este tipo de agentes les tienes que meter un montón de información para que se vuelvan como un chatbot, por así decirlo, donde te puedan decir rápidamente cuál sería la respuesta del organismo regulador sin que tú tengas que meter todas las cosas a la plataforma del regulador, pues de alguna forma más rápido te puede decir cuál sería el veredicto. O te puede decir, como te decía, si esta campaña va a tener el éxito esperado en cierto target de dado de región esa es la idea no entonces ese es un ejemplo que que nos está pasando y algo que nos ofrecieron hace tres meses probablemente hoy ya no es vigente porque están usando un chatbot o más bien un un un agregado o información de de OpenAI y OpenAI ya cambió su su Su modelo del 4.5 al cinco y en el cinco ya además agregas imágenes lectura de imágenes que antes no estabas entonces yo sé que ni tampoco es fácil desde el lado de la agencia pues estarte ofreciendo cada cada mes novedades por más bien ellos te las pueden tratar de ofrecer pero tú tú ya tú ya estás haciendo una evaluación con algo que ya no es nuevo. Entonces todo mundo nos está pidiendo entrarle a esto no porque todo mundo está invirtiendo y está pensando que esto es el futuro y y de pronto nosotros no somos tan rápidos por un lado y de pronto tampoco nosotros sabemos si es lo más lo más indicado para invertir entonces estamos en la dicotomía de invertimos con alguien con una agencia o este o lo hacemos interno con los conocimientos que yo ya tengo en el área no solo yo sino en el área cómo cómo podemos aprovechar esta información entonces algo que podría ser un buen insight que pueda salir de esto es que como también sabemos que las agencias están aprendiendo es muy importante que nos ofrezcan una especie de pilotos gratuitos no entonces obviamente todo el mundo quiere vender yo sé o sea no no yo también estaba del otro lado también tengo experiencia haciendo agencias entonces haciendo agencia entonces obviamente todo el mundo quiere vender pero tampoco es tan fácil de pronto para nosotros como empresas que nos aventemos a una inversión importante por así decirlo cuando en tres meses ya no será vigente no entonces yo te pagué por algo que es hoy punta de lanza parece pero en tres meses ya llegó otra agencia que me lo da más barato y además mejor. Entonces estamos en ese problema. Todo mundo quiere aprender de ella y entonces estás haciéndola porque hoy hoy por hoy todavía al que te dice que es un experto es porque ha visto tres videos más que tú de YouTube. Pero en realidad no, no, no, nadie es tan experto como dice serlo desde mi perspectiva y tratando de ser
+
+Speaker 1  39:11
+humilde. Claro y es una nueva tecnología. Sí,
+
+Speaker 2  39:15
+sí, y nadie, nadie está 100 % consciente del alcance. Todo mundo está pensando en el potencial pero nadie sabe exactamente cuánto es ese potencial no muy bueno entonces lo que te decía es creo que algo que nos ha servido con nosotros es la la la puesta en marcha de pilotos gratuitos por cierto tiempo o por el primer shot y o la primera ola no sé cómo llamarlo y pensando en que si esto funciona sería un contrato ya o un pago ya continuo
+
+Speaker 1  39:50
+claro en el sentido Pedro de Analytics o sea ya haciendo un lado la parte de risa.
+
+Speaker 2  40:08
+Sí es que es que sí estamos en ese en ese punto. O sea por ejemplo nosotros hemos buscado agentes externos agentes que ya hay externos y esa proveeduría simplemente es tú dame la información que quieres analizar, ¿cuál qué quieres? Qué es lo que haga el agente y nosotros te vamos a generar esa gente. Pero por otro lado, llega a Google y te dice, oye, pero cuestión de la misma semana llega Google te dice, oye, conoces Vertex? Sí, conozco verte. Ah mira Vertex te hace esto contrátame Vertex y y es el es el agente entonces o sea, cómo simplemente yo me tomé información lo mismo que nos iba a hacer una agencia pero ahora ya pero ya interno por así decirlo. Entonces es la dicotomía de de para qué lo voy a invertir con una agencia que además están esperando que aunque me hayas dado piloto gratuito están esperando que yo en el mediano plazo esté con ellos si yo lo puedo hacer interno con con la nube de Google o la consola de Google entonces estamos justo en esa dicotomía ya tenemos ahí un par de opciones lo lo lo que hemos llegado a la conclusión es que aprendamos al mismo tiempo todos Entonces no digas que no al a los pilotos porque estamos viendo cómo aprender por así decirlo, pero también este internamente veamos cómo podemos sacarle provecho a las herramientas que ya tenemos de nosotros tenemos Copilot Copilot plus creo que se llama agentes y Vertex que también te hace agentes entonces estamos en ese punto en el en la bisagra digamos de de hacer las cosas con agencia o hacerlas internamente a través de de Google y no es que sea gratis Google no pero pero ya tienes ahí la opción interna y sabes que esto es importante lo acabo de pensar y tal vez lo lo tenía que haber dicho antes el gran el gran problema o la gran preocupación que tenemos como empresa es la salvaguarda de nuestra información regulatorio la seguridad regulatorio legal nos han nos ha o sea está encima de nosotros con justa razón para que no no este tipo de de agentes que vemos con terceros no no se va no se lleve la información para entrenar otras otras eh otros eh lenguajes de LLMs no entonces correcto entonces tú tú le crees digamos a la agencia cuando te dice no de verdad o sea yo yo tengo mi propio servidor y yo tengo solamente uso uso OpenAI para el lenguaje no para que la estructura del lenguaje pero la información tuya se va a quedar en este servidor que que es de la agencia y tú dices mira pues tampoco me gusta del todo porque aunque sea aunque te creo que que no que no se comparte o aunque te quiero creer que no se comparte aún así lo vas a tener en tus servidores. Entonces yo como sé que en el mediano plazo no se va a ir esa información para otra parte y tú sabes eso es su información hipersensible ventas descuentos todo varones todo todo entonces estamos en ese punto y se va a
+
+Speaker 1  43:41
+resolver en algún momento Bueno, pues ya ni modo es como ahorita pues yo me tomo fotos y está mi familia y todo y están en un cloud. Dices pues ya confías en el Cloud de Apple?
+
+Speaker 2  43:58
+No, sí, sí de Google. Exacto, en el de Google.
+
+Speaker 1  44:01
+El día de mañana vamos a tener que dar ese paso como empresas y decir voy con los servidores que dan ciertas garantías aunque ellos seguramente las usan eh pues pero pues ya que sí
+
+Speaker 2  44:13
+sí o sea exacto como lo dices o sea tú esperas por eso te decía quiero creer o sea porque no tengo ninguna forma de
+
+Speaker 1  44:21
+creer claro entonces sensible data pues ahí es es complicado bien Pedro este platícame ya ya vamos para las partes finales. En tu caso, ¿cuál dirías que es tu responsabilidad? Tu función no hoy Pedro a qué se dedica ahí donde está
+
+Speaker 2  44:43
+mira hoy en este rol la idea es encontrar cómo en lo que se parece con roles anteriores enfocados en Research es cómo encontrar la mejor las mejores insights los mejores. Los mejores hallazgos literal de de cómo cómo entender mejor al consumidor, de cómo llegar más a él, de cómo encontrar ocasiones de consumo, de cómo darle herramientas a marketing para a su vez inviertan en en tanto en medios como en como en tiempos o lo que sea para que ellos enfoquen mejor sus campañas darle darle información interna a mis clientes internos siempre pensando en qué es lo que quiere el consumidor en eso se parece a a otros roles la diferencia acá es las herramientas con las que se se llegan a esos insights no entonces acá estamos usando modelos acá estamos usando series de tiempos otro otro otro enfoque, digamos, al consumidor tal vez más con mucha más información, pero tratando de llegar a una intersegmentación mucho más ad hoc. No entonces hay cosas que antes eran mucho más generales. O sea, hablábamos de una segmentación de cuatro, cinco segmentos. Nada más. Ahora ya queremos llegar a hipersegmentaciones donde puedas entender cómo es el comportamiento de las mujeres embarazadas en la zona tres de la Ciudad de México. Entonces, zona sur o zona oriente, digamos, de la Ciudad de México, ¿cómo se están, qué es lo que les interesa y cómo puedes llegar a mujeres embarazadas? Entonces, eso sería súper interesante con campañas mucho más enfocadas en lo digital, quizá usando redes sociales. O algo parecido, donde puedas entender dónde está tu consumidor y cómo llegas a él. Eso es, digamos, la diferencia con el research actual. Me encantaría decir que ya estamos ahí, no o que estamos cerca de estar ahí. La realidad es que no estamos con ideas, que es parte de lo mismo que estamos platicando desde hace rato como que todo el mundo tiene ideas y como que más solos tenemos el el norte. Bien definido, pero no sabemos exactamente cómo llegar a esto. Sí, entonces en eso estamos.
+
+Speaker 1  47:08
+Es como un Bueno, pienso yo en estas ideas que dices como cierto cierto resultado híbrido porque por un lado, tienes que utilizar la data sensible para dar más insight como bueno pues que están comprando que que en qué días y demás y eso te lo da el dato de la empresa ese es el análisis el análisis que puedes sacar de ahí y luego viene la la parte ya de de los hábitos no que a lo mejor ahí empieza lo lo interesante en en en estos comportamientos ¿Por qué la embarazada compró ese tipo? O por qué no aquel otro tipo? Y no sé si eso te lo da propiamente el dato duro de análisis de comercial.
+
+Speaker 2  47:57
+Ah no, pero bueno, ya ya me estoy Sí, no te entiendo, te entiendo, pero es que estás haciendo lo mismo que nosotros hacemos en el día a día. Es a ver o sea, ¿cómo vamos a llegar a esa hiper segmentación? ¿Cómo hago que el Instagram le muestre un anuncio solo enfocado en 1000 personas en toda la Ciudad de México? O sea, yo sé que hay 1000 personas que quiero llegar. Bueno, hagamos que TikTok porque TikTok es más para jóvenes digamos le muestre este anuncio personalizado casi entonces ese es el el que queremos llegar porque tienes que primero encontrar a la persona después bueno primero generar el el el comercial literal la comunicación que le quieres dar después encontrar el target y después mostrárselo. Esas son las tres, los tres, las tres cosas. Entonces vamos a llegar ahí hoy no estamos ahí, estamos haciendo lo necesario para estar ahí. Creo que sí y y creo que hoy la dicotomía es lo hacemos interno lo hacemos externo o híbrido o híbrido entonces sí
+
+Speaker 1  49:03
+sí no y y es creo que es en el punto en donde estamos bastante interesante ojalá y se resuelva y si se resuelve pues se va a hacer prácticas pero creo que tiene que ser ágil no al final del día resolverlo como bien dices pues sí se van a tardar seis meses en Ir a buscar esos 1000 pues no tiene que ser ágil también la la decisión claro y además como como como dices ágil pero además del otro lado tienes a alguien que te dice bueno y cuando vamos a tener resultados
+
+Speaker 2  49:34
+y y pues obviamente todo uno quiere hacerlo rápido pero no es tan rápido tampoco entonces entonces bueno, estamos justo en ese punto, no sé si es un tema de de todas las empresas, de todas las industrias, yo soy 100 % franco, yo creo que hasta en cierto punto nosotros vamos adelantados, pero pues tal vez es un sesgo que tengo ahí. Bueno, yo te puedo decir con. Lo que he explorado en esto que sí sí sí traen un nivel de reflexión mayor. Y ya ese es un Win. No es lo que podría yo decirte ya ya pensar en esto que estás poniendo en la mesa.
+
+Speaker 1  50:13
+No, no todos lo están pensando, pero hay industrias muy maduras que no no traen esta reflexión y creo que tiene que ver con las personas que están en el lugar estratégico. Puedo hablarte de empresas grandes que todavía no están ni siquiera familiarizados con lo que es el agente. No, pero bien, mira ya para terminar porque ya hemos pasado. Bueno, ya nos vamos a pasar en 1 min . Nada más terminamos. Pedro, si tienes oportunidad de decirme cómo es tu consumo de información, dónde te te documentas, dónde te donde conociste esto de de Google, de todo eso. O sea, ¿cómo cómo cómo te encuentro yo a ti?
+
+Speaker 2  50:56
+Hay algo que no te comenté antes, pero al final es importante. Yo en esta búsqueda de información yo creo libros nuevos, digamos, pero yo creo que los libros hoy se quedan obsoletos más rápido de lo que los imprimen. Entonces, la mejor fuente hoy es YouTube sin duda como sobre todo para iniciarte en esto después. El siguiente paso es lo que no te había comentado es yo estoy tomando actualmente un máster se llama Big Data y machine learning. Ninguna cosa así no me acuerdo exactamente es uno que estaba ofreciendo la Universidad Complutense de Madrid y básicamente me gustó porque se me hizo como punto de lanza buen precio desde tu casa ya sabes y y bueno entonces alguien como yo que ya medio Me acostumbré a aprender a través de de de Google de plataformas ya más más novedosas, menos tradicionales, en el sentido de que un profesor te explica en momentos, sino te suben las clases y obviamente hay foros para preguntas, pero así es como ya la nueva educación se me hizo relativamente fácil hacerlo así y empezar a documentarme. No entonces te digo hay muchos libros que hablan de de de esto, pero creo que ya están medio obsoletos. Es más fácil que sigas a un creador de contenido que esté hablando del tema de agentes, por ejemplo, y ya que lo encuentras, irlo consumiendo poco a poco. Y probablemente son cosas que este creador de contenido está generando son útiles para ti porque tú estás pensando lo mismo y si no, de pronto sale a los pocos, a las pocas semanas ya tú también te enfrentas a algo parecido. Entonces, a lo que voy es esa es la mejor fuente hoy creo para entender Google, por otro lado, está haciendo unos cursos de de entrenamiento que también es para obviamente enfocados en su consola para que tú puedas este entender mejor mejor. Este eso lo que está haciendo Google. No sé si si sea lo normal para todas las empresas es que dice, bueno, ya tengo todas estas herramientas. Primero te voy a hacer una evaluación tú dame quiénes son los personajes dentro de tu empresa que están más enfocados en esto en en big data o entendimiento de de la nube, etcétera. Les voy a hacer una evaluación. Nos hicieron una evaluación no están en eso en el que nos van a decir ¿Sabes qué? Tú estás empezando, tú ya estás en una etapa más madura. Supongo que las empresas de tecnología o enfocadas en tecnología deberían estar más adelantadas, pero te van a te van a dar una evaluación y con base en esa evaluación, te van a dar una serie de entrenamientos para que tú puedas, digamos, alcanzar un mayor nivel de emprendimiento. Entonces, eso está súper interesante y eso sería otra segunda fuente de información que obviamente es muy muy enfocada en Google pero también es interesante para para esto te digo yo yo mira yo tengo un un esto ya no tiene nada que ver. Yo tengo un tío que trabajó en los ochentas en UDM y él nos contaba que a él le entrenaron como un año como más yo sé que esas cosas es como la prehistoria no con unas tarjetitas y las tarjetitas servían literal para programar a las las computadoras y él dice que en retrospectiva es lo más inútil que ha hecho en toda su vida porque después del entrenamiento al poco tiempo ya salieron las las peces personales no o sea no pasó ni un año dos años y ya teníamos peces entonces esa ese entrenamiento que tuvo por más de un año fue completamente tirado a la basura entonces. Yo no sé si nos vaya a pasar algo parecido Alex yo creo que yo creo que en los lenguajes o sea no tal vez en los lenguajes yo yo sabes que yo justo vi un hace como una semana un un video en YouTube que decías hace unos pocos años a todo mundo nos decían hay que programar hay que saber programar y tú lo dijiste hace rato ya Chat GPT le dices oye y yo ya lo he hecho Chat GPT Encuéntrame cuál es el error de esto no y copias todo el código de error y te dice ah pues mira este cambia esta línea te lo subí aquí está el código actualizado no o sea estamos a nada de que saquen algo que que sea programa con tus palabras Claro. Claro es un traductor
+
+Speaker 2  55:55
+literal Correcto. Correcto. Estabas en SQL necesito que se hable con esta otra dame el código y ya te lo
+
+56:08
+das de
+
+Speaker 1  56:11
+Snowflake sí claro también el el lenguaje esas formas sí son queries SQL para tú poder traer data de tu nube o de tu data lake correcto y hoy lo lo veo yo lo analizo y digo el día de mañana le van a hacer la actualización y en lugar de que yo le ponga búscame la base con estos
+
+Speaker 2  56:42
+datos le voy a decir al micrófono necesito que vayas a esta base y te la traigas literal. Sí ¿y
+
+Speaker 1  56:49
+cuánto inviertes en en en aprender un lenguaje como SQL, Python en tu vida? O sea te avientas meses Pedro que yo creo que es lo de
+
+Speaker 2  56:57
+las tarjetitas. Sí, exacto. Entonces bueno estamos viviendo épocas emocionantes la verdad también por otro lado y espero que que pues sigamos aquí no en una de esas en una de esas todo Research lo puedes meter al chat
+
+Speaker 1  57:15
+al chat sabes estaremos acá no yo creo que como dicen en en en la parte de arte en los últimos años en semis fui líder también de la del área de contenido y yo les decía ya no se trata de ser más creativo, sino de quién es más estratégico para hacerlo creativo, porque ya lo creativo ya te lo te lo hace Canva te lo hace lo de adobe, no con Photoshop, ya está la IA, pero el prom es lo estratégico a lo que tú le pides. Sí, lo que le escribes, a lo que le hables, va a ser lo bueno. Entonces hay que prepararse y creo que el camino va por donde dices tú en esta reflexión, en estas formas de ver la las cosas con más estrategia que que atalacharles y y a
+
+Speaker 2  58:13
+catalacharles
+
+Speaker 2  58:20
+está a punto de o sea de tener problemas graves porque justo no le encuentran ya la ventaja al Photoshop o sea ya en el largo plazo Photoshop va va a morir o sea porque no tiene sentido ni la gente que se entrenó para para hacerlo ni ni el mismo programa en sí porque te entrega seguramente lo necesitas Photoshop? O ya no vas a necesitar Photoshop y los inversionistas hoy no no encuentran cuál es el valor diferenciado que va a tener Adobe con Photoshop? Pues desde que salió
+
+Speaker 1  58:57
+sí, desde que Open ahí sacó esta parte de hacer las imágenes realistas. Ahí se cayó, pienso yo, porque mi equipo lo que hacía era antes se compró la licencia de Dobby para poder tener fotos reales, no de decir ni detectas que es IA. Y ahora que que se abrió con OpenAI, pues yo creo que ahí ya se desmadró todo reinventar
+
+59:30
+si no
+
+Speaker 1  59:41
+van a morir van a morir no sí sí sí este pero digo siendo respetuosos también desde tu tiempo y demás este muy interesante la plática. Podríamos quedarnos aquí 2 h porque los dos prácticamente hacemos lo mismo. Yo también evolucioné de tríceps a. Al líder de data ya al final fui gerente de todo el equipo de data ingeniería de datos, arquitectura y de ahí pues el noflex y el big data y demás. Pero pero todo lo que dices tiene sentido y creo que son las personas las que se las que se arriman a evolucionar en las empresas, en los líderes, muchas veces están vendiendo qué es lo que deben de hacer y gestionando crecimientos, pero esta parte de tecnología y demás, creo que estás en una posición de explotarla demasiado y que seas la figura que representa ese ese cambio no que es lo que quieren al final del día ¿quién de la empresa? Alex? Pedro dale tráenos, tráenos, no actualízanos. Tú nos representas? Creo que por ahí va ya en temas de planeamiento personal y profesional, no
+
+Speaker 2  1:00:54
+y ahora creo que el reto para perfiles así es ¿Cómo transmites las ventajas que puede tener este tipo de cosas? No muy
+
+Speaker 2  1:01:11
+el coche México y que me lleve de un lugar a otro. Pero también hay mucha gente que que necesitas que está interesada, que al mismo tiempo están un poco en la desinformación. Y ¿Cómo le transmites a esas personas? Lo mejor sería que sea tu director general, pero pero también en todos los niveles hay Entonces, ¿cómo le transmites a esas personas que que esto es interesante, que puedes sacar mucha información? Ese es
+
+Speaker 1  1:01:42
+el reto hoy y van a voltear Pedro porque te va a alcanzar. Van a ver una conferencia que el CEO, el dueño, el pariente le va a recomendar al dueño y el dueño va a decir, oye, ¿A quién enviamos? Y ahí es donde voltean. ¿A quién? Ah, pues ¿quién me ha hablado de eso? Pues Pedro, perfecto. Esperemos que así sea. Mira, estoy tocando madera, que así sea y que y va a ser es posicionarte que tú lo sabes que tú estás metido que tú traes ciertos artículos compártelo en los grupos así sin random. Oigan este cree que salió algo nuevo ahí se los dejo para que lo lean. Puede ser de interés así me pasó el día de mañana se va a abrir una convocatoria tienen que ir dos tres personas a Ukya a un curso de lo que sea entonces voltean quién increíble y ahí te vas este metiendo pero pero va por ahí pero creo que y aparte estás muy bien metido en donde debes entonces creo que va a generar cosas chidas Qué bueno Gracias Muchas gracias esperemos que así sea pues gracias a ti por la entrevista y este ahí se me apagó ahí me escuchas? Sí perfecto se bloqueó la computadora Qué raro este pues muchas gracias por la entrevista pero como todo ya está de más decirlo pero es importante y no dejarlo decir esto no no te comparte como tal Pedro dijo no tú sabes que se analizan patrones se analizan resultados que generen tendencias y así es como se muestra en la conclusión que al final del día pues tiene que ayudar a a ser ágiles en la toma de decisiones aquí con
+
+Speaker 2  1:03:17
+Perú perfecto pues un Gusto conocerte Alex estamos en contacto para cualquier cosa que quieras profundizar, cuéntame. Giovanni.
+
+Speaker 1  1:03:25
+Muchas gracias, Pedro. Estamos en contacto. Ya tienes mi mi WhatsApp también. Entonces ahí
+
+Speaker 2  1:03:30
+fue correcto. Perfecto. Claro que sí, cuídate mucho. Buena semana.
+
+1:03:34
+Hasta luego igual. Bye.
