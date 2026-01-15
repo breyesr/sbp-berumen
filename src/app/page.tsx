@@ -256,7 +256,7 @@ export default function ConstructionPersonasPage() {
     const handleExport = () => {
         if (!analysis) return;
         const date = new Date().toLocaleDateString();
-        const report = `IDEA STRESS TEST REPORT
+        const report = `IDEA STRESS TEST REPORT FOR ${result?.persona || selectedPersonaName}
 Generated: ${date}
 [ THE IDEA ] ${idea}
 
@@ -278,7 +278,37 @@ Generated: ${date}
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `stress-test-${new Date().toISOString().slice(0, 10)}.txt`;
+        const safePersona = (result?.persona || selectedPersonaName || "persona")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+        link.download = `stress-test-${safePersona}-${new Date().toISOString().slice(0, 10)}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const handleExportRefined = () => {
+        if (!refinedPitch) return;
+        const date = new Date().toLocaleDateString();
+        const report = `REFINED PITCH FOR ${result?.persona || selectedPersonaName}
+Generated: ${date}
+
+[ GOAL ]
+${goal}
+
+[ REFINED PITCH ]
+${refinedPitch}
+`;
+        const blob = new Blob([report], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        const safePersona = (result?.persona || selectedPersonaName || "persona")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+        link.download = `refined-pitch-${safePersona}-${new Date().toISOString().slice(0, 10)}.txt`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -725,13 +755,22 @@ Generated: ${date}
                             </div>
                         </div>
 
-                        <div className="mt-10 pt-6 border-t border-gray-100 flex justify-end pb-12">
+                        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col gap-3 pb-12 sm:flex-row sm:justify-end">
+                            {refinedPitch && (
+                                <button
+                                    onClick={handleExportRefined}
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] bg-[#22d3ee] rounded-lg transition-all shadow-lg shadow-[#22d3ee]/20 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]/40 hover:bg-[#38bdf8] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[0.99]"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    Download Refined Pitch
+                                </button>
+                            )}
                             <button
                                 onClick={handleExport}
                                 className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#ededed] bg-gradient-to-br from-[#171717] to-[#0f0f0f] border border-[rgba(255,255,255,0.15)] rounded-lg transition-all shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-0.5 hover:border-[#4F46E5]/40 hover:shadow-[#4F46E5]/20 active:translate-y-[1px] active:scale-[0.99] active:border-[#4F46E5]/50"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                Download Analysis (.txt)
+                                Download Analysis
                             </button>
                         </div>
                     </div>
