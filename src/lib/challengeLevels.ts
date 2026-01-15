@@ -12,7 +12,12 @@ export type ChallengeLevel = {
   questionStyle: string | { tone?: string; examples?: string[] };
   description?: string;
   purpose?: string;
-  behavior?: Record<string, unknown>;
+  behavior?: {
+    flawDetection?: string[];
+    attack_mode?: boolean;
+    scoring_bias?: string;
+    [key: string]: any;
+  };
   outputRequirements?: Record<string, unknown>;
 };
 

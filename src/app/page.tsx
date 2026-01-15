@@ -18,6 +18,7 @@ type StressResult = {
     gaps: string[];
     improvements: string[];
     questions: string[];
+    presentation: string;
     confidence: number;
     tone?: string;
 };
@@ -175,6 +176,7 @@ export default function ConstructionPersonasPage() {
             gaps: result.gaps,
             actionPlan: result.improvements,
             followUpQuestions: result.questions,
+            presentation: result.presentation,
         }
         : null;
 
@@ -194,6 +196,8 @@ Generated: ${date}
 [ GAPS ] ${analysis.gaps.map((g: string) => `- ${g}`).join('\n')}
 
 [ ACTION PLAN ] ${analysis.actionPlan.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')}
+
+[ PRESENTATION FOR THIS PERSONA ] ${analysis.presentation}
 
 [ FOLLOW-UP QUESTIONS ] ${analysis.followUpQuestions.map((q: string) => `? ${q}`).join('\n')} `;
 
@@ -512,6 +516,23 @@ Generated: ${date}
                                         </button>
                                     ))}
                                 </div>
+                            </div>
+                        </div>
+
+                        <div className="animate-fade-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
+                            <div className="p-6">
+                                <div className="flex items-center gap-3 pb-4 border-b border-[rgba(255,255,255,0.1)] mb-5">
+                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
+                                        <Sparkles className="w-6 h-6 text-[#4F46E5]" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
+                                            Persona-Preferred Presentation
+                                        </h3>
+                                        <p className="text-xs text-[#a1a1aa] mt-0.5">Rewritten in this persona’s voice and tone</p>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
                             </div>
                         </div>
 
