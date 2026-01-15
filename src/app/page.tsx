@@ -18,6 +18,7 @@ type StressResult = {
     gaps: string[];
     improvements: string[];
     questions: string[];
+    triggeredRedFlags?: string[];
     presentation: string;
     confidence: number;
     tone?: string;
@@ -54,6 +55,12 @@ export default function ConstructionPersonasPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [result, setResult] = useState<StressResult | null>(null);
+    const [refineLoading, setRefineLoading] = useState(false);
+    const [refineError, setRefineError] = useState<string | null>(null);
+    const [refineQuestions, setRefineQuestions] = useState<string[]>([]);
+    const [refineAnswers, setRefineAnswers] = useState<string[]>([]);
+    const [refinedPitch, setRefinedPitch] = useState<string | null>(null);
+    const [refineChanges, setRefineChanges] = useState<string[]>([]);
 
 
     useEffect(() => {
@@ -137,6 +144,11 @@ export default function ConstructionPersonasPage() {
         setLoading(true);
         setResult(null);
         setError(null);
+        setRefineError(null);
+        setRefineQuestions([]);
+        setRefineAnswers([]);
+        setRefinedPitch(null);
+        setRefineChanges([]);
 
         try {
             const res = await fetch("/api/stress-test", {
@@ -158,6 +170,67 @@ export default function ConstructionPersonasPage() {
             setError(message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleRefine = async (answers?: string[]) => {
+        if (!result || refineLoading) return;
+
+        setRefineLoading(true);
+        setRefineError(null);
+        if (!answers?.length) {
+            setRefinedPitch(null);
+            setRefineChanges([]);
+        }
+
+        try {
+            const res = await fetch("/api/idea-refinement", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    personaType,
+                    challengeLevelId,
+                    idea: idea.trim(),
+                    goal: goal.trim(),
+                    stressResult: {
+                        summary: result.summary,
+                        gaps: result.gaps,
+                        improvements: result.improvements,
+                        questions: result.questions,
+                        triggeredRedFlags: result.triggeredRedFlags ?? [],
+                        confidence: result.confidence,
+                    },
+                    missingInfoQuestions: refineQuestions.length ? refineQuestions : undefined,
+                    userAnswers: answers,
+                }),
+            });
+            let json: any = null;
+            try {
+                json = await res.json();
+            } catch {
+                json = null;
+            }
+            if (!res.ok) {
+                const message = json?.error || `HTTP error! status: ${res.status}`;
+                throw new Error(message);
+            }
+            if (json.status === "needs_input") {
+                const questions = Array.isArray(json.questions) ? json.questions : [];
+                setRefineQuestions(questions);
+                setRefineAnswers(new Array(questions.length).fill(""));
+                setRefinedPitch(null);
+                setRefineChanges([]);
+            } else {
+                setRefineQuestions([]);
+                setRefineAnswers([]);
+                setRefinedPitch(json.refinedPitch ?? "");
+                setRefineChanges(Array.isArray(json.changesSummary) ? json.changesSummary : []);
+            }
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Could not refine the pitch.";
+            setRefineError(message);
+        } finally {
+            setRefineLoading(false);
         }
     };
 
@@ -527,12 +600,128 @@ Generated: ${date}
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                            Persona-Preferred Presentation
+                                            Persona-Aligned Draft
                                         </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">Rewritten in this persona’s voice and tone</p>
+                                        <p className="text-xs text-[#a1a1aa] mt-0.5">A first-pass rewrite in this persona's voice</p>
                                     </div>
                                 </div>
                                 <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
+                            </div>
+                        </div>
+
+                        <div className="animate-fade-in bg-gradient-to-br from-[#111827] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
+                            <div className="p-6 space-y-5">
+                                <div className="flex items-center justify-between gap-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#22d3ee]/30 to-[#0ea5e9]/10 flex items-center justify-center shadow-md">
+                                            <Sparkles className="w-6 h-6 text-[#22d3ee]" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-sm font-bold uppercase tracking-wider text-[#22d3ee]">
+                                                Refine the Pitch
+                                            </h3>
+                                            <p className="text-xs text-[#a1a1aa] mt-0.5">Refine the pitch to match this persona</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => handleRefine()}
+                                        disabled={refineLoading}
+                                        className={clsx(
+                                            "inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all",
+                                            "focus:outline-none focus:ring-2 focus:ring-[#22d3ee]/40",
+                                            refineLoading
+                                                ? "bg-[rgba(255,255,255,0.05)] text-[#94a3b8] cursor-not-allowed"
+                                                : "bg-[#0ea5e9]/20 text-[#22d3ee] border border-[#22d3ee]/40 hover:bg-[#22d3ee]/20"
+                                        )}
+                                    >
+                                        {refineLoading ? (
+                                            <>
+                                                <Loader2 className="w-4 h-4 animate-spin" />
+                                                Working...
+                                            </>
+                                        ) : (
+                                            `Refine for ${selectedPersonaName}`
+                                        )}
+                                    </button>
+                                </div>
+
+                                {refineError && (
+                                    <div className="text-sm text-red-400">{refineError}</div>
+                                )}
+
+                                {refineQuestions.length > 0 && !refinedPitch && (
+                                    <div className="space-y-4">
+                                        <p className="text-sm text-[#e2e8f0]">
+                                            {selectedPersonaName} needs a few specifics before the pitch can be tightened.
+                                        </p>
+                                        <div className="space-y-4">
+                                            {refineQuestions.map((question, idx) => (
+                                                <div key={idx} className="space-y-2">
+                                                    <p className="text-xs uppercase tracking-wider text-[#94a3b8]">{question}</p>
+                                                    <textarea
+                                                        value={refineAnswers[idx] ?? ""}
+                                                        onChange={(e) => {
+                                                            const next = [...refineAnswers];
+                                                            next[idx] = e.target.value;
+                                                            setRefineAnswers(next);
+                                                        }}
+                                                        rows={2}
+                                                        className="w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#22d3ee]/40 focus:border-transparent transition-all resize-none"
+                                                        placeholder="Add the missing detail..."
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button
+                                            onClick={() => handleRefine(refineAnswers)}
+                                            disabled={refineLoading || refineAnswers.some((answer) => !answer.trim())}
+                                            className={clsx(
+                                                "w-full py-3 rounded-lg text-sm font-semibold transition-all",
+                                                "focus:outline-none focus:ring-2 focus:ring-[#22d3ee]/40 focus:ring-offset-2 focus:ring-offset-[#0a0a0a]",
+                                                refineLoading || refineAnswers.some((answer) => !answer.trim())
+                                                    ? "bg-[rgba(255,255,255,0.05)] text-[#94a3b8] cursor-not-allowed"
+                                                    : "bg-[#22d3ee] text-[#0a0a0a] hover:bg-[#38bdf8] shadow-lg shadow-[#22d3ee]/20"
+                                            )}
+                                        >
+                                            {refineLoading ? (
+                                                <span className="flex items-center justify-center gap-2">
+                                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                                    Working...
+                                                </span>
+                                            ) : (
+                                                "Generate Refined Pitch"
+                                            )}
+                                        </button>
+                                    </div>
+                                )}
+
+                                {refinedPitch && (
+                                    <div className="space-y-6">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] p-4">
+                                                <p className="text-xs uppercase tracking-wider text-[#94a3b8] mb-2">Original Pitch</p>
+                                                <p className="text-sm text-[#e2e8f0] whitespace-pre-line">{idea}</p>
+                                            </div>
+                                            <div className="rounded-xl border border-[#22d3ee]/30 bg-[#0f172a] p-4 shadow-lg shadow-[#22d3ee]/10">
+                                                <p className="text-xs uppercase tracking-wider text-[#22d3ee] mb-2">Refined Pitch</p>
+                                                <p className="text-sm text-[#f8fafc] whitespace-pre-line">{refinedPitch}</p>
+                                            </div>
+                                        </div>
+                                        {refineChanges.length > 0 && (
+                                            <div className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] p-4">
+                                                <p className="text-xs uppercase tracking-wider text-[#94a3b8] mb-3">What changed</p>
+                                                <ul className="space-y-2 text-sm text-[#e2e8f0]">
+                                                    {refineChanges.map((change, idx) => (
+                                                        <li key={idx} className="flex items-start gap-2">
+                                                            <span className="text-[#22d3ee]">•</span>
+                                                            <span>{change}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
 
