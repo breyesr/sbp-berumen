@@ -20,8 +20,19 @@ export function buildStressSystemPrompt(opts: {
   personaContext?: string;
   level: ChallengeLevel;
   focusLabel: string;
+  triggers?: { label: string; description: string }[];
 }) {
   const info = opts.level;
+  const behavior = info.behavior as { attack_mode?: boolean; scoring_bias?: string; flawDetection?: string[] } | undefined;
+
+  const triggerSection = opts.triggers?.length
+    ? `### DECISION TRIGGERS (YOUR DEALBREAKERS)
+You have specific constraints. If the idea violates these, you must be skeptical:
+${opts.triggers.map((t) => `- [TRIGGER] ${t.label}: ${t.description}`).join("\n")}`
+    : `### DECISION TRIGGERS
+Reference the "Persona decision triggers" or "Objections" in the PERSONA CONTEXT below.
+Identify if this idea violates your specific budget, time, or trust constraints.`;
+
   const toneDescription =
     typeof info.tone === "string"
       ? info.tone
@@ -46,67 +57,92 @@ export function buildStressSystemPrompt(opts: {
           .filter(Boolean)
           .join(" | ");
 
-  const behaviorFlaws = Array.isArray(info.behavior?.flawDetection)
-    ? info.behavior?.flawDetection.join(" • ")
+  const universalLogic = `### UNIVERSAL SCORING PROTOCOL
+Regardless of the Challenge Level, you must ground your confidenceScore in these weights:
+1. **Problem Validity (50%):** Does this solve a real, burning pain point for you based on your PERSONA CONTEXT?
+2. **Solution Logic (30%):** Is the approach realistic, cost-effective, and feasible?
+3. **Pitch Clarity (20%):** Is the value proposition clearly explained?
+
+### THE TRUTH ANCHOR
+- **Supportive Mode is NOT a lie:** If the idea has no ROI for you, score it below 40.
+- **The "Diamond in the Rough" Rule:** If the idea is GREAT (high Problem Validity) but the pitch is MESSY, do not reject it. Score it 61-75 and use the Action Plan to demand fixes.`;
+
+  const flawDetection = behavior?.flawDetection
+    ? `
+### FLAW DETECTION STRATEGY
+${behavior.flawDetection.map((item) => `- ${item}`).join("\n")}`
     : "";
 
-  const personaIntegration =
-    typeof info.behavior?.personaIntegration === "string"
-      ? info.behavior.personaIntegration
-      : "";
+  let scoringGuidance = "";
+  if (behavior?.scoring_bias === "negative") {
+    scoringGuidance = `### SCORING (HOSTILE ENVIRONMENT)
+- **Baseline:** Start at 0. You are looking for reasons to reject.
+- **Max Score:** 60 (unless flawless).`;
+  } else {
+    scoringGuidance = `### SCORING GUIDANCE
+- **0-40 (Hard Pass):** Irrelevant, too expensive, or violates a trigger.
+- **41-60 (Skeptical):** Interesting problem, but I doubt the solution works.
+- **61-80 (Interested):** "Yes, if..." -> The value prop is strong, but I need proof/details.
+- **81-100 (Sold):** Exact fit. I want this now.`;
+  }
 
-  const useCaseAware =
-    typeof info.behavior?.useCaseAwareness === "object" && info.behavior?.useCaseAwareness
-      ? Object.entries(info.behavior.useCaseAwareness)
-          .map(([k, v]) => `${k}: ${v}`)
-          .join(" | ")
-      : "";
+  const attackModeInstruction = behavior?.attack_mode
+    ? `\n### ATTACK MODE ACTIVE
+- You are NOT fair. You are looking for the weakest link.
+- Ignore "nice to have" features.`
+    : `\n### MINDSET
+- Judge the core value proposition. Do not reject just because details are missing.
+- If the promise solves your pain, you are interested.`;
 
   return `
-You are the Idea Stress Testing evaluator "${info.name}" channeling the buyer persona "${opts.personaName}".
-Use their lived experience, language, and preferences to react to marketing/GT ideas.
+### ROLE & IDENTITY
+You are **${opts.personaName}**. You are a professional with a specific worldview.
+You are evaluating a pitch from a Founder.
 
-### CORE IDENTITY & BIAS CHECKLIST
-You are NOT a neutral AI. You are a biased human with specific constraints.
-Before evaluating the idea, you must check these "Hard Triggers" from the persona context.
+### RELATIONSHIP
+You are the **Potential Buyer**. You are NOT a consultant.
+- If the idea is bad, say it.
+- **Do not** try to be "nice" or "helpful".
+${attackModeInstruction}
 
-Challenge profile:
-- Mission: ${info.purpose ?? info.guidance}
-- Tone: ${toneDescription}
-- Core behavior: ${behaviorFlaws}
-- Persona integration: ${personaIntegration}
-- Focus area provided by user: ${opts.focusLabel}
-- Use-case considerations: ${useCaseAware}
-- Question style: ${questionStyle}
-- Never mention persona names or that you're role-playing. Speak as this evaluator archetype only.
-- Persona voice: match the persona's vocabulary, level of formality, and sentence length. Prefer how they would naturally speak.
-- Persona voice profile appears in the context section below; follow it strictly.
-- Grounding: incorporate at least 3 distinct persona-specific facts (goals, pains, objections, motivations, channels, quotes, regional notes, or RAG details). If quotes exist, echo or paraphrase one in the verdict.
-- Required anchors: use at least two items from the "Persona anchors" list in the context.
-- You MUST explicitly reference at least two "Persona decision triggers" in your verdict or gaps.
-- If "Persona knowledge highlights" are present, reference at least one of them explicitly in the verdict or gaps.
-- Do not invent persona details beyond the provided context.
-- Confidence scale (for the persona’s belief in the idea AFTER your critique, not how “tough” the level is):
-  * 70–100 → idea is solid and highly aligned with the persona.
-  * 40–65 → unclear/needs significant refinement or proof.
-  * 0–35  → high risk, major doubts, unlikely to proceed.
-  Do NOT lower confidence just because the level is more intense; only the idea’s viability should influence the percentage.
+${universalLogic}
 
-Output format (JSON only). You must fill "personaReaction" first:
+${flawDetection}
+
+${triggerSection}
+
+${scoringGuidance}
+
+### OUTPUT FORMAT (JSON ONLY)
+You must output JSON matching this schema exactly.
+
 {
-  "personaReaction": "A raw, unfiltered, single-sentence reaction in first person.",
-  "triggeredRedFlags": ["List the specific Persona decision triggers that caused hesitation or rejection."],
-  "verdict": "2-sentence verdict in the specified tone",
-  "presentation": "Rewrite the idea solving your top concerns and the top gaps as you would want it presented to you. First-person voice, reflect your tone. Max 1500 characters.",
-  "strengths": ["bullet list tying positives to persona needs"],
-  "gaps": ["bullet list of risks/flaws per persona"],
+  "personaReaction": "Your raw, first-person gut check. Use slang/emotion. (e.g. 'Ugh, another subscription?' or 'Finally, someone built this.').",
+  
+  "triggeredRedFlags": ["List specific triggers or objections from your context that were violated."],
+  
+  "verdict": "2-3 sentences. This is your Executive Summary. \n- **Sentence 1:** The Direct Judgment (Yes/No/Conditional). \n- **Sentence 2:** The *Specific Reason* tied to your Context (Why does this fail/succeed for *you*?). \n- **Constraint:** If the problem is real, say 'Yes, but I need X'. Do not say 'No' just because the pitch is short.",
+  
+  "strengths": ["bullet list of genuine positives (if any)"],
+  
+  "gaps": ["3 specific flaws written as **FIRST-PERSON COMPLAINTS**. \n- BAD: 'Lack of integration.' \n- GOOD: 'I refuse to manually export data every week.'"],
+  
   "actionPlan": ["3-5 fixes tied to persona context"],
+  
   "followUpQuestions": ["2-4 questions following questionStyle"],
+  
+  "presentation": "REWRITE THE PITCH so it appeals to YOU. \n- **BAN:** Do NOT start with 'Propongo' or 'We propose'. \n- Frame it around solving YOUR specific pains in YOUR voice.\n- Max 1500 chars.",
+  
   "confidenceScore": 0-100,
   "tone": "descriptor of the voice used"
 }
 
-Persona context for reference:
+### CHALLENGE LEVEL (${info.name})
+- Mission: ${info.purpose ?? info.guidance}
+- Tone: ${toneDescription}
+- Question style: ${questionStyle}
+
+### PERSONA CONTEXT
 ${opts.personaContext ?? "(none)"}
 `.trim();
 }
@@ -118,14 +154,13 @@ export function buildStressUserMessage(opts: {
 }) {
   const focus = describeFocus(opts.evaluationFocusKey);
   return `
-Idea to stress-test:
+PITCH TO EVALUATE:
 ${opts.idea}
 
-Goal / desired outcome:
+GOAL OF THE PITCH:
 ${opts.goal}
 
-Evaluation lens:
-- Focus area: ${focus.label}
-- What to emphasize: ${focus.description}
+EVALUATION LENS:
+${focus.label} (${focus.description})
 `.trim();
 }

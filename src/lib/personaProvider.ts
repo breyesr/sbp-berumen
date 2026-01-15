@@ -58,79 +58,32 @@ function normalizeVoice(input: any): PersonaVoice | null {
 }
 
 function deriveVoiceFromJson(j: any): PersonaVoice {
-  const arrays = [
-    j.demographics,
-    j.business,
-    j.goals,
-    j.pains,
-    j.objections,
-    j.motivations,
-    j.channels,
-    j.quotes,
-    j.regionalNotes,
-  ];
-  const text = arrays
-    .flatMap((v) => (Array.isArray(v) ? v : v ? [v] : []))
-    .join(" ")
-    .toLowerCase();
-
-  const keywordMap = [
-    "analítico",
-    "estructurado",
-    "directo",
-    "claro",
-    "riguroso",
-    "práctico",
-    "empático",
-    "humano",
-    "estratégico",
-    "orientado a resultados",
-    "ejecutivo",
-    "narrativo",
-    "crítico",
-  ];
-  const toneHits = keywordMap.filter((k) => text.includes(k));
-  const tone =
-    toneHits.length > 0
-      ? toneHits.join(", ")
-      : "profesional, claro, orientado a resultados";
+  const quotes = Array.isArray(j.quotes) ? j.quotes.map(String).filter(Boolean) : [];
+  const hasQuotes = quotes.length > 0;
+  const inferredTone = hasQuotes
+    ? `Match the style of these quotes: "${quotes.slice(0, 3).join('"; "')}"`
+    : "Professional, analytical, and direct.";
 
   const style = [
-    "Usa frases claras y concretas; evita jerga vacía.",
-    "Prioriza síntesis, titulares y acciones.",
-    "Conecta cada punto con impacto de negocio.",
-  ];
+    j.role ? `Perspective: ${j.role}` : "Perspective: Decision Maker",
+    j.city ? `Regional Context: ${j.city}` : "",
+    "Prioritize brevity",
+    "No fluff",
+  ].filter(Boolean);
 
-  const dos = [];
-  if (text.includes("accionable") || text.includes("insight")) {
-    dos.push("Traduce hallazgos en decisiones y acciones concretas.");
-  }
-  if (text.includes("reporte") || text.includes("reportes largos") || text.includes("síntesis") || text.includes("titulares")) {
-    dos.push("Sé breve y ejecutiva/o; prioriza titulares claros.");
-  }
-  if (text.includes("precio") || text.includes("costo") || text.includes("rentabilidad") || text.includes("retorno")) {
-    dos.push("Ancla el valor en ROI y costo-beneficio.");
-  }
-  if (text.includes("comparar") || text.includes("comparables")) {
-    dos.push("Presenta comparables claros y criterios de decisión.");
-  }
-  if (text.includes("qa") || text.includes("calidad") || text.includes("errores") || text.includes("campo")) {
-    dos.push("Menciona control de calidad y riesgos operativos.");
-  }
-
+  const pains = Array.isArray(j.pains) ? j.pains.map(String).filter(Boolean) : [];
   const donts = [
-    "No uses generalidades sin respaldo.",
-    "No prometas sin métricas o evidencia.",
+    "Do not be polite just to be nice",
+    "Do not use generic AI marketing jargon",
+    ...pains.slice(0, 2).map((p) => `Avoid triggering pain: ${p}`),
   ];
-
-  const phrases = Array.isArray(j.quotes) ? j.quotes.map(String) : [];
 
   return {
-    tone,
+    tone: inferredTone,
     style,
-    dos,
+    dos: ["Be skeptical", "Focus on ROI/Value"],
     donts,
-    phrases,
+    phrases: hasQuotes ? quotes.slice(0, 3) : [],
   };
 }
 
@@ -305,14 +258,27 @@ export async function getPersona(id: string, userQuery: string): Promise<Persona
   const voiceContext = file.voiceProfile ? `Persona voice profile:\n${file.voiceProfile}` : "";
   const anchorsContext = formatAnchors(file.anchors);
   const triggersContext = formatTriggers(file.triggers);
+  const strategicDepth = await readStrategicDepthFile(id);
+  const strategicDepthContext = strategicDepth ? `Persona strategic depth:\n${strategicDepth}` : "";
   const highlightsContext = ragHighlights ? `Persona knowledge highlights (cite at least one if present):\n${ragHighlights}` : "";
 
   // Combine the dynamic RAG context with the static context from the persona file
-  const context = [voiceContext, triggersContext, anchorsContext, highlightsContext, ragContext, file.context]
+  const context = [voiceContext, triggersContext, anchorsContext, strategicDepthContext, highlightsContext, ragContext, file.context]
     .filter(Boolean)
     .join("\n\n");
 
   return { ...file, context };
+}
+
+async function readStrategicDepthFile(id: string): Promise<string | null> {
+  const filePath = path.join(DATA_DIR, id, "persona_strategic_depth.md");
+  try {
+    const raw = await fs.readFile(filePath, "utf8");
+    const trimmed = raw.trim();
+    return trimmed.length > 0 ? trimmed : null;
+  } catch {
+    return null;
+  }
 }
 
 function buildRagHighlights(results: { content: string; metadata?: { source_file?: string } }[]): string | null {
