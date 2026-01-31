@@ -1,43 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Synthetic Persona Web
 
-## Getting Started
+A Next.js app for stress‑testing business ideas with synthetic personas and generating platform‑specific marketing copy. It uses local persona/industry data plus optional RAG from a Postgres + pgvector store.
 
-This guide provides the minimal commands to get the project running locally. For a complete "zero-to-hero" setup guide, which includes configuring environment variables, please see **[our full Contributing Guide](./docs/CONTRIBUTING.md)**.
+## What’s in the product
 
-**Prerequisites:**
-- Node.js, npm, and Docker Desktop are installed.
-- You have created and configured your `.env.local` file as described in the contributing guide.
+- **Idea Stress Test (UI)**: collect idea + goal + evaluation focus, run a persona simulation, and optionally refine the pitch.
+- **Copywriter (UI)**: generate copy per platform/format using persona voice and platform rules.
+- **APIs**: stress‑test, idea‑refinement, copywriter, persona list, industries, cities, and challenge levels.
 
-### Quick Start
+## Tech stack
 
-1.  **Start the local database:**
-    ```bash
-    docker-compose up -d
-    ```
+- Next.js 16 (App Router), React 19, TypeScript
+- OpenAI API (chat + embeddings)
+- Postgres + pgvector for RAG
+- Tailwind CSS v4
 
-2.  **Set up the database schema and ingest data:**
-    ```bash
-    npm run db:setup && npm run embed
-    ```
+## Quick start (local)
 
-3.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
-Open [http://localhost:3000](http://localhost:3000) (or the port Next.js selects if 3000 is busy) with your browser to see the result.
+1) Install deps
+```bash
+npm install
+```
 
+2) Configure env
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+3) Start the local database
+```bash
+docker-compose up -d
+```
 
-To learn more about Next.js, take a look at the following resources:
+4) Create schema + ingest data
+```bash
+npm run db:setup
+npm run embed
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5) Run the app
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open http://localhost:3000
 
-## Deploy on Vercel
+## Required environment variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See `docs/ENVIRONMENT.md` for details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `OPENAI_API_KEY` (required)
+- `POSTGRES_URL_LOCAL` (required for local RAG)
+- `POSTGRES_URL` (required for Vercel)
+- `OPENAI_MODEL` (optional override)
+
+## Useful scripts
+
+- `npm run dev` — dev server
+- `npm run build` — production build
+- `npm run start` — run production build
+- `npm run lint` — lint
+- `npm run db:setup` — create schema/indexes
+- `npm run embed` — ingest data into vector DB
+
+## Documentation
+
+- `docs/README.md` — product overview
+- `docs/API.md` — API reference
+- `docs/PROJECT_DOCUMENTATION.txt` — technical deep‑dive
+- `docs/ENVIRONMENT.md` — env vars
+- `docs/DEPLOYMENT.md` — Vercel deployment
+- `docs/TESTING.md` — testing guidance
+

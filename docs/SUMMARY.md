@@ -1,25 +1,18 @@
 # Documentation Summary
 
-## 📖 General Project Docs
-- [README](README.md) — Intro & quickstart
-- [SUMMARY](SUMMARY.md) — This index
-- [ARCHITECTURE](ARCHITECTURE.md) — System overview & flows
+## General Project Docs
+- [README](../README.md) — Repo overview
+- [Docs README](README.md) — Product overview & quickstart
+- [API](API.md) — Endpoints reference
+- [PROJECT_DOCUMENTATION](PROJECT_DOCUMENTATION.txt) — Technical deep‑dive
 - [CONTRIBUTING](CONTRIBUTING.md) — How to contribute
 - [DEPLOYMENT](DEPLOYMENT.md) — Deploying locally & on Vercel
 - [ENVIRONMENT](ENVIRONMENT.md) — Env vars & secrets
-- [API](API.md) — Endpoints reference
-- [TESTING](TESTING.md) — Testing guidelines
+- [TESTING](TESTING.md) — Testing guidance
 - [CHANGELOG](CHANGELOG.md) — Version history
-- [ROADMAP](ROADMAP.md) — Planned features
 
-## 🎨 Design Docs
-- [STYLEGUIDE](design/STYLEGUIDE.md) — Typography, colors, components
-- [DESIGN_SYSTEM](design/DESIGN_SYSTEM.md) — Design tokens & reusable patterns
-- [UX Wireframes](design/Ux%20Wireframes.md) — Step-by-step flow (intake → scorecard → persona Q&A → insights)
+## Design Docs
+- [Design Architecture](design/ARCHITECTURE.md)
+- [Design System](design/DESIGN_SYSTEM.md)
+- [UX Wireframes](design/UX_WIREFRAMES.md)
 
-## ⚖️ Governance / Community (repo root)
-- [LICENSE](../LICENSE.md)
-- [CODE_OF_CONDUCT](../CODE_OF_CONDUCT.md)
-- [SECURITY](../SECURITY.md)
-- [SUPPORT](../SUPPORT.md)
-- [GOVERNANCE](../GOVERNANCE.md)

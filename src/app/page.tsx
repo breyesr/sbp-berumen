@@ -1,7 +1,7 @@
 // src/app/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { User, BarChart, AlertTriangle, CheckCircle, Sparkles, Loader2, MessageSquare, TrendingUp, Shield, Award, Target, HelpCircle, XCircle, AlertCircle } from 'lucide-react';
 import { clsx } from 'clsx';
 
@@ -22,6 +22,23 @@ type StressResult = {
     presentation: string;
     confidence: number;
     tone?: string;
+    debug?: {
+        rawModelOutput?: string;
+        retried?: boolean;
+        model?: string;
+        temperature?: number;
+        retryTemperature?: number;
+        systemPrompt?: string;
+        userPrompt?: string;
+        personaContext?: string;
+        ragHighlights?: string | null;
+        confidenceBreakdown?: {
+            problemValidity: number;
+            solutionLogic: number;
+            pitchClarity: number;
+        } | null;
+        debugRationale?: string | null;
+    };
 };
 
 type ChallengeLevelOption = {
@@ -61,6 +78,8 @@ export default function ConstructionPersonasPage() {
     const [refineAnswers, setRefineAnswers] = useState<string[]>([]);
     const [refinedPitch, setRefinedPitch] = useState<string | null>(null);
     const [refineChanges, setRefineChanges] = useState<string[]>([]);
+    const [showDebug, setShowDebug] = useState(false);
+    const resultTopRef = useRef<HTMLDivElement | null>(null);
 
 
     useEffect(() => {
@@ -107,9 +126,7 @@ export default function ConstructionPersonasPage() {
                             ? levelsData.options
                             : [];
                     setLevels(levelList);
-                    if (levelList.length > 1) {
-                        setChallengeLevelId(levelList[1].id);
-                    } else if (levelList.length > 0) {
+                    if (levelList.length > 0) {
                         setChallengeLevelId(levelList[0].id);
                     }
                 }
@@ -128,6 +145,20 @@ export default function ConstructionPersonasPage() {
             cancelled = true;
         };
     }, []);
+
+    useEffect(() => {
+        const envEnabled = process.env.NEXT_PUBLIC_STRESS_DEBUG === "1";
+        const queryEnabled = typeof window !== "undefined"
+            ? new URLSearchParams(window.location.search).get("debug") === "1"
+            : false;
+        setShowDebug(envEnabled && queryEnabled);
+    }, []);
+
+    useEffect(() => {
+        if (result && resultTopRef.current) {
+            resultTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }, [result]);
 
     const isFormValid = idea.trim().length >= FIELD_LIMITS.idea.min &&
                         idea.trim().length <= FIELD_LIMITS.idea.max &&
@@ -475,7 +506,7 @@ ${refinedPitch}
 
                 {result && (
                     <div className="mt-8 space-y-6">
-                        <div className="animate-scale-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl p-6 shadow-xl">
+                        <div ref={resultTopRef} className="animate-scale-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl p-6 shadow-xl">
                             <div className="flex items-start justify-between">
                                 <div className="space-y-1">
                                     <h2 className="text-2xl font-semibold tracking-tight">{personaNames[personaType] || 'Persona'}</h2>
@@ -490,6 +521,71 @@ ${refinedPitch}
                             </div>
                         </div>
 
+                        {showDebug && result.debug?.rawModelOutput && (
+                            <div className="animate-fade-in bg-[#0f0f0f] border border-[rgba(255,255,255,0.12)] rounded-xl p-5 shadow-lg">
+                                <details>
+                                    <summary className="cursor-pointer text-sm font-semibold text-[#a1a1aa]">
+                                        Ver respuesta cruda del modelo
+                                    </summary>
+                                    <div className="mt-4 space-y-3">
+                                        <div className="text-xs text-[#71717a]">
+                                            {result.debug.model ? `Modelo: ${result.debug.model}` : ""}
+                                            {result.debug.temperature !== undefined ? ` · Temp: ${result.debug.temperature}` : ""}
+                                            {result.debug.retried ? ` · Retry: sí (temp ${result.debug.retryTemperature})` : " · Retry: no"}
+                                        </div>
+                                        {result.debug.confidenceBreakdown && (
+                                            <div className="text-xs text-[#a1a1aa]">
+                                                Desglose confianza — Problem: {result.debug.confidenceBreakdown.problemValidity}, Solution: {result.debug.confidenceBreakdown.solutionLogic}, Pitch: {result.debug.confidenceBreakdown.pitchClarity}
+                                            </div>
+                                        )}
+                                        {result.debug.debugRationale && (
+                                            <div className="text-xs text-[#a1a1aa]">
+                                                Rationale: {result.debug.debugRationale}
+                                            </div>
+                                        )}
+                                        {result.debug.ragHighlights && (
+                                            <div className="text-xs text-[#a1a1aa] whitespace-pre-line">
+                                                Highlights: {result.debug.ragHighlights}
+                                            </div>
+                                        )}
+                                        {result.debug.personaContext && (
+                                            <details>
+                                                <summary className="cursor-pointer text-xs text-[#a1a1aa]">
+                                                    Ver contexto de la persona
+                                                </summary>
+                                                <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto mt-2">
+{result.debug.personaContext}
+                                                </pre>
+                                            </details>
+                                        )}
+                                        {result.debug.systemPrompt && (
+                                            <details>
+                                                <summary className="cursor-pointer text-xs text-[#a1a1aa]">
+                                                    Ver system prompt
+                                                </summary>
+                                                <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto mt-2">
+{result.debug.systemPrompt}
+                                                </pre>
+                                            </details>
+                                        )}
+                                        {result.debug.userPrompt && (
+                                            <details>
+                                                <summary className="cursor-pointer text-xs text-[#a1a1aa]">
+                                                    Ver user prompt
+                                                </summary>
+                                                <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto mt-2">
+{result.debug.userPrompt}
+                                                </pre>
+                                            </details>
+                                        )}
+                                        <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto">
+{result.debug.rawModelOutput}
+                                        </pre>
+                                    </div>
+                                </details>
+                            </div>
+                        )}
+
                         <div className="animate-slide-in-up stagger-1 bg-gradient-to-r from-[#4F46E5]/10 via-[#4F46E5]/5 to-transparent border-l-4 border-[#4F46E5] rounded-r-xl overflow-hidden shadow-lg">
                             <div className="p-6">
                                 <div className="flex items-center gap-3 pb-4 border-b border-[#4F46E5]/20 mb-4">
@@ -498,12 +594,12 @@ ${refinedPitch}
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                            Executive Verdict
+                                            Persona Reaction
                                         </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">Professional Assessment</p>
+                                        <p className="text-xs text-[#a1a1aa] mt-0.5">First-person gut check</p>
                                     </div>
                                 </div>
-                                <p className="text-base leading-relaxed text-[#ededed]">{result.summary}</p>
+                                <p className="text-base leading-relaxed text-[#ededed]">{result.personaReaction}</p>
                             </div>
                         </div>
 
@@ -622,22 +718,24 @@ ${refinedPitch}
                             </div>
                         </div>
 
-                        <div className="animate-fade-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
-                            <div className="p-6">
-                                <div className="flex items-center gap-3 pb-4 border-b border-[rgba(255,255,255,0.1)] mb-5">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
-                                        <Sparkles className="w-6 h-6 text-[#4F46E5]" />
+                        {showDebug && (
+                            <div className="animate-fade-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
+                                <div className="p-6">
+                                    <div className="flex items-center gap-3 pb-4 border-b border-[rgba(255,255,255,0.1)] mb-5">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
+                                            <Sparkles className="w-6 h-6 text-[#4F46E5]" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
+                                                Persona Pitch (First‑Person)
+                                            </h3>
+                                            <p className="text-xs text-[#a1a1aa] mt-0.5">A first-pass rewrite in this persona's voice</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                            Persona-Aligned Draft
-                                        </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">A first-pass rewrite in this persona's voice</p>
-                                    </div>
+                                    <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
                                 </div>
-                                <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
                             </div>
-                        </div>
+                        )}
 
                         <div className="animate-fade-in bg-gradient-to-br from-[#111827] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
                             <div className="p-6 space-y-5">
