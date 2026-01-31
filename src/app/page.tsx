@@ -718,22 +718,24 @@ ${refinedPitch}
                             </div>
                         </div>
 
-                        <div className="animate-fade-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
-                            <div className="p-6">
-                                <div className="flex items-center gap-3 pb-4 border-b border-[rgba(255,255,255,0.1)] mb-5">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
-                                        <Sparkles className="w-6 h-6 text-[#4F46E5]" />
+                        {showDebug && (
+                            <div className="animate-fade-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
+                                <div className="p-6">
+                                    <div className="flex items-center gap-3 pb-4 border-b border-[rgba(255,255,255,0.1)] mb-5">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
+                                            <Sparkles className="w-6 h-6 text-[#4F46E5]" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
+                                                Persona Pitch (First‑Person)
+                                            </h3>
+                                            <p className="text-xs text-[#a1a1aa] mt-0.5">A first-pass rewrite in this persona's voice</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                            Persona Pitch (First‑Person)
-                                        </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">A first-pass rewrite in this persona's voice</p>
-                                    </div>
+                                    <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
                                 </div>
-                                <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
                             </div>
-                        </div>
+                        )}
 
                         <div className="animate-fade-in bg-gradient-to-br from-[#111827] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
                             <div className="p-6 space-y-5">

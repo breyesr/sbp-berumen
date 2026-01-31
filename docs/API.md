@@ -1,25 +1,200 @@
 API Reference
 
-Synthetic Persona Web exposes a small set of HTTP endpoints used by the web client. All endpoints return JSON.
+Synthetic Persona Web exposes a set of HTTP endpoints used by the web client.
+All endpoints return JSON unless noted otherwise.
 
 Base URL examples
-  • Local: http://localhost:3001
+  • Local: http://localhost:3000
   • Vercel Preview/Prod: use the deployment URL shown by Vercel
 
-Auth: None (MVP). Behind the scenes, LLM calls are protected via server‑side API keys.
-
-Rate limits: None enforced at gateway (MVP). Prefer client‑side debounce when calling /api/persona.
+Auth: None (MVP). LLM calls are protected via server‑side API keys.
 
 Errors: Non‑2xx responses include { error: string, details?: any }.
 
-⸻
+—
+
+POST /api/stress-test
+
+Runs a persona “stress test” against a business idea and returns structured critique.
+
+Request Body
+{
+  "personaType": "string",
+  "challengeLevelId": "string",
+  "idea": "string (10–1500 chars)",
+  "goal": "string (5–300 chars)",
+  "evaluationFocus": "string (5–300 chars)"
+}
+
+Response
+{
+  "persona": "string",
+  "challengeLevel": 2,
+  "challengeLevelId": "validation",
+  "challengeLabel": "...",
+  "challengeDetail": "...",
+  "focus": "...",
+  "personaReaction": "string",
+  "triggeredRedFlags": ["string"],
+  "summary": "string",
+  "strengths": ["string"],
+  "gaps": ["string"],
+  "improvements": ["string"],
+  "questions": ["string"],
+  "presentation": "string",
+  "confidence": 75
+}
+
+Status Codes
+  • 200 OK
+  • 400 Bad request (validation)
+  • 404 Persona not found
+  • 500 Malformed model output
+
+—
+
+POST /api/idea-refinement
+
+Asks missing‑info questions (if needed) and rewrites the pitch with improvements.
+
+Request Body
+{
+  "personaType": "string",
+  "challengeLevelId": "string (optional)",
+  "idea": "string",
+  "goal": "string",
+  "stressResult": {
+    "summary": "string (optional)",
+    "gaps": ["string"],
+    "improvements": ["string"],
+    "questions": ["string"],
+    "triggeredRedFlags": ["string"],
+    "confidence": 70
+  },
+  "missingInfoQuestions": ["string"],
+  "userAnswers": ["string"]
+}
+
+Response (needs more input)
+{
+  "status": "needs_input",
+  "questions": ["string"]
+}
+
+Response (ok)
+{
+  "status": "ok",
+  "refinedPitch": "string",
+  "changesSummary": ["string"]
+}
+
+—
+
+GET /api/copywriter
+
+Returns the platform/format catalog and company guidelines used by the copywriter UI.
+
+Response
+{
+  "platforms": [
+    {
+      "id": "string",
+      "name": "string",
+      "platform_purpose": "string",
+      "core_voice": "string",
+      "tone_adaptation": "string",
+      "copy_guidelines_summary": "string",
+      "global_guidelines": { "...": "..." },
+      "formats": [
+        {
+          "id": "string",
+          "platform_id": "string",
+          "name": "string",
+          "primary_goal_vibe": "string",
+          "tone_preference": "string",
+          "copy_guidelines": { "...": "..." }
+        }
+      ]
+    }
+  ],
+  "companyGuidelines": { "...": "..." }
+}
+
+POST /api/copywriter
+
+Generates copy outputs for selected platform/format pairs.
+
+Request Body
+{
+  "personaType": "string",
+  "context": "string (optional)",
+  "message": "string",
+  "goal": "string",
+  "platforms": ["platform_id"],
+  "formats": ["format_id"]
+}
+
+Response
+{
+  "persona": "string",
+  "goal": "string",
+  "message": "string",
+  "context": "string",
+  "outputs": [
+    {
+      "platformId": "string",
+      "platformName": "string",
+      "formatId": "string",
+      "formatName": "string",
+      "primaryCopy": "string",
+      "alternateCopy": "string",
+      "hashtags": ["string"],
+      "cta": "string",
+      "notes": ["string"]
+    }
+  ]
+}
+
+—
+
+POST /api/berumen
+
+Returns a dual response: a persona answer and a consultant analysis.
+
+Request Body
+{
+  "personaType": "string",
+  "businessType": "string",
+  "city": "string",
+  "question": "string"
+}
+
+Response
+{
+  "persona": "string",
+  "industry": "string",
+  "city": "string",
+  "question": "string",
+  "client": {
+    "answer": "string",
+    "tone": "string",
+    "keyPoints": ["string"]
+  },
+  "consultant": {
+    "analysis": "string",
+    "recommendations": ["string"],
+    "followUps": ["string"]
+  },
+  "confidence": 70
+}
+
+—
 
 POST /api/scorecard
 
-Compute a numeric efficiency score (0–10) and a set of layman narratives using the user’s inputs + industry benchmarks. Uses LLM with a deterministic fallback.
+Computes an efficiency score and a short narrative using business inputs + benchmarks.
 
 Request Body
-
 {
   "personaType": "string",
   "businessType": "string",
@@ -32,261 +207,129 @@ Request Body
   "supportChannels": ["whatsapp", "google"]
 }
 
-Field notes:
-  • returnRate: one of "0-2"|"3-4"|"5-6"|"7-8"|"9-10"|"No sé".
-  • mainChannel & supportChannels: normalized to one of instagram|facebook|tiktok|google|whatsapp|referidos|otros.
-
 Response
-
 {
   "efficiencyScore": 5,
-  "narratives": [
-    "Con tu inversión actual de MX$4,000 estás cerrando ~10 clientes al mes.",
-    "Cada cliente te cuesta ~MX$333 (rango típico ~MX$300–600), hay margen para bajar.",
-    "Si optimizas hacia ~MX$250–300, con el mismo presupuesto podrías atraer +3–5 clientes al mes.",
-    "Recuperas ~MX$25 por peso invertido; valida medición antes de subir presupuesto.",
-    "Repetición directa baja; enfoca referidos con paquete post‑visita.",
-    "Refuerza Facebook con prueba social y claridad de precios/proceso."
-  ],
+  "narratives": ["string"],
   "suggestedFocus": "optimize_spend"
 }
 
-Status Codes
-  • 200 OK
-  • 400 Bad request (validation)
-  • 500 Internal error (very rare)
+—
 
-⸻
+POST /api/persona  (streaming)
 
-POST /api/persona
-
-Generates Q&A in first‑person (client voice) and an Insights block that merges the persona’s words with your numbers. Includes a drift guard to keep the answers aligned to the selected industry.
+Streams a persona’s answer to the last user message. This endpoint uses the AI SDK
+streaming response and does not return a JSON envelope.
 
 Request Body
-
 {
   "personaType": "string",
-  "businessType": "string",
-  "city": "string",
-  "question": "¿Qué te haría dar clic en un anuncio mío sin dudar?",
-  "focus": "insight", 
-  "personaContext": "(optional override)",
-  "patientsPerMonth": 10,
-  "avgTicket": 10000,
-  "adSpend": 4000,
-  "mainChannel": "referidos",
-  "supportChannels": ["facebook"],
-  "returnRate": "1"
-}
-
-Notes:
-  • focus is a soft hint for the tone of the Q&A (efficiency|conversion|insight).
-  • Numbers are optional, but required to get Insights.
-
-Response
-
-{
-  "ok": true,
-  "persona": "Lic. Mariana la Nutrióloga",
-  "industry": "Bienes Raíces",
-  "askedQuestion": "¿Qué te haría dar clic en un anuncio mío sin dudar?",
-  "reaction": "Me interesa si me dicen precios y el proceso sin vueltas.",
-  "answerToQuestion": "Dime el rango de precios desde el inicio, zona exacta y el paso a paso. Si veo fotos o video real y puedo escribir por WhatsApp sin presión, sí hago clic.",
-  "dudasCliente": ["¿Precio total y mensualidad?", "¿Tiempo y pasos de escrituración?", "¿Zona exacta y seguridad?", "¿Costos extra?"],
-  "sugerencias": ["Rango ‘desde–hasta’", "Prueba social verificable", "Video real de la propiedad", "WhatsApp directo"],
-  "conversionLikelihood": 7,
-  "insights": {
-    "whatClientWantsSummary": "Quiere rango de precios, pasos/tiempos y prueba real; contacto directo y cero presión.",
-    "whatToDoThisWeek": [
-      "Crea 1 anuncio con fotos/video reales + rango de precios + CTA a WhatsApp (‘te explico sin presión’).",
-      "Muestra en página/listado pasos y tiempos; botón ‘calcular mensualidad’.",
-      "Refuerza Facebook con testimonios verificables."
-    ],
-    "expectedImpact": [
-      "Reduciendo CPL hacia ~MX$250, +3–5 interesados/mes.",
-      "A tus tasas, ~2–4 clientes adicionales/mes."
-    ],
-    "howToKnow": [
-      "Más mensajes con la palabra ‘precio’/‘mensualidad’.",
-      "CPL acercándose a ~MX$250."
-    ],
-    "howToTalk": [
-      "Tono cercano y cero presión.",
-      "En Facebook/IG evita stock y usa subtítulos con ‘precio desde’ y ‘cómo empezar’."
-    ]
-  }
-}
-
-Status Codes
-  • 200 OK
-  • 400 Bad request (validation)
-  • 500 LLM output malformed (guard rails)
-
-GET /api/industries
-
-List available industries (id, name, and any known benchmarks).
-
-Response (truncated)
-
-{
-  "items": [
-    { "id": "salud", "name": "Salud", "bench": { "cplTargetMXN": [120, 200], "retentionP50": 60 } },
-    { "id": "bienesraices", "name": "Bienes Raíces", "bench": { "cplTargetMXN": [300, 600], "retentionP50": 30 } }
+  "messages": [
+    { "role": "user", "content": "..." },
+    { "role": "assistant", "content": "..." }
   ]
 }
 
-Status codes: 200 OK
+Response
+  • Streaming text response (AI SDK stream)
 
-⸻
+—
 
 GET /api/personas
 
-List available personas used in the intake.
+Returns available personas for selectors.
 
-Response (truncated)
-
+Response
 {
-  "items": [
-    { "id": "nutriologa", "name": "Lic. Mariana la Nutrióloga" },
-    { "id": "abogado",   "name": "Lic. Jorge el Abogado" }
+  "options": [
+    { "id": "string", "name": "string", "role": "string" }
   ]
 }
 
-Status codes: 200 OK
+GET /api/personas/[id]/knowledge
 
-⸻
+Lists knowledge files available for a persona.
+
+Response
+{ "knowledgeFiles": ["string"] }
+
+—
+
+GET /api/industries
+
+Returns industries for the selector.
+
+Response
+[
+  { "id": "string", "name": "string" }
+]
 
 GET /api/cities
 
-List known cities (static, used to prefill the dropdown).
+Returns cities for the selector.
 
-Response (truncated)
+Response
+[
+  { "id": "Monterrey", "name": "Monterrey" }
+]
 
-{ "items": ["Monterrey", "Ciudad de México", "Guadalajara"] }
+GET /api/challenge-levels
 
-Status codes: 200 OK
+Returns challenge level options for the stress test.
 
-⸻
+Response
+{
+  "options": [
+    { "id": "supportive", "name": "...", "detail": "...", "intensity": 1 }
+  ]
+}
+
+—
 
 POST /api/action-card (experimental)
 
-Generates a compact “action card” summarizing a recommended next step. Used for prototypes and may change.
+Generates a compact action card. This endpoint expects a specific request shape and
+is not currently wired in the UI.
 
-Request Body (shape may evolve)
+Request Body (current schema)
+{
+  "personaType": "nutriologa" | "odontologa" | "psicologo" | "fisioterapeuta" | "estetica",
+  "city": "string",
+  "focus": "efficiency" | "conversion",
+  "intake": { "...": "..." },
+  "scorecard": {
+    "efficiencyScore": 0,
+    "conversionScore": 0,
+    "objections": ["string"],
+    "suggestions": ["string"]
+  },
+  "personaAnswer": {
+    "reaction": "string",
+    "objections": ["string"],
+    "suggestions": ["string"],
+    "conversionLikelihood": 0
+  }
+}
 
-{ "context": { "businessType": "string", "goal": "string" } }
+Response
+{
+  "diy": {
+    "steps": ["string"],
+    "scripts": [
+      { "label": "string", "text": "string" }
+    ]
+  },
+  "agency": ["string"],
+  "why": "string",
+  "impactScore": 0
+}
 
-Response (example)
+—
 
-{ "title": "Baja tu costo por cliente a ~MX$250", "steps": ["Publica 2 testimonios verificables", "Video real por propiedad" ] }
+Environment variables required (server)
 
-Status codes: 200, 400, 500
+- `OPENAI_API_KEY` — required for all AI calls (chat + embeddings)
+- `POSTGRES_URL_LOCAL` — required for local dev (RAG + persona context)
+- `POSTGRES_URL` — required for Vercel/production
+- `OPENAI_MODEL` — optional override (defaults to `gpt-4o-mini`)
 
-⸻
-
-Data Contracts (TypeScript)
-
-Scorecard (response)
-
-export type Scorecard = {
-  efficiencyScore: number; // 0..10
-  narratives: string[];    // layman bullets (max ~6)
-  suggestedFocus?: "optimize_spend" | "improve_sales" | "change_channel" | "choose";
-};
-
-Persona (response)
-
-export type PersonaReply = {
-  reaction: string;            // short 1-liner in first person
-  answerToQuestion: string;    // 2–4 sentences answering the exact question
-  dudasCliente: string[];      // 3–5
-  sugerencias: string[];       // 3–5 (what gives confidence)
-  conversionLikelihood: number;// 0..10
-  personaName?: string;
-  industryName?: string;
-  askedQuestion?: string;
-  insights?: {
-    whatClientWantsSummary: string;
-    whatToDoThisWeek: string[];
-    expectedImpact: string[];
-    howToKnow: string[];
-    howToTalk: string[];
-  } | null;
-};
-
-
-⸻
-
-Validation & Error Shapes
-  • All POST bodies are validated with zod. Expect 400 with { error, details } when fields are missing/invalid.
-  • LLM JSON output is schema‑checked. If malformed after a retry, the route returns 500 with { error: "Malformed model output" }.
-
-⸻
-
-LLM Usage & Models
-  • Uses OpenAI gpt-4o-mini for:
-  • Scorecard narrative rewrite (via buildAIDiagnostic with a deterministic fallback)
-  • Persona Q&A + Insights (with domain drift guard and question‑aware tweaks)
-  • Temperature: 0.3–0.5 depending on call.
-  • All LLM calls are server‑side; API key is never exposed to the browser.
-
-Environment variables required (server):
-  • OPENAI_API_KEY
-
-⸻
-
-Versioning & Stability
-  • APIs are MVP and may evolve without a formal version prefix.
-  • Breaking changes will be noted in CHANGELOG.md and release PRs.
-
-⸻
-
-Examples
-
-cURL (local)
-
-# Scorecard
-curl -s -X POST http://localhost:3001/api/scorecard \
-  -H "Content-Type: application/json" \
-  -d '{
-    "personaType":"nutriologa",
-    "businessType":"bienesraices",
-    "city":"Monterrey",
-    "patientsPerMonth":10,
-    "avgTicket":10000,
-    "mainChannel":"referidos",
-    "adSpend":4000,
-    "returnRate":"1",
-    "supportChannels":["facebook"]
-  }' | jq .
-
-# Persona Q&A + Insights
-curl -s -X POST http://localhost:3001/api/persona \
-  -H "Content-Type: application/json" \
-  -d '{
-    "personaType":"nutriologa",
-    "businessType":"bienesraices",
-    "city":"Monterrey",
-    "question":"¿Qué te haría dar clic en un anuncio mío sin dudar?",
-    "focus":"insight",
-    "patientsPerMonth":10,
-    "avgTicket":10000,
-    "adSpend":4000,
-    "mainChannel":"referidos",
-    "supportChannels":["facebook"],
-    "returnRate":"1"
-  }' | jq .
-
-
-⸻
-
-Security Notes (MVP)
-  • No authentication on read/write endpoints; rely on project privacy and Vercel protections.
-  • Rate limiting & auth can be introduced via middleware when needed.
-
-⸻
-
-Troubleshooting
-  • 500 on /api/persona: often malformed LLM output; retry. Ensure OPENAI_API_KEY is set.
-  • Weird persona domain: check businessType and persona prompt; the route includes a drift guard but garbage‑in → garbage‑out.
-  • Build fails on Vercel (ESLint/TS): see next.config.ts settings that ignore lint errors during CI for MVP.

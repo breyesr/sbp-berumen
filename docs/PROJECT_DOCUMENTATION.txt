@@ -3,82 +3,83 @@ Synthetic Persona Web — Technical Documentation
 
 1. Product Overview
 -------------------
-- Goal: help SMB owners simulate conversations with synthetic buyer personas, quantify their marketing efficiency, and receive actionable guidance without hiring an analyst.
-- Stack: Next.js 15 (app router) with React 19 client components, Tailwind CSS via `@import "tailwindcss"` in `src/app/globals.css`.
-- Data inputs: local JSON fixtures under `data/` (personas, industries, cities) plus OpenAI APIs for reasoning, narratives, and small-scale RAG enrichment.
+- Goal: help SMBs stress‑test ideas with synthetic personas and generate tailored marketing copy.
+- Stack: Next.js 16 (app router) with React 19 client components, Tailwind CSS v4.
+- Data inputs: local JSON/MD fixtures under `data/` plus OpenAI APIs for reasoning and embeddings.
+- RAG: Postgres + pgvector for hybrid search over persona and global knowledge.
 
 2. UX Entry Points
 ------------------
-- `/` (`src/app/page.tsx`): renders `IntakeForm` with persona dropdown, business metrics, acquisition channels, and repeat rate. Submitting hits `/api/scorecard` to build the numeric score + narrative. Post-submit focus buttons unlock the persona Q&A workflow.
-- Shared components: `PersonaSelect`, `IndustrySelect`, `CitySelect`, and the large `IntakeForm` orchestrate all form logic, validation, preset starter questions, and Q&A rendering.
+- `/` (`src/app/page.tsx`): Idea Stress Test UI. Collects idea/goal/focus, runs `/api/stress-test`, then allows refinement via `/api/idea-refinement`.
+- `/copywriter` (`src/app/copywriter/page.tsx`): Copywriter UI. Select persona + platform/format, generate copy via `/api/copywriter`.
 
 3. Data + AI Flow
 -----------------
-1. **Persona metadata** (name, context, benchmark ranges) lives in `data/personas/*.json` and is loaded server-side (file system) in both `/api/scorecard` and `/api/persona`.
-2. **Industry benchmarks** live in `data/industries/*.json` and provide CPL/ROAS/retention targets per industry via `src/lib/industryProvider.ts`.
-3. **Scorecard pipeline** (`src/app/api/scorecard/route.ts`):
-   - Validates request body with Zod, normalizes main/support channels, and blends persona + industry bench data.
-   - Computes derived metrics (approx leads, CPL, ROAS, spend targets) and produces `efficiencyScore`, focus hints, and a narrative using `buildAIDiagnostic` (LLM fallback to deterministic text).
-4. **Persona Q&A pipeline** (`src/app/api/persona/route.ts`):
-   - Fetches persona + industry context, builds a system/user prompt pair, and asks `gpt-4o-mini` for JSON containing reaction, answer, doubts, suggestions, and conversion likelihood.
-   - Guards output with `zod` and a domain check (`looksOffDomain`), retrying once if health-related leakage is detected.
-   - When the intake payload includes numbers, it also calls `buildActionableInsights` to merge persona bullets + business math into “what to do this week”, KPIs, and tone guidance.
-5. **Action card generator** (`src/app/api/action-card/route.ts`):
-   - Accepts the scorecard + persona reply and asks OpenAI (model configurable via `OPENAI_MODEL`) for DIY steps, agency-ready handoff bullets, a “why now”, and an impact score. Not yet wired into the UI but ready for integrations/automations.
-6. **Cities & industries** (`/api/cities`, `/api/industries`) are simple file-backed endpoints used by the selects. `/api/personas` lists locally available personas for selector components.
-7. **RAG enrichment** (`src/lib/ragSource.ts`): optional Markdown persona notes are chunked, embedded via `text-embedding-3-small`, and re-injected into prompts to keep answers aligned with custom uploads (`uploadedContext`).
+1) **Persona metadata** lives in `data/personas/<id>/persona.json` and optional `persona_strategic_depth.md`.
+2) **Persona knowledge** in `data/personas/<id>/knowledge/*` and **global knowledge** in `data/global-knowledge/*` are ingested into Postgres via `npm run embed`.
+3) **RAG**: `src/lib/rag.ts` performs hybrid search (FTS + vector) and feeds context into `src/lib/personaProvider.ts`.
+4) **Stress Test** (`/api/stress-test`):
+   - Validates the request, loads persona context, applies challenge‑level rules, and requests a JSON‑shaped critique from OpenAI.
+   - Persists usage logs to Postgres (best‑effort).
+5) **Idea Refinement** (`/api/idea-refinement`):
+   - Asks missing‑info questions (if needed) then rewrites the pitch with structured changes.
+6) **Copywriter** (`/api/copywriter`):
+   - Loads platform + format rules from `data/copywriter/**` and applies persona context to produce copy variants.
+7) **Legacy Scorecard** (`/api/scorecard`):
+   - Computes an efficiency score + narrative. UI component `src/components/IntakeForm.tsx` exists but is not wired to `/`.
 
 4. Key Modules
 --------------
-- `src/components/IntakeForm.tsx`: client-side hub for validation, controlled numeric inputs, focus toggles, and orchestrating API calls for scorecards + persona Q&A.
-- `src/lib/aiNarrative.ts`: shared math helpers + dual-purpose narrative builders (scorecard bullet list + actionable insights). Contains deterministic fallbacks to keep the product stable without API access.
-- `src/lib/personaProvider.ts`: loads personas from JSON/Markdown, stitches fallback defaults, and merges RAG output with stored context.
-- `src/lib/benchmarks.ts`: legacy scoring helpers (still used by other surfaces) with channel weighting logic.
-- `src/prompts/*.ts`: string builders for OpenAI prompts (`persona-qna` moved inline; `action-card` defines system + user prompt builders).
+- `src/app/page.tsx`: Stress test UI, submission + refinement flow.
+- `src/app/copywriter/page.tsx`: Copywriter UI.
+- `src/lib/personaProvider.ts`: loads persona files and merges RAG context.
+- `src/lib/rag.ts`: hybrid search (keyword + vector) with pgvector.
+- `src/lib/aiNarrative.ts`: deterministic + LLM narrative helpers for scorecard/insights.
 
 5. Configuration & Environment
 ------------------------------
-Required runtime variables (set in `.env.local` for Next.js):
-- `OPENAI_API_KEY` — mandatory for `/api/persona`, `/api/action-card`, RAG embeddings, and AI narratives.
-- `OPENAI_MODEL` — optional override for the action-card route (defaults to `gpt-4o-mini`).
-- `OPENAI_EMBEDDING_MODEL` — optional; defaults to `text-embedding-3-small`.
-- `RAG_TOP_K` — optional integer limiting how many persona chunks feed prompts (default 4).
-- `NODE_ENV` — influences industry list caching.
-No third-party databases are used; everything else is file-backed.
+Required environment variables (set in `.env.local` for local dev):
+- `OPENAI_API_KEY` — required for all AI calls.
+- `POSTGRES_URL_LOCAL` — required for local Postgres (RAG + logs).
+- `POSTGRES_URL` — required for Vercel/production.
+- `OPENAI_MODEL` — optional override for chat models.
+
+Note: `src/lib/clients.ts` validates DB + OpenAI env on module load. Without DB env vars, API routes that import persona/RAG helpers will fail.
 
 6. Local Development
 --------------------
 1. Install deps: `npm install`.
-2. Copy `.env.example` → `.env.local` (create if missing) and set the OpenAI variables above.
-3. Run `npm run dev` (Turbopack) and visit http://localhost:3000.
-4. Run `npm run lint` to keep the repo consistent (TypeScript + Next lint rules).
+2. Copy `.env.example` → `.env.local` and set keys.
+3. Start DB: `docker-compose up -d`.
+4. Run schema: `npm run db:setup`.
+5. Ingest data: `npm run embed`.
+6. Run dev server: `npm run dev`.
 
 7. Extending the System
 -----------------------
-- **Add a persona**: drop a `{persona_id}.json` (or `.md`) file into `data/personas/` with the fields used in `personaProvider`. Include `bench` data to customize CPL/retention ranges for that persona.
-- **Add an industry**: add a JSON file to `data/industries/` with `{ id, name, bench }`. Channel-specific CPL ranges greatly improve scorecard accuracy.
-- **Custom cities list**: edit `data/cities.json`. `/api/cities` dedupes IDs and falls back to a short default list if parsing fails.
-- **Surface the action card**: call `/api/action-card` after a persona Q&A to display DIY vs agency recommendations inside the UI. The handler already expects persona + scorecard payloads.
-- **Internationalization**: update `src/app/layout.tsx` metadata + fonts, extend persona/industry files with `locale`, and adjust copy in `IntakeForm`.
+- **Add a persona**: create `data/personas/<id>/persona.json` with fields used by `personaProvider`.
+- **Add persona knowledge**: drop files into `data/personas/<id>/knowledge/`, then run `npm run embed`.
+- **Add global knowledge**: drop files into `data/global-knowledge/`, then run `npm run embed`.
+- **Add industries**: add JSON to `data/industries/` (used by scorecard).
+- **Add challenge levels**: add JSON to `data/challengelevels/`.
+- **Add copywriter platforms/formats**: add JSON under `data/copywriter/digital-platforms/`.
 
 8. Known Limitations & Risks
 ----------------------------
-- Scorecard calculations assume 1.2 leads per client; if a business differs wildly, efficiency scores may mislead. Consider exposing this ratio as configurable.
-- Persona answers rely on GPT JSON mode; malformed responses are handled but still produce 500s if retries also fail.
-- The RAG module loads entire Markdown files into memory and embeds on-demand — acceptable for a handful of personas but not yet optimized for dozens.
-- There is no persistence for user submissions; everything runs statelessly per request.
-- UI copy/labels remain Spanish-only and metadata in `src/app/layout.tsx` is still the Next.js default.
+- RAG requires Postgres to be available; missing DB env vars will break routes that import the RAG stack.
+- AI output quality depends on prompt design and available persona knowledge.
+- Some legacy endpoints (scorecard/persona Q&A) are still present but not wired to the main UI.
 
 9. Reference Commands
 ---------------------
-- `npm run dev` — local development server.
-- `npm run build && npm start` — production build/start.
-- `npm run lint` — ESLint across the repo.
+- `npm run dev` — local development server
+- `npm run build && npm start` — production build/start
+- `npm run lint` — ESLint across repo
+- `npm run db:setup` — create schema/indexes
+- `npm run embed` — ingest data into Postgres
 
-This document should give new contributors enough context to navigate the codebase, wire new data, and understand how the AI-assisted flows fit together.
+10. Idea Stress Testing Tool
+----------------------------
+- **Challenge Levels**: Level 1 = `supportive`, Level 2 = `validation`, Level 3 = `critical`. These files live in `data/challengelevels/` and are loaded by `src/lib/challengeLevels.ts`.
+- **API**: `/api/stress-test` accepts `{ personaType, challengeLevelId, idea, goal, evaluationFocus }` and returns a structured critique plus confidence.
 
-10. Idea Stress Testing Tool (API-only)
----------------------------------------
-- **Surface**: the dedicated `/construction-personas` UI was removed; the functionality remains available via the APIs below for integrations or future UI work.
-- **Challenge Levels**: Each intensity lives as its own JSON file in `data/challengelevels/` (`supportive.json`, `direct.json`, `critical.json`). Fields cover tone styles, behavior rules, use-case awareness, and output requirements. These files are read by `src/lib/challengeLevels.ts`, and `/api/challenge-levels` exposes them. Caching happens only in production so changes are picked up automatically during local dev.
-- **API**: `/api/stress-test` accepts `{ personaType, challengeLevelId, idea, goal, evaluationFocus }`. It loads persona context plus the selected challenge-level metadata, then builds a system prompt describing tone, behavior, persona integration, and question style. Responses include summary, strengths, gaps, improvements, follow-up questions, tone label, confidence, and echo back the challenge metadata.
