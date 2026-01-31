@@ -1,0 +1,672 @@
+personaId,personaName,challengeLevelId,challengeLevelName,intensity,confidence,summary,strengths,gaps,improvements,questions,presentation,rawModelOutput,retried,error
+alejandro,Alejandro,supportive,Level 1 — Low Intensity (Supportive but Honest),1,68,"Estoy cautivado por la idea de simular y validar estrategias antes de gastar. Sin embargo, necesito asegurarme de que el costo esté justificado y que haya una clara conexión entre esta inversión y el valor que se obtendría.","[""La idea de un simulador basado en data real y arquetipos es prometedora."",""El enfoque en evitar errores caros es atractivo para la gestión del presupuesto."",""El servicio sugiere una operación sencilla y libre de fricciones para el usuario final.""]","[""No tengo claro cómo se justifica el costo de este servicio frente a los resultados que se espera obtener."",""Falta información sobre la precisión de la simulación y el valor de las recomendaciones que recibiré."",""No queda claro cómo se integra este proceso con mis flujos de trabajo actuales.""]","[""Definir claramente el costo del servicio y cómo se compara con el retorno esperado."",""Agregar ejemplos o estudios de caso que demuestren la efectividad del simulador."",""Clarificar el proceso de implementación y tiempo requerido para iniciar la simulación.""]","[""¿Cuál es el costo de este servicio y cómo se justifica?"",""¿Tienen ejemplos de clientes que hayan utilizado el simulador y qué resultados obtuvieron?"",""¿Cómo se asegura la precisión de las recomendaciones que se recibirán?""]","Imagínate tener la oportunidad de validar tus estrategias antes de lanzar una campaña. Este simulador de Berumen promete precisamente eso. Te permite cargar tus activos creativos y simular cómo reaccionarán cinco arquetipos de clientes sintéticos basados en data real. De esta forma, puedes obtener un reporte de 'Fricción Prevista' en solo 24 horas. Lo que me gusta es que el servicio lo gestionan ellos, evitando que yo tenga que aprender a usar una nueva plataforma. Es como tener un seguro de inversión, asegurándome que el gasto en pauta esté respaldado por datos sólidos y no por corazonadas. Pero, claro, necesito saber que el costo está alineado con el valor que obtendré.","{
+  ""personaReaction"": ""Esto suena interesante, pero necesito más claridad sobre cómo realmente se traduce en ahorros o eficiencia para mí."",
+  
+  ""triggeredRedFlags"": [
+    ""No se menciona el costo del servicio ni su justificación."",
+    ""Falta de ejemplos específicos que validen la efectividad del simulador."",
+    ""¿Qué tipo de fricción previa podrían surgir en la implementación?""
+  ],
+  
+  ""verdict"": ""Estoy cautivado por la idea de simular y validar estrategias antes de gastar. Sin embargo, necesito asegurarme de que el costo esté justificado y que haya una clara conexión entre esta inversión y el valor que se obtendría."",
+  
+  ""strengths"": [
+    ""La idea de un simulador basado en data real y arquetipos es prometedora."",
+    ""El enfoque en evitar errores caros es atractivo para la gestión del presupuesto."",
+    ""El servicio sugiere una operación sencilla y libre de fricciones para el usuario final.""
+  ],
+
+  ""gaps"": [
+    ""No tengo claro cómo se justifica el costo de este servicio frente a los resultados que se espera obtener."",
+    ""Falta información sobre la precisión de la simulación y el valor de las recomendaciones que recibiré."",
+    ""No queda claro cómo se integra este proceso con mis flujos de trabajo actuales.""
+  ],
+
+  ""actionPlan"": [
+    ""Definir claramente el costo del servicio y cómo se compara con el retorno esperado."",
+    ""Agregar ejemplos o estudios de caso que demuestren la efectividad del simulador."",
+    ""Clarificar el proceso de implementación y tiempo requerido para iniciar la simulación.""
+  ],
+
+  ""followUpQuestions"": [
+    ""¿Cuál es el costo de este servicio y cómo se justifica?"",
+    ""¿Tienen ejemplos de clientes que hayan utilizado el simulador y qué resultados obtuvieron?"",
+    ""¿Cómo se asegura la precisión de las recomendaciones que se recibirán?""
+  ],
+
+  ""presentation"": ""Imagínate tener la oportunidad de validar tus estrategias antes de lanzar una campaña. Este simulador de Berumen promete precisamente eso. Te permite cargar tus activos creativos y simular cómo reaccionarán cinco arquetipos de clientes sintéticos basados en data real. De esta forma, puedes obtener un reporte de 'Fricción Prevista' en solo 24 horas. Lo que me gusta es que el servicio lo gestionan ellos, evitando que yo tenga que aprender a usar una nueva plataforma. Es como tener un seguro de inversión, asegurándome que el gasto en pauta esté respaldado por datos sólidos y no por corazonadas. Pero, claro, necesito saber que el costo está alineado con el valor que obtendré."",
+  
+  ""confidenceScore"": 68,
+  ""tone"": ""Analítico y escéptico""
+}",false,
+alejandro,Alejandro,direct,Level 2 — Medium Intensity (Direct and Practical),2,54,"No me convence. Aunque la idea de validar estrategias antes de lanzarlas suena atractiva, parece ser solo un reempaquetado de lo que ya se hace sin datos concretos que justifiquen su costo. Necesito claridad sobre cómo esto realmente reduce fricciones o mejora decisiones.","[""Propone un enfoque novedoso para la validación de estrategias."",""Enfocado en la reducción de riesgo antes del lanzamiento."",""Se basa en data real de México, lo cual es un plus.""]","[""No entiendo cómo se traduce su simulación en acciones concretas para la campaña."",""¿Cuál es el costo y qué incluye realmente el servicio? No lo explican."",""El concepto suena complicado; prefiero algo más directo y fácil de entender.""]","[""Clarificar el valor específico de cada simulación en términos de ROI."",""Establecer un precio que refleje la utilidad y no inflar costos sin justificación."",""Incluir ejemplos de casos anteriores donde el servicio ha demostrado valor.""]","[""¿Qué métricas específicas utilizan para demostrar el impacto de la simulación?"",""¿Cómo aseguramos que la data de entrada es precisa y relevante?"",""¿Qué sucede si la simulación no se alinea con lo que el cliente esperaba?""]","Esto se siente como una herramienta más en un mundo lleno de promesas vacías. La idea de validar estrategias antes de gastar en campañas es genial, pero me resulta complicado. Necesito ver cómo esto se realmente traduce en una mejora tangible; no quiero un producto que sienta que complica más el proceso. Quiero ver ejemplos claros de cómo ha funcionado y, sobre todo, que hay un precio que se justifique con lo que se entrega. Si no hay claridad en el costo y la propuesta, no le veo el sentido.","{
+  ""personaReaction"": ""Ugh, otro servicio que promete validar lo obvio. ¿De verdad necesitamos más herramientas en el marketing?"",
+  
+  ""triggeredRedFlags"": [
+    ""Precios inflados sin justificación metodológica"",
+    ""Entregas superficiales por mala comprensión del brief"",
+    ""Falta de síntesis ejecutiva en la propuesta""
+  ],
+  
+  ""verdict"": ""No me convence. Aunque la idea de validar estrategias antes de lanzarlas suena atractiva, parece ser solo un reempaquetado de lo que ya se hace sin datos concretos que justifiquen su costo. Necesito claridad sobre cómo esto realmente reduce fricciones o mejora decisiones."",
+  
+  ""strengths"": [
+    ""Propone un enfoque novedoso para la validación de estrategias."",
+    ""Enfocado en la reducción de riesgo antes del lanzamiento."",
+    ""Se basa en data real de México, lo cual es un plus.""
+  ],
+  
+  ""gaps"": [
+    ""No entiendo cómo se traduce su simulación en acciones concretas para la campaña."",
+    ""¿Cuál es el costo y qué incluye realmente el servicio? No lo explican."",
+    ""El concepto suena complicado; prefiero algo más directo y fácil de entender.""
+  ],
+  
+  ""actionPlan"": [
+    ""Clarificar el valor específico de cada simulación en términos de ROI."",
+    ""Establecer un precio que refleje la utilidad y no inflar costos sin justificación."",
+    ""Incluir ejemplos de casos anteriores donde el servicio ha demostrado valor.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué métricas específicas utilizan para demostrar el impacto de la simulación?"",
+    ""¿Cómo aseguramos que la data de entrada es precisa y relevante?"",
+    ""¿Qué sucede si la simulación no se alinea con lo que el cliente esperaba?""
+  ],
+  
+  ""presentation"": ""Esto se siente como una herramienta más en un mundo lleno de promesas vacías. La idea de validar estrategias antes de gastar en campañas es genial, pero me resulta complicado. Necesito ver cómo esto se realmente traduce en una mejora tangible; no quiero un producto que sienta que complica más el proceso. Quiero ver ejemplos claros de cómo ha funcionado y, sobre todo, que hay un precio que se justifique con lo que se entrega. Si no hay claridad en el costo y la propuesta, no le veo el sentido."",
+  
+  ""confidenceScore"": 54,
+  ""tone"": ""skeptical""
+}",false,
+alejandro,Alejandro,critical,Level 3 — High Intensity (Blunt and Critical),3,50,"No me convence. El concepto de un 'simulador' suena innovador, pero falta evidencia de que realmente valide las decisiones de marketing. Sin una justificación clara de costos y resultados tangibles, no puedo considerarlo.","[""La idea de evitar gastos en estrategias fallidas es atractiva."",""Posicionarse como un socio de predicción puede ser un buen enfoque.""]","[""No tengo claro cómo se valida la data histórica y qué pasa si las simulaciones son incorrectas."",""Me rehuso a depender de un sistema que puede resultar en recomendaciones poco confiables."",""¿Por qué no se ofrece un caso de éxito o un ejemplo claro de la efectividad del simulador?""]","[""Proveer ejemplos concretos de cómo el simulador ha funcionado en campañas anteriores."",""Especificar cómo se construyen los arquetipos de clientes y cuáles son los criterios."",""Justificar los costos en relación con el impacto esperado, mostrando un ROI claro.""]","[""¿Qué pasa si el simulador recomienda cambios que no se alinean con la visión de la marca?"",""¿Cuáles son las garantías de que los arquetipos reflejan correctamente al público objetivo?"",""¿Hay datos comparativos de costos entre este servicio y otros métodos tradicionales de validación?""]","Mira, he estado buscando una manera de validar mis campañas antes de gastarme un dineral. Este Simulador 'Pre-Flight' suena interesante porque aseguran que puedes probar tus ideas con datos de verdad, no solo con el instinto. Pero, ¿realmente puedo confiar en que esos arquetipos sintéticos me representen a mis clientes reales? No quiero tampoco depender de un sistema que podría darme malas recomendaciones. La promesa de evitar errores es genial, pero necesito entender mejor cómo se construye la simulación y qué respaldo hay detrás de la data. Si pueden demostrar que esto ha funcionado en otras ocasiones, podría pensar en usarlo.","{
+  ""personaReaction"": ""Ugh, otra solución que promete validar estrategias, pero ¿en serio necesito confiar en una IA para esto?"",
+  
+  ""triggeredRedFlags"": [
+    ""Falta de claridad sobre cómo se construyen los arquetipos de clientes."",
+    ""No hay evidencia suficiente de la efectividad del modelo de simulación."",
+    ""El concepto sugiere un gasto en tecnología sin justificar el retorno directo.""
+  ],
+  
+  ""verdict"": ""No me convence. El concepto de un 'simulador' suena innovador, pero falta evidencia de que realmente valide las decisiones de marketing. Sin una justificación clara de costos y resultados tangibles, no puedo considerarlo."",
+  
+  ""strengths"": [
+    ""La idea de evitar gastos en estrategias fallidas es atractiva."",
+    ""Posicionarse como un socio de predicción puede ser un buen enfoque.""
+  ],
+  
+  ""gaps"": [
+    ""No tengo claro cómo se valida la data histórica y qué pasa si las simulaciones son incorrectas."",
+    ""Me rehuso a depender de un sistema que puede resultar en recomendaciones poco confiables."",
+    ""¿Por qué no se ofrece un caso de éxito o un ejemplo claro de la efectividad del simulador?""
+  ],
+  
+  ""actionPlan"": [
+    ""Proveer ejemplos concretos de cómo el simulador ha funcionado en campañas anteriores."",
+    ""Especificar cómo se construyen los arquetipos de clientes y cuáles son los criterios."",
+    ""Justificar los costos en relación con el impacto esperado, mostrando un ROI claro.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué pasa si el simulador recomienda cambios que no se alinean con la visión de la marca?"",
+    ""¿Cuáles son las garantías de que los arquetipos reflejan correctamente al público objetivo?"",
+    ""¿Hay datos comparativos de costos entre este servicio y otros métodos tradicionales de validación?""
+  ],
+  
+  ""presentation"": ""Mira, he estado buscando una manera de validar mis campañas antes de gastarme un dineral. Este Simulador 'Pre-Flight' suena interesante porque aseguran que puedes probar tus ideas con datos de verdad, no solo con el instinto. Pero, ¿realmente puedo confiar en que esos arquetipos sintéticos me representen a mis clientes reales? No quiero tampoco depender de un sistema que podría darme malas recomendaciones. La promesa de evitar errores es genial, pero necesito entender mejor cómo se construye la simulación y qué respaldo hay detrás de la data. Si pueden demostrar que esto ha funcionado en otras ocasiones, podría pensar en usarlo."",
+  
+  ""confidenceScore"": 50,
+  ""tone"": ""direct, skeptical, critical""
+}",false,
+gabriela,Gabriela,supportive,Level 1 — Low Intensity (Supportive but Honest),1,65,"Me parece que hay un buen potencial aquí en cuanto a la validación antes de invertir, pero me preocupa la implementación. No quiero complicaciones en el proceso, y la propuesta como ‘servicio’ necesita ser más clara para saber si realmente es fácil de usar.","[""La idea de evitar errores costosos al probar creativos antes de lanzarlos es muy atractiva."",""El enfoque en data real de México puede aportar valor significativo en la personalización de estrategias."",""Reducir la carga de aprendizaje al operar la IA es un punto a favor para aquellos que buscan simplicidad.""]","[""No tengo claro cómo funciona realmente el simulador. ¿Es fácil de usar o va a requerir más tiempo de mi equipo?"",""La propuesta de 'seguro de inversión' suena bien, pero ¿cómo se traduce eso en resultados tangibles?"",""Me gustaría ver ejemplos o casos de éxito que respalden la efectividad del enfoque.""]","[""Proporcionar ejemplos claros de cómo el simulador ha beneficiado a otros clientes."",""Aclarar el proceso de uso del servicio para asegurar que no haya fricción operativa."",""Ofrecer un demo o prueba piloto para que podamos ver el servicio en acción antes de decidir.""]","[""¿Cómo se asegura la calidad de los arquetipos y su relevancia con el contexto local?"",""¿Qué tipo de reportes recibimos y cómo se pueden utilizar en decisiones estratégicas?"",""¿Hay soporte continuo para resolver dudas durante el uso del simulador?""]","Esta idea de un simulador 'Pre-Flight' realmente me atrapa. La perspectiva de evitar errores costosos antes de lanzar una campaña es fundamental para nosotros, especialmente en un mercado tan competitivo. Lo que me gusta es la adaptación de data real de México, lo que significa que las recomendaciones serían relevantes y no solo generalizaciones. Además, me encanta la idea que no tenemos que aprender a usar un nuevo software, sino que ustedes manejan todo. Pero necesito entender mejor cómo funciona en la práctica. ¿Realmente es tan fácil como parece? Estoy buscando algo que mejore nuestra toma de decisiones sin complicar nuestras operaciones diarias.","{
+  ""personaReaction"": ""Interesante, pero suena un poco complicado. ¿Realmente se necesita tanta tecnología para validar una buena idea?"",
+  
+  ""triggeredRedFlags"": [
+    ""Mala atención o lentitud desde etapas tempranas"",
+    ""Desconocimiento del negocio o confusión entre marcas"",
+    ""Carga administrativa y desgaste en la etapa de briefing""
+  ],
+  
+  ""verdict"": ""Me parece que hay un buen potencial aquí en cuanto a la validación antes de invertir, pero me preocupa la implementación. No quiero complicaciones en el proceso, y la propuesta como ‘servicio’ necesita ser más clara para saber si realmente es fácil de usar."",
+  
+  ""strengths"": [
+    ""La idea de evitar errores costosos al probar creativos antes de lanzarlos es muy atractiva."",
+    ""El enfoque en data real de México puede aportar valor significativo en la personalización de estrategias."",
+    ""Reducir la carga de aprendizaje al operar la IA es un punto a favor para aquellos que buscan simplicidad.""
+  ],
+  
+  ""gaps"": [
+    ""No tengo claro cómo funciona realmente el simulador. ¿Es fácil de usar o va a requerir más tiempo de mi equipo?"",
+    ""La propuesta de 'seguro de inversión' suena bien, pero ¿cómo se traduce eso en resultados tangibles?"",
+    ""Me gustaría ver ejemplos o casos de éxito que respalden la efectividad del enfoque.""
+  ],
+  
+  ""actionPlan"": [
+    ""Proporcionar ejemplos claros de cómo el simulador ha beneficiado a otros clientes."",
+    ""Aclarar el proceso de uso del servicio para asegurar que no haya fricción operativa."",
+    ""Ofrecer un demo o prueba piloto para que podamos ver el servicio en acción antes de decidir.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cómo se asegura la calidad de los arquetipos y su relevancia con el contexto local?"",
+    ""¿Qué tipo de reportes recibimos y cómo se pueden utilizar en decisiones estratégicas?"",
+    ""¿Hay soporte continuo para resolver dudas durante el uso del simulador?""
+  ],
+  
+  ""presentation"": ""Esta idea de un simulador 'Pre-Flight' realmente me atrapa. La perspectiva de evitar errores costosos antes de lanzar una campaña es fundamental para nosotros, especialmente en un mercado tan competitivo. Lo que me gusta es la adaptación de data real de México, lo que significa que las recomendaciones serían relevantes y no solo generalizaciones. Además, me encanta la idea que no tenemos que aprender a usar un nuevo software, sino que ustedes manejan todo. Pero necesito entender mejor cómo funciona en la práctica. ¿Realmente es tan fácil como parece? Estoy buscando algo que mejore nuestra toma de decisiones sin complicar nuestras operaciones diarias."",
+  
+  ""confidenceScore"": 65,
+  ""tone"": ""Curious, eager but cautious""
+}",false,
+gabriela,Gabriela,direct,Level 2 — Medium Intensity (Direct and Practical),2,56,"No veo claro el retorno sobre la inversión aquí. La idea de validar estrategias suena atractiva, pero carece de pruebas concretas de eficacia y del impacto real que puede tener en nuestras decisiones. Necesito ver métricas y resultados previos para considerar esto.","[""La propuesta aborda la necesidad de validar campañas antes de lanzarlas."",""Ofrece un enfoque basado en datos históricos, lo cual es un buen punto de partida.""]","[""No me convence que solo se basa en datos de Berumen sin detalles sobre su relevancia o precisión."",""No me queda claro cómo se traduce la 'fricción prevista' en acciones concretas."",""No se aborda el costo real del servicio y qué diferencia tiene frente a los métodos tradicionales.""]","[""Incluir casos de estudio o ejemplos específicos donde esta simulación ha generado valor."",""Aclarar cómo se mide la 'fricción prevista' y qué acciones correctivas se pueden tomar basándose en esos resultados."",""Definir el modelo de pricing y compararlo con los costos de métodos tradicionales para visualizar el ROI.""]","[""¿Qué datos respaldan que los 'arquetipos sintéticos' son representativos del mercado real?"",""¿Cómo se asegura que los resultados de la simulación se traduzcan en acciones concretas y efectivas? "",""¿Cuál es el proceso si la simulación da resultados negativos? ¿Qué pasos seguiríamos?""]","Imagina que lanzas una campaña, pero antes de invertir, tienes la oportunidad de someter tus ideas a una validación real. Aquí es donde entra el Simulador 'Pre-Flight'. No es como un focus group que puede llevar tiempo y no siempre da resultados claros. Este servicio utiliza datos reales para crear un entorno de pruebas donde tu estrategia se enfrenta a cinco arquetipos de clientes que reflejan la realidad del mercado. Además, lo mejor es que no tienes que aprender a usar un nuevo software; la agencia se encarga de todo, tú solo recibes el reporte y el análisis. Es una manera eficaz de minimizar riesgos y evitar gastar en campañas que podrían no funcionar. Pero, honestamente, necesito ver cómo ha funcionado esto antes y qué métricas podemos esperar.","{
+  ""personaReaction"": ""¿Otro servicio que promete 'asegurar' resultados sin acción clara? Suena bien, pero... ¿realmente puedo confiar en eso?"",
+  
+  ""triggeredRedFlags"": [
+    ""No hay evidencia concreta de cómo la simulación mejora resultados reales."",
+    ""Falta claridad sobre la diferencia práctica entre este servicio y las metodologías tradicionales."",
+    ""No se menciona qué métricas o resultados específicos se pueden esperar.""
+  ],
+  
+  ""verdict"": ""No veo claro el retorno sobre la inversión aquí. La idea de validar estrategias suena atractiva, pero carece de pruebas concretas de eficacia y del impacto real que puede tener en nuestras decisiones. Necesito ver métricas y resultados previos para considerar esto."",
+  
+  ""strengths"": [
+    ""La propuesta aborda la necesidad de validar campañas antes de lanzarlas."",
+    ""Ofrece un enfoque basado en datos históricos, lo cual es un buen punto de partida.""
+  ],
+  
+  ""gaps"": [
+    ""No me convence que solo se basa en datos de Berumen sin detalles sobre su relevancia o precisión."",
+    ""No me queda claro cómo se traduce la 'fricción prevista' en acciones concretas."",
+    ""No se aborda el costo real del servicio y qué diferencia tiene frente a los métodos tradicionales.""
+  ],
+  
+  ""actionPlan"": [
+    ""Incluir casos de estudio o ejemplos específicos donde esta simulación ha generado valor."",
+    ""Aclarar cómo se mide la 'fricción prevista' y qué acciones correctivas se pueden tomar basándose en esos resultados."",
+    ""Definir el modelo de pricing y compararlo con los costos de métodos tradicionales para visualizar el ROI.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué datos respaldan que los 'arquetipos sintéticos' son representativos del mercado real?"",
+    ""¿Cómo se asegura que los resultados de la simulación se traduzcan en acciones concretas y efectivas? "",
+    ""¿Cuál es el proceso si la simulación da resultados negativos? ¿Qué pasos seguiríamos?""
+  ],
+  
+  ""presentation"": ""Imagina que lanzas una campaña, pero antes de invertir, tienes la oportunidad de someter tus ideas a una validación real. Aquí es donde entra el Simulador 'Pre-Flight'. No es como un focus group que puede llevar tiempo y no siempre da resultados claros. Este servicio utiliza datos reales para crear un entorno de pruebas donde tu estrategia se enfrenta a cinco arquetipos de clientes que reflejan la realidad del mercado. Además, lo mejor es que no tienes que aprender a usar un nuevo software; la agencia se encarga de todo, tú solo recibes el reporte y el análisis. Es una manera eficaz de minimizar riesgos y evitar gastar en campañas que podrían no funcionar. Pero, honestamente, necesito ver cómo ha funcionado esto antes y qué métricas podemos esperar."",
+  
+  ""confidenceScore"": 56,
+  ""tone"": ""skeptical""
+}",false,
+gabriela,Gabriela,critical,Level 3 — High Intensity (Blunt and Critical),3,45,"No veo cómo esto me ayudaría. La propuesta suena como un intento de ofrecer un servicio que en realidad puede ser un truco y no aborda mi dolor principal: la falta de narrativa clara en la data. Además, la idea de un 'túnel de viento' para marketing suena más como un gimmick que una solución sólida.","[""Transformación de data histórica en algo 'accionable' para la estrategia"",""Promesa de rapidez en la retroalimentación de resultados""]","[""No me queda claro cómo validan la data que usan; si no es fiable, ¿por qué me preocuparía?"",""No veo cómo la simulación se traduce en insights aplicables; suena muy abstracto."",""¿Qué pasa si el ajuste que sugieren no conecta con la realidad del mercado?""]","[""Explicar con ejemplos claros cómo se validan los arquetipos de clientes."",""Proporcionar casos de éxito y ROI tangible de empresas que usaron el servicio."",""Ofrecer una fase de prueba o demo para demostrar la efectividad del simulador.""]","[""¿Qué datos específicos respaldan la creación de los arquetipos sintéticos?"",""¿Cómo se aseguran de que la simulación realmente refleje el comportamiento del consumidor en la vida real?"",""¿Cuáles son los criterios de éxito que consideran después de la simulación?""]","Mira, lo que me gusta de este simulador es que toma data histórica y la convierte en algo útil antes de gastar en pauta. Pero tengo serias dudas. ¿Cómo me garantiza que los arquetipos son representativos de mis clientes reales? No quiero caer en el error de usar data mal interpretada. Además, este 'túnel de viento' suena atractivo, pero necesito ver resultados concretos y directos relacionados con mis estrategias; si solo es otra herramienta complicada que no se traduce en acciones, no me interesa.","{
+  ""personaReaction"": ""Ugh, un simulador. ¿Es otro gadget que no añade valor real?"",
+  
+  ""triggeredRedFlags"": [""Mala atención o lentitud desde etapas tempranas"", ""Desconocimiento del negocio o confusión entre marcas"", ""Promesas vagas de 'predicción del futuro' sin evidencia concreta""],
+  
+  ""verdict"": ""No veo cómo esto me ayudaría. La propuesta suena como un intento de ofrecer un servicio que en realidad puede ser un truco y no aborda mi dolor principal: la falta de narrativa clara en la data. Además, la idea de un 'túnel de viento' para marketing suena más como un gimmick que una solución sólida."",
+  
+  ""strengths"": [""Transformación de data histórica en algo 'accionable' para la estrategia"", ""Promesa de rapidez en la retroalimentación de resultados""],
+  
+  ""gaps"": [""No me queda claro cómo validan la data que usan; si no es fiable, ¿por qué me preocuparía?"", ""No veo cómo la simulación se traduce en insights aplicables; suena muy abstracto."", ""¿Qué pasa si el ajuste que sugieren no conecta con la realidad del mercado?""],
+  
+  ""actionPlan"": [""Explicar con ejemplos claros cómo se validan los arquetipos de clientes."", ""Proporcionar casos de éxito y ROI tangible de empresas que usaron el servicio."", ""Ofrecer una fase de prueba o demo para demostrar la efectividad del simulador.""],
+  
+  ""followUpQuestions"": [""¿Qué datos específicos respaldan la creación de los arquetipos sintéticos?"", ""¿Cómo se aseguran de que la simulación realmente refleje el comportamiento del consumidor en la vida real?"", ""¿Cuáles son los criterios de éxito que consideran después de la simulación?""],
+  
+  ""presentation"": ""Mira, lo que me gusta de este simulador es que toma data histórica y la convierte en algo útil antes de gastar en pauta. Pero tengo serias dudas. ¿Cómo me garantiza que los arquetipos son representativos de mis clientes reales? No quiero caer en el error de usar data mal interpretada. Además, este 'túnel de viento' suena atractivo, pero necesito ver resultados concretos y directos relacionados con mis estrategias; si solo es otra herramienta complicada que no se traduce en acciones, no me interesa."",
+  
+  ""confidenceScore"": 45,
+  ""tone"": ""skeptical""
+}",false,
+julia,Julia,supportive,Level 1 — Low Intensity (Supportive but Honest),1,75,"Sí, estoy interesada, especialmente porque aborda un problema real: evitar errores costosos antes de optar por una campaña. Sin embargo, me gustaría más claridad sobre cómo funciona exactamente la simulación y la precisión de los arquetipos.","[""Aborda un dolor crítico de validar estrategias antes de gastar en publicidad."",""Usa datos reales de México, lo cual es un gran diferencial frente a generalizaciones."",""El enfoque como 'Servicio de Aseguramiento de Calidad' reduce la carga operativa para mi equipo.""]","[""No me queda claro cómo se garantiza la calidad de la data histórica utilizada para los arquetipos."",""Me preocupa saber cómo se traduce 'Fricción Prevista' en acciones concretas para ajustar las campañas."",""Necesito más información sobre qué sucede si la simulación no ofrece resultados positivos.""]","[""Agregar ejemplos concretos de campañas que se beneficiaron del uso del simulador."",""Clarificar el proceso de garantía de calidad de la data histórica."",""Definir más a fondo qué significan los resultados de 'Fricción Prevista' y cómo se aplican a nuestras estrategias.""]","[""¿Qué tipo de ajustes han hecho los clientes tras recibir los reportes de 'Fricción Prevista'?"",""¿Cómo se configura esta herramienta específicamente para nuestras necesidades?"",""¿Qué respaldo tienen para asegurar la precisión de los arquetipos generados?""]","Imagínate, lanzar una campaña sin tener que adivinar si va a funcionar o no. Lo que me encanta de este Simulador 'Pre-Flight' es que transforma toda la data validada de Berumen en algo útil antes de que hagamos cualquier inversión. Es como tener un Túnel de Viento para nuestras estrategias de marketing, donde podemos probar y ajustar las ideas antes de dar el siguiente paso. Además, al estar operado por ustedes, no tengo que preocuparme de aprender a utilizar una nueva plataforma. Solo tengo que subir mis activos creativos y recibir un análisis en 24 horas. Este flujo es justo lo que necesito para evitar errores costosos y asegurar que nuestras campañas tengan éxito.","{
+  ""personaReaction"": ""Finalmente alguien entendió que necesitamos frenar antes de gastar. Esto suena como una herramienta que podría hacer toda la diferencia."",
+  
+  ""triggeredRedFlags"": [],
+  
+  ""verdict"": ""Sí, estoy interesada, especialmente porque aborda un problema real: evitar errores costosos antes de optar por una campaña. Sin embargo, me gustaría más claridad sobre cómo funciona exactamente la simulación y la precisión de los arquetipos."",
+  
+  ""strengths"": [
+    ""Aborda un dolor crítico de validar estrategias antes de gastar en publicidad."",
+    ""Usa datos reales de México, lo cual es un gran diferencial frente a generalizaciones."",
+    ""El enfoque como 'Servicio de Aseguramiento de Calidad' reduce la carga operativa para mi equipo.""
+  ],
+  
+  ""gaps"": [
+    ""No me queda claro cómo se garantiza la calidad de la data histórica utilizada para los arquetipos."",
+    ""Me preocupa saber cómo se traduce 'Fricción Prevista' en acciones concretas para ajustar las campañas."",
+    ""Necesito más información sobre qué sucede si la simulación no ofrece resultados positivos.""
+  ],
+  
+  ""actionPlan"": [
+    ""Agregar ejemplos concretos de campañas que se beneficiaron del uso del simulador."",
+    ""Clarificar el proceso de garantía de calidad de la data histórica."",
+    ""Definir más a fondo qué significan los resultados de 'Fricción Prevista' y cómo se aplican a nuestras estrategias.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué tipo de ajustes han hecho los clientes tras recibir los reportes de 'Fricción Prevista'?"",
+    ""¿Cómo se configura esta herramienta específicamente para nuestras necesidades?"",
+    ""¿Qué respaldo tienen para asegurar la precisión de los arquetipos generados?""
+  ],
+  
+  ""presentation"": ""Imagínate, lanzar una campaña sin tener que adivinar si va a funcionar o no. Lo que me encanta de este Simulador 'Pre-Flight' es que transforma toda la data validada de Berumen en algo útil antes de que hagamos cualquier inversión. Es como tener un Túnel de Viento para nuestras estrategias de marketing, donde podemos probar y ajustar las ideas antes de dar el siguiente paso. Además, al estar operado por ustedes, no tengo que preocuparme de aprender a utilizar una nueva plataforma. Solo tengo que subir mis activos creativos y recibir un análisis en 24 horas. Este flujo es justo lo que necesito para evitar errores costosos y asegurar que nuestras campañas tengan éxito."",
+  
+  ""confidenceScore"": 75,
+  ""tone"": ""Encouraging and pragmatic""
+}",false,
+julia,Julia,direct,Level 2 — Medium Intensity (Direct and Practical),2,65,"Condicionalmente interesante, pero hay que ver más detalles. La propuesta de evitar errores caros suena atractiva, pero necesito pruebas de que la data histórica es realmente confiable y cómo se mide el éxito de las simulaciones. Este servicio tiene potencial, pero la falta de claridad en ejecución genera dudas.","[""Ofrece una solución que puede mitigar riesgos antes de lanzar campañas."",""El enfoque en usar data histórica y real es un buen punto."",""Reduce la carga operativa al manejar la tecnología como un servicio.""]","[""No entiendo cómo se mide la efectividad de las simulaciones; necesito datos específicos."",""La propuesta suena compleja y me preocupa que no tenga respaldo suficiente para confiar."",""No veo un plan claro de seguimiento post-simulación; ¿qué ocurre si los resultados no son como se esperaban?""]","[""Demostrar casos de éxito o estudios que respalden la efectividad del simulador."",""Explicar cómo se generarán y medirán los resultados de las simulaciones."",""Definir el costo del servicio y compararlo con otras opciones para evaluar el ROI.""]","[""¿Qué tipo de resultados han visto en campañas previas utilizando este método?"",""¿Cómo se valida que los arquetipos sintéticos realmente reflejan el comportamiento del consumidor?"",""¿Cuál es el proceso de ajuste una vez que se reciben los reportes de 'Fricción Prevista'?""]","Me parece que esta idea de un simulador 'Pre-Flight' realmente podría ayudar a evitar errores costosos antes de lanzar campañas. Imaginen poder probar nuestras creatividades y estrategias en un entorno sintético que usa data real de México. Es como tener este túnel de viento para nuestras ideas, donde podemos ver qué funciona y qué no, antes de gastar en medios. Además, el hecho de que sea un servicio en lugar de un software que el equipo tiene que aprender a usar, reduce la fricción operativa que tanto nos preocupa. Aún así, necesito saber más sobre cómo se valida todo esto y qué resultados reales podemos esperar. ¡Esto tiene potencial!","{
+  ""personaReaction"": ""Interesante, pero ¿de verdad esto va a funcionar en la práctica?"",
+  
+  ""triggeredRedFlags"": [""Señales de baja confiabilidad: no hay suficiente información sobre la precisión de los arquetipos sintéticos."", ""No se menciona claramente el costo del servicio ni cómo se compara con métodos tradicionales."", ""Riesgo operacional alto si la simulación falla en la etapa inicial.""],
+  
+  ""verdict"": ""Condicionalmente interesante, pero hay que ver más detalles. La propuesta de evitar errores caros suena atractiva, pero necesito pruebas de que la data histórica es realmente confiable y cómo se mide el éxito de las simulaciones. Este servicio tiene potencial, pero la falta de claridad en ejecución genera dudas."",
+  
+  ""strengths"": [
+    ""Ofrece una solución que puede mitigar riesgos antes de lanzar campañas."",
+    ""El enfoque en usar data histórica y real es un buen punto."",
+    ""Reduce la carga operativa al manejar la tecnología como un servicio.""
+  ],
+  
+  ""gaps"": [
+    ""No entiendo cómo se mide la efectividad de las simulaciones; necesito datos específicos."",
+    ""La propuesta suena compleja y me preocupa que no tenga respaldo suficiente para confiar."",
+    ""No veo un plan claro de seguimiento post-simulación; ¿qué ocurre si los resultados no son como se esperaban?""
+  ],
+  
+  ""actionPlan"": [
+    ""Demostrar casos de éxito o estudios que respalden la efectividad del simulador."",
+    ""Explicar cómo se generarán y medirán los resultados de las simulaciones."",
+    ""Definir el costo del servicio y compararlo con otras opciones para evaluar el ROI.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué tipo de resultados han visto en campañas previas utilizando este método?"",
+    ""¿Cómo se valida que los arquetipos sintéticos realmente reflejan el comportamiento del consumidor?"",
+    ""¿Cuál es el proceso de ajuste una vez que se reciben los reportes de 'Fricción Prevista'?""
+  ],
+  
+  ""presentation"": ""Me parece que esta idea de un simulador 'Pre-Flight' realmente podría ayudar a evitar errores costosos antes de lanzar campañas. Imaginen poder probar nuestras creatividades y estrategias en un entorno sintético que usa data real de México. Es como tener este túnel de viento para nuestras ideas, donde podemos ver qué funciona y qué no, antes de gastar en medios. Además, el hecho de que sea un servicio en lugar de un software que el equipo tiene que aprender a usar, reduce la fricción operativa que tanto nos preocupa. Aún así, necesito saber más sobre cómo se valida todo esto y qué resultados reales podemos esperar. ¡Esto tiene potencial!"",
+  
+  ""confidenceScore"": 65,
+  ""tone"": ""pragmatic""
+}",false,
+julia,Julia,critical,Level 3 — High Intensity (Blunt and Critical),3,45,"No puedo ver suficiente valor aquí. La idea suena bien en teoría, pero falta claridad en cómo realmente se traduce en resultados confiables para mis decisiones. Además, tengo dudas sobre la efectividad de los arquetipos sintéticos basados en datos históricos.","[""El enfoque en mitigar riesgos antes de la inversión es valioso."",""La promesa de recibir análisis en 24 horas es atractiva.""]","[""No me queda claro cómo se validan los arquetipos sintéticos; ¿qué datos los sustentan?"",""La frase de que nosotros 'solo recibimos la validación' suena ambigua y no me genera confianza."",""La comparación con un túnel de viento es confusa; no veo la correlación directa.""]","[""Necesito ver ejemplos claros de resultados previos del simulador."",""Sería útil tener testimonios o casos de éxito que respalden su efectividad."",""Clarificar cómo se realiza la adaptación de los arquetipos a diversos perfiles de mercado.""]","[""¿Qué métricas específicas se utilizarán para evaluar la validez de los resultados del simulador?"",""¿Cómo se asegura que el análisis no sea solo un ejercicio teórico?"",""¿Qué tipo de seguimiento existe después de presentar los resultados?""]","Me gusta la idea de tener un simulador que me ayude a anticipar problemas antes de lanzar una campaña, especialmente con el costoso proceso de pauta. Sin embargo, no veo cómo el uso de arquetipos sintéticos puede ser confiable sin mostrar datos sólidos. La promesa de resultados rápidos es interesante, pero necesito más claridad sobre cómo se genera la validación de lo que recibiré. En mi experiencia, depender de datos históricos podría no ser suficiente si no hay un contexto claro que lo respalde.","{
+  ""personaReaction"": ""Ugh, otra promesa de IA que no sé si realmente se sostiene."",
+  
+  ""triggeredRedFlags"": [
+    ""Señales de baja confiabilidad: no hay evidencia concreta de la eficacia del simulador."",
+    ""Falta de claridad en la entrega y en los resultados esperados."",
+    ""Asume que la data histórica es suficiente sin explicar cómo se mitigará la variabilidad.""
+  ],
+  
+  ""verdict"": ""No puedo ver suficiente valor aquí. La idea suena bien en teoría, pero falta claridad en cómo realmente se traduce en resultados confiables para mis decisiones. Además, tengo dudas sobre la efectividad de los arquetipos sintéticos basados en datos históricos."",
+  
+  ""strengths"": [
+    ""El enfoque en mitigar riesgos antes de la inversión es valioso."",
+    ""La promesa de recibir análisis en 24 horas es atractiva.""
+  ],
+  
+  ""gaps"": [
+    ""No me queda claro cómo se validan los arquetipos sintéticos; ¿qué datos los sustentan?"",
+    ""La frase de que nosotros 'solo recibimos la validación' suena ambigua y no me genera confianza."",
+    ""La comparación con un túnel de viento es confusa; no veo la correlación directa.""
+  ],
+  
+  ""actionPlan"": [
+    ""Necesito ver ejemplos claros de resultados previos del simulador."",
+    ""Sería útil tener testimonios o casos de éxito que respalden su efectividad."",
+    ""Clarificar cómo se realiza la adaptación de los arquetipos a diversos perfiles de mercado.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué métricas específicas se utilizarán para evaluar la validez de los resultados del simulador?"",
+    ""¿Cómo se asegura que el análisis no sea solo un ejercicio teórico?"",
+    ""¿Qué tipo de seguimiento existe después de presentar los resultados?""
+  ],
+  
+  ""presentation"": ""Me gusta la idea de tener un simulador que me ayude a anticipar problemas antes de lanzar una campaña, especialmente con el costoso proceso de pauta. Sin embargo, no veo cómo el uso de arquetipos sintéticos puede ser confiable sin mostrar datos sólidos. La promesa de resultados rápidos es interesante, pero necesito más claridad sobre cómo se genera la validación de lo que recibiré. En mi experiencia, depender de datos históricos podría no ser suficiente si no hay un contexto claro que lo respalde."",
+  
+  ""confidenceScore"": 45,
+  ""tone"": ""Critical and skeptical""
+}",false,
+mauricio,Mauricio,supportive,Level 1 — Low Intensity (Supportive but Honest),1,72,"Estoy interesado en la idea, ya que aborda el dolor de tener que validar estrategias antes de gastar dinero en publicidad. Pero necesito entender mejor cómo se asegura la calidad de la data y qué garantías hay de que los arquetipos sean representativos.","[""Aborda la necesidad de validar estrategias antes de lanzarlas, lo cual es vital."",""El enfoque en data histórica y real de México es un gran plus."",""El servicio de aseguramiento de calidad suena útil para evitar fricciones operativas.""]","[""No tengo claro cómo garantizan la precisión de los arquetipos sintéticos."",""Me gustaría saber qué criterios usan para medir la 'fricción prevista'."",""Falta información sobre el proceso de entrega del reporte y qué tan fácil es de interpretar.""]","[""Incluir ejemplos concretos de campañas que hayan utilizado este modelo con éxito."",""Especificar cómo se asegura la calidad de los datos y los arquetipos sintéticos."",""Simplificar la presentación del proceso de ajuste y reporte para que sea más fácil de entender.""]","[""¿Cuál es el proceso para adaptar los arquetipos a diferentes sectores o campañas?"",""¿Tienen ejemplos de datos históricos que respaldan la efectividad de la simulación?"",""¿Cómo se aborda la retroalimentación de cada simulación en futuros ajustes?""]","Imagina poder lanzar tus campañas sabiendo que has tenido una validación previa. 'Pre-Flight' transforma datos reales en un entorno de pruebas, permitiendo probar tus ideas con arquetipos basados en ese mismo tipo de data, no en internet. En lugar de gastar en pautas sin estar seguros, puedes obtener un reporte claro de 'fricción prevista' en solo 24 horas. Además, no tendrás que aprender a usar software complicado; nosotros hacemos el trabajo para ti y tú te concentras en los resultados. Este servicio podría ser la solución perfecta para evitar esos errores caros y asegurar que nuestras estrategias realmente resuenen con nuestros clientes.","{
+  ""personaReaction"": ""Finalmente algo que aborda el problema de los focus groups lentos y riesgosos. Esto podría ser un gran paso para evitar inversiones fallidas en campañas."",
+  
+  ""triggeredRedFlags"": [],
+  
+  ""verdict"": ""Estoy interesado en la idea, ya que aborda el dolor de tener que validar estrategias antes de gastar dinero en publicidad. Pero necesito entender mejor cómo se asegura la calidad de la data y qué garantías hay de que los arquetipos sean representativos."",
+  
+  ""strengths"": [
+    ""Aborda la necesidad de validar estrategias antes de lanzarlas, lo cual es vital."",
+    ""El enfoque en data histórica y real de México es un gran plus."",
+    ""El servicio de aseguramiento de calidad suena útil para evitar fricciones operativas.""
+  ],
+  
+  ""gaps"": [
+    ""No tengo claro cómo garantizan la precisión de los arquetipos sintéticos."",
+    ""Me gustaría saber qué criterios usan para medir la 'fricción prevista'."",
+    ""Falta información sobre el proceso de entrega del reporte y qué tan fácil es de interpretar.""
+  ],
+  
+  ""actionPlan"": [
+    ""Incluir ejemplos concretos de campañas que hayan utilizado este modelo con éxito."",
+    ""Especificar cómo se asegura la calidad de los datos y los arquetipos sintéticos."",
+    ""Simplificar la presentación del proceso de ajuste y reporte para que sea más fácil de entender.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cuál es el proceso para adaptar los arquetipos a diferentes sectores o campañas?"",
+    ""¿Tienen ejemplos de datos históricos que respaldan la efectividad de la simulación?"",
+    ""¿Cómo se aborda la retroalimentación de cada simulación en futuros ajustes?""
+  ],
+  
+  ""presentation"": ""Imagina poder lanzar tus campañas sabiendo que has tenido una validación previa. 'Pre-Flight' transforma datos reales en un entorno de pruebas, permitiendo probar tus ideas con arquetipos basados en ese mismo tipo de data, no en internet. En lugar de gastar en pautas sin estar seguros, puedes obtener un reporte claro de 'fricción prevista' en solo 24 horas. Además, no tendrás que aprender a usar software complicado; nosotros hacemos el trabajo para ti y tú te concentras en los resultados. Este servicio podría ser la solución perfecta para evitar esos errores caros y asegurar que nuestras estrategias realmente resuenen con nuestros clientes."",
+  
+  ""confidenceScore"": 72,
+  ""tone"": ""optimistic yet analytical""
+}",false,
+mauricio,Mauricio,direct,Level 2 — Medium Intensity (Direct and Practical),2,54,"No, esto no funciona para mí. Aunque la idea de mitigar riesgos suena bien, el enfoque de depender de una simulación sin datos claros y sin una forma de validación robusta es muy arriesgado. Además, estoy cansado de propuestas que no responden directamente a mis necesidades reales.","[""Propone un enfoque innovador al uso de datos históricos."",""Intenta reducir el riesgo de errores costosos en campañas."",""El enfoque de 'túnel de viento' suena interesante y puede captar la atención.""]","[""No me queda claro cómo esta simulación realmente se alinea con mis KPIs."",""No tengo confianza en un sistema que no puedo entender o controlar."",""Necesito más claridad sobre cómo se decide qué arquetipos usar.""]","[""Proveer ejemplos de validación previa y resultados obtenidos con otros clientes."",""Demostrar claramente cómo esta herramienta se vincula con los tiempos y necesidades de investigación."",""Incluir métricas específicas sobre mejora en campañas tras usar el simulador.""]","[""¿Cómo aseguran la precisión de los arquetipos generados?"",""¿Qué antecedentes tienen en la aplicación de este tipo de simulaciones?"",""¿Cómo se manejan las posibles inconsistencias en los datos históricos utilizados?""]","Imagina poder probar tu estrategia de marketing antes de lanzarla al mercado, pero no solo como una idea, sino con datos reales de los consumidores en México. El Simulador 'Pre-Flight' sería como el túnel de viento que los pilotos usan: te permite ajustar tu enfoque y ver cómo reaccionarían diferentes grupos de clientes. Sin embargo, no quiero quedarme solo con la teoría; necesito saber cómo tus resultados pasados apoyan esta metodología y cómo se vincula a un calendario académico claro. Si no hay confianza en los datos y en cómo se opera, eso podría ser un gran riesgo.","{
+  ""personaReaction"": ""¿En serio? ¿Otra cosa que promete ser la solución mágica antes de gastar? No estoy vendiendo mis decisiones a un experimento sin fundamentos reales."",
+  
+  ""triggeredRedFlags"": [
+    ""Promesas de valor sin evidencia sólida que respalde la efectividad del simulador."",
+    ""Ambigüedad en el proceso de recepción de datos y cómo se utilizará."",
+    ""Dependencia total de la agencia sin claridad en el valor real para mi toma de decisiones.""
+  ],
+  
+  ""verdict"": ""No, esto no funciona para mí. Aunque la idea de mitigar riesgos suena bien, el enfoque de depender de una simulación sin datos claros y sin una forma de validación robusta es muy arriesgado. Además, estoy cansado de propuestas que no responden directamente a mis necesidades reales."",
+  
+  ""strengths"": [
+    ""Propone un enfoque innovador al uso de datos históricos."",
+    ""Intenta reducir el riesgo de errores costosos en campañas."",
+    ""El enfoque de 'túnel de viento' suena interesante y puede captar la atención.""
+  ],
+  
+  ""gaps"": [
+    ""No me queda claro cómo esta simulación realmente se alinea con mis KPIs."",
+    ""No tengo confianza en un sistema que no puedo entender o controlar."",
+    ""Necesito más claridad sobre cómo se decide qué arquetipos usar.""
+  ],
+  
+  ""actionPlan"": [
+    ""Proveer ejemplos de validación previa y resultados obtenidos con otros clientes."",
+    ""Demostrar claramente cómo esta herramienta se vincula con los tiempos y necesidades de investigación."",
+    ""Incluir métricas específicas sobre mejora en campañas tras usar el simulador.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cómo aseguran la precisión de los arquetipos generados?"",
+    ""¿Qué antecedentes tienen en la aplicación de este tipo de simulaciones?"",
+    ""¿Cómo se manejan las posibles inconsistencias en los datos históricos utilizados?""
+  ],
+  
+  ""presentation"": ""Imagina poder probar tu estrategia de marketing antes de lanzarla al mercado, pero no solo como una idea, sino con datos reales de los consumidores en México. El Simulador 'Pre-Flight' sería como el túnel de viento que los pilotos usan: te permite ajustar tu enfoque y ver cómo reaccionarían diferentes grupos de clientes. Sin embargo, no quiero quedarme solo con la teoría; necesito saber cómo tus resultados pasados apoyan esta metodología y cómo se vincula a un calendario académico claro. Si no hay confianza en los datos y en cómo se opera, eso podría ser un gran riesgo."",
+
+  ""confidenceScore"": 54,
+  ""tone"": ""direct, skeptical""
+}",false,
+mauricio,Mauricio,critical,Level 3 — High Intensity (Blunt and Critical),3,50,"No me convence. La idea de un simulador suena bien, pero no tengo confianza en cómo se traducirá esto en resultados concretos. Necesito más que promesas de evitar errores; el tiempo es crítico y esto puede tardar demasiado.","[""La idea de simular reacciones de clientes antes de lanzar campañas suena interesante."",""Se enfoca en mitigar riesgos, lo cual es relevante para mi trabajo.""]","[""No creo que esto realmente valide lo que necesito; a veces la data no refleja la realidad de los consumidores."",""Me preocupa que este enfoque sea una excusa para justificar errores futuros."",""Siento que depender del simulador podría ralentizar mis procesos más de lo que ya están.""]","[""Aclarar cómo se asegura la calidad y fiabilidad de los datos utilizados en el simulador."",""Demostrar casos de éxito previos que respalden la efectividad del servicio."",""Reducir el tiempo de entrega del reporte de 'Fricción Prevista' para que encaje mejor con mis necesidades.""]","[""¿Cuánto tiempo realmente toma obtener resultados y cómo se asegura la velocidad?"",""¿Qué evidencia tienen de que el uso de su simulador ha mejorado las campañas previas de otros clientes?"",""¿Cómo manejan situaciones donde la simulación falla en predecir resultados reales?""]","Mira, este Simulador 'Pre-Flight' parece ofrecer un enfoque interesante para validar campañas de marketing, pero tengo mis dudas. La idea de llenar un túnel de viento con datos históricos y sintetizarlo en un entorno de pruebas suena genial, pero me preocupa que no sea suficiente. ¿Realmente puede predecir la fricción que enfrento en el mercado? Más que herramientas, necesito decisiones. Si este servicio puede realmente aportar valor y velocidad a mis campañas, podría considerarlo. Sin embargo, ¿realmente es una solución rápida o solo una nueva forma de complicar el proceso?","{
+  ""personaReaction"": ""¿En serio? ¿Más simulaciones? No tengo tiempo para esto."",
+  
+  ""triggeredRedFlags"": [""Promesa de resultados basados en data que podría no ser del todo confiable."", ""Propuesta de un servicio que puede olfatear a otra herramienta más que a un verdadero aliado estratégico.""],
+  
+  ""verdict"": ""No me convence. La idea de un simulador suena bien, pero no tengo confianza en cómo se traducirá esto en resultados concretos. Necesito más que promesas de evitar errores; el tiempo es crítico y esto puede tardar demasiado."",
+  
+  ""strengths"": [
+    ""La idea de simular reacciones de clientes antes de lanzar campañas suena interesante."",
+    ""Se enfoca en mitigar riesgos, lo cual es relevante para mi trabajo.""
+  ],
+  
+  ""gaps"": [
+    ""No creo que esto realmente valide lo que necesito; a veces la data no refleja la realidad de los consumidores."",
+    ""Me preocupa que este enfoque sea una excusa para justificar errores futuros."",
+    ""Siento que depender del simulador podría ralentizar mis procesos más de lo que ya están.""
+  ],
+  
+  ""actionPlan"": [
+    ""Aclarar cómo se asegura la calidad y fiabilidad de los datos utilizados en el simulador."",
+    ""Demostrar casos de éxito previos que respalden la efectividad del servicio."",
+    ""Reducir el tiempo de entrega del reporte de 'Fricción Prevista' para que encaje mejor con mis necesidades.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cuánto tiempo realmente toma obtener resultados y cómo se asegura la velocidad?"",
+    ""¿Qué evidencia tienen de que el uso de su simulador ha mejorado las campañas previas de otros clientes?"",
+    ""¿Cómo manejan situaciones donde la simulación falla en predecir resultados reales?""
+  ],
+  
+  ""presentation"": ""Mira, este Simulador 'Pre-Flight' parece ofrecer un enfoque interesante para validar campañas de marketing, pero tengo mis dudas. La idea de llenar un túnel de viento con datos históricos y sintetizarlo en un entorno de pruebas suena genial, pero me preocupa que no sea suficiente. ¿Realmente puede predecir la fricción que enfrento en el mercado? Más que herramientas, necesito decisiones. Si este servicio puede realmente aportar valor y velocidad a mis campañas, podría considerarlo. Sin embargo, ¿realmente es una solución rápida o solo una nueva forma de complicar el proceso?"",
+  
+  ""confidenceScore"": 50,
+  ""tone"": ""Skeptical and direct""
+}",false,
+pedro,Pedro,supportive,Level 1 — Low Intensity (Supportive but Honest),1,72,"Estoy interesado en la propuesta, pero necesito más claridad sobre cómo funciona el proceso de simulación y qué tipo de validación se ofrece. La idea de evitar errores es atractiva, pero quiero asegurarte que la calidad de la data y la confianza en los resultados son primordiales para mí.","[""Identificación clara del problema: la necesidad de validar las campañas antes de invertir."",""Uso de datos históricos para construir arquetipos sintéticos, lo cual me parece innovador."",""El concepto del 'Túnel de Viento' es una metáfora efectiva que comunica la intención de mitigar riesgos.""]","[""No me quedó claro cómo se configura el proceso y qué sucede si la data no es representativa."",""Me gustaría saber cómo se garantiza la calidad y la actualización de la data que se utiliza para crear los arquetipos."",""Necesito más ejemplos de cómo ha funcionado en situaciones anteriores para sentirme más seguro.""]","[""Incluir ejemplos prácticos sobre cómo ha funcionado el simulador con datos reales."",""Definir claramente el proceso de validación y qué tipo de métricas de éxito se utilizan."",""Explicar cómo se manejan las actualizaciones de datos para asegurar que los arquetipos sean representativos.""]","[""¿Qué tipo de data histórica están utilizando para construir los arquetipos y cómo se actualiza?"",""¿Cuál es el proceso específico para la entrega del reporte de 'Fricción Prevista'?"",""¿Pueden ofrecer ejemplos de cómo su simulador ha ayudado a otras marcas a evitar errores costosos?""]","Imagínate que estás a punto de lanzar una gran campaña. Normalmente, te lanzas directo al gasto en publicidad, pero ¿y si pudieras validar todo antes? Con el Simulador 'Pre-Flight', eso se convierte en una realidad. Tienes la oportunidad de probar tus creativos, tu mensaje y tu mix de medios contra arquetipos de clientes que se basan en datos reales de México. Aquí no hay generalizaciones, solo insights prácticos que te ayudan a evitar errores y a afinar tu estrategia. Además, no tienes que aprender a usar un montón de software nuevo; el equipo se encarga de todo. Así, puedes concentrarte en lo que realmente importa: hacer que tu campaña sea un éxito sin gastar de más.","{
+  ""personaReaction"": ""¡Por fin! Un enfoque que podría cambiar el juego antes de quemar presupuesto en publicidad. Esto sí que tiene sentido."",
+  
+  ""triggeredRedFlags"": [],
+
+  ""verdict"": ""Estoy interesado en la propuesta, pero necesito más claridad sobre cómo funciona el proceso de simulación y qué tipo de validación se ofrece. La idea de evitar errores es atractiva, pero quiero asegurarte que la calidad de la data y la confianza en los resultados son primordiales para mí."",
+  
+  ""strengths"": [
+    ""Identificación clara del problema: la necesidad de validar las campañas antes de invertir."",
+    ""Uso de datos históricos para construir arquetipos sintéticos, lo cual me parece innovador."",
+    ""El concepto del 'Túnel de Viento' es una metáfora efectiva que comunica la intención de mitigar riesgos.""
+  ],
+  
+  ""gaps"": [
+    ""No me quedó claro cómo se configura el proceso y qué sucede si la data no es representativa."",
+    ""Me gustaría saber cómo se garantiza la calidad y la actualización de la data que se utiliza para crear los arquetipos."",
+    ""Necesito más ejemplos de cómo ha funcionado en situaciones anteriores para sentirme más seguro.""
+  ],
+  
+  ""actionPlan"": [
+    ""Incluir ejemplos prácticos sobre cómo ha funcionado el simulador con datos reales."",
+    ""Definir claramente el proceso de validación y qué tipo de métricas de éxito se utilizan."",
+    ""Explicar cómo se manejan las actualizaciones de datos para asegurar que los arquetipos sean representativos.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué tipo de data histórica están utilizando para construir los arquetipos y cómo se actualiza?"",
+    ""¿Cuál es el proceso específico para la entrega del reporte de 'Fricción Prevista'?"",
+    ""¿Pueden ofrecer ejemplos de cómo su simulador ha ayudado a otras marcas a evitar errores costosos?""
+  ],
+  
+  ""presentation"": ""Imagínate que estás a punto de lanzar una gran campaña. Normalmente, te lanzas directo al gasto en publicidad, pero ¿y si pudieras validar todo antes? Con el Simulador 'Pre-Flight', eso se convierte en una realidad. Tienes la oportunidad de probar tus creativos, tu mensaje y tu mix de medios contra arquetipos de clientes que se basan en datos reales de México. Aquí no hay generalizaciones, solo insights prácticos que te ayudan a evitar errores y a afinar tu estrategia. Además, no tienes que aprender a usar un montón de software nuevo; el equipo se encarga de todo. Así, puedes concentrarte en lo que realmente importa: hacer que tu campaña sea un éxito sin gastar de más."",
+  
+  ""confidenceScore"": 72,
+  ""tone"": ""Optimista y crítico""
+}",false,
+pedro,Pedro,direct,Level 2 — Medium Intensity (Direct and Practical),2,55,"No estoy convencido. Aunque la idea de simular reacciones es interesante, no hay suficiente claridad sobre la calidad de la data ni el verdadero valor que aporta en términos de ROI. Necesito ver más pruebas de que esto realmente reducirá errores y mejorará la toma de decisiones.","[""El concepto de validar campañas antes de lanzarlas puede reducir costos en pauta."",""La propuesta de un entorno de pruebas sintético es innovadora y atractiva.""]","[""¿Qué garantías tengo de que la data que utilizan es confiable y relevante para mis campañas?"",""Quiero ver ejemplos de cómo las simulaciones han entregado resultados concretos."",""No me queda claro cómo se traduce la 'Fricción Prevista' en acciones prácticas y ajustadas a mis necesidades.""]","[""Proveer casos de éxito o datos de resultados pasados que respalden la propuesta."",""Aclarar cómo se garantiza la calidad y relevancia de la data histórica utilizada."",""Definir claramente el proceso de ajuste tras recibir el reporte de fricción.""]","[""¿Cómo aseguran que la data utilizada en las simulaciones sea realmente representativa del público objetivo?"",""¿Qué métricas específicas se pueden esperar al utilizar este servicio?"",""¿Tienen testimonios de clientes anteriores sobre la efectividad del simulador?""]","Imagina poder probar tus campañas antes de lanzarlas, como si tuvieras un túnel de viento para medir la resistencia. Este nuevo servicio que están proponiendo, 'Pre-Flight', parece ser justo lo que necesitamos. Con el uso de data real de Mercado en México, nos da la oportunidad de ajustar nuestras estrategias creativas sin gastar un peso en publicidad. Sin embargo, quiero que me aseguren que la calidad de esa data está validada y que realmente se podrá traducir en insights que mejoren mis decisiones. Si efectivamente pueden demostrar que este proceso ayuda a evitar errores costosos, podría estar muy interesado en implementarlo.","{
+  ""personaReaction"": ""¿En serio? ¿Un túnel de viento para marketing? No me encaja del todo."",
+  
+  ""triggeredRedFlags"": [
+    ""Falta de claridad sobre cómo se asegura la calidad de la data utilizada."",
+    ""Vaguedades sobre el diferencial frente a otras herramientas de marketing."",
+    ""No queda claro cómo se conecta el resultado de la simulación con decisiones concretas.""
+  ],
+  
+  ""verdict"": ""No estoy convencido. Aunque la idea de simular reacciones es interesante, no hay suficiente claridad sobre la calidad de la data ni el verdadero valor que aporta en términos de ROI. Necesito ver más pruebas de que esto realmente reducirá errores y mejorará la toma de decisiones."",
+  
+  ""strengths"": [
+    ""El concepto de validar campañas antes de lanzarlas puede reducir costos en pauta."",
+    ""La propuesta de un entorno de pruebas sintético es innovadora y atractiva.""
+  ],
+  
+  ""gaps"": [
+    ""¿Qué garantías tengo de que la data que utilizan es confiable y relevante para mis campañas?"",
+    ""Quiero ver ejemplos de cómo las simulaciones han entregado resultados concretos."",
+    ""No me queda claro cómo se traduce la 'Fricción Prevista' en acciones prácticas y ajustadas a mis necesidades.""
+  ],
+  
+  ""actionPlan"": [
+    ""Proveer casos de éxito o datos de resultados pasados que respalden la propuesta."",
+    ""Aclarar cómo se garantiza la calidad y relevancia de la data histórica utilizada."",
+    ""Definir claramente el proceso de ajuste tras recibir el reporte de fricción.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cómo aseguran que la data utilizada en las simulaciones sea realmente representativa del público objetivo?"",
+    ""¿Qué métricas específicas se pueden esperar al utilizar este servicio?"",
+    ""¿Tienen testimonios de clientes anteriores sobre la efectividad del simulador?""
+  ],
+  
+  ""presentation"": ""Imagina poder probar tus campañas antes de lanzarlas, como si tuvieras un túnel de viento para medir la resistencia. Este nuevo servicio que están proponiendo, 'Pre-Flight', parece ser justo lo que necesitamos. Con el uso de data real de Mercado en México, nos da la oportunidad de ajustar nuestras estrategias creativas sin gastar un peso en publicidad. Sin embargo, quiero que me aseguren que la calidad de esa data está validada y que realmente se podrá traducir en insights que mejoren mis decisiones. Si efectivamente pueden demostrar que este proceso ayuda a evitar errores costosos, podría estar muy interesado en implementarlo."",
+  
+  ""confidenceScore"": 55,
+  ""tone"": ""Cauteloso y analítico""
+}",false,
+pedro,Pedro,critical,Level 3 — High Intensity (Blunt and Critical),3,45,"No me convence. La idea de un simulador para validar campañas suena interesante, pero parece más marketing que una solución real. Además, no estoy seguro de que la data que usan sea realmente confiable.","[""El enfoque de evitar errores caros antes de lanzar es relevante."",""Interesante usar data histórica para crear arquetipos.""]","[""Me suena a otra agencia que quiere venderme humo en lugar de una solución concreta."",""No sé cómo me garantizan que la data es real y no llena de sesgos."",""Soy escéptico sobre si realmente hay valor en el servicio si no puedo validar la calidad de los datos.""]","[""Proporcionar ejemplos específicos de cómo la data histórica se transforma en arquetipos y asegurar su calidad."",""Clarificar qué tipo de métricas se utilizan para medir la fricción y cómo estas se relacionan con mis objetivos."",""Mostrar casos de éxito previos donde este simulador haya tenido impacto positivo en campañas.""]","[""¿Cómo validan que la data histórica se mantiene actual y relevante?"",""¿Pueden compartir un caso de estudio real donde este enfoque haya marcado la diferencia?"",""¿Cómo se adaptan los arquetipos sintéticos a la variabilidad del mercado en tiempo real?""]","Esto puede sonar emocionante, pero a mí me preocupa que sea solo otro intento de venderme una herramienta que no entiendo del todo. Imagínate, un simulador que supuestamente te da feedback sobre tu estrategia de marketing, pero ¿realmente confío en los datos que usan? Hay muchas promesas en el aire, y yo estoy buscando resultados concretos. Necesito saber cómo garantizan que lo que están haciendo no está basado en suposiciones erróneas. Además, si voy a dejar que otros configuren la IA, necesito pruebas de que eso realmente funciona, no solo palabras bonitas.","{
+  ""personaReaction"": ""¿En serio? Otro intento de 'simulador' que parece más promesa que realidad. Yo solo quiero un enfoque que funcione."",
+  
+  ""triggeredRedFlags"": [
+    ""El concepto de utilizar un simulador suena genérico y poco original."",
+    ""No queda claro cómo se asegura la calidad de los datos históricos utilizados."",
+    ""La promesa de un 'túnel de viento' no aborda mis preocupaciones sobre la calidad real de los insights.""
+  ],
+  
+  ""verdict"": ""No me convence. La idea de un simulador para validar campañas suena interesante, pero parece más marketing que una solución real. Además, no estoy seguro de que la data que usan sea realmente confiable."",
+  
+  ""strengths"": [
+    ""El enfoque de evitar errores caros antes de lanzar es relevante."",
+    ""Interesante usar data histórica para crear arquetipos.""
+  ],
+  
+  ""gaps"": [
+    ""Me suena a otra agencia que quiere venderme humo en lugar de una solución concreta."",
+    ""No sé cómo me garantizan que la data es real y no llena de sesgos."",
+    ""Soy escéptico sobre si realmente hay valor en el servicio si no puedo validar la calidad de los datos.""
+  ],
+  
+  ""actionPlan"": [
+    ""Proporcionar ejemplos específicos de cómo la data histórica se transforma en arquetipos y asegurar su calidad."",
+    ""Clarificar qué tipo de métricas se utilizan para medir la fricción y cómo estas se relacionan con mis objetivos."",
+    ""Mostrar casos de éxito previos donde este simulador haya tenido impacto positivo en campañas.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cómo validan que la data histórica se mantiene actual y relevante?"",
+    ""¿Pueden compartir un caso de estudio real donde este enfoque haya marcado la diferencia?"",
+    ""¿Cómo se adaptan los arquetipos sintéticos a la variabilidad del mercado en tiempo real?""
+  ],
+  
+  ""presentation"": ""Esto puede sonar emocionante, pero a mí me preocupa que sea solo otro intento de venderme una herramienta que no entiendo del todo. Imagínate, un simulador que supuestamente te da feedback sobre tu estrategia de marketing, pero ¿realmente confío en los datos que usan? Hay muchas promesas en el aire, y yo estoy buscando resultados concretos. Necesito saber cómo garantizan que lo que están haciendo no está basado en suposiciones erróneas. Además, si voy a dejar que otros configuren la IA, necesito pruebas de que eso realmente funciona, no solo palabras bonitas."",
+  
+  ""confidenceScore"": 45,
+  ""tone"": ""blunt and skeptical""
+}",false,
+salvador,Salvador,supportive,Level 1 — Low Intensity (Supportive but Honest),1,73,"Estoy interesado en la idea, ya que mitiga una necesidad real: evadir errores costosos en campañas. Sin embargo, necesito más claridad sobre cómo se asegura la calidad de la data y ejemplos concretos de éxito para confiar plenamente en esta simulación.","[""La idea de un simulador que permite probar estrategias de marketing es innovadora."",""Evitar errores antes de invertir es un gran atractivo, especialmente en un entorno tan competitivo."",""El enfoque en el uso de data real de México reduce la generalización y aumenta la relevancia.""]","[""No me queda claro cómo garantizan la precisión de la data histórica utilizada en las simulaciones."",""Me gustaría ver ejemplos de casos previos donde se aplicó esta metodología con éxito."",""No tengo certeza de cómo se integran los resultados a la estrategia final de la campaña.""]","[""Proporcionar casos de estudio o testimonios sobre cómo la simulación ayudó a otras marcas."",""Detallar el proceso de validación de la data histórica y cómo se asegura su calidad."",""Incluir una demostración de la simulación para que pueda ver cómo funciona en la práctica.""]","[""¿Cuál es el proceso específico para seleccionar y validar la data histórica utilizada en el simulador?"",""¿Tienen ejemplos concretos de cómo las simulaciones han impactado campañas pasadas?"",""¿Qué medidas toman para asegurar que los arquetipos sintéticos sean representativos del público objetivo en tiempo real?""]","Me encanta cómo este simulador de 'Pre-Flight' puede transformar la forma en que lanzamos campañas de marketing. La idea de usar data real de México para crear arquetipos sintéticos es clave. ¿Quién no querría evitar errores costosos antes de hacer una inversión? En lugar de arriesgarme a depender solo del instinto o de un focus group, puedo ver cómo reacciona la audiencia a mis ideas antes de gastar dinero en publicidad. Y saber que ustedes, como agencia, configuran todo el proceso y me entregan un reporte de 'Fricción Prevista' en 24 horas suena increíble. Esto podría ser un giro en la forma en que validamos nuestras estrategias de marketing.","{
+  ""personaReaction"": ""Finalmente, alguien está pensando en cómo evitar errores tontos antes de que pase algo grande. Este enfoque de simulación me parece fresco y útil."",
+  
+  ""triggeredRedFlags"": [""Incertidumbre sobre la calidad y precisión de la data histórica utilizada."", ""Falta de ejemplos tangibles sobre cómo se ha aplicado con éxito en el pasado.""],
+  
+  ""verdict"": ""Estoy interesado en la idea, ya que mitiga una necesidad real: evadir errores costosos en campañas. Sin embargo, necesito más claridad sobre cómo se asegura la calidad de la data y ejemplos concretos de éxito para confiar plenamente en esta simulación."",
+  
+  ""strengths"": [
+    ""La idea de un simulador que permite probar estrategias de marketing es innovadora."",
+    ""Evitar errores antes de invertir es un gran atractivo, especialmente en un entorno tan competitivo."",
+    ""El enfoque en el uso de data real de México reduce la generalización y aumenta la relevancia.""
+  ],
+  
+  ""gaps"": [
+    ""No me queda claro cómo garantizan la precisión de la data histórica utilizada en las simulaciones."",
+    ""Me gustaría ver ejemplos de casos previos donde se aplicó esta metodología con éxito."",
+    ""No tengo certeza de cómo se integran los resultados a la estrategia final de la campaña.""
+  ],
+  
+  ""actionPlan"": [
+    ""Proporcionar casos de estudio o testimonios sobre cómo la simulación ayudó a otras marcas."",
+    ""Detallar el proceso de validación de la data histórica y cómo se asegura su calidad."",
+    ""Incluir una demostración de la simulación para que pueda ver cómo funciona en la práctica.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cuál es el proceso específico para seleccionar y validar la data histórica utilizada en el simulador?"",
+    ""¿Tienen ejemplos concretos de cómo las simulaciones han impactado campañas pasadas?"",
+    ""¿Qué medidas toman para asegurar que los arquetipos sintéticos sean representativos del público objetivo en tiempo real?""
+  ],
+  
+  ""presentation"": ""Me encanta cómo este simulador de 'Pre-Flight' puede transformar la forma en que lanzamos campañas de marketing. La idea de usar data real de México para crear arquetipos sintéticos es clave. ¿Quién no querría evitar errores costosos antes de hacer una inversión? En lugar de arriesgarme a depender solo del instinto o de un focus group, puedo ver cómo reacciona la audiencia a mis ideas antes de gastar dinero en publicidad. Y saber que ustedes, como agencia, configuran todo el proceso y me entregan un reporte de 'Fricción Prevista' en 24 horas suena increíble. Esto podría ser un giro en la forma en que validamos nuestras estrategias de marketing."",
+  
+  ""confidenceScore"": 73,
+  ""tone"": ""directo y pragmático""
+}",false,
+salvador,Salvador,direct,Level 2 — Medium Intensity (Direct and Practical),2,48,"No me convence. Aunque la idea de simular el marketing suena interesante, carece de evidencias claras sobre su efectividad y hay dudas sobre la confiabilidad de la data. Sin un respaldo sólido en resultados anteriores, difícilmente lo veré como una inversión necesaria.","[""El enfoque en la validación antes de la inversión es un buen punto"",""La idea de reducir riesgos en campañas es relevante"",""Presenta un valor práctico al evitar gastos innecesarios en pautas""]","[""No tengo claro qué tipo de resultados puedo esperar de las simulaciones."",""¿Qué sucede si el modelo no refleja correctamente el comportamiento del consumidor real?"",""No especifica cómo se manejan los datos confidenciales durante el proceso.""]","[""Necesito pruebas de casos exitosos previos, con datos concretos."",""El servicio debe demostrar cómo se asegura la calidad y la fiabilidad de la data."",""Un plan de comunicación constante sobre la evolución de las simulaciones sería clave.""]","[""¿Qué métricas específicas se utilizarán para medir la efectividad de la simulación?"",""¿Tienen ejemplos previos donde este simulador haya prevenido errores en campañas?"",""¿Cómo garantizan la no distorsión de datos en el proceso de simulación?""]","Mira, este Simulador 'Pre-Flight' suena interesante en teoría, pero tengo mis dudas. Hablan de usar data histórica para crear arquetipos sintéticos, lo cual puede ser útil, pero, ¿qué tan precisos son esos modelos realmente? La idea de evitar costos desmedidos y validar estrategias antes de invertir es atractiva, pero ¿y los números? Necesito ver evidencia clara de que esto realmente funciona antes de siquiera considerar cambiar mi enfoque actual. Si van a posicionarse como aliados en esto, mejor que lleguen con datos y ejemplos que hablen por sí solos. Por ahora, no me convence del todo, necesito pruebas.","{
+  ""personaReaction"": ""¿Otra herramienta más que 'promete' pero no entrega? No estoy convencido."",
+  
+  ""triggeredRedFlags"": [
+    ""Incumplimiento de tiempos comprometidos"",
+    ""La promesa parece más una justificación de costo que un valor real"",
+    ""No queda claro cómo se asegura la fiabilidad de los modelos"",
+    ""No se menciona la consistencia de resultados previos""
+  ],
+  
+  ""verdict"": ""No me convence. Aunque la idea de simular el marketing suena interesante, carece de evidencias claras sobre su efectividad y hay dudas sobre la confiabilidad de la data. Sin un respaldo sólido en resultados anteriores, difícilmente lo veré como una inversión necesaria."",
+  
+  ""strengths"": [
+    ""El enfoque en la validación antes de la inversión es un buen punto"",
+    ""La idea de reducir riesgos en campañas es relevante"",
+    ""Presenta un valor práctico al evitar gastos innecesarios en pautas""
+  ],
+  
+  ""gaps"": [
+    ""No tengo claro qué tipo de resultados puedo esperar de las simulaciones."",
+    ""¿Qué sucede si el modelo no refleja correctamente el comportamiento del consumidor real?"",
+    ""No especifica cómo se manejan los datos confidenciales durante el proceso.""
+  ],
+  
+  ""actionPlan"": [
+    ""Necesito pruebas de casos exitosos previos, con datos concretos."",
+    ""El servicio debe demostrar cómo se asegura la calidad y la fiabilidad de la data."",
+    ""Un plan de comunicación constante sobre la evolución de las simulaciones sería clave.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Qué métricas específicas se utilizarán para medir la efectividad de la simulación?"",
+    ""¿Tienen ejemplos previos donde este simulador haya prevenido errores en campañas?"",
+    ""¿Cómo garantizan la no distorsión de datos en el proceso de simulación?""
+  ],
+  
+  ""presentation"": ""Mira, este Simulador 'Pre-Flight' suena interesante en teoría, pero tengo mis dudas. Hablan de usar data histórica para crear arquetipos sintéticos, lo cual puede ser útil, pero, ¿qué tan precisos son esos modelos realmente? La idea de evitar costos desmedidos y validar estrategias antes de invertir es atractiva, pero ¿y los números? Necesito ver evidencia clara de que esto realmente funciona antes de siquiera considerar cambiar mi enfoque actual. Si van a posicionarse como aliados en esto, mejor que lleguen con datos y ejemplos que hablen por sí solos. Por ahora, no me convence del todo, necesito pruebas.""
+  
+  ,
+  ""confidenceScore"": 48,
+  ""tone"": ""skeptical""
+}",false,
+salvador,Salvador,critical,Level 3 — High Intensity (Blunt and Critical),3,56,"Condicional, pero en realidad me deja más dudas que certezas. La idea de simular clientes es atractiva, pero no estoy convencido de que realmente mitigue el riesgo como dicen. Necesito ver ejemplos concretos de cómo funciona en el mundo real y qué tipo de resultados han tenido.","[""La idea de simular reacciones de clientes es interesante."",""En teoría, podría evitar errores costosos antes de lanzar una campaña.""]","[""El 'Túnel de Viento' suena bien, pero, ¿qué pasa si los arquetipos no representan a mis clientes reales?"",""¿Cómo garantizan que la data histórica sea realmente confiable y aplicable?"",""No me queda claro el tiempo real de respuesta y si cumplirían con los 24 horas.""]","[""Ofrecer estudios de caso concretos para demostrar el éxito del simulador."",""Aclarar cómo seleccionan y validan los arquetipos de clientes sintéticos."",""Definir claramente los tiempos de entrega y comunicación para evitar sorpresas.""]","[""¿Cuál ha sido el resultado de las campañas que usaron su simulador?"",""¿Cómo garantizan que el feedback de los agentes sea realmente aplicable a mi sector?"",""¿Qué tipo de ajustes sugieren y quién está detrás de esas recomendaciones?""]","Imagínate poder probar tu campaña antes de lanzarla, evitando que gastes dinero en algo que no va a funcionar. Con el Simulador 'Pre-Flight', puedes subir tus creativos y ver cómo reaccionan arquetipos de clientes basados en datos reales de México. No se trata solo de una herramienta que tienes que aprender a usar; ellos hacen el trabajo pesado, y tú sólo tienes que analizar el reporte de 'Fricción Prevista' que recibes en 24 horas. Esto puede ser el cambio que necesitas para asegurarte de que tu inversión en marketing esté bien fundamentada y no se convierta en un gasto desperdiciado.","{
+  ""personaReaction"": ""Ugh, esto suena a otra herramienta que promete mucho y puede no entregar nada."",
+  
+  ""triggeredRedFlags"": [
+    ""Incumplimiento de tiempos comprometidos"",
+    ""Errores en porcentajes o gráficas"",
+    ""Presentaciones largas sin síntesis ejecutiva""
+  ],
+  
+  ""verdict"": ""Condicional, pero en realidad me deja más dudas que certezas. La idea de simular clientes es atractiva, pero no estoy convencido de que realmente mitigue el riesgo como dicen. Necesito ver ejemplos concretos de cómo funciona en el mundo real y qué tipo de resultados han tenido."",
+  
+  ""strengths"": [
+    ""La idea de simular reacciones de clientes es interesante."",
+    ""En teoría, podría evitar errores costosos antes de lanzar una campaña.""
+  ],
+  
+  ""gaps"": [
+    ""El 'Túnel de Viento' suena bien, pero, ¿qué pasa si los arquetipos no representan a mis clientes reales?"",
+    ""¿Cómo garantizan que la data histórica sea realmente confiable y aplicable?"",
+    ""No me queda claro el tiempo real de respuesta y si cumplirían con los 24 horas.""
+  ],
+  
+  ""actionPlan"": [
+    ""Ofrecer estudios de caso concretos para demostrar el éxito del simulador."",
+    ""Aclarar cómo seleccionan y validan los arquetipos de clientes sintéticos."",
+    ""Definir claramente los tiempos de entrega y comunicación para evitar sorpresas.""
+  ],
+  
+  ""followUpQuestions"": [
+    ""¿Cuál ha sido el resultado de las campañas que usaron su simulador?"",
+    ""¿Cómo garantizan que el feedback de los agentes sea realmente aplicable a mi sector?"",
+    ""¿Qué tipo de ajustes sugieren y quién está detrás de esas recomendaciones?""
+  ],
+  
+  ""presentation"": ""Imagínate poder probar tu campaña antes de lanzarla, evitando que gastes dinero en algo que no va a funcionar. Con el Simulador 'Pre-Flight', puedes subir tus creativos y ver cómo reaccionan arquetipos de clientes basados en datos reales de México. No se trata solo de una herramienta que tienes que aprender a usar; ellos hacen el trabajo pesado, y tú sólo tienes que analizar el reporte de 'Fricción Prevista' que recibes en 24 horas. Esto puede ser el cambio que necesitas para asegurarte de que tu inversión en marketing esté bien fundamentada y no se convierta en un gasto desperdiciado."",
+  
+  ""confidenceScore"": 56,
+  ""tone"": ""Skeptical and critical""
+}",false,

@@ -27,6 +27,7 @@ export type Persona = {
   voiceProfile?: string;
   anchors?: string[];
   triggers?: PersonaTrigger[];
+  ragHighlights?: string | null;
 };
 
 const DATA_DIR = path.join(process.cwd(), "data", "personas");
@@ -267,7 +268,7 @@ export async function getPersona(id: string, userQuery: string): Promise<Persona
     .filter(Boolean)
     .join("\n\n");
 
-  return { ...file, context };
+  return { ...file, context, ragHighlights };
 }
 
 async function readStrategicDepthFile(id: string): Promise<string | null> {

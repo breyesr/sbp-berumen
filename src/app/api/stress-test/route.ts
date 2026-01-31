@@ -29,6 +29,14 @@ const SimulationResultSchema = z.object({
   actionPlan: z.array(z.string()),
   followUpQuestions: z.array(z.string()),
   presentation: z.string(),
+  confidenceBreakdown: z
+    .object({
+      problemValidity: z.number().min(0).max(100),
+      solutionLogic: z.number().min(0).max(100),
+      pitchClarity: z.number().min(0).max(100),
+    })
+    .optional(),
+  debugRationale: z.string().optional(),
 });
 
 const MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
@@ -92,11 +100,13 @@ export async function POST(req: Request) {
     const openai = new OpenAI({ apiKey });
     const focusMeta = describeFocus(body.evaluationFocus);
 
+    const debugEnabled = process.env.NEXT_PUBLIC_STRESS_DEBUG === "1";
     const system = buildStressSystemPrompt({
       personaName: persona.name,
       personaContext: persona.context,
       level: challengeLevel,
       focusLabel: focusMeta.label,
+      includeDebug: debugEnabled,
     });
     
     const user = buildStressUserMessage({
@@ -107,7 +117,7 @@ export async function POST(req: Request) {
 
     const completion = await openai.chat.completions.create({
       model: MODEL,
-      temperature: 0.6,
+      temperature: 0.9,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: system },
@@ -117,10 +127,12 @@ export async function POST(req: Request) {
 
     const raw = completion.choices[0]?.message?.content ?? "{}";
     let parsed = SimulationResultSchema.safeParse(JSON.parse(raw));
+    let usedRaw = raw;
+    let retried = false;
     if (!parsed.success) {
       const retry = await openai.chat.completions.create({
         model: MODEL,
-        temperature: 0.3,
+        temperature: 0.4,
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: `${system}\n\nReturn valid JSON only. Fix the prior formatting issues.` },
@@ -128,6 +140,8 @@ export async function POST(req: Request) {
         ],
       });
       const retryRaw = retry.choices[0]?.message?.content ?? "{}";
+      usedRaw = retryRaw;
+      retried = true;
       parsed = SimulationResultSchema.safeParse(JSON.parse(retryRaw));
     }
 
@@ -158,6 +172,21 @@ export async function POST(req: Request) {
       questions: parsed.data.followUpQuestions,
       presentation: parsed.data.presentation,
       confidence: confidenceScore,
+      debug: debugEnabled
+        ? {
+            rawModelOutput: usedRaw,
+            retried,
+            model: MODEL,
+            temperature: 0.9,
+            retryTemperature: 0.4,
+            systemPrompt: system,
+            userPrompt: user,
+            personaContext: persona.context,
+            ragHighlights: persona.ragHighlights ?? null,
+            confidenceBreakdown: parsed.data.confidenceBreakdown ?? null,
+            debugRationale: parsed.data.debugRationale ?? null,
+          }
+        : undefined,
       // tone is part of prompt now, not response
     };
 
