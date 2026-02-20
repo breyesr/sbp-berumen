@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SignOutButton } from "@/components/auth/SignOutButton";
+import { SignInButton } from "@/components/auth/SignInButton";
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
@@ -48,14 +49,15 @@ export default function ProfilePage() {
   };
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">Loading...</div>;
   }
 
-  if (!session) {
+  if (status === "unauthenticated") {
     return (
-      <div>
-        <p>You are not signed in.</p>
-        <Link href="/login">Sign In</Link>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+        <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
+        <p className="mb-8">Please sign in to view your profile.</p>
+        <SignInButton />
       </div>
     );
   }
@@ -63,7 +65,7 @@ export default function ProfilePage() {
   return (
     <div style={{ maxWidth: '600px', margin: '50px auto' }}>
       <h1>User Profile</h1>
-      <p><strong>Email:</strong> {session.user?.email}</p>
+      <p><strong>Email:</strong> {session?.user?.email}</p>
       <p><strong>2FA Status:</strong> {is2FAEnabled ? 'Enabled' : 'Disabled'}</p>
 
       {!is2FAEnabled && !setup2FA && (
