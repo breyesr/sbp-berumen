@@ -1,66 +1,79 @@
 # Environment Configuration
 
-This document describes the environment configuration for Synthetic Persona Web.
+This document describes environment requirements for local, preview, and production.
 
----
+## 1. Runtime versions
 
-## 1. Node & Framework Versions
-- **Node.js**: >=20.x
-- **Next.js**: 16.x
-- **TypeScript**: 5.x
-- **Package Manager**: npm
+- Node.js: `>=20`
+- Next.js: `16.x`
+- TypeScript: `5.x`
+- Package manager: `npm`
 
----
+## 2. Environment variables
 
-## 2. Environment Variables
-
-All sensitive or environment‑dependent values should be defined via `.env.local` (local dev) or Vercel Environment Variables (preview/production).
-
-### Core Variables
-
-| Variable             | Scope     | Description                                                                 |
-| -------------------- | --------- | --------------------------------------------------------------------------- |
-| `OPENAI_API_KEY`     | All       | **Required**. OpenAI API key used for chat + embeddings.                   |
-| `POSTGRES_URL_LOCAL` | Local     | **Required**. Local Postgres connection string (Docker).                   |
-| `POSTGRES_URL`       | Vercel    | **Required**. Production/preview Postgres connection string.               |
-| `OPENAI_MODEL`       | Optional  | Override for chat model (defaults to `gpt-4o-mini`).                        |
-| `NEXT_PUBLIC_STRESS_DEBUG` | Optional | If set to `1`, enables debug payloads for stress-test.                 |
+| Variable | Scope | Required | Description |
+| --- | --- | --- | --- |
+| `OPENAI_API_KEY` | Local + Vercel | Yes | Required for AI calls and for modules that validate env on import |
+| `AUTH_SECRET` | Local + Vercel | Yes | Auth.js secret for signing/encrypting tokens/sessions |
+| `POSTGRES_URL_LOCAL` | Local | Yes (local runtime) | Local Postgres connection string |
+| `POSTGRES_URL` | Preview + Prod | Yes | Vercel/runtime Postgres connection string |
+| `OPENAI_MODEL` | Optional | No | Chat model override (default `gpt-4o-mini`) |
+| `NEXT_PUBLIC_STRESS_DEBUG` | Optional | No | If `1`, enables stress-test debug payloads |
 
 Notes:
-- `src/lib/clients.ts` validates DB + OpenAI env vars at module load time. If these are missing, API routes that import persona/RAG helpers will fail.
+- `src/lib/clients.ts` validates DB + OpenAI vars at module load.
+- Missing required vars can fail routes even before endpoint logic runs.
 
----
+## 3. Local `.env.local` setup
 
-## 3. Local Environment Setup
-
-1) Copy the example file:
 ```bash
 cp .env.example .env.local
 ```
 
-2) Edit `.env.local` and add your `OPENAI_API_KEY`. The example includes `POSTGRES_URL_LOCAL` for Docker.
+Example:
 
-Example `.env.local`:
 ```env
-# For local Docker database
 POSTGRES_URL_LOCAL="postgresql://user:password@localhost:5433/persona_db"
-
-# For OpenAI API
-OPENAI_API_KEY="sk-xxxxxx"
+POSTGRES_URL=""
+OPENAI_API_KEY="sk-..."
+AUTH_SECRET="replace-with-long-random-secret"
+OPENAI_MODEL="gpt-4o-mini"
 ```
 
----
+Generate a secret (example):
 
-## 4. Vercel Environments (Preview & Production)
+```bash
+openssl rand -hex 32
+```
 
-Set the following in **Project → Settings → Environment Variables**:
-- `POSTGRES_URL` (from your Vercel Postgres/Neon database)
+## 4. Vercel env setup
+
+Set these in `Project -> Settings -> Environment Variables`:
+- `POSTGRES_URL`
 - `OPENAI_API_KEY`
+- `AUTH_SECRET`
 
----
+Ensure `Preview` scope includes all required vars if you test auth on preview URLs.
 
-## 5. Security Best Practices
-- Never commit `.env.local` or other secrets.
-- Mark API keys as “Sensitive” in Vercel.
-- Keep `.env.example` updated when new variables are introduced.
+## 5. Script behavior by environment
 
+- `npm run db:setup`
+  - Uses `POSTGRES_URL` if present, otherwise `POSTGRES_URL_LOCAL`.
+- `npm run db:auth:setup`
+  - Uses `src/lib/clients.ts` selection logic.
+  - To target Vercel DB explicitly, run with `NODE_ENV=production` and set `POSTGRES_URL`.
+
+Example (target preview/prod DB):
+
+```bash
+NODE_ENV=production \
+POSTGRES_URL='postgresql://...' \
+OPENAI_API_KEY='dummy' \
+npm run db:auth:setup
+```
+
+## 6. Security practices
+
+- Never commit `.env.local`.
+- Store secrets only in Vercel env manager for cloud deploys.
+- Treat `db:auth:setup` and `db:reset` as destructive operations.

@@ -1,37 +1,53 @@
-Testing Synthetic Persona Web
+# Testing Synthetic Persona Web
 
-This document describes the current testing posture.
+Current project status relies on manual QA plus runtime validation. This checklist reflects the current auth + 2FA flow.
 
----
+## 1. Current state
 
-## 1. Current State
+- No dedicated automated test script in `package.json`.
+- Runtime guards include Zod validation and server-side checks.
 
-There are no automated test scripts configured in `package.json` at this time. The project relies on manual QA and runtime validation (Zod schemas + JSON guards).
+## 2. Manual QA checklist
 
----
+### A. Authentication and access control
 
-## 2. Manual QA Checklist
+- Visit `/` while logged out -> redirected to `/login`.
+- Visit `/register`, create account, confirm redirect to `/profile`.
+- Log in with credentials; if account has 2FA enabled, confirm redirect to `/login/2fa`.
+- Submit valid 2FA code and confirm access to `/`.
+- Confirm `/login`, `/register`, `/login/2fa` redirect to `/` when already authenticated.
 
-Stress Test
-- Submit valid inputs and verify response includes reaction, verdict, strengths, gaps, questions, and confidence.
-- Confirm challenge levels load correctly from `/api/challenge-levels`.
+### B. 2FA onboarding wizard (`/profile`)
 
-Idea Refinement
-- Trigger missing‑info questions and verify “needs_input” response.
-- Provide answers and verify refined pitch + changes summary.
+- Status shows `Disabled` for new account.
+- Step flow works in order: choose platform -> app links -> generate QR -> verify.
+- Desktop path works: copy link / scan store-link QR from phone.
+- After successful verify, UI immediately shows clear success and `2FA is active` state.
+- Sign out and sign in again; verify 2FA code is required.
 
-Copywriter
-- Load platform/format catalog.
-- Generate copy for a single platform/format and verify output ordering and structure.
+### C. Idea Stress Test
 
-Legacy Scorecard
-- Call `/api/scorecard` with valid inputs and verify narratives + suggestedFocus.
+- Submit valid payload and verify response sections (reaction, strengths, gaps, questions, confidence).
+- Challenge levels load from `/api/challenge-levels`.
 
----
+### D. Idea refinement
 
-## 3. Suggested Future Enhancements
+- Trigger `needs_input` path.
+- Submit follow-up answers and verify refined pitch response.
 
-- Unit tests for `src/lib/aiNarrative.ts` math helpers.
-- Integration tests for `/api/stress-test`, `/api/idea-refinement`, and `/api/copywriter` with mocked OpenAI.
-- Contract tests for API schemas.
+### E. Copywriter
 
+- Load catalog from `GET /api/copywriter`.
+- Generate copy from `POST /api/copywriter` for at least one platform/format pair.
+
+### F. Vercel preview sanity
+
+- Confirm Preview env vars: `POSTGRES_URL`, `OPENAI_API_KEY`, `AUTH_SECRET`.
+- Confirm `/api/auth/session` does not return 500.
+- Confirm registration does not fail with `relation "users" does not exist`.
+
+## 3. Suggested future automation
+
+- Integration tests for auth endpoints (`/api/register`, `/api/2fa/*`, session behavior).
+- Contract tests for stress-test/refinement/copywriter schema responses.
+- End-to-end flow test: register -> profile 2FA setup -> logout/login with 2FA.

@@ -6,6 +6,11 @@ This project adheres to Semantic Versioning and follows a simplified Keep a Chan
 ⸻
 
 [Unreleased]
+  • Credentials auth + guided 2FA onboarding flow on `/profile`.
+  • Registration now auto-signs in and redirects to `/profile` for 2FA setup.
+  • Session now propagates `two_factor_enabled` for accurate profile status.
+  • Documentation updated for auth endpoints, required `AUTH_SECRET`, and Vercel preview/prod setup.
+  • Deployment runbook now documents `db:auth:setup` behavior and production-targeting requirements.
   • Add multi-language support (EN/ES switch).
   • Persona image/avatar generation.
   • Export results to PDF and CSV.

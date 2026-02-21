@@ -1,6 +1,6 @@
-# Synthetic Persona Web — Docs
+# Synthetic Persona Web - Docs
 
-This project provides two main product surfaces: an **Idea Stress Test** and a **Copywriter**. Both use persona data and optional RAG context from a Postgres + pgvector store.
+Reference docs for the current application state.
 
 ## Quickstart (local)
 
@@ -9,53 +9,56 @@ npm install
 cp .env.example .env.local
 docker-compose up -d
 npm run db:setup
+npm run db:auth:setup
 npm run embed
 npm run dev
 # open: http://localhost:3000
 ```
 
-## Product surfaces
+## Current routes
 
-### 1) Idea Stress Test (UI)
-- **Route**: `/` (`src/app/(app)/page.tsx`)
-- **Flow**:
-  1. Load personas + challenge levels.
-  2. Submit idea, goal, and evaluation focus to `/api/stress-test`.
-  3. Display reaction, verdict, strengths, gaps, questions, and confidence.
-  4. Optionally refine the pitch with `/api/idea-refinement`.
+### Protected app routes (`src/app/(app)`)
+- `/` - Idea Stress Test
+- `/copywriter` - Copywriter
+- `/profile` - profile + guided 2FA setup wizard
 
-### 2) Copywriter (UI)
-- **Route**: `/copywriter` (`src/app/(app)/copywriter/page.tsx`)
-- **Flow**:
-  1. Select persona + platforms + formats.
-  2. Submit context + message + goal to `/api/copywriter`.
-  3. Receive platform/format‑specific copy outputs.
+### Public routes (`src/app/(public)`)
+- `/login` - credentials login
+- `/login/2fa` - second-factor verification during sign-in
+- `/register` - account creation, then auto sign-in + redirect to `/profile`
+
+## Auth model
+
+- Auth.js credentials provider (`next-auth` v5 beta)
+- Sessions use JWT strategy
+- Middleware protects non-public pages
+- 2FA status (`two_factor_enabled`) is mapped into session/JWT and surfaced in `/profile`
 
 ## Key APIs
 
-- `POST /api/stress-test` — persona simulation + critique
-- `POST /api/idea-refinement` — missing‑info questions + rewrite
-- `GET/POST /api/copywriter` — platform/format catalog + copy generation
-- `POST /api/berumen` — persona answer + consultant analysis
-- `POST /api/scorecard` — marketing efficiency scorecard (legacy UI not wired)
-- `POST /api/persona` — streaming persona Q&A (messages‑based)
-- `GET /api/personas` — list personas
-- `GET /api/industries` — list industries
-- `GET /api/cities` — list cities
-- `GET /api/challenge-levels` — list challenge levels
+- `POST /api/stress-test`
+- `POST /api/idea-refinement`
+- `GET/POST /api/copywriter`
+- `POST /api/register`
+- `POST /api/2fa/generate`
+- `POST /api/2fa/verify`
+- `GET/POST /api/auth/[...nextauth]`
+- `GET /api/personas`
+- `GET /api/industries`
+- `GET /api/cities`
+- `GET /api/challenge-levels`
+- `POST /api/berumen` (legacy)
+- `POST /api/scorecard` (legacy)
+- `POST /api/persona` (legacy streaming)
+- `POST /api/action-card` (experimental)
 
-## Data model & RAG
+## Data model and RAG
 
-- **Personas**: `data/personas/<persona_id>/persona.json`
-- **Persona knowledge**: `data/personas/<persona_id>/knowledge/*`
-- **Global knowledge**: `data/global-knowledge/*`
-- **Industries**: `data/industries/*.json`
-- **Challenge levels**: `data/challengelevels/*.json`
-- **Copywriter platform/format rules**: `data/copywriter/**`
+- Personas: `data/personas/<persona_id>/persona.json`
+- Persona knowledge: `data/personas/<persona_id>/knowledge/*`
+- Global knowledge: `data/global-knowledge/*`
+- Industries: `data/industries/*.json`
+- Challenge levels: `data/challengelevels/*.json`
+- Copywriter config: `data/copywriter/**`
 
-Run `npm run embed` after changing any content in `data/`.
-
-## Notes
-
-- LLM calls are server‑side only; API keys are never exposed to the browser.
-- The database is required for RAG; core flows still run without RAG content, but embeddings and hybrid search rely on Postgres + pgvector.
+Run `npm run embed` after modifying `data/`.

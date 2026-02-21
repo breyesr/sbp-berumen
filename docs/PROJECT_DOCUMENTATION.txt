@@ -3,82 +3,89 @@ Synthetic Persona Web — Technical Documentation
 
 1. Product Overview
 -------------------
-- Goal: help SMBs stress‑test ideas with synthetic personas and generate tailored marketing copy.
-- Stack: Next.js 16 (app router) with React 19 client components, Tailwind CSS v4.
-- Data inputs: local JSON/MD fixtures under `data/` plus OpenAI APIs for reasoning and embeddings.
+- Goal: help SMBs stress-test ideas with synthetic personas and generate tailored marketing copy.
+- Stack: Next.js 16 (App Router), React 19, Tailwind CSS v4, Auth.js credentials auth.
+- Data inputs: local JSON/MD under `data/` plus OpenAI APIs for reasoning and embeddings.
 - RAG: Postgres + pgvector for hybrid search over persona and global knowledge.
 
 2. UX Entry Points
 ------------------
-- `/` (`src/app/(app)/page.tsx`): Idea Stress Test UI. Collects idea/goal/focus, runs `/api/stress-test`, then allows refinement via `/api/idea-refinement`.
-- `/copywriter` (`src/app/(app)/copywriter/page.tsx`): Copywriter UI. Select persona + platform/format, generate copy via `/api/copywriter`.
+Protected routes (`src/app/(app)`):
+- `/` (`src/app/(app)/page.tsx`): Idea Stress Test UI.
+- `/copywriter` (`src/app/(app)/copywriter/page.tsx`): Copywriter UI.
+- `/profile` (`src/app/(app)/profile/page.tsx`): Profile + guided 2FA setup wizard.
 
-3. Data + AI Flow
+Public routes (`src/app/(public)`):
+- `/login` credentials login.
+- `/register` account creation.
+- `/login/2fa` TOTP verification for users with 2FA enabled.
+
+3. Authentication and Protection
+--------------------------------
+- Auth handler: `src/app/api/auth/[...nextauth]/route.ts`.
+- Core config: `src/lib/auth.ts` with credentials provider + JWT strategy.
+- Middleware (`middleware.ts`) allows only `/login`, `/register`, `/login/2fa` publicly.
+- `(app)` layout wraps pages in `AuthGate` + persistent app shell.
+- Session exposes custom claims: `roles`, `apps`, `personas`, `two_factor_enabled`.
+
+4. Data + AI Flow
 -----------------
-1) **Persona metadata** lives in `data/personas/<id>/persona.json` and optional `persona_strategic_depth.md`.
-2) **Persona knowledge** in `data/personas/<id>/knowledge/*` and **global knowledge** in `data/global-knowledge/*` are ingested into Postgres via `npm run embed`.
-3) **RAG**: `src/lib/rag.ts` performs hybrid search (FTS + vector) and feeds context into `src/lib/personaProvider.ts`.
-4) **Stress Test** (`/api/stress-test`):
-   - Validates the request, loads persona context, applies challenge‑level rules, and requests a JSON‑shaped critique from OpenAI.
-   - Persists usage logs to Postgres (best‑effort).
-5) **Idea Refinement** (`/api/idea-refinement`):
-   - Asks missing‑info questions (if needed) then rewrites the pitch with structured changes.
-6) **Copywriter** (`/api/copywriter`):
-   - Loads platform + format rules from `data/copywriter/**` and applies persona context to produce copy variants.
-7) **Legacy Scorecard** (`/api/scorecard`):
-   - Computes an efficiency score + narrative. UI component `src/components/IntakeForm.tsx` exists but is not wired to `/`.
+1) Persona metadata in `data/personas/<id>/persona.json`.
+2) Persona/global knowledge ingested into Postgres with `npm run embed`.
+3) `src/lib/rag.ts` executes hybrid search (FTS + vector).
+4) `/api/stress-test` generates structured critique.
+5) `/api/idea-refinement` asks missing-info questions and rewrites pitch.
+6) `/api/copywriter` loads rules from `data/copywriter/**` and generates outputs.
 
-4. Key Modules
+5. Key Modules
 --------------
-- `src/app/(app)/page.tsx`: Stress test UI, submission + refinement flow.
-- `src/app/(app)/copywriter/page.tsx`: Copywriter UI.
-- `src/lib/personaProvider.ts`: loads persona files and merges RAG context.
-- `src/lib/rag.ts`: hybrid search (keyword + vector) with pgvector.
-- `src/lib/aiNarrative.ts`: deterministic + LLM narrative helpers for scorecard/insights.
+- `src/lib/clients.ts`: singleton Postgres/OpenAI clients + env validation.
+- `src/lib/personaProvider.ts`: persona loading + RAG context merge.
+- `src/lib/totp.ts`: TOTP generation/verification helpers.
+- `src/app/api/register/route.ts`: account creation + role assignment.
+- `src/app/api/2fa/generate/route.ts`: create secret + QR payload.
+- `src/app/api/2fa/verify/route.ts`: verify code and enable 2FA.
 
-5. Configuration & Environment
-------------------------------
-Required environment variables (set in `.env.local` for local dev):
-- `OPENAI_API_KEY` — required for all AI calls.
-- `POSTGRES_URL_LOCAL` — required for local Postgres (RAG + logs).
-- `POSTGRES_URL` — required for Vercel/production.
-- `OPENAI_MODEL` — optional override for chat models.
+6. Configuration and Environment
+--------------------------------
+Required vars:
+- `OPENAI_API_KEY`
+- `AUTH_SECRET`
+- `POSTGRES_URL_LOCAL` (local)
+- `POSTGRES_URL` (Vercel)
+- `OPENAI_MODEL` (optional)
 
-Note: `src/lib/clients.ts` validates DB + OpenAI env on module load. Without DB env vars, API routes that import persona/RAG helpers will fail.
+Note: `src/lib/clients.ts` validates DB + OpenAI env vars on import.
 
-6. Local Development
+7. Local Development
 --------------------
-1. Install deps: `npm install`.
-2. Copy `.env.example` → `.env.local` and set keys.
-3. Start DB: `docker-compose up -d`.
-4. Run schema: `npm run db:setup`.
-5. Ingest data: `npm run embed`.
-6. Run dev server: `npm run dev`.
+1. `npm install`
+2. `cp .env.example .env.local`
+3. `docker-compose up -d`
+4. `npm run db:setup`
+5. `npm run db:auth:setup`
+6. `npm run embed`
+7. `npm run dev`
 
-7. Extending the System
------------------------
-- **Add a persona**: create `data/personas/<id>/persona.json` with fields used by `personaProvider`.
-- **Add persona knowledge**: drop files into `data/personas/<id>/knowledge/`, then run `npm run embed`.
-- **Add global knowledge**: drop files into `data/global-knowledge/`, then run `npm run embed`.
-- **Add industries**: add JSON to `data/industries/` (used by scorecard).
-- **Add challenge levels**: add JSON to `data/challengelevels/`.
-- **Add copywriter platforms/formats**: add JSON under `data/copywriter/digital-platforms/`.
+8. DB Scripts and Safety
+------------------------
+- `db:setup`: resets `documents` table + indexes.
+- `db:auth:setup`: recreates auth/RBAC tables; destructive for auth data (`users`, sessions, roles mappings).
+- `db:reset`: drops most app/auth tables.
 
-8. Known Limitations & Risks
-----------------------------
-- RAG requires Postgres to be available; missing DB env vars will break routes that import the RAG stack.
-- AI output quality depends on prompt design and available persona knowledge.
-- Some legacy endpoints (scorecard/persona Q&A) are still present but not wired to the main UI.
+When targeting Vercel DB with `db:auth:setup`, run with `NODE_ENV=production` and explicit `POSTGRES_URL`.
 
-9. Reference Commands
----------------------
-- `npm run dev` — local development server
-- `npm run build && npm start` — production build/start
-- `npm run lint` — ESLint across repo
-- `npm run db:setup` — create schema/indexes
-- `npm run embed` — ingest data into Postgres
+9. Known Limitations and Risks
+------------------------------
+- Some lint/type issues exist outside the auth flow.
+- `db:auth:setup` is not a migration; it resets auth data.
+- Legacy endpoints (`/api/scorecard`, `/api/persona`, `/api/berumen`) remain available but are not core UI flows.
 
-10. Idea Stress Testing Tool
-----------------------------
-- **Challenge Levels**: Level 1 = `supportive`, Level 2 = `validation`, Level 3 = `critical`. These files live in `data/challengelevels/` and are loaded by `src/lib/challengeLevels.ts`.
-- **API**: `/api/stress-test` accepts `{ personaType, challengeLevelId, idea, goal, evaluationFocus }` and returns a structured critique plus confidence.
+10. Reference Commands
+----------------------
+- `npm run dev`
+- `npm run build && npm run start`
+- `npm run db:setup`
+- `npm run db:auth:setup`
+- `npm run db:reset`
+- `npm run embed`
