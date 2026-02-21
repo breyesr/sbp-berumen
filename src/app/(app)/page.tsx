@@ -1,11 +1,9 @@
-// src/app/page.tsx
+// src/app/(app)/page.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { User, BarChart, AlertTriangle, CheckCircle, Sparkles, Loader2, MessageSquare, TrendingUp, Shield, Award, Target, HelpCircle, XCircle, AlertCircle } from 'lucide-react';
 import { clsx } from 'clsx';
-import { useSession } from "next-auth/react";
-import { SignInButton } from "@/components/auth/SignInButton";
 
 // Types
 type StressResult = {
@@ -62,26 +60,6 @@ const FIELD_LIMITS = {
 };
 
 export default function HomePage() {
-    const { data: session, status } = useSession();
-  
-    if (status === "loading") {
-      return <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">Loading...</div>;
-    }
-  
-    if (status === "unauthenticated") {
-      return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-          <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-          <p className="mb-8">Please sign in to use the application.</p>
-          <SignInButton />
-        </div>
-      );
-    }
-    
-    return <ConstructionPersonasPageContent />;
-}
-
-function ConstructionPersonasPageContent() {
     const [personas, setPersonas] = useState<PersonaOption[]>([]);
     const [personaNames, setPersonaNames] = useState<Record<string, string>>({});
     const [personaType, setPersonaType] = useState<string>("");
@@ -368,7 +346,7 @@ ${refinedPitch}
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-[#ededed] px-4 py-12">
+        <div className="bg-[#0a0a0a] text-[#ededed] px-4 py-6 md:py-8">
             <div className="max-w-4xl mx-auto">
                 <header className="mb-12">
                     <h1 className="text-4xl font-semibold tracking-tight mb-3">

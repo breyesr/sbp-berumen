@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { clsx } from "clsx";
 import {
@@ -13,7 +12,6 @@ import {
   Hash,
   AlignLeft,
 } from "lucide-react";
-import { SignInButton } from "@/components/auth/SignInButton";
 
 const FIELD_LIMITS = {
   context: { min: 10, max: 600 },
@@ -64,26 +62,6 @@ type CopywriterResponse = {
 };
 
 export default function CopywriterPage() {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">Loading...</div>;
-  }
-
-  if (status === "unauthenticated") {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-        <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-        <p className="mb-8">Please sign in to use the Copywriter Studio.</p>
-        <SignInButton />
-      </div>
-    );
-  }
-
-  return <CopywriterTool />;
-}
-
-function CopywriterTool() {
   const [personas, setPersonas] = useState<PersonaOption[]>([]);
   const [personaType, setPersonaType] = useState("");
   const [platforms, setPlatforms] = useState<Platform[]>([]);
@@ -285,7 +263,7 @@ function CopywriterTool() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#ededed] px-4 py-12">
+    <div className="bg-[#0a0a0a] text-[#ededed] px-4 py-6 md:py-8">
       <div className="max-w-5xl mx-auto">
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-3">

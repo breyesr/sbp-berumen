@@ -1,75 +1,50 @@
 # Page Protection Architecture
 
-This document outlines the standard architecture for protecting pages and API routes within this Next.js application. All new pages containing non-public content **must** adhere to this two-layer protection strategy.
+This document outlines the standard architecture for protecting pages and API routes in this Next.js application.
 
 ## Two-Layer Protection Strategy
 
-To ensure robust security and a smooth user experience, we use a combination of server-side middleware and client-side conditional rendering.
-
 ### 1. Server-Side Protection (Middleware)
 
-*   **File:** `middleware.ts` (in the project root)
-*   **Role:** Acts as the primary, server-side gatekeeper for all routes. It is the most critical security layer.
-*   **Mechanism:**
-    1.  The middleware is configured to run on all incoming requests by default (by not having a `matcher` config).
-    2.  It checks if the user has a valid authentication session.
-    3.  If the user is **not authenticated** and is attempting to access any route that is not explicitly public (e.g., `/login`, `/register`), the middleware immediately stops the request and sends a **redirect** to the `/login` page.
-    4.  The protected page's code is **never** executed or rendered on the server for an unauthenticated user.
+- **File:** `middleware.ts`
+- **Role:** Primary gatekeeper for route access.
+- **Behavior:**
+  1. Routes under `/login`, `/register`, and `/login/2fa` are public.
+  2. Any other non-API route is protected.
+  3. Unauthenticated users are redirected to `/login`.
+  4. Authenticated users visiting public auth routes are redirected to `/`.
 
-### 2. Client-Side Protection (React Component)
+### 2. Client-Side Protection (App Route Group Layout)
 
-*   **File:** Any page component that renders protected content (e.g., `src/app/page.tsx`, `src/app/copywriter/page.tsx`).
-*   **Role:** Provides a graceful user experience by handling the UI state while the authentication status is being determined in the browser.
-*   **Mechanism:**
-    1.  The page component **must** be a Client Component (`"use client";`).
-    2.  It **must** use the `useSession()` hook from `next-auth/react`.
-    3.  The component logic must check the `status` returned by `useSession()` and render content conditionally:
-        *   If `status === 'loading'`, it should render a loading indicator (e.g., a spinner or a skeleton screen). This prevents a "flash" of protected content.
-        *   If `status === 'unauthenticated'`, it should render a clear "Access Denied" or "Please Sign In" message. This handles cases where a session expires while the user is on the page.
-        *   If `status === 'authenticated'`, it should render the main, protected content of the page.
+- **Files:**
+  - `src/app/(app)/layout.tsx`
+  - `src/components/layout/AuthGate.tsx`
+- **Role:** Centralized UI-level auth handling for protected pages.
+- **Behavior:**
+  1. `AuthGate` uses `useSession()` once at layout level.
+  2. `status === "loading"` renders a shared loading state.
+  3. `status === "unauthenticated"` renders a shared access-denied state.
+  4. `status === "authenticated"` renders the persistent app shell.
 
----
+## Route Group Structure
 
-### Standard Implementation Example for a New Page
+- **Protected app routes** (persistent shell):
+  - `src/app/(app)/page.tsx` (`/`)
+  - `src/app/(app)/copywriter/page.tsx` (`/copywriter`)
+  - `src/app/(app)/profile/page.tsx` (`/profile`)
+- **Public routes** (no app shell):
+  - `src/app/(public)/login/page.tsx` (`/login`)
+  - `src/app/(public)/register/page.tsx` (`/register`)
+  - `src/app/(public)/login/2fa/page.tsx` (`/login/2fa`)
 
-All new protected pages must follow this structure.
+## Global App Shell Composition
 
-```tsx
-// src/app/new-protected-page/page.tsx
-"use client";
+- **File:** `src/components/layout/AppLayout.tsx`
+- **Includes by default:**
+  - `AppHeader`
+  - `AppNavigation`
+  - `AppFooter`
+  - `AppScripts`
+  - `<main>{children}</main>` slot for page content
 
-import { useSession } from "next-auth/react";
-import { SignInButton } from "@/components/auth/SignInButton";
-
-// Main component for the page's content
-function MyProtectedContent() {
-  // ... (all the state, effects, and JSX for your feature go here)
-  return (
-    <div>
-      <h1>My Protected Feature</h1>
-      {/* ... */}
-    </div>
-  );
-}
-
-// The default export that wraps the content with the auth check
-export default function NewProtectedPage() {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">Loading...</div>;
-  }
-
-  if (status === "unauthenticated") {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-        <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-        <p className="mb-8">Please sign in to access this page.</p>
-        <SignInButton />
-      </div>
-    );
-  }
-
-  return <MyProtectedContent />;
-}
-```
+This ensures shell state persists between protected page navigations using Next.js App Router layout persistence.

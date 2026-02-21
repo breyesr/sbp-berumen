@@ -2,12 +2,10 @@
 
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { SignOutButton } from "@/components/auth/SignOutButton";
-import { SignInButton } from "@/components/auth/SignInButton";
 
 export default function ProfilePage() {
-  const { data: session, status, update } = useSession();
+  const { data: session, update } = useSession();
   const [setup2FA, setSetup2FA] = useState<{ qrCodeDataUrl: string; secret: string } | null>(null);
   const [verificationCode, setVerificationCode] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -48,18 +46,8 @@ export default function ProfilePage() {
     }
   };
 
-  if (status === "loading") {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">Loading...</div>;
-  }
-
-  if (status === "unauthenticated") {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-        <h1 className="text-3xl font-bold mb-4">Access Denied</h1>
-        <p className="mb-8">Please sign in to view your profile.</p>
-        <SignInButton />
-      </div>
-    );
+  if (!session?.user) {
+    return <p className="text-sm text-[#a1a1aa]">Loading profile...</p>;
   }
 
   return (
