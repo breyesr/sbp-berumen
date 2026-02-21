@@ -8,6 +8,7 @@ declare module "next-auth" {
       roles?: string[];
       apps?: string[];
       personas?: string[];
+      two_factor_enabled?: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -18,5 +19,6 @@ declare module "next-auth/jwt" {
     roles?: string[];
     apps?: string[];
     personas?: string[];
+    two_factor_enabled?: boolean;
   }
 }

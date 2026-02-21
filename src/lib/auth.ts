@@ -10,11 +10,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PostgresAdapter(db),
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) { // Initial sign-in
+    async jwt({ token, user, trigger }) {
+      if (user?.id) {
         token.id = user.id;
+      }
+
+      if ((user || trigger === "update" || token.two_factor_enabled === undefined) && token.id) {
         const permissionsResult = await db.query(
-          `SELECT r.name as role, a.name as app, up."personaId"
+          `SELECT r.name as role, a.name as app, up."personaId", u.two_factor_enabled
            FROM users u
            LEFT JOIN user_roles ur ON u.id = ur."userId"
            LEFT JOIN roles r ON ur."roleId" = r.id
@@ -22,12 +25,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
            LEFT JOIN applications a ON ra."applicationId" = a.id
            LEFT JOIN user_personas up ON u.id = up."userId"
            WHERE u.id = $1`,
-          [user.id]
+          [token.id]
         );
 
         token.roles = [...new Set(permissionsResult.rows.map(r => r.role).filter(Boolean))];
         token.apps = [...new Set(permissionsResult.rows.map(r => r.app).filter(Boolean))];
         token.personas = [...new Set(permissionsResult.rows.map(r => r.personaId).filter(Boolean))];
+        token.two_factor_enabled = Boolean(permissionsResult.rows[0]?.two_factor_enabled);
       }
       return token;
     },
@@ -37,6 +41,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.roles = token.roles as string[] | undefined;
         session.user.apps = token.apps as string[] | undefined;
         session.user.personas = token.personas as string[] | undefined;
+        session.user.two_factor_enabled = token.two_factor_enabled as boolean | undefined;
       }
       return session;
     },

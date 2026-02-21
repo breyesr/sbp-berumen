@@ -39,7 +39,7 @@ export default function RegisterPage() {
         if (result?.error) {
           setError("Registration successful, but login failed. Please go to the login page.");
         } else {
-          router.push("/");
+          router.push("/profile");
         }
       }
     } catch (err) {
