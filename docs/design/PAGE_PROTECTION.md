@@ -9,7 +9,7 @@ This document describes the current layered access strategy for authentication a
 - **File:** `middleware.ts`
 - **Role:** Base gatekeeper for page-level auth.
 - **Behavior:**
-  1. Public routes: `/login`, `/register`, `/login/2fa`
+  1. Public routes: `/login`, `/login/2fa`
   2. Other non-API routes are protected
   3. Unauthenticated users are redirected to `/login`
   4. Authenticated users trying to access public auth routes are redirected to `/`
@@ -43,10 +43,11 @@ This document describes the current layered access strategy for authentication a
   - `/` (`src/app/(app)/page.tsx`)
   - `/copywriter` (`src/app/(app)/copywriter/page.tsx`)
   - `/profile` (`src/app/(app)/profile/page.tsx`)
+  - `/admin/users` (`src/app/(app)/admin/users/page.tsx`)
 - **Public routes (`src/app/(public)`)**
   - `/login`
-  - `/register`
   - `/login/2fa`
+  - `/register` (compatibility redirect)
 
 ## Global app shell composition
 

@@ -76,7 +76,9 @@ Frontend ───▶ API Route├─┐
 - `/api/stress-test`: persona critique for ideas.
 - `/api/idea-refinement`: missing‑info questions + rewrite.
 - `/api/copywriter`: platform/format copy generation.
-- `/api/register`: account creation + default role mapping.
+- `/api/register`: admin-only account creation + role assignment.
+- `/api/admin/users`: admin-only user listing.
+- `/api/admin/users/[id]`: admin-only user update/delete.
 - `/api/2fa/generate`: TOTP secret + QR payload generation.
 - `/api/2fa/verify`: TOTP verification and activation.
 - `/api/auth/[...nextauth]`: Auth.js handler route.

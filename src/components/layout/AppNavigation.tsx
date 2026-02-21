@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
+import { useSession } from "next-auth/react";
+import { isAdminRole } from "@/lib/rbac";
 
 const links = [
   { href: "/", label: "Stress Test" },
@@ -12,11 +14,15 @@ const links = [
 
 export default function AppNavigation() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const allLinks = isAdminRole(session?.user?.roles)
+    ? [...links, { href: "/admin/users", label: "Users" }]
+    : links;
 
   return (
     <nav aria-label="Main" className="rounded-xl border border-white/10 bg-[#0f0f10] p-2 lg:p-3">
       <ul className="flex flex-col gap-1 lg:gap-2">
-        {links.map((link) => {
+        {allLinks.map((link) => {
           const isActive = pathname === link.href;
 
           return (

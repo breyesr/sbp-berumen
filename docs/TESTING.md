@@ -12,11 +12,10 @@ Current project status relies on manual QA plus runtime validation. This checkli
 ### A. Authentication and access control
 
 - Visit `/` while logged out -> redirected to `/login`.
-- Visit `/register`, create account, confirm redirect to `/profile`.
 - Log in with credentials and no 2FA enabled -> redirected to `/profile`.
 - Log in with credentials; if account has 2FA enabled, confirm redirect to `/login/2fa`.
 - Submit valid 2FA code and confirm access to `/`.
-- Confirm `/login`, `/register`, `/login/2fa` redirect to `/` when already authenticated.
+- Confirm `/login` and `/login/2fa` redirect to `/` when already authenticated.
 
 ### B. 2FA onboarding wizard (`/profile`)
 
@@ -28,29 +27,38 @@ Current project status relies on manual QA plus runtime validation. This checkli
 - While 2FA is disabled, visiting protected routes other than `/profile` shows blocking 2FA modal.
 - Modal CTA sends user to `/profile` and page behind modal is not interactive.
 
-### C. Idea Stress Test
+### C. Admin user management (`/admin/users`)
+
+- Log in as admin and confirm page loads user table.
+- Create a new user with role `user`; verify credentials work and 2FA onboarding is required.
+- Promote a user to `admin`, then demote back to `user`.
+- Verify non-admin account cannot access `/admin/users` features and receives API `403` on admin endpoints.
+- Verify self-delete and removing own admin role are blocked.
+- Verify deleting the last admin is blocked.
+
+### D. Idea Stress Test
 
 - Submit valid payload and verify response sections (reaction, strengths, gaps, questions, confidence).
 - Challenge levels load from `/api/challenge-levels`.
 
-### D. Idea refinement
+### E. Idea refinement
 
 - Trigger `needs_input` path.
 - Submit follow-up answers and verify refined pitch response.
 
-### E. Copywriter
+### F. Copywriter
 
 - Load catalog from `GET /api/copywriter`.
 - Generate copy from `POST /api/copywriter` for at least one platform/format pair.
 
-### F. Vercel preview sanity
+### G. Vercel preview sanity
 
 - Confirm Preview env vars: `POSTGRES_URL`, `OPENAI_API_KEY`, `AUTH_SECRET`.
 - Confirm `/api/auth/session` does not return 500.
-- Confirm registration does not fail with `relation "users" does not exist`.
+- Confirm admin user creation does not fail with `relation "users" does not exist`.
 
 ## 3. Suggested future automation
 
-- Integration tests for auth endpoints (`/api/register`, `/api/2fa/*`, session behavior).
+- Integration tests for auth/admin endpoints (`/api/register`, `/api/admin/users/*`, `/api/2fa/*`, session behavior).
 - Contract tests for stress-test/refinement/copywriter schema responses.
-- End-to-end flow test: register -> profile 2FA setup -> logout/login with 2FA.
+- End-to-end flow test: admin creates user -> user profile 2FA setup -> logout/login with 2FA.

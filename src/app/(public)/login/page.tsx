@@ -3,7 +3,6 @@
 import { getSession, signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import Link from "next/link";
 
 function LoginPageContent() {
   const router = useRouter();
@@ -75,9 +74,7 @@ function LoginPageContent() {
               >
                 Login
               </button>
-              <Link href="/register" className="text-sm text-blue-600 hover:underline">
-                Don't have an account? Register
-              </Link>
+              <p className="text-sm text-gray-300">Need an account? Ask an administrator.</p>
             </div>
           </div>
         </form>

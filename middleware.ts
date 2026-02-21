@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth.edge";
 import { NextRequest, NextResponse } from 'next/server';
 
-const publicRoutes = ['/login', '/register', '/login/2fa'];
+const publicRoutes = ['/login', '/login/2fa'];
 
 export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
@@ -28,4 +28,3 @@ export const config = {
   // Match all routes except for API routes, static files, and images
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
-

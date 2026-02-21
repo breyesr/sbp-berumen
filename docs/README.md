@@ -21,11 +21,12 @@ npm run dev
 - `/` - Idea Stress Test
 - `/copywriter` - Copywriter
 - `/profile` - profile + guided 2FA setup wizard
+- `/admin/users` - admin-only user management
 
 ### Public routes (`src/app/(public)`)
 - `/login` - credentials login
 - `/login/2fa` - second-factor verification during sign-in
-- `/register` - account creation, then auto sign-in + redirect to `/profile`
+- `/register` - compatibility redirect to `/admin/users` for authenticated admins
 
 ## Auth model
 
@@ -42,6 +43,9 @@ npm run dev
 - `POST /api/idea-refinement`
 - `GET/POST /api/copywriter`
 - `POST /api/register`
+- `GET /api/admin/users`
+- `PATCH /api/admin/users/[id]`
+- `DELETE /api/admin/users/[id]`
 - `POST /api/2fa/generate`
 - `POST /api/2fa/verify`
 - `GET/POST /api/auth/[...nextauth]`

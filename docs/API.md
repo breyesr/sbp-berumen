@@ -10,9 +10,10 @@ Synthetic Persona Web exposes App Router API routes under `/api/*`.
 ## Auth and access model
 
 - Browser app uses credentials auth via Auth.js (`next-auth`).
-- Public UI routes: `/login`, `/register`, `/login/2fa`.
+- Public UI routes: `/login`, `/login/2fa`.
 - All other non-API pages are protected by middleware and redirect to `/login` when unauthenticated.
 - Users without 2FA are redirected to `/profile` after login and blocked from other protected pages until setup is completed.
+- User provisioning requires an authenticated admin role.
 - API auth is session-based where required.
 
 ## Error format
@@ -31,18 +32,58 @@ Most error responses return:
 Auth.js route handler (session, callback, csrf, providers internals).
 
 ### `POST /api/register`
-Creates a new credentials user and assigns default `user` role.
+Creates a new credentials user. **Admin-only endpoint**.
 
 Request body:
 
 ```json
-{ "email": "user@example.com", "password": "secret" }
+{ "email": "user@example.com", "password": "secret", "role": "user" }
 ```
 
 Responses:
 - `201` user created
 - `400` missing email/password
+- `401` unauthenticated
+- `403` non-admin caller
 - `409` email already exists
+- `500` internal error
+
+### `GET /api/admin/users`
+Returns all users with `id`, `email`, `two_factor_enabled`, and `roles[]`.
+
+Responses:
+- `200` users list
+- `401` unauthenticated
+- `403` non-admin caller
+- `500` internal error
+
+### `PATCH /api/admin/users/[id]`
+Updates user email and/or role. **Admin-only endpoint**.
+
+Request body (one or both fields):
+
+```json
+{ "email": "updated@example.com", "role": "admin" }
+```
+
+Responses:
+- `200` user updated
+- `400` invalid input or protected action (e.g. removing own admin role)
+- `401` unauthenticated
+- `403` non-admin caller
+- `404` user not found
+- `409` email already exists
+- `500` internal error
+
+### `DELETE /api/admin/users/[id]`
+Deletes a user. **Admin-only endpoint**.
+
+Responses:
+- `200` user deleted
+- `400` protected action (e.g. self-delete / deleting last admin)
+- `401` unauthenticated
+- `403` non-admin caller
+- `404` user not found
 - `500` internal error
 
 ### `POST /api/2fa/generate`
