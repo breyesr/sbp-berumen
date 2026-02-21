@@ -33,7 +33,7 @@ This document describes the current layered access strategy for authentication a
   - `src/components/layout/AppLayout.tsx`
 - **Behavior:**
   1. After successful credentials login, users without `two_factor_enabled` are redirected to `/profile`
-  2. On protected pages other than `/profile`, users without 2FA see a blocking modal
+  2. On protected pages other than `/profile/*`, users without 2FA see a blocking modal
   3. Modal CTA takes user to `/profile` to complete setup
   4. Optional escape path is Sign Out
 
@@ -42,7 +42,8 @@ This document describes the current layered access strategy for authentication a
 - **Protected routes (`src/app/(app)`)**
   - `/` (`src/app/(app)/page.tsx`)
   - `/copywriter` (`src/app/(app)/copywriter/page.tsx`)
-  - `/profile` (`src/app/(app)/profile/page.tsx`)
+  - `/profile` (`src/app/(app)/profile/page.tsx`, includes 2FA setup)
+  - `/profile/security` (`src/app/(app)/profile/security/page.tsx`, includes password change)
   - `/admin/users` (`src/app/(app)/admin/users/page.tsx`)
 - **Public auth routes**
   - `/login`

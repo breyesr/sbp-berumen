@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 import { Button } from "@/components/ui/button";
+import ProfileSectionNav from "@/components/profile/ProfileSectionNav";
 
 type DevicePlatform = "ios" | "android";
 
@@ -136,7 +137,8 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto w-full max-w-3xl space-y-6">
       <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
-        <h1 className="text-2xl font-semibold text-white">Profile & Security</h1>
+        <ProfileSectionNav />
+        <h1 className="mt-4 text-2xl font-semibold text-white">Profile & Security</h1>
         <p className="mt-2 text-sm text-[#a1a1aa]">
           Two-factor authentication (2FA) adds one extra security step when you log in.
           After your password, you will also type a 6-digit code from your phone.

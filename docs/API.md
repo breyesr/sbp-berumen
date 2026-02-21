@@ -48,6 +48,25 @@ Responses:
 - `409` email already exists
 - `500` internal error
 
+### `POST /api/account/password/change`
+Changes the authenticated user's password. Requires current password + active 2FA code.
+
+Request body:
+
+```json
+{
+  "currentPassword": "old-secret",
+  "newPassword": "new-strong-secret",
+  "code": "123456"
+}
+```
+
+Responses:
+- `200` password changed
+- `400` invalid payload, wrong current password, 2FA missing/invalid
+- `401` unauthenticated
+- `500` internal error
+
 ### `GET /api/admin/users`
 Returns all users with `id`, `email`, `two_factor_enabled`, and `roles[]`.
 

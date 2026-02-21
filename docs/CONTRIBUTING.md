@@ -62,7 +62,7 @@ Folders:
 
 ## 4. Project structure (high level)
 
-- `src/app/(app)/` protected UI routes (`/`, `/copywriter`, `/profile`, `/admin/users`)
+- `src/app/(app)/` protected UI routes (`/`, `/copywriter`, `/profile`, `/profile/security`, `/admin/users`)
 - `src/app/(public)/` auth routes (`/login`, `/login/2fa`) + middleware-protected `/register` compatibility redirect
 - `src/app/api/` server endpoints
 - `src/lib/` DB, auth, RAG, and AI helpers

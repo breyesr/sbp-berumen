@@ -23,7 +23,10 @@ export default function AppNavigation() {
     <nav aria-label="Main" className="rounded-xl border border-white/10 bg-[#0f0f10] p-2 lg:p-3">
       <ul className="flex flex-col gap-1 lg:gap-2">
         {allLinks.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive =
+            link.href === "/profile"
+              ? pathname?.startsWith("/profile")
+              : pathname === link.href;
 
           return (
             <li key={link.href}>

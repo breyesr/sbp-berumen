@@ -28,7 +28,15 @@ Current project status relies on manual QA plus runtime validation. This checkli
 - While 2FA is disabled, visiting protected routes other than `/profile` shows blocking 2FA modal.
 - Modal CTA sends user to `/profile` and page behind modal is not interactive.
 
-### C. Admin user management (`/admin/users`)
+### C. Password change (`/profile/security`)
+
+- With 2FA enabled, submit correct current password + valid 2FA code and confirm password change succeeds.
+- Confirm mismatched new-password confirmation is blocked client-side.
+- Confirm wrong current password returns API `400`.
+- Confirm invalid 2FA code returns API `400`.
+- After successful password change, confirm user is signed out and must log in with new password.
+
+### D. Admin user management (`/admin/users`)
 
 - Log in as admin and confirm page loads user table.
 - Create a new user with role `user`; verify credentials work and 2FA onboarding is required.
@@ -37,22 +45,22 @@ Current project status relies on manual QA plus runtime validation. This checkli
 - Verify self-delete and removing own admin role are blocked.
 - Verify deleting the last admin is blocked.
 
-### D. Idea Stress Test
+### E. Idea Stress Test
 
 - Submit valid payload and verify response sections (reaction, strengths, gaps, questions, confidence).
 - Challenge levels load from `/api/challenge-levels`.
 
-### E. Idea refinement
+### F. Idea refinement
 
 - Trigger `needs_input` path.
 - Submit follow-up answers and verify refined pitch response.
 
-### F. Copywriter
+### G. Copywriter
 
 - Load catalog from `GET /api/copywriter`.
 - Generate copy from `POST /api/copywriter` for at least one platform/format pair.
 
-### G. Vercel preview sanity
+### H. Vercel preview sanity
 
 - Confirm Preview env vars: `POSTGRES_URL`, `OPENAI_API_KEY`, `AUTH_SECRET`.
 - Confirm `/api/auth/session` does not return 500.
@@ -60,6 +68,6 @@ Current project status relies on manual QA plus runtime validation. This checkli
 
 ## 3. Suggested future automation
 
-- Integration tests for auth/admin endpoints (`/api/register`, `/api/admin/users/*`, `/api/2fa/*`, session behavior).
+- Integration tests for auth/admin endpoints (`/api/register`, `/api/admin/users/*`, `/api/account/password/change`, `/api/2fa/*`, session behavior).
 - Contract tests for stress-test/refinement/copywriter schema responses.
 - End-to-end flow test: admin creates user -> user profile 2FA setup -> logout/login with 2FA.

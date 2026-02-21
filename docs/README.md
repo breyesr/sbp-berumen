@@ -20,7 +20,8 @@ npm run dev
 ### Protected app routes (`src/app/(app)`)
 - `/` - Idea Stress Test
 - `/copywriter` - Copywriter
-- `/profile` - profile + guided 2FA setup wizard
+- `/profile` - profile overview + guided 2FA setup wizard
+- `/profile/security` - security settings + password change
 - `/admin/users` - admin-only user management
 
 ### Auth routes (`src/app/(public)`)
@@ -35,7 +36,7 @@ npm run dev
 - Middleware protects non-public pages
 - 2FA status (`two_factor_enabled`) is mapped into session/JWT and surfaced in `/profile`
 - Users without 2FA are redirected to `/profile` right after login
-- Protected routes (except `/profile`) display a blocking 2FA-required modal until setup is complete
+- Protected routes (except `/profile/*`) display a blocking 2FA-required modal until setup is complete
 
 ## Key APIs
 
@@ -43,6 +44,7 @@ npm run dev
 - `POST /api/idea-refinement`
 - `GET/POST /api/copywriter`
 - `POST /api/register`
+- `POST /api/account/password/change`
 - `GET /api/admin/users`
 - `PATCH /api/admin/users/[id]`
 - `DELETE /api/admin/users/[id]`

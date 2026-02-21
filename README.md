@@ -6,14 +6,15 @@ Next.js app to stress-test business ideas with synthetic personas and generate m
 
 - `/(app)/` home (`/`): Idea Stress Test + optional refinement.
 - `/copywriter`: persona-aware copy generation.
-- `/profile`: account security and step-by-step 2FA setup wizard.
+- `/profile`: account overview and step-by-step 2FA setup wizard.
+- `/profile/security`: account access settings (password change).
 - `/admin/users`: admin-only user management (create, role updates, delete).
 - Public auth routes: `/login`, `/login/2fa`.
 
 ## 2FA enforcement
 
 - After credentials login, users without 2FA are redirected to `/profile`.
-- On protected pages other than `/profile`, users without 2FA see a blocking modal with a CTA to set up 2FA.
+- On protected pages other than `/profile/*`, users without 2FA see a blocking modal with a CTA to set up 2FA.
 - Once 2FA is enabled, full app navigation is restored.
 - User provisioning is admin-only; public self-registration is disabled.
 

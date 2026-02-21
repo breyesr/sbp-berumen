@@ -14,6 +14,7 @@ Protected routes (`src/app/(app)`):
 - `/` (`src/app/(app)/page.tsx`): Idea Stress Test UI.
 - `/copywriter` (`src/app/(app)/copywriter/page.tsx`): Copywriter UI.
 - `/profile` (`src/app/(app)/profile/page.tsx`): Profile + guided 2FA setup wizard.
+- `/profile/security` (`src/app/(app)/profile/security/page.tsx`): account security settings + password change.
 - `/admin/users` (`src/app/(app)/admin/users/page.tsx`): admin user management.
 
 Auth routes (`src/app/(public)`):
@@ -48,6 +49,7 @@ Auth routes (`src/app/(public)`):
 - `src/lib/totp.ts`: TOTP generation/verification helpers.
 - `src/lib/rbac.ts`: role helper predicates (`admin` checks).
 - `src/app/api/register/route.ts`: admin-only account creation + role assignment.
+- `src/app/api/account/password/change/route.ts`: authenticated password change (current password + 2FA code).
 - `src/app/api/admin/users/route.ts`: admin-only user listing.
 - `src/app/api/admin/users/[id]/route.ts`: admin-only user update/delete.
 - `src/app/api/2fa/generate/route.ts`: create secret + QR payload.

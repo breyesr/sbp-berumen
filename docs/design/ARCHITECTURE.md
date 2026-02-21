@@ -77,6 +77,7 @@ Frontend ───▶ API Route├─┐
 - `/api/idea-refinement`: missing‑info questions + rewrite.
 - `/api/copywriter`: platform/format copy generation.
 - `/api/register`: admin-only account creation + role assignment.
+- `/api/account/password/change`: authenticated password change with current password + 2FA.
 - `/api/admin/users`: admin-only user listing.
 - `/api/admin/users/[id]`: admin-only user update/delete.
 - `/api/2fa/generate`: TOTP secret + QR payload generation.

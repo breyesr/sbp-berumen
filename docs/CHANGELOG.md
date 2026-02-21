@@ -11,6 +11,7 @@ This project adheres to Semantic Versioning and follows a simplified Keep a Chan
   • Session now propagates `two_factor_enabled` for accurate profile status.
   • Public self-registration disabled; user provisioning is now admin-only via `/admin/users`.
   • Added admin user-management APIs: `/api/admin/users` and `/api/admin/users/[id]`.
+  • Added authenticated password-change flow on `/profile/security` via `/api/account/password/change` (current password + 2FA code).
   • `/register` is now a compatibility redirect route to `/admin/users` (still middleware-protected).
   • Documentation updated for auth endpoints, required `AUTH_SECRET`, and Vercel preview/prod setup.
   • Deployment runbook now documents `db:auth:setup` behavior and production-targeting requirements.

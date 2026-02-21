@@ -63,6 +63,13 @@ This document outlines the current user flows for the two main surfaces.
 - Success state shown immediately
 - Recommended confirmation: sign out and sign in again
 
+**Step 5 — Change Password (Authenticated)**
+Route: `/profile/security`
+- Requires current password
+- Requires new password + confirmation
+- Requires 6-digit 2FA code for verification
+- On success, user is signed out and must sign in with new password
+
 ---
 
 ## Notes
