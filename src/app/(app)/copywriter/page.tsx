@@ -1,4 +1,3 @@
-// src/app/copywriter/page.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -264,7 +263,7 @@ export default function CopywriterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#ededed] px-4 py-12">
+    <div className="bg-[#0a0a0a] text-[#ededed] px-4 py-6 md:py-8">
       <div className="max-w-5xl mx-auto">
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-3">

@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// src/app/(app)/page.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -59,7 +59,7 @@ const FIELD_LIMITS = {
     evaluationFocus: { min: 5, max: 300 },
 };
 
-export default function ConstructionPersonasPage() {
+export default function HomePage() {
     const [personas, setPersonas] = useState<PersonaOption[]>([]);
     const [personaNames, setPersonaNames] = useState<Record<string, string>>({});
     const [personaType, setPersonaType] = useState<string>("");
@@ -346,7 +346,7 @@ ${refinedPitch}
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-[#ededed] px-4 py-12">
+        <div className="bg-[#0a0a0a] text-[#ededed] px-4 py-6 md:py-8">
             <div className="max-w-4xl mx-auto">
                 <header className="mb-12">
                     <h1 className="text-4xl font-semibold tracking-tight mb-3">
