@@ -17,7 +17,7 @@ npm run dev
 ## Product surfaces
 
 ### 1) Idea Stress Test (UI)
-- **Route**: `/` (`src/app/(app)/page.tsx`)
+- **Route**: `/` (`src/app/page.tsx`)
 - **Flow**:
   1. Load personas + challenge levels.
   2. Submit idea, goal, and evaluation focus to `/api/stress-test`.
@@ -25,7 +25,7 @@ npm run dev
   4. Optionally refine the pitch with `/api/idea-refinement`.
 
 ### 2) Copywriter (UI)
-- **Route**: `/copywriter` (`src/app/(app)/copywriter/page.tsx`)
+- **Route**: `/copywriter` (`src/app/copywriter/page.tsx`)
 - **Flow**:
   1. Select persona + platforms + formats.
   2. Submit context + message + goal to `/api/copywriter`.
@@ -59,3 +59,4 @@ Run `npm run embed` after changing any content in `data/`.
 
 - LLM calls are server‑side only; API keys are never exposed to the browser.
 - The database is required for RAG; core flows still run without RAG content, but embeddings and hybrid search rely on Postgres + pgvector.
+

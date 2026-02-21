@@ -10,8 +10,8 @@ Synthetic Persona Web — Technical Documentation
 
 2. UX Entry Points
 ------------------
-- `/` (`src/app/(app)/page.tsx`): Idea Stress Test UI. Collects idea/goal/focus, runs `/api/stress-test`, then allows refinement via `/api/idea-refinement`.
-- `/copywriter` (`src/app/(app)/copywriter/page.tsx`): Copywriter UI. Select persona + platform/format, generate copy via `/api/copywriter`.
+- `/` (`src/app/page.tsx`): Idea Stress Test UI. Collects idea/goal/focus, runs `/api/stress-test`, then allows refinement via `/api/idea-refinement`.
+- `/copywriter` (`src/app/copywriter/page.tsx`): Copywriter UI. Select persona + platform/format, generate copy via `/api/copywriter`.
 
 3. Data + AI Flow
 -----------------
@@ -30,8 +30,8 @@ Synthetic Persona Web — Technical Documentation
 
 4. Key Modules
 --------------
-- `src/app/(app)/page.tsx`: Stress test UI, submission + refinement flow.
-- `src/app/(app)/copywriter/page.tsx`: Copywriter UI.
+- `src/app/page.tsx`: Stress test UI, submission + refinement flow.
+- `src/app/copywriter/page.tsx`: Copywriter UI.
 - `src/lib/personaProvider.ts`: loads persona files and merges RAG context.
 - `src/lib/rag.ts`: hybrid search (keyword + vector) with pgvector.
 - `src/lib/aiNarrative.ts`: deterministic + LLM narrative helpers for scorecard/insights.
@@ -82,3 +82,4 @@ Note: `src/lib/clients.ts` validates DB + OpenAI env on module load. Without DB 
 ----------------------------
 - **Challenge Levels**: Level 1 = `supportive`, Level 2 = `validation`, Level 3 = `critical`. These files live in `data/challengelevels/` and are loaded by `src/lib/challengeLevels.ts`.
 - **API**: `/api/stress-test` accepts `{ personaType, challengeLevelId, idea, goal, evaluationFocus }` and returns a structured critique plus confidence.
+
