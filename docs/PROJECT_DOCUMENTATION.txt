@@ -16,10 +16,10 @@ Protected routes (`src/app/(app)`):
 - `/profile` (`src/app/(app)/profile/page.tsx`): Profile + guided 2FA setup wizard.
 - `/admin/users` (`src/app/(app)/admin/users/page.tsx`): admin user management.
 
-Public routes (`src/app/(public)`):
+Auth routes (`src/app/(public)`):
 - `/login` credentials login.
 - `/login/2fa` TOTP verification for users with 2FA enabled.
-- `/register` compatibility redirect to `/admin/users`.
+- `/register` compatibility redirect to `/admin/users` (still protected by middleware).
 
 3. Authentication and Protection
 --------------------------------

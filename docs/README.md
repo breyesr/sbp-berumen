@@ -23,10 +23,10 @@ npm run dev
 - `/profile` - profile + guided 2FA setup wizard
 - `/admin/users` - admin-only user management
 
-### Public routes (`src/app/(public)`)
+### Auth routes (`src/app/(public)`)
 - `/login` - credentials login
 - `/login/2fa` - second-factor verification during sign-in
-- `/register` - compatibility redirect to `/admin/users` for authenticated admins
+- `/register` - compatibility route that redirects to `/admin/users` (middleware still requires auth)
 
 ## Auth model
 

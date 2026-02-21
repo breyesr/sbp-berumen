@@ -7,9 +7,11 @@ This project adheres to Semantic Versioning and follows a simplified Keep a Chan
 
 [Unreleased]
   • Credentials auth + guided 2FA onboarding flow on `/profile`.
-  • Registration now auto-signs in and redirects to `/profile` for 2FA setup.
   • Users without 2FA are redirected to `/profile` after login and blocked by a modal on other protected pages.
   • Session now propagates `two_factor_enabled` for accurate profile status.
+  • Public self-registration disabled; user provisioning is now admin-only via `/admin/users`.
+  • Added admin user-management APIs: `/api/admin/users` and `/api/admin/users/[id]`.
+  • `/register` is now a compatibility redirect route to `/admin/users` (still middleware-protected).
   • Documentation updated for auth endpoints, required `AUTH_SECRET`, and Vercel preview/prod setup.
   • Deployment runbook now documents `db:auth:setup` behavior and production-targeting requirements.
   • Add multi-language support (EN/ES switch).

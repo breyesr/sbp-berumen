@@ -16,6 +16,7 @@ Current project status relies on manual QA plus runtime validation. This checkli
 - Log in with credentials; if account has 2FA enabled, confirm redirect to `/login/2fa`.
 - Submit valid 2FA code and confirm access to `/`.
 - Confirm `/login` and `/login/2fa` redirect to `/` when already authenticated.
+- Visit `/register` while logged out -> redirected to `/login` by middleware.
 
 ### B. 2FA onboarding wizard (`/profile`)
 

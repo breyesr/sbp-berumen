@@ -44,10 +44,11 @@ This document describes the current layered access strategy for authentication a
   - `/copywriter` (`src/app/(app)/copywriter/page.tsx`)
   - `/profile` (`src/app/(app)/profile/page.tsx`)
   - `/admin/users` (`src/app/(app)/admin/users/page.tsx`)
-- **Public routes (`src/app/(public)`)**
+- **Public auth routes**
   - `/login`
   - `/login/2fa`
-  - `/register` (compatibility redirect)
+- **Compatibility route**
+  - `/register` (`src/app/(public)/register/page.tsx`) redirects to `/admin/users`, but middleware requires auth first.
 
 ## Global app shell composition
 

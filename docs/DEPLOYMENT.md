@@ -85,7 +85,7 @@ Likely causes:
 - Missing `POSTGRES_URL`
 - Missing auth tables (`users`, etc.)
 
-### Registration returns `relation "users" does not exist`
+### Admin user creation returns `relation "users" does not exist`
 - Auth schema not initialized on the DB used by deployment
 - Run `db:auth:setup` against the correct DB URL
 
