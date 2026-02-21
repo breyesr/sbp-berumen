@@ -27,6 +27,8 @@ Public routes (`src/app/(public)`):
 - Middleware (`middleware.ts`) allows only `/login`, `/register`, `/login/2fa` publicly.
 - `(app)` layout wraps pages in `AuthGate` + persistent app shell.
 - Session exposes custom claims: `roles`, `apps`, `personas`, `two_factor_enabled`.
+- Post-login enforcement: users without 2FA are redirected to `/profile`.
+- Protected-page enforcement: `TwoFAEnforcementModal` blocks non-profile protected pages until 2FA setup is completed.
 
 4. Data + AI Flow
 -----------------

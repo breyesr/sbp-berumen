@@ -2,6 +2,7 @@ import AppFooter from "@/components/layout/AppFooter";
 import AppHeader from "@/components/layout/AppHeader";
 import AppNavigation from "@/components/layout/AppNavigation";
 import AppScripts from "@/components/layout/AppScripts";
+import TwoFAEnforcementModal from "@/components/layout/TwoFAEnforcementModal";
 
 export default function AppLayout({
   children,
@@ -24,6 +25,7 @@ export default function AppLayout({
           <AppFooter />
         </div>
       </div>
+      <TwoFAEnforcementModal />
       <AppScripts />
     </div>
   );

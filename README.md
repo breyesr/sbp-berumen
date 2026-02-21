@@ -9,6 +9,12 @@ Next.js app to stress-test business ideas with synthetic personas and generate m
 - `/profile`: account security and step-by-step 2FA setup wizard.
 - Public auth routes: `/login`, `/register`, `/login/2fa`.
 
+## 2FA enforcement
+
+- After credentials login, users without 2FA are redirected to `/profile`.
+- On protected pages other than `/profile`, users without 2FA see a blocking modal with a CTA to set up 2FA.
+- Once 2FA is enabled, full app navigation is restored.
+
 ## Tech stack
 
 - Next.js 16 (App Router), React 19, TypeScript

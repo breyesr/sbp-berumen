@@ -33,6 +33,8 @@ npm run dev
 - Sessions use JWT strategy
 - Middleware protects non-public pages
 - 2FA status (`two_factor_enabled`) is mapped into session/JWT and surfaced in `/profile`
+- Users without 2FA are redirected to `/profile` right after login
+- Protected routes (except `/profile`) display a blocking 2FA-required modal until setup is complete
 
 ## Key APIs
 

@@ -13,6 +13,7 @@ Current project status relies on manual QA plus runtime validation. This checkli
 
 - Visit `/` while logged out -> redirected to `/login`.
 - Visit `/register`, create account, confirm redirect to `/profile`.
+- Log in with credentials and no 2FA enabled -> redirected to `/profile`.
 - Log in with credentials; if account has 2FA enabled, confirm redirect to `/login/2fa`.
 - Submit valid 2FA code and confirm access to `/`.
 - Confirm `/login`, `/register`, `/login/2fa` redirect to `/` when already authenticated.
@@ -24,6 +25,8 @@ Current project status relies on manual QA plus runtime validation. This checkli
 - Desktop path works: copy link / scan store-link QR from phone.
 - After successful verify, UI immediately shows clear success and `2FA is active` state.
 - Sign out and sign in again; verify 2FA code is required.
+- While 2FA is disabled, visiting protected routes other than `/profile` shows blocking 2FA modal.
+- Modal CTA sends user to `/profile` and page behind modal is not interactive.
 
 ### C. Idea Stress Test
 

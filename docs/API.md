@@ -12,6 +12,7 @@ Synthetic Persona Web exposes App Router API routes under `/api/*`.
 - Browser app uses credentials auth via Auth.js (`next-auth`).
 - Public UI routes: `/login`, `/register`, `/login/2fa`.
 - All other non-API pages are protected by middleware and redirect to `/login` when unauthenticated.
+- Users without 2FA are redirected to `/profile` after login and blocked from other protected pages until setup is completed.
 - API auth is session-based where required.
 
 ## Error format

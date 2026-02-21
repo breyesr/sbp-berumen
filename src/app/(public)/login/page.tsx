@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import Link from "next/link";
@@ -31,7 +31,9 @@ function LoginPageContent() {
         setError("Login failed. Please check your credentials and try again.");
       }
     } else {
-      router.push("/");
+      const session = await getSession();
+      const needs2FASetup = !session?.user?.two_factor_enabled;
+      router.push(needs2FASetup ? "/profile" : "/");
     }
   };
 

@@ -1,50 +1,62 @@
 # Page Protection Architecture
 
-This document outlines the standard architecture for protecting pages and API routes in this Next.js application.
+This document describes the current layered access strategy for authentication and mandatory 2FA.
 
-## Two-Layer Protection Strategy
+## Three-Layer Protection Strategy
 
-### 1. Server-Side Protection (Middleware)
+### 1. Server-side route protection (middleware)
 
 - **File:** `middleware.ts`
-- **Role:** Primary gatekeeper for route access.
+- **Role:** Base gatekeeper for page-level auth.
 - **Behavior:**
-  1. Routes under `/login`, `/register`, and `/login/2fa` are public.
-  2. Any other non-API route is protected.
-  3. Unauthenticated users are redirected to `/login`.
-  4. Authenticated users visiting public auth routes are redirected to `/`.
+  1. Public routes: `/login`, `/register`, `/login/2fa`
+  2. Other non-API routes are protected
+  3. Unauthenticated users are redirected to `/login`
+  4. Authenticated users trying to access public auth routes are redirected to `/`
 
-### 2. Client-Side Protection (App Route Group Layout)
+### 2. Client-side auth gate in protected layout
 
 - **Files:**
   - `src/app/(app)/layout.tsx`
   - `src/components/layout/AuthGate.tsx`
-- **Role:** Centralized UI-level auth handling for protected pages.
+- **Role:** Standardized UX for session loading / unauthenticated states.
 - **Behavior:**
-  1. `AuthGate` uses `useSession()` once at layout level.
-  2. `status === "loading"` renders a shared loading state.
-  3. `status === "unauthenticated"` renders a shared access-denied state.
-  4. `status === "authenticated"` renders the persistent app shell.
+  1. `status === "loading"` shows loading view
+  2. `status === "unauthenticated"` shows access-denied prompt
+  3. `status === "authenticated"` renders app shell
+
+### 3. Forced 2FA enforcement on protected pages
+
+- **Files:**
+  - `src/app/(public)/login/page.tsx`
+  - `src/components/layout/TwoFAEnforcementModal.tsx`
+  - `src/components/layout/AppLayout.tsx`
+- **Behavior:**
+  1. After successful credentials login, users without `two_factor_enabled` are redirected to `/profile`
+  2. On protected pages other than `/profile`, users without 2FA see a blocking modal
+  3. Modal CTA takes user to `/profile` to complete setup
+  4. Optional escape path is Sign Out
 
 ## Route Group Structure
 
-- **Protected app routes** (persistent shell):
-  - `src/app/(app)/page.tsx` (`/`)
-  - `src/app/(app)/copywriter/page.tsx` (`/copywriter`)
-  - `src/app/(app)/profile/page.tsx` (`/profile`)
-- **Public routes** (no app shell):
-  - `src/app/(public)/login/page.tsx` (`/login`)
-  - `src/app/(public)/register/page.tsx` (`/register`)
-  - `src/app/(public)/login/2fa/page.tsx` (`/login/2fa`)
+- **Protected routes (`src/app/(app)`)**
+  - `/` (`src/app/(app)/page.tsx`)
+  - `/copywriter` (`src/app/(app)/copywriter/page.tsx`)
+  - `/profile` (`src/app/(app)/profile/page.tsx`)
+- **Public routes (`src/app/(public)`)**
+  - `/login`
+  - `/register`
+  - `/login/2fa`
 
-## Global App Shell Composition
+## Global app shell composition
 
 - **File:** `src/components/layout/AppLayout.tsx`
-- **Includes by default:**
+- **Includes:**
   - `AppHeader`
   - `AppNavigation`
   - `AppFooter`
   - `AppScripts`
-  - `<main>{children}</main>` slot for page content
+  - `TwoFAEnforcementModal`
+  - `<main>{children}</main>`
 
-This ensures shell state persists between protected page navigations using Next.js App Router layout persistence.
+This setup preserves persistent layout behavior while enforcing authentication and 2FA requirements consistently.
