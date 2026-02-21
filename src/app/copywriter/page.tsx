@@ -138,7 +138,7 @@ function CopywriterTool() {
           if (firstFormats.length > 0) setSelectedFormats([firstFormats[0].id]);
         }
       } catch (err) {
-        const message = 
+        const message =
           err instanceof Error ? err.message : "Failed to load copywriter data.";
         setError(message);
       }
@@ -197,7 +197,7 @@ function CopywriterTool() {
     );
   };
 
-  const isFormValid = 
+  const isFormValid =
     personaType &&
     context.trim().length >= FIELD_LIMITS.context.min &&
     context.trim().length <= FIELD_LIMITS.context.max &&
