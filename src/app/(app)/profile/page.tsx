@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import ProfileSectionNav from "@/components/profile/ProfileSectionNav";
 
 type DevicePlatform = "ios" | "android";
+type AccessDevice = "mobile" | "desktop";
 
 const AUTHENTICATOR_LINKS: Record<DevicePlatform, Array<{ name: string; href: string }>> = {
   ios: [
@@ -37,6 +38,7 @@ export default function ProfilePage() {
   const [didScanQr, setDidScanQr] = useState(false);
   const [selectedAuthenticatorHref, setSelectedAuthenticatorHref] = useState<string>("");
   const [didJustEnable2FA, setDidJustEnable2FA] = useState(false);
+  const [accessDevice, setAccessDevice] = useState<AccessDevice>("desktop");
   const step2Ref = useRef<HTMLDivElement | null>(null);
   const step3Ref = useRef<HTMLDivElement | null>(null);
   const completeSetupRef = useRef<HTMLDivElement | null>(null);
@@ -45,6 +47,21 @@ export default function ProfilePage() {
   const authenticatorOptions = devicePlatform ? AUTHENTICATOR_LINKS[devicePlatform] : [];
   const selectedAuthenticator =
     authenticatorOptions.find((app) => app.href === selectedAuthenticatorHref) ?? authenticatorOptions[0];
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const ua = navigator.userAgent || "";
+    const isMobileByUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+    const isCoarsePointer = window.matchMedia?.("(pointer: coarse)").matches ?? false;
+    const isSmallScreen = window.innerWidth <= 900;
+
+    if (isMobileByUa || (isCoarsePointer && isSmallScreen)) {
+      setAccessDevice("mobile");
+    } else {
+      setAccessDevice("desktop");
+    }
+  }, []);
 
   useEffect(() => {
     if (!didConfirmPlatform) return;
@@ -117,16 +134,6 @@ export default function ProfilePage() {
       setError("Could not verify code. Please try again.");
     } finally {
       setIsVerifying(false);
-    }
-  };
-
-  const handleCopyAuthenticatorLink = async () => {
-    if (!selectedAuthenticator) return;
-    try {
-      await navigator.clipboard.writeText(selectedAuthenticator.href);
-      setMessage("Store link copied. Send it to your phone and open it there.");
-    } catch {
-      setError("Could not copy link automatically. Please copy it manually.");
     }
   };
 
@@ -234,7 +241,9 @@ export default function ProfilePage() {
                 <p className="text-sm font-semibold text-white">Step 2: Install an authenticator app</p>
                 <p className="mt-2 text-sm text-[#a1a1aa]">
                   Pick one app below.
-                  If you are on desktop, scan the QR code with your phone camera to open the store link.
+                  {accessDevice === "mobile"
+                    ? " You are on mobile, so use the store link directly from this device."
+                    : " You are on desktop, so scan the QR code with your phone to open the store page."}
                 </p>
                 <div className="mt-3 grid gap-2 sm:grid-cols-2">
                   {authenticatorOptions.map((app) => (
@@ -258,29 +267,36 @@ export default function ProfilePage() {
                     <p className="text-sm text-[#d4d4d8]">
                       Selected app: <span className="font-semibold text-white">{selectedAuthenticator.name}</span>
                     </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <a
-                        href={selectedAuthenticator.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center rounded-md border border-white/20 bg-transparent px-3 py-2 text-sm text-[#d4d4d8] hover:border-blue-500/60 hover:text-white"
-                      >
-                        Open Store Link
-                      </a>
-                      <Button type="button" onClick={handleCopyAuthenticatorLink}>
-                        Copy Link
-                      </Button>
-                    </div>
-                    <p className="mt-3 text-xs text-[#a1a1aa]">
-                      On desktop? Scan this QR code with your phone camera:
-                    </p>
-                    <div className="mt-2 inline-block rounded-md bg-white p-2">
-                      <img
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(selectedAuthenticator.href)}`}
-                        alt={`${selectedAuthenticator.name} store link QR`}
-                        className="h-40 w-40"
-                      />
-                    </div>
+                    {accessDevice === "mobile" ? (
+                      <div className="mt-3">
+                        <a
+                          href={selectedAuthenticator.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center rounded-md border border-blue-500/40 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 hover:bg-blue-500/25"
+                        >
+                          Open Store Link
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="mt-3">
+                        <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-3">
+                          <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">
+                            Scan this QR code with your phone
+                          </p>
+                          <p className="mt-1 text-xs text-amber-100/90">
+                            Use your phone camera to open the store page and install the authenticator app.
+                          </p>
+                        </div>
+                        <div className="mt-3 inline-block rounded-md bg-white p-2">
+                          <img
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(selectedAuthenticator.href)}`}
+                            alt={`${selectedAuthenticator.name} store link QR`}
+                            className="h-52 w-52"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 

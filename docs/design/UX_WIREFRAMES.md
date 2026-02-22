@@ -48,10 +48,12 @@ This document outlines the current user flows for the two main surfaces.
 **Step 2 — Guided 2FA Onboarding**
 - Ask device type (iOS or Android)
 - Offer authenticator app options
-- Desktop-friendly handoff:
-  - open store link
-  - copy store link
-  - QR code that opens app-store link on phone camera
+- Mobile detection path:
+  - show direct store link for selected authenticator app
+  - no QR handoff
+- Desktop detection path:
+  - show prominent QR handoff to phone camera
+  - no open/copy store link actions
 
 **Step 3 — Connect Authenticator**
 - Generate account-specific QR code
