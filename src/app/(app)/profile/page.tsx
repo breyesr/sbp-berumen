@@ -39,6 +39,9 @@ export default function ProfilePage() {
   const [selectedAuthenticatorHref, setSelectedAuthenticatorHref] = useState<string>("");
   const [didJustEnable2FA, setDidJustEnable2FA] = useState(false);
   const [accessDevice, setAccessDevice] = useState<AccessDevice>("desktop");
+  const [step1Hint, setStep1Hint] = useState<string>("");
+  const [step2Hint, setStep2Hint] = useState<string>("");
+  const [setupKeyCopyState, setSetupKeyCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const step2Ref = useRef<HTMLDivElement | null>(null);
   const step3Ref = useRef<HTMLDivElement | null>(null);
   const completeSetupRef = useRef<HTMLDivElement | null>(null);
@@ -82,6 +85,16 @@ export default function ProfilePage() {
     if (!didScanQr) return;
     verifyStepRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [didScanQr]);
+
+  useEffect(() => {
+    if (setupKeyCopyState === "idle") return;
+
+    const timer = window.setTimeout(() => {
+      setSetupKeyCopyState("idle");
+    }, 2500);
+
+    return () => window.clearTimeout(timer);
+  }, [setupKeyCopyState]);
 
   const handleGenerate2FA = async () => {
     setError(null);
@@ -145,11 +158,34 @@ export default function ProfilePage() {
     if (!setup2FA?.secret) return;
     try {
       await navigator.clipboard.writeText(setup2FA.secret);
-      setMessage("Setup key copied. Paste it into your authenticator app.");
-      setError(null);
+      setSetupKeyCopyState("copied");
     } catch {
-      setError("Could not copy setup key automatically. Please copy it manually.");
+      setSetupKeyCopyState("failed");
     }
+  };
+
+  const handleContinueStep1 = () => {
+    setDidConfirmPlatform(true);
+    setDidInstallApp(false);
+    setStep1Hint("Step 1 complete. Continue with Step 2 below.");
+    setTimeout(() => {
+      step2Ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  };
+
+  const handleContinueStep2 = () => {
+    setDidInstallApp(true);
+    setStep2Hint("Step 2 complete. Continue with Step 3 below.");
+    setTimeout(() => {
+      step3Ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  };
+
+  const handleContinueSetupComplete = () => {
+    setDidScanQr(true);
+    setTimeout(() => {
+      verifyStepRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
   };
 
   if (!session?.user) {
@@ -214,6 +250,7 @@ export default function ProfilePage() {
                   onClick={() => {
                     setDevicePlatform("ios");
                     setSelectedAuthenticatorHref(AUTHENTICATOR_LINKS.ios[0].href);
+                    setStep1Hint("");
                   }}
                   className={`rounded-md border px-3 py-2 text-sm ${
                     devicePlatform === "ios"
@@ -228,6 +265,7 @@ export default function ProfilePage() {
                   onClick={() => {
                     setDevicePlatform("android");
                     setSelectedAuthenticatorHref(AUTHENTICATOR_LINKS.android[0].href);
+                    setStep1Hint("");
                   }}
                   className={`rounded-md border px-3 py-2 text-sm ${
                     devicePlatform === "android"
@@ -239,16 +277,14 @@ export default function ProfilePage() {
                 </button>
               </div>
               <Button
-                className="mt-4"
+                className="mt-4 transition-transform active:scale-[0.98]"
                 type="button"
                 disabled={!devicePlatform}
-                onClick={() => {
-                  setDidConfirmPlatform(true);
-                  setDidInstallApp(false);
-                }}
+                onClick={handleContinueStep1}
               >
-                Done - Continue
+                {didConfirmPlatform ? "Step 1 Complete - Continue" : "Done - Continue"}
               </Button>
+              {step1Hint && <p className="mt-2 text-xs text-emerald-300">{step1Hint}</p>}
             </div>
 
             {didConfirmPlatform && (
@@ -265,7 +301,10 @@ export default function ProfilePage() {
                     <button
                       key={app.name}
                       type="button"
-                      onClick={() => setSelectedAuthenticatorHref(app.href)}
+                      onClick={() => {
+                        setSelectedAuthenticatorHref(app.href);
+                        setStep2Hint("");
+                      }}
                       className={`rounded-md border px-3 py-2 text-left text-sm ${
                         selectedAuthenticator?.href === app.href
                           ? "border-blue-500 bg-blue-500/20 text-blue-100"
@@ -316,12 +355,13 @@ export default function ProfilePage() {
                 )}
 
                 <Button
-                  className="mt-4"
+                  className="mt-4 transition-transform active:scale-[0.98]"
                   type="button"
-                  onClick={() => setDidInstallApp(true)}
+                  onClick={handleContinueStep2}
                 >
-                  Done - Continue
+                  {didInstallApp ? "Step 2 Complete - Continue" : "Done - Continue"}
                 </Button>
+                {step2Hint && <p className="mt-2 text-xs text-emerald-300">{step2Hint}</p>}
               </div>
             )}
 
@@ -336,7 +376,7 @@ export default function ProfilePage() {
                     : "We will now generate a QR code for your app to scan."}
                 </p>
                 <Button
-                  className="mt-4"
+                  className="mt-4 transition-transform active:scale-[0.98]"
                   onClick={handleGenerate2FA}
                   disabled={isGenerating}
                 >
@@ -368,14 +408,26 @@ export default function ProfilePage() {
                 {setup2FA.secret}
               </p>
               <div className="mt-3">
-                <Button type="button" onClick={handleCopySetupKey}>
-                  Copy Setup Key
+                <Button
+                  type="button"
+                  className="transition-transform active:scale-[0.98]"
+                  onClick={handleCopySetupKey}
+                >
+                  {setupKeyCopyState === "copied" ? "Setup Key Copied" : "Copy Setup Key"}
                 </Button>
+                {setupKeyCopyState === "copied" && (
+                  <p className="mt-2 text-xs text-emerald-300">Copied. Open your authenticator app and paste the key.</p>
+                )}
+                {setupKeyCopyState === "failed" && (
+                  <p className="mt-2 text-xs text-red-300">
+                    Could not copy automatically. Press and hold the key above to copy manually.
+                  </p>
+                )}
               </div>
               <Button
                 type="button"
-                className="mt-4"
-                onClick={() => setDidScanQr(true)}
+                className="mt-4 transition-transform active:scale-[0.98]"
+                onClick={handleContinueSetupComplete}
               >
                 Done - I Added the Setup Key
               </Button>
@@ -398,8 +450,8 @@ export default function ProfilePage() {
 
               <Button
                 type="button"
-                className="mt-4"
-                onClick={() => setDidScanQr(true)}
+                className="mt-4 transition-transform active:scale-[0.98]"
+                onClick={handleContinueSetupComplete}
               >
                 Done - I Scanned the QR Code
               </Button>
@@ -424,12 +476,16 @@ export default function ProfilePage() {
                 placeholder="123456"
               />
               <div className="flex gap-3">
-                <Button type="submit" disabled={isVerifying || verificationCode.length !== 6}>
+                <Button
+                  type="submit"
+                  className="transition-transform active:scale-[0.98]"
+                  disabled={isVerifying || verificationCode.length !== 6}
+                >
                   {isVerifying ? "Verifying..." : "Verify & Activate 2FA"}
                 </Button>
                 <Button
                   type="button"
-                  className="bg-[#1f2937] hover:bg-[#374151]"
+                  className="bg-[#1f2937] transition-transform hover:bg-[#374151] active:scale-[0.98]"
                   onClick={handleGenerate2FA}
                   disabled={isGenerating}
                 >
