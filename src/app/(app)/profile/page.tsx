@@ -109,11 +109,7 @@ export default function ProfilePage() {
 
       if (response.ok) {
         setSetup2FA(data);
-        setMessage(
-          accessDevice === "mobile"
-            ? "Step 1 complete. Add the setup key in your app, then enter your 6-digit code below."
-            : "Step 1 complete. Scan the QR code, then enter your 6-digit code below."
-        );
+        setMessage("Setup details generated. Continue with Step 4 below.");
       } else {
         setError(data.error || "Failed to start 2FA setup.");
       }
@@ -238,7 +234,7 @@ export default function ProfilePage() {
         <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
           <h2 className="text-lg font-semibold text-white">Set Up 2FA (Step by Step)</h2>
           <p className="mt-2 text-sm text-[#a1a1aa]">
-            Follow each step and click done to continue.
+            Follow each step in order. Each Done button moves you to the next step.
           </p>
 
           <div className="mt-4 space-y-4">
@@ -282,7 +278,7 @@ export default function ProfilePage() {
                 disabled={!devicePlatform}
                 onClick={handleContinueStep1}
               >
-                {didConfirmPlatform ? "Step 1 Complete - Continue" : "Done - Continue"}
+                {didConfirmPlatform ? "Step 1 Complete - Continue to Step 2" : "Done - Continue to Step 2"}
               </Button>
               {step1Hint && <p className="mt-2 text-xs text-emerald-300">{step1Hint}</p>}
             </div>
@@ -359,7 +355,7 @@ export default function ProfilePage() {
                   type="button"
                   onClick={handleContinueStep2}
                 >
-                  {didInstallApp ? "Step 2 Complete - Continue" : "Done - Continue"}
+                  {didInstallApp ? "Step 2 Complete - Continue to Step 3" : "Done - Continue to Step 3"}
                 </Button>
                 {step2Hint && <p className="mt-2 text-xs text-emerald-300">{step2Hint}</p>}
               </div>
@@ -368,7 +364,7 @@ export default function ProfilePage() {
             {didInstallApp && (
               <div ref={step3Ref} className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
                 <p className="text-sm font-semibold text-white">
-                  Step 3: {accessDevice === "mobile" ? "Generate your setup key" : "Generate your QR code"}
+                  Step 3: Generate your 2FA setup details
                 </p>
                 <p className="mt-2 text-sm text-[#a1a1aa]">
                   {accessDevice === "mobile"
@@ -383,8 +379,8 @@ export default function ProfilePage() {
                   {isGenerating
                     ? "Generating..."
                     : accessDevice === "mobile"
-                      ? "Generate Setup Key"
-                      : "Generate QR Code"}
+                      ? "Generate Setup Key for Step 4"
+                      : "Generate QR Code for Step 4"}
                 </Button>
               </div>
             )}
@@ -394,15 +390,15 @@ export default function ProfilePage() {
 
       {!is2FAEnabled && setup2FA && (
         <section ref={completeSetupRef} className="rounded-xl border border-white/10 bg-[#111214] p-6">
-          <h2 className="text-lg font-semibold text-white">Complete 2FA Setup</h2>
+          <h2 className="text-lg font-semibold text-white">Step 4: Complete setup in your authenticator app</h2>
 
           {accessDevice === "mobile" ? (
             <>
               <p className="mt-3 text-sm text-[#d4d4d8]">
-                Step 1: In your authenticator app, choose to add an account manually.
+                In your authenticator app, choose to add an account manually.
               </p>
               <p className="mt-2 text-sm text-[#d4d4d8]">
-                Step 2: Paste this setup key and choose a time-based code (TOTP):
+                Paste this setup key and choose a time-based code (TOTP):
               </p>
               <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
                 {setup2FA.secret}
@@ -429,20 +425,20 @@ export default function ProfilePage() {
                 className="mt-4 transition-transform active:scale-[0.98]"
                 onClick={handleContinueSetupComplete}
               >
-                Done - I Added the Setup Key
+                Done - Continue
               </Button>
             </>
           ) : (
             <>
               <p className="mt-3 text-sm text-[#d4d4d8]">
-                Step 1: Open your authenticator app on your phone and scan this QR code.
+                Open your authenticator app on your phone and scan this QR code.
               </p>
               <div className="mt-3 inline-block rounded-lg bg-white p-3">
                 <img src={setup2FA.qrCodeDataUrl} alt="2FA QR Code" className="h-48 w-48" />
               </div>
 
               <p className="mt-4 text-sm text-[#d4d4d8]">
-                Step 2 (only if scan does not work): use this manual setup key:
+                If scan does not work, use this manual setup key:
               </p>
               <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
                 {setup2FA.secret}
@@ -453,7 +449,7 @@ export default function ProfilePage() {
                 className="mt-4 transition-transform active:scale-[0.98]"
                 onClick={handleContinueSetupComplete}
               >
-                Done - I Scanned the QR Code
+                Done - Continue
               </Button>
             </>
           )}
@@ -461,7 +457,7 @@ export default function ProfilePage() {
           {didScanQr && (
             <form ref={verifyStepRef} onSubmit={handleVerify2FA} className="mt-5 space-y-3">
               <label htmlFor="verificationCode" className="block text-sm text-[#d4d4d8]">
-                Final step: Enter the current 6-digit code from your app
+                Enter the current 6-digit code from your app
               </label>
               <input
                 type="text"
