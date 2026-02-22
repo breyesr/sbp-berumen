@@ -11,16 +11,16 @@ type AccessDevice = "mobile" | "desktop";
 
 const AUTHENTICATOR_LINKS: Record<DevicePlatform, Array<{ name: string; href: string }>> = {
   ios: [
-    { name: "Google Authenticator", href: "https://apps.apple.com/us/search?term=Google%20Authenticator" },
-    { name: "Microsoft Authenticator", href: "https://apps.apple.com/us/search?term=Microsoft%20Authenticator" },
-    { name: "Authy", href: "https://apps.apple.com/us/search?term=Authy" },
-    { name: "1Password", href: "https://apps.apple.com/us/search?term=1Password" },
+    { name: "Google Authenticator", href: "https://apps.apple.com/us/app/google-authenticator/id388497605" },
+    { name: "Microsoft Authenticator", href: "https://apps.apple.com/us/app/microsoft-authenticator/id983156458" },
+    { name: "Authy", href: "https://apps.apple.com/us/app/twilio-authy/id494168017" },
+    { name: "1Password", href: "https://apps.apple.com/us/app/1password-password-manager/id1511601750" },
   ],
   android: [
-    { name: "Google Authenticator", href: "https://play.google.com/store/search?q=Google%20Authenticator&c=apps" },
-    { name: "Microsoft Authenticator", href: "https://play.google.com/store/search?q=Microsoft%20Authenticator&c=apps" },
-    { name: "Authy", href: "https://play.google.com/store/search?q=Authy&c=apps" },
-    { name: "1Password", href: "https://play.google.com/store/search?q=1Password&c=apps" },
+    { name: "Google Authenticator", href: "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" },
+    { name: "Microsoft Authenticator", href: "https://play.google.com/store/apps/details?id=com.azure.authenticator" },
+    { name: "Authy", href: "https://play.google.com/store/apps/details?id=com.authy.authy" },
+    { name: "1Password", href: "https://play.google.com/store/apps/details?id=com.onepassword.android" },
   ],
 };
 

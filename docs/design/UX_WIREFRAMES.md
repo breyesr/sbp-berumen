@@ -49,7 +49,7 @@ This document outlines the current user flows for the two main surfaces.
 - Ask device type (iOS or Android)
 - Offer authenticator app options
 - Mobile detection path:
-  - show direct store link for selected authenticator app
+  - show direct app listing link for selected authenticator app (not store search)
   - no QR handoff
 - Desktop detection path:
   - show prominent QR handoff to phone camera
