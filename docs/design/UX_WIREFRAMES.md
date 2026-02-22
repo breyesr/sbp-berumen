@@ -56,9 +56,9 @@ This document outlines the current user flows for the two main surfaces.
   - no open/copy store link actions
 
 **Step 3 — Connect Authenticator**
-- Generate account-specific QR code
-- Manual setup secret fallback
-- User confirms they scanned code
+- Mobile: show manual setup key (copyable), no QR image
+- Desktop: generate account-specific QR code with manual setup secret fallback
+- User confirms authenticator app setup is complete
 
 **Step 4 — Verify Code**
 - User enters 6-digit TOTP code
