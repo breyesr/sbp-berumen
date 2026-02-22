@@ -22,7 +22,7 @@ Current project status relies on manual QA plus runtime validation. This checkli
 
 - Status shows `Disabled` for new account.
 - Step flow works in order: choose platform -> app links -> generate QR -> verify.
-- Mobile path: app store link is shown directly, no QR.
+- Mobile path: direct app listing link is shown (not store search), no QR.
 - Desktop path: prominent QR-only handoff is shown (no open/copy store link buttons).
 - After successful verify, UI immediately shows clear success and `2FA is active` state.
 - Sign out and sign in again; verify 2FA code is required.
