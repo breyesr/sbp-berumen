@@ -96,7 +96,11 @@ export default function ProfilePage() {
 
       if (response.ok) {
         setSetup2FA(data);
-        setMessage("Step 1 complete. Scan the QR code, then enter your 6-digit code below.");
+        setMessage(
+          accessDevice === "mobile"
+            ? "Step 1 complete. Add the setup key in your app, then enter your 6-digit code below."
+            : "Step 1 complete. Scan the QR code, then enter your 6-digit code below."
+        );
       } else {
         setError(data.error || "Failed to start 2FA setup.");
       }
@@ -134,6 +138,17 @@ export default function ProfilePage() {
       setError("Could not verify code. Please try again.");
     } finally {
       setIsVerifying(false);
+    }
+  };
+
+  const handleCopySetupKey = async () => {
+    if (!setup2FA?.secret) return;
+    try {
+      await navigator.clipboard.writeText(setup2FA.secret);
+      setMessage("Setup key copied. Paste it into your authenticator app.");
+      setError(null);
+    } catch {
+      setError("Could not copy setup key automatically. Please copy it manually.");
     }
   };
 
@@ -312,16 +327,24 @@ export default function ProfilePage() {
 
             {didInstallApp && (
               <div ref={step3Ref} className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-                <p className="text-sm font-semibold text-white">Step 3: Generate your QR code</p>
+                <p className="text-sm font-semibold text-white">
+                  Step 3: {accessDevice === "mobile" ? "Generate your setup key" : "Generate your QR code"}
+                </p>
                 <p className="mt-2 text-sm text-[#a1a1aa]">
-                  We will now generate a QR code for your app to scan.
+                  {accessDevice === "mobile"
+                    ? "We will generate your setup key so you can add it manually in your authenticator app."
+                    : "We will now generate a QR code for your app to scan."}
                 </p>
                 <Button
                   className="mt-4"
                   onClick={handleGenerate2FA}
                   disabled={isGenerating}
                 >
-                  {isGenerating ? "Generating..." : "Generate QR Code"}
+                  {isGenerating
+                    ? "Generating..."
+                    : accessDevice === "mobile"
+                      ? "Generate Setup Key"
+                      : "Generate QR Code"}
                 </Button>
               </div>
             )}
@@ -333,32 +356,60 @@ export default function ProfilePage() {
         <section ref={completeSetupRef} className="rounded-xl border border-white/10 bg-[#111214] p-6">
           <h2 className="text-lg font-semibold text-white">Complete 2FA Setup</h2>
 
-          <p className="mt-3 text-sm text-[#d4d4d8]">
-            Step 1: Open your authenticator app on your phone and scan this QR code.
-          </p>
-          <div className="mt-3 inline-block rounded-lg bg-white p-3">
-            <img src={setup2FA.qrCodeDataUrl} alt="2FA QR Code" className="h-48 w-48" />
-          </div>
+          {accessDevice === "mobile" ? (
+            <>
+              <p className="mt-3 text-sm text-[#d4d4d8]">
+                Step 1: In your authenticator app, choose to add an account manually.
+              </p>
+              <p className="mt-2 text-sm text-[#d4d4d8]">
+                Step 2: Paste this setup key and choose a time-based code (TOTP):
+              </p>
+              <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
+                {setup2FA.secret}
+              </p>
+              <div className="mt-3">
+                <Button type="button" onClick={handleCopySetupKey}>
+                  Copy Setup Key
+                </Button>
+              </div>
+              <Button
+                type="button"
+                className="mt-4"
+                onClick={() => setDidScanQr(true)}
+              >
+                Done - I Added the Setup Key
+              </Button>
+            </>
+          ) : (
+            <>
+              <p className="mt-3 text-sm text-[#d4d4d8]">
+                Step 1: Open your authenticator app on your phone and scan this QR code.
+              </p>
+              <div className="mt-3 inline-block rounded-lg bg-white p-3">
+                <img src={setup2FA.qrCodeDataUrl} alt="2FA QR Code" className="h-48 w-48" />
+              </div>
 
-          <p className="mt-4 text-sm text-[#d4d4d8]">
-            Step 2 (only if scan does not work): use this manual setup key:
-          </p>
-          <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
-            {setup2FA.secret}
-          </p>
+              <p className="mt-4 text-sm text-[#d4d4d8]">
+                Step 2 (only if scan does not work): use this manual setup key:
+              </p>
+              <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
+                {setup2FA.secret}
+              </p>
 
-          <Button
-            type="button"
-            className="mt-4"
-            onClick={() => setDidScanQr(true)}
-          >
-            Done - I Scanned the QR Code
-          </Button>
+              <Button
+                type="button"
+                className="mt-4"
+                onClick={() => setDidScanQr(true)}
+              >
+                Done - I Scanned the QR Code
+              </Button>
+            </>
+          )}
 
           {didScanQr && (
             <form ref={verifyStepRef} onSubmit={handleVerify2FA} className="mt-5 space-y-3">
               <label htmlFor="verificationCode" className="block text-sm text-[#d4d4d8]">
-                Step 3: Enter the current 6-digit code from your app
+                Final step: Enter the current 6-digit code from your app
               </label>
               <input
                 type="text"
@@ -382,7 +433,7 @@ export default function ProfilePage() {
                   onClick={handleGenerate2FA}
                   disabled={isGenerating}
                 >
-                  Regenerate QR
+                  {accessDevice === "mobile" ? "Regenerate Setup Key" : "Regenerate QR"}
                 </Button>
               </div>
             </form>
@@ -392,7 +443,10 @@ export default function ProfilePage() {
             <p className="font-semibold text-[#e4e4e7]">If verification fails:</p>
             <p className="mt-1">1. Wait for a new code in your app, then try again.</p>
             <p className="mt-1">2. Make sure your phone time is set to automatic.</p>
-            <p className="mt-1">3. Click Regenerate QR and repeat the setup from Step 1.</p>
+            <p className="mt-1">
+              3. Click {accessDevice === "mobile" ? "Regenerate Setup Key" : "Regenerate QR"} and repeat the setup
+              from Step 1.
+            </p>
           </div>
         </section>
       )}

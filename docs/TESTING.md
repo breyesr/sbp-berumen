@@ -21,9 +21,11 @@ Current project status relies on manual QA plus runtime validation. This checkli
 ### B. 2FA onboarding wizard (`/profile`)
 
 - Status shows `Disabled` for new account.
-- Step flow works in order: choose platform -> app links -> generate QR -> verify.
+- Step flow works in order: choose platform -> app links -> generate setup data -> verify.
 - Mobile path: direct app listing link is shown (not store search), no QR.
 - Desktop path: prominent QR-only handoff is shown (no open/copy store link buttons).
+- Mobile complete-setup path: manual setup key + copy action is shown (no QR image).
+- Desktop complete-setup path: QR image is shown with manual setup key fallback.
 - After successful verify, UI immediately shows clear success and `2FA is active` state.
 - Sign out and sign in again; verify 2FA code is required.
 - While 2FA is disabled, visiting protected routes other than `/profile` shows blocking 2FA modal.
