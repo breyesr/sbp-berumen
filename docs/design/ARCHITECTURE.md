@@ -1,6 +1,6 @@
 # Architecture — Synthetic Persona Web
 
-This document describes the current architecture centered around a Postgres‑based RAG pipeline and multiple AI‑driven product surfaces.
+This document describes the current architecture centered around a Postgres‑based RAG pipeline, credentials auth + 2FA, and multiple AI‑driven product surfaces.
 
 ---
 
@@ -48,6 +48,7 @@ Frontend ───▶ API Route├─┐
 ## 2. Runtime & Tech
 - **Framework**: Next.js 16 (App Router)
 - **UI**: React 19, Tailwind CSS v4
+- **Auth**: Auth.js (`next-auth`) credentials provider + JWT sessions + middleware route protection
 - **Database**: Postgres with the `pgvector` extension
 - **Vector Search**: Hybrid search (keyword + vector) in `src/lib/rag.ts`
 - **LLM**: OpenAI (`gpt-4o-mini` default)
@@ -75,6 +76,13 @@ Frontend ───▶ API Route├─┐
 - `/api/stress-test`: persona critique for ideas.
 - `/api/idea-refinement`: missing‑info questions + rewrite.
 - `/api/copywriter`: platform/format copy generation.
+- `/api/register`: admin-only account creation + role assignment.
+- `/api/account/password/change`: authenticated password change with current password + 2FA.
+- `/api/admin/users`: admin-only user listing.
+- `/api/admin/users/[id]`: admin-only user update/delete.
+- `/api/2fa/generate`: TOTP secret + QR payload generation.
+- `/api/2fa/verify`: TOTP verification and activation.
+- `/api/auth/[...nextauth]`: Auth.js handler route.
 - `/api/persona`: streaming persona Q&A (messages‑based).
 - `/api/scorecard`: legacy efficiency scorecard (UI not wired).
 
@@ -91,4 +99,3 @@ All indexed content is stored in a single table named `documents`.
 | `embedding`        | `VECTOR(1536)` | Embedding vector for the chunk. |
 | `metadata`         | `JSONB`        | Metadata (source file, persona ids). |
 | `content_tsvector` | `TSVECTOR`     | Full‑text search index. |
-

@@ -1,113 +1,85 @@
 # Contributing to Synthetic Persona Web
 
-Thanks for your interest in contributing! This guide will help you set up your environment, understand the workflow, and follow our standards.
+Thanks for contributing. This guide reflects the current repository setup.
 
----
+## 1. Development setup
 
-## Development Setup (“Zero‑to‑Hero”)
-
-This guide assumes **Node.js**, **npm**, and **Docker Desktop** are installed.
-
-1) Clone the repository
+1. Clone and enter repo.
 ```bash
-git clone https://github.com/breyesr/synthetic-persona-web.git
-cd synthetic-persona-web
+git clone https://github.com/breyesr/sbp-berumen.git
+cd sbp-berumen
 ```
 
-2) Install dependencies
+2. Install dependencies.
 ```bash
 npm install
 ```
 
-3) Configure environment variables
+3. Configure env vars.
 ```bash
 cp .env.example .env.local
 ```
-Edit `.env.local` and add `OPENAI_API_KEY`. The example includes `POSTGRES_URL_LOCAL` for Docker.
+Set at minimum:
+- `OPENAI_API_KEY`
+- `AUTH_SECRET`
+- `POSTGRES_URL_LOCAL` (local docker db)
 
-4) Start the local database
+4. Start local DB.
 ```bash
 docker-compose up -d
 ```
 
-5) Set up database schema
+5. Initialize tables and ingest content.
 ```bash
 npm run db:setup
-```
-
-6) Seed the database (ingestion)
-```bash
+npm run db:auth:setup
 npm run embed
 ```
 
-7) Run the application
+6. Run app.
 ```bash
 npm run dev
 ```
-Open http://localhost:3000
 
----
+Open `http://localhost:3000`.
 
-## Managing Content (Ingestion Runbook)
+## 2. Important script safety notes
 
-The vector database follows a “convention over configuration” model based on the file system. To add, update, or remove content, modify files in `/data` and re‑run ingestion.
+- `npm run db:auth:setup` recreates auth tables and removes existing users/sessions.
+- `npm run db:reset` drops app/auth tables.
+- Use those scripts carefully on shared or production-like databases.
 
-### Directory Structure
+## 3. Content ingestion workflow
 
-- `data/global-knowledge/`: files available to **all** personas
-- `data/personas/<persona_id>/knowledge/`: files accessible only to that persona
-- `data/personas/<persona_id>/persona.json`: persona core definition
-- `data/copywriter/`: platform + format rules used by the copywriter
+- Add/update files in `data/`.
+- Run `npm run embed`.
 
-### How to Add or Update Content
+Folders:
+- `data/global-knowledge/`
+- `data/personas/<persona_id>/knowledge/`
+- `data/personas/<persona_id>/persona.json`
+- `data/copywriter/`
 
-1) Add files to the correct directory.
-2) Run ingestion:
-```bash
-npm run embed
-```
+## 4. Project structure (high level)
 
-### How to Delete Content
+- `src/app/(app)/` protected UI routes (`/`, `/copywriter`, `/profile`, `/profile/security`, `/admin/users`)
+- `src/app/(public)/` auth routes (`/login`, `/login/2fa`) + middleware-protected `/register` compatibility redirect
+- `src/app/api/` server endpoints
+- `src/lib/` DB, auth, RAG, and AI helpers
+- `docs/` documentation
 
-1) Delete the source file.
-2) Run ingestion:
-```bash
-npm run embed
-```
+## 5. Git workflow
 
----
+- Base production branch: `main`
+- Feature branches: `feature/*`
+- Bugfix branches: `fix/*`
+- Open PRs into `main` unless maintainers specify otherwise.
 
-## Project Structure
+Commit style:
+- Use Conventional Commits when possible (`feat:`, `fix:`, `docs:`, etc.).
 
-`src/`
- ├─ `app/`
- │   ├─ `api/`
- │   │   ├─ `stress-test/`         # Persona stress test API
- │   │   ├─ `idea-refinement/`     # Follow‑up Qs + pitch rewrite
- │   │   ├─ `copywriter/`          # Copywriter API + catalog
- │   │   ├─ `berumen/`             # Dual persona + consultant response
- │   │   ├─ `scorecard/`           # Legacy efficiency scorecard
- │   │   └─ `persona/`             # Streaming persona Q&A
- │   ├─ `page.tsx`                 # Stress test UI
- │   └─ `copywriter/page.tsx`      # Copywriter UI
- ├─ `components/`
- ├─ `lib/`
- │   ├─ `clients.ts`               # DB + OpenAI clients (env validation)
- │   ├─ `rag.ts`                   # Hybrid search
- │   ├─ `personaProvider.ts`       # Persona loading + RAG merge
- │   └─ ...
+## 6. Deployment
 
----
-
-## Git Workflow & Commit Conventions
-
-- Branches: `main` (production), `develop` (staging), `feat/*` (features), `fix/*` (bugfixes).
-- Workflow: create feature branches off `develop`. Open PRs against `develop`.
-- Commits: follow Conventional Commits.
-
----
-
-## Deployment
-
-Deployment is handled via Vercel. Every PR creates a Preview Deployment; merges to `main` deploy to production. See `docs/DEPLOYMENT.md`.
-
+- Vercel previews are created from branches/PRs.
+- `main` deploys to production.
+- See `docs/DEPLOYMENT.md` for env + DB setup details.

@@ -1,0 +1,61 @@
+"use client";
+
+import { useEffect } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
+export default function TwoFAEnforcementModal() {
+  const { data: session, status } = useSession();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isOnProfile = pathname?.startsWith("/profile");
+  const shouldShow =
+    status === "authenticated" && !session?.user?.two_factor_enabled && !isOnProfile;
+
+  useEffect(() => {
+    if (!shouldShow) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [shouldShow]);
+
+  if (!shouldShow) return null;
+
+  return (
+    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 px-4">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="twofa-required-title"
+        className="w-full max-w-md rounded-xl border border-white/15 bg-[#111214] p-6 text-[#ededed] shadow-2xl"
+      >
+        <h2 id="twofa-required-title" className="text-xl font-semibold">
+          Activate 2FA to continue
+        </h2>
+        <p className="mt-3 text-sm text-[#c4c4cc]">
+          To keep your account secure, two-factor authentication is now required before using the app.
+        </p>
+        <p className="mt-2 text-sm text-[#a1a1aa]">
+          It takes about 2 minutes. We will guide you step by step on your profile page.
+        </p>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Button type="button" onClick={() => router.push("/profile")}>Set Up 2FA Now</Button>
+          <Button
+            type="button"
+            className="bg-[#1f2937] hover:bg-[#374151]"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+          >
+            Sign Out
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
