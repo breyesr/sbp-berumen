@@ -30,7 +30,12 @@ function LoginPageContent() {
     });
 
     if (result?.error) {
-      if (result.error === "Configuration") {
+      const isTwoFactorRequired =
+        (result.error === "CredentialsSignin" && result.code === "2fa_required") ||
+        // Backward-compatible fallback for older generic throws.
+        result.error === "Configuration";
+
+      if (isTwoFactorRequired) {
         router.push(`/login/2fa?email=${encodeURIComponent(email)}`);
       } else {
         setError(t("auth.login.error_try_again"));

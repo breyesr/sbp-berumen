@@ -1,11 +1,15 @@
 
 import { verifyOtp } from "./totp";
 import bcrypt from "bcryptjs";
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import PostgresAdapter from "@auth/pg-adapter";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "./clients";
 import { normalizeLocale } from "./i18n/config";
+
+class TwoFactorRequiredError extends CredentialsSignin {
+  code = "2fa_required";
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PostgresAdapter(db),
@@ -79,7 +83,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (passwordsMatch) {
           if (user.two_factor_enabled) {
-            throw new Error("2FA_REQUIRED");
+            if (!user.two_factor_secret) {
+              // Recover from inconsistent DB state so the user can re-enroll 2FA.
+              await db.query(
+                "UPDATE users SET two_factor_enabled = FALSE WHERE id = $1",
+                [user.id]
+              );
+              return { id: user.id, name: user.name, email: user.email };
+            }
+            throw new TwoFactorRequiredError();
           }
           return { id: user.id, name: user.name, email: user.email };
         }

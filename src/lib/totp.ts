@@ -15,6 +15,9 @@ export function generateOtpAuthUri(email: string, secret: string, issuer: string
 }
 
 export function verifyOtp(token: string, secret: string): boolean {
+  const normalizedToken = token.replace(/\s+/g, '').trim();
+  if (!/^\d{6}$/.test(normalizedToken)) return false;
+
   const decodedSecret = base32.decode(secret);
   const time = Math.floor(Date.now() / 1000 / TOTP_PERIOD);
   
@@ -37,6 +40,7 @@ export function verifyOtp(token: string, secret: string): boolean {
 
   const otpCurrent = hotp(time);
   const otpPrevious = hotp(time - 1); // Check previous time step due to clock drift
+  const otpNext = hotp(time + 1); // Also allow slight client-ahead drift
 
-  return token === otpCurrent || token === otpPrevious;
+  return normalizedToken === otpCurrent || normalizedToken === otpPrevious || normalizedToken === otpNext;
 }
