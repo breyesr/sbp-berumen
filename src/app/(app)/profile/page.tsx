@@ -34,16 +34,14 @@ export default function ProfilePage() {
   const [isVerifying, setIsVerifying] = useState(false);
   const [devicePlatform, setDevicePlatform] = useState<DevicePlatform | null>(null);
   const [didConfirmPlatform, setDidConfirmPlatform] = useState(false);
-  const [didInstallApp, setDidInstallApp] = useState(false);
+  const [hasAuthenticatorApp, setHasAuthenticatorApp] = useState<boolean | null>(null);
   const [didScanQr, setDidScanQr] = useState(false);
   const [selectedAuthenticatorHref, setSelectedAuthenticatorHref] = useState<string>("");
   const [didJustEnable2FA, setDidJustEnable2FA] = useState(false);
   const [accessDevice, setAccessDevice] = useState<AccessDevice>("desktop");
-  const [step1Hint, setStep1Hint] = useState<string>("");
   const [step2Hint, setStep2Hint] = useState<string>("");
   const [setupKeyCopyState, setSetupKeyCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const step2Ref = useRef<HTMLDivElement | null>(null);
-  const step3Ref = useRef<HTMLDivElement | null>(null);
   const completeSetupRef = useRef<HTMLDivElement | null>(null);
   const verifyStepRef = useRef<HTMLFormElement | null>(null);
   const is2FAEnabled = didJustEnable2FA || Boolean(session?.user?.two_factor_enabled);
@@ -70,11 +68,6 @@ export default function ProfilePage() {
     if (!didConfirmPlatform) return;
     step2Ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [didConfirmPlatform]);
-
-  useEffect(() => {
-    if (!didInstallApp) return;
-    step3Ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [didInstallApp]);
 
   useEffect(() => {
     if (!setup2FA) return;
@@ -109,7 +102,7 @@ export default function ProfilePage() {
 
       if (response.ok) {
         setSetup2FA(data);
-        setMessage("Setup details generated. Continue with Step 4 below.");
+        setMessage("Setup details generated. Continue with Step 3 below.");
       } else {
         setError(data.error || "Failed to start 2FA setup.");
       }
@@ -160,21 +153,26 @@ export default function ProfilePage() {
     }
   };
 
-  const handleContinueStep1 = () => {
-    setDidConfirmPlatform(true);
-    setDidInstallApp(false);
-    setStep1Hint("Step 1 complete. Continue with Step 2 below.");
+  const handleSelectPlatform = (platform: DevicePlatform) => {
+    setDevicePlatform(platform);
+    setSelectedAuthenticatorHref(AUTHENTICATOR_LINKS[platform][0].href);
+    setHasAuthenticatorApp(null);
+    setStep2Hint("");
+    if (!didConfirmPlatform) setDidConfirmPlatform(true);
     setTimeout(() => {
       step2Ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 80);
   };
 
-  const handleContinueStep2 = () => {
-    setDidInstallApp(true);
-    setStep2Hint("Step 2 complete. Continue with Step 3 below.");
-    setTimeout(() => {
-      step3Ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
+  const handleContinueStep2 = async (selectedPath: boolean | null = hasAuthenticatorApp) => {
+    if (selectedPath === null || isGenerating) return;
+    setStep2Hint(
+      selectedPath
+        ? "Great. You already have an app. Preparing your 2FA setup..."
+        : "Preparing your 2FA setup..."
+    );
+    await handleGenerate2FA();
+    setStep2Hint("");
   };
 
   const handleContinueSetupComplete = () => {
@@ -234,7 +232,7 @@ export default function ProfilePage() {
         <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
           <h2 className="text-lg font-semibold text-white">Set Up 2FA (Step by Step)</h2>
           <p className="mt-2 text-sm text-[#a1a1aa]">
-            Follow each step in order. Each Done button moves you to the next step.
+            Follow each step in order. Selecting your phone in Step 1 moves you to Step 2 automatically.
           </p>
 
           <div className="mt-4 space-y-4">
@@ -243,11 +241,7 @@ export default function ProfilePage() {
               <div className="mt-3 flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    setDevicePlatform("ios");
-                    setSelectedAuthenticatorHref(AUTHENTICATOR_LINKS.ios[0].href);
-                    setStep1Hint("");
-                  }}
+                  onClick={() => handleSelectPlatform("ios")}
                   className={`rounded-md border px-3 py-2 text-sm ${
                     devicePlatform === "ios"
                       ? "border-blue-500 bg-blue-500/20 text-blue-200"
@@ -258,11 +252,7 @@ export default function ProfilePage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    setDevicePlatform("android");
-                    setSelectedAuthenticatorHref(AUTHENTICATOR_LINKS.android[0].href);
-                    setStep1Hint("");
-                  }}
+                  onClick={() => handleSelectPlatform("android")}
                   className={`rounded-md border px-3 py-2 text-sm ${
                     devicePlatform === "android"
                       ? "border-blue-500 bg-blue-500/20 text-blue-200"
@@ -272,116 +262,138 @@ export default function ProfilePage() {
                   Android
                 </button>
               </div>
-              <Button
-                className="mt-4 transition-transform active:scale-[0.98]"
-                type="button"
-                disabled={!devicePlatform}
-                onClick={handleContinueStep1}
-              >
-                {didConfirmPlatform ? "Step 1 Complete - Continue to Step 2" : "Done - Continue to Step 2"}
-              </Button>
-              {step1Hint && <p className="mt-2 text-xs text-emerald-300">{step1Hint}</p>}
             </div>
 
             {didConfirmPlatform && (
               <div ref={step2Ref} className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
                 <p className="text-sm font-semibold text-white">Step 2: Install an authenticator app</p>
                 <p className="mt-2 text-sm text-[#a1a1aa]">
-                  Pick one app below.
-                  {accessDevice === "mobile"
-                    ? " You are on mobile, so use the store link directly from this device."
-                    : " You are on desktop, so scan the QR code with your phone to open the store page."}
+                  Do you already have an authenticator app installed on your phone?
                 </p>
-                <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                  {authenticatorOptions.map((app) => (
-                    <button
-                      key={app.name}
-                      type="button"
-                      onClick={() => {
-                        setSelectedAuthenticatorHref(app.href);
-                        setStep2Hint("");
-                      }}
-                      className={`rounded-md border px-3 py-2 text-left text-sm ${
-                        selectedAuthenticator?.href === app.href
-                          ? "border-blue-500 bg-blue-500/20 text-blue-100"
-                          : "border-white/15 bg-[#121318] text-[#d4d4d8] hover:border-blue-500/60 hover:text-white"
-                      }`}
-                    >
-                      {app.name}
-                    </button>
-                  ))}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHasAuthenticatorApp(true);
+                      setStep2Hint("");
+                      void handleContinueStep2(true);
+                    }}
+                    className={`rounded-md border px-3 py-2 text-sm ${
+                      hasAuthenticatorApp === true
+                        ? "border-emerald-500 bg-emerald-500/20 text-emerald-100"
+                        : "border-white/20 bg-transparent text-[#d4d4d8]"
+                    }`}
+                  >
+                    Yes, I already have one
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHasAuthenticatorApp(false);
+                      setStep2Hint("");
+                    }}
+                    className={`rounded-md border px-3 py-2 text-sm ${
+                      hasAuthenticatorApp === false
+                        ? "border-blue-500 bg-blue-500/20 text-blue-100"
+                        : "border-white/20 bg-transparent text-[#d4d4d8]"
+                    }`}
+                  >
+                    No, help me install one
+                  </button>
                 </div>
 
-                {selectedAuthenticator && (
-                  <div className="mt-4 rounded-lg border border-white/10 bg-[#111214] p-4">
-                    <p className="text-sm text-[#d4d4d8]">
-                      Selected app: <span className="font-semibold text-white">{selectedAuthenticator.name}</span>
+                {hasAuthenticatorApp === true && (
+                  <div className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-4">
+                    <p className="text-sm text-emerald-100">
+                      Great. You already have an app. Moving you to setup...
                     </p>
-                    {accessDevice === "mobile" ? (
-                      <div className="mt-3">
-                        <a
-                          href={selectedAuthenticator.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center rounded-md border border-blue-500/40 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 hover:bg-blue-500/25"
-                        >
-                          Open Store Link
-                        </a>
-                      </div>
-                    ) : (
-                      <div className="mt-3">
-                        <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-3">
-                          <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">
-                            Scan this QR code with your phone
-                          </p>
-                          <p className="mt-1 text-xs text-amber-100/90">
-                            Use your phone camera to open the store page and install the authenticator app.
-                          </p>
-                        </div>
-                        <div className="mt-3 inline-block rounded-md bg-white p-2">
-                          <img
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(selectedAuthenticator.href)}`}
-                            alt={`${selectedAuthenticator.name} store link QR`}
-                            className="h-52 w-52"
-                          />
-                        </div>
-                      </div>
-                    )}
                   </div>
                 )}
 
-                <Button
-                  className="mt-4 transition-transform active:scale-[0.98]"
-                  type="button"
-                  onClick={handleContinueStep2}
-                >
-                  {didInstallApp ? "Step 2 Complete - Continue to Step 3" : "Done - Continue to Step 3"}
-                </Button>
-                {step2Hint && <p className="mt-2 text-xs text-emerald-300">{step2Hint}</p>}
-              </div>
-            )}
+                {hasAuthenticatorApp === false && (
+                  <>
+                    <p className="mt-4 text-sm text-[#a1a1aa]">
+                      Pick one app below.
+                      {accessDevice === "mobile"
+                        ? " You are on mobile, so use the store link directly from this device."
+                        : " You are on desktop, so use the QR below with your phone camera to open the store page."}
+                    </p>
+                    <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                      {authenticatorOptions.map((app) => (
+                        <button
+                          key={app.name}
+                          type="button"
+                          onClick={() => {
+                            setSelectedAuthenticatorHref(app.href);
+                            setStep2Hint("");
+                          }}
+                          className={`rounded-md border px-3 py-2 text-left text-sm ${
+                            selectedAuthenticator?.href === app.href
+                              ? "border-blue-500 bg-blue-500/20 text-blue-100"
+                              : "border-white/15 bg-[#121318] text-[#d4d4d8] hover:border-blue-500/60 hover:text-white"
+                          }`}
+                        >
+                          {app.name}
+                        </button>
+                      ))}
+                    </div>
 
-            {didInstallApp && (
-              <div ref={step3Ref} className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-                <p className="text-sm font-semibold text-white">
-                  Step 3: Generate your 2FA setup details
-                </p>
-                <p className="mt-2 text-sm text-[#a1a1aa]">
-                  {accessDevice === "mobile"
-                    ? "We will generate your setup key so you can add it manually in your authenticator app."
-                    : "We will now generate a QR code for your app to scan."}
-                </p>
-                <Button
-                  className="mt-4 transition-transform active:scale-[0.98]"
-                  onClick={handleGenerate2FA}
-                  disabled={isGenerating}
-                >
-                  {isGenerating
-                    ? "Generating..."
-                    : accessDevice === "mobile"
-                      ? "Generate Setup Key for Step 4"
-                      : "Generate QR Code for Step 4"}
-                </Button>
+                    {selectedAuthenticator && (
+                      <div className="mt-4 rounded-lg border border-white/10 bg-[#111214] p-4">
+                        <p className="text-sm text-[#d4d4d8]">
+                          Selected app: <span className="font-semibold text-white">{selectedAuthenticator.name}</span>
+                        </p>
+                        {accessDevice === "mobile" ? (
+                          <div className="mt-3">
+                            <a
+                              href={selectedAuthenticator.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center rounded-md border border-blue-500/40 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 hover:bg-blue-500/25"
+                            >
+                              Open Store Link
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="mt-3">
+                            <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-3">
+                              <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">
+                                Scan with your camera to download your chosen 2FA app
+                              </p>
+                              <p className="mt-1 text-xs text-amber-100/90">
+                                Do not scan this with your authenticator app. This QR is only to open the app store.
+                              </p>
+                            </div>
+                            <div className="mt-3 inline-block rounded-md bg-white p-2">
+                              <img
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(selectedAuthenticator.href)}`}
+                                alt={`${selectedAuthenticator.name} app download QR`}
+                                className="h-52 w-52"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {hasAuthenticatorApp !== true && (
+                  <>
+                    <Button
+                      className="mt-4 transition-transform active:scale-[0.98]"
+                      type="button"
+                      disabled={hasAuthenticatorApp === null || isGenerating}
+                      onClick={() => void handleContinueStep2(false)}
+                    >
+                      {isGenerating ? "Preparing 2FA Setup..." : "Done - Continue to Step 3"}
+                    </Button>
+                    {hasAuthenticatorApp === null && (
+                      <p className="mt-2 text-xs text-amber-300">Choose Yes or No above to continue.</p>
+                    )}
+                  </>
+                )}
+                {step2Hint && <p className="mt-2 text-xs text-emerald-300">{step2Hint}</p>}
               </div>
             )}
           </div>
@@ -390,7 +402,7 @@ export default function ProfilePage() {
 
       {!is2FAEnabled && setup2FA && (
         <section ref={completeSetupRef} className="rounded-xl border border-white/10 bg-[#111214] p-6">
-          <h2 className="text-lg font-semibold text-white">Step 4: Complete setup in your authenticator app</h2>
+          <h2 className="text-lg font-semibold text-white">Step 3: Complete setup in your authenticator app</h2>
 
           {accessDevice === "mobile" ? (
             <>

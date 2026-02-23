@@ -47,20 +47,23 @@ This document outlines the current user flows for the two main surfaces.
 
 **Step 2 — Guided 2FA Onboarding**
 - Ask device type (iOS or Android)
-- Offer authenticator app options
+- Selecting device type auto-advances within onboarding (no Step 1 Continue button)
+- Ask whether user already has an authenticator app (`Yes` / `No`)
+- On continue: generate setup details automatically
+- If `Yes`: skip app-download guidance and start setup generation immediately
+- If `No`: offer authenticator app options
 - Mobile detection path:
   - show direct app listing link for selected authenticator app (not store search)
   - no QR handoff
 - Desktop detection path:
-  - show prominent QR handoff to phone camera
+  - show app-download QR with explicit "scan with camera" label
+  - show warning that this QR is not for authenticator scan
   - no open/copy store link actions
 
-**Step 3 — Connect Authenticator**
+**Step 3 — Complete Setup and Verify**
 - Mobile: show manual setup key (copyable), no QR image
 - Desktop: generate account-specific QR code with manual setup secret fallback
 - User confirms authenticator app setup is complete
-
-**Step 4 — Verify Code**
 - User enters 6-digit TOTP code
 - Success state shown immediately
 - Recommended confirmation: sign out and sign in again
