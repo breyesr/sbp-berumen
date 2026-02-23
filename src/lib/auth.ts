@@ -5,6 +5,7 @@ import NextAuth from "next-auth";
 import PostgresAdapter from "@auth/pg-adapter";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "./clients";
+import { normalizeLocale } from "./i18n/config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PostgresAdapter(db),
@@ -17,7 +18,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       if ((user || trigger === "update" || token.two_factor_enabled === undefined) && token.id) {
         const permissionsResult = await db.query(
-          `SELECT r.name as role, a.name as app, up."personaId", u.two_factor_enabled
+          `SELECT r.name as role, a.name as app, up."personaId", u.two_factor_enabled, u.locale
            FROM users u
            LEFT JOIN user_roles ur ON u.id = ur."userId"
            LEFT JOIN roles r ON ur."roleId" = r.id
@@ -32,6 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.apps = [...new Set(permissionsResult.rows.map(r => r.app).filter(Boolean))];
         token.personas = [...new Set(permissionsResult.rows.map(r => r.personaId).filter(Boolean))];
         token.two_factor_enabled = Boolean(permissionsResult.rows[0]?.two_factor_enabled);
+        token.locale = normalizeLocale(permissionsResult.rows[0]?.locale);
       }
       return token;
     },
@@ -42,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.apps = token.apps as string[] | undefined;
         session.user.personas = token.personas as string[] | undefined;
         session.user.two_factor_enabled = token.two_factor_enabled as boolean | undefined;
+        session.user.locale = token.locale as "es-MX" | "en-US" | undefined;
       }
       return session;
     },

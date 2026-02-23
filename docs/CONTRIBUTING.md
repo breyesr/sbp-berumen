@@ -66,9 +66,21 @@ Folders:
 - `src/app/(public)/` auth routes (`/login`, `/login/2fa`) + middleware-protected `/register` compatibility redirect
 - `src/app/api/` server endpoints
 - `src/lib/` DB, auth, RAG, and AI helpers
+- `src/lib/i18n/` locale config, dictionaries, translator helpers
+- `src/components/i18n/` provider + language switch UI
 - `docs/` documentation
 
-## 5. Git workflow
+## 5. i18n contribution workflow
+
+- Add or edit keys in `src/lib/i18n/messages.ts` for both `es-MX` and `en-US`.
+- Use keys from components/pages via `useI18n().t("key")`; avoid hardcoded UI strings.
+- Keep Spanish copy neutral-MX and user-facing (not literal machine translation).
+- For existing DBs, run `npm run db:locale:migrate` once to add `users.locale`.
+- Validate locale persistence:
+  - logged out: cookie-based
+  - logged in: DB + session-based
+
+## 6. Git workflow
 
 - Base production branch: `main`
 - Feature branches: `feature/*`
@@ -78,7 +90,7 @@ Folders:
 Commit style:
 - Use Conventional Commits when possible (`feat:`, `fix:`, `docs:`, etc.).
 
-## 6. Deployment
+## 7. Deployment
 
 - Vercel previews are created from branches/PRs.
 - `main` deploys to production.

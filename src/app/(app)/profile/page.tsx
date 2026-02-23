@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 import { Button } from "@/components/ui/button";
 import ProfileSectionNav from "@/components/profile/ProfileSectionNav";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 type DevicePlatform = "ios" | "android";
 type AccessDevice = "mobile" | "desktop";
@@ -25,6 +26,7 @@ const AUTHENTICATOR_LINKS: Record<DevicePlatform, Array<{ name: string; href: st
 };
 
 export default function ProfilePage() {
+  const { t } = useI18n();
   const { data: session, update } = useSession();
   const [setup2FA, setSetup2FA] = useState<{ qrCodeDataUrl: string; secret: string } | null>(null);
   const [verificationCode, setVerificationCode] = useState("");
@@ -98,16 +100,16 @@ export default function ProfilePage() {
 
     try {
       const response = await fetch("/api/2fa/generate", { method: "POST" });
-      const data = await response.json();
+      const data = await response.json().catch(() => null);
 
-      if (response.ok) {
-        setSetup2FA(data);
-        setMessage("Setup details generated. Continue with Step 3 below.");
+      if (response.ok && data?.qrCodeDataUrl && data?.secret) {
+        setSetup2FA({ qrCodeDataUrl: data.qrCodeDataUrl, secret: data.secret });
+        setMessage(t("profile.setup.generated"));
       } else {
-        setError(data.error || "Failed to start 2FA setup.");
+        setError(t("profile.setup.generate_error"));
       }
     } catch {
-      setError("Could not reach the server. Please try again.");
+      setError(t("common.errors.network"));
     } finally {
       setIsGenerating(false);
     }
@@ -125,19 +127,19 @@ export default function ProfilePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: verificationCode.trim() }),
       });
-      const data = await response.json();
+      await response.json().catch(() => null);
 
       if (response.ok) {
         setSetup2FA(null);
         setVerificationCode("");
         setDidJustEnable2FA(true);
-        setMessage("Success: 2FA is now active on your account.");
+        setMessage(t("profile.setup.success.banner"));
         await update({ two_factor_enabled: true } as any); // Force an explicit session update trigger
       } else {
-        setError(data.error || "Failed to verify 2FA code.");
+        setError(t("profile.setup.verify_error"));
       }
     } catch {
-      setError("Could not verify code. Please try again.");
+      setError(t("profile.setup.verify_unreachable"));
     } finally {
       setIsVerifying(false);
     }
@@ -168,8 +170,8 @@ export default function ProfilePage() {
     if (selectedPath === null || isGenerating) return;
     setStep2Hint(
       selectedPath
-        ? "Great. You already have an app. Preparing your 2FA setup..."
-        : "Preparing your 2FA setup..."
+        ? t("profile.setup.step2.yes_hint")
+        : t("profile.setup.step2.preparing")
     );
     await handleGenerate2FA();
     setStep2Hint("");
@@ -183,33 +185,32 @@ export default function ProfilePage() {
   };
 
   if (!session?.user) {
-    return <p className="text-sm text-[#a1a1aa]">Loading profile...</p>;
+    return <p className="text-sm text-[#a1a1aa]">{t("profile.loading")}</p>;
   }
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-6">
       <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
         <ProfileSectionNav />
-        <h1 className="mt-4 text-2xl font-semibold text-white">Profile & Security</h1>
+        <h1 className="mt-4 text-2xl font-semibold text-white">{t("profile.title")}</h1>
         <p className="mt-2 text-sm text-[#a1a1aa]">
-          Two-factor authentication (2FA) adds one extra security step when you log in.
-          After your password, you will also type a 6-digit code from your phone.
+          {t("profile.description")}
         </p>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <div className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-            <p className="text-xs uppercase tracking-wide text-[#71717a]">Email</p>
+            <p className="text-xs uppercase tracking-wide text-[#71717a]">{t("common.fields.email")}</p>
             <p className="mt-1 text-sm text-[#e4e4e7]">{session.user.email}</p>
           </div>
           <div className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-            <p className="text-xs uppercase tracking-wide text-[#71717a]">2FA Status</p>
+            <p className="text-xs uppercase tracking-wide text-[#71717a]">{t("profile.twofa_status")}</p>
             <p className="mt-1 text-sm font-semibold">
               <span
                 className={
                   is2FAEnabled ? "text-emerald-400" : "text-amber-400"
                 }
               >
-                {is2FAEnabled ? "Enabled" : "Disabled"}
+                {is2FAEnabled ? t("common.status.enabled") : t("common.status.disabled")}
               </span>
             </p>
           </div>
@@ -230,14 +231,14 @@ export default function ProfilePage() {
 
       {!is2FAEnabled && !setup2FA && (
         <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
-          <h2 className="text-lg font-semibold text-white">Set Up 2FA (Step by Step)</h2>
+          <h2 className="text-lg font-semibold text-white">{t("profile.setup.title")}</h2>
           <p className="mt-2 text-sm text-[#a1a1aa]">
-            Follow each step in order. Selecting your phone in Step 1 moves you to Step 2 automatically.
+            {t("profile.setup.subtitle")}
           </p>
 
           <div className="mt-4 space-y-4">
             <div className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-              <p className="text-sm font-semibold text-white">Step 1: Which phone do you use?</p>
+              <p className="text-sm font-semibold text-white">{t("profile.setup.step1.title")}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <button
                   type="button"
@@ -248,7 +249,7 @@ export default function ProfilePage() {
                       : "border-white/20 bg-transparent text-[#d4d4d8]"
                   }`}
                 >
-                  iPhone (iOS)
+                  {t("profile.setup.step1.ios")}
                 </button>
                 <button
                   type="button"
@@ -259,16 +260,16 @@ export default function ProfilePage() {
                       : "border-white/20 bg-transparent text-[#d4d4d8]"
                   }`}
                 >
-                  Android
+                  {t("profile.setup.step1.android")}
                 </button>
               </div>
             </div>
 
             {didConfirmPlatform && (
               <div ref={step2Ref} className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-                <p className="text-sm font-semibold text-white">Step 2: Install an authenticator app</p>
+                <p className="text-sm font-semibold text-white">{t("profile.setup.step2.title")}</p>
                 <p className="mt-2 text-sm text-[#a1a1aa]">
-                  Do you already have an authenticator app installed on your phone?
+                  {t("profile.setup.step2.question_has_app")}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button
@@ -284,7 +285,7 @@ export default function ProfilePage() {
                         : "border-white/20 bg-transparent text-[#d4d4d8]"
                     }`}
                   >
-                    Yes, I already have one
+                    {t("profile.setup.step2.option_yes")}
                   </button>
                   <button
                     type="button"
@@ -298,14 +299,14 @@ export default function ProfilePage() {
                         : "border-white/20 bg-transparent text-[#d4d4d8]"
                     }`}
                   >
-                    No, help me install one
+                    {t("profile.setup.step2.option_no")}
                   </button>
                 </div>
 
                 {hasAuthenticatorApp === true && (
                   <div className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-4">
                     <p className="text-sm text-emerald-100">
-                      Great. You already have an app. Moving you to setup...
+                      {t("profile.setup.step2.yes_hint")}
                     </p>
                   </div>
                 )}
@@ -313,10 +314,10 @@ export default function ProfilePage() {
                 {hasAuthenticatorApp === false && (
                   <>
                     <p className="mt-4 text-sm text-[#a1a1aa]">
-                      Pick one app below.
+                      {t("profile.setup.step2.pick_app")}
                       {accessDevice === "mobile"
-                        ? " You are on mobile, so use the store link directly from this device."
-                        : " You are on desktop, so use the QR below with your phone camera to open the store page."}
+                        ? ` ${t("profile.setup.step2.mobile_hint")}`
+                        : ` ${t("profile.setup.step2.desktop_hint")}`}
                     </p>
                     <div className="mt-3 grid gap-2 sm:grid-cols-2">
                       {authenticatorOptions.map((app) => (
@@ -341,7 +342,7 @@ export default function ProfilePage() {
                     {selectedAuthenticator && (
                       <div className="mt-4 rounded-lg border border-white/10 bg-[#111214] p-4">
                         <p className="text-sm text-[#d4d4d8]">
-                          Selected app: <span className="font-semibold text-white">{selectedAuthenticator.name}</span>
+                          {t("profile.setup.step2.selected_app", { app: selectedAuthenticator.name })}
                         </p>
                         {accessDevice === "mobile" ? (
                           <div className="mt-3">
@@ -351,23 +352,23 @@ export default function ProfilePage() {
                               rel="noreferrer"
                               className="inline-flex items-center rounded-md border border-blue-500/40 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 hover:bg-blue-500/25"
                             >
-                              Open Store Link
+                              {t("profile.setup.step2.open_store_link")}
                             </a>
                           </div>
                         ) : (
                           <div className="mt-3">
                             <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-3">
                               <p className="text-sm font-semibold uppercase tracking-wide text-amber-200">
-                                Scan with your camera to download your chosen 2FA app
+                                {t("profile.setup.step2.download_qr_title")}
                               </p>
                               <p className="mt-1 text-xs text-amber-100/90">
-                                Do not scan this with your authenticator app. This QR is only to open the app store.
+                                {t("profile.setup.step2.download_qr_warning")}
                               </p>
                             </div>
                             <div className="mt-3 inline-block rounded-md bg-white p-2">
                               <img
                                 src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(selectedAuthenticator.href)}`}
-                                alt={`${selectedAuthenticator.name} app download QR`}
+                                alt={t("profile.setup.step2.download_qr_alt", { app: selectedAuthenticator.name })}
                                 className="h-52 w-52"
                               />
                             </div>
@@ -386,10 +387,10 @@ export default function ProfilePage() {
                       disabled={hasAuthenticatorApp === null || isGenerating}
                       onClick={() => void handleContinueStep2(false)}
                     >
-                      {isGenerating ? "Preparing 2FA Setup..." : "Done - Continue to Step 3"}
+                      {isGenerating ? t("profile.setup.step2.preparing") : t("profile.setup.step2.continue")}
                     </Button>
                     {hasAuthenticatorApp === null && (
-                      <p className="mt-2 text-xs text-amber-300">Choose Yes or No above to continue.</p>
+                      <p className="mt-2 text-xs text-amber-300">{t("profile.setup.step2.choose_required")}</p>
                     )}
                   </>
                 )}
@@ -402,15 +403,15 @@ export default function ProfilePage() {
 
       {!is2FAEnabled && setup2FA && (
         <section ref={completeSetupRef} className="rounded-xl border border-white/10 bg-[#111214] p-6">
-          <h2 className="text-lg font-semibold text-white">Step 3: Complete setup in your authenticator app</h2>
+          <h2 className="text-lg font-semibold text-white">{t("profile.setup.step3.title")}</h2>
 
           {accessDevice === "mobile" ? (
             <>
               <p className="mt-3 text-sm text-[#d4d4d8]">
-                In your authenticator app, choose to add an account manually.
+                {t("profile.setup.step3.mobile_1")}
               </p>
               <p className="mt-2 text-sm text-[#d4d4d8]">
-                Paste this setup key and choose a time-based code (TOTP):
+                {t("profile.setup.step3.mobile_2")}
               </p>
               <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
                 {setup2FA.secret}
@@ -421,14 +422,14 @@ export default function ProfilePage() {
                   className="transition-transform active:scale-[0.98]"
                   onClick={handleCopySetupKey}
                 >
-                  {setupKeyCopyState === "copied" ? "Setup Key Copied" : "Copy Setup Key"}
+                  {setupKeyCopyState === "copied" ? t("profile.setup.step3.copy_key_done") : t("profile.setup.step3.copy_key")}
                 </Button>
                 {setupKeyCopyState === "copied" && (
-                  <p className="mt-2 text-xs text-emerald-300">Copied. Open your authenticator app and paste the key.</p>
+                  <p className="mt-2 text-xs text-emerald-300">{t("profile.setup.step3.copy_key_success")}</p>
                 )}
                 {setupKeyCopyState === "failed" && (
                   <p className="mt-2 text-xs text-red-300">
-                    Could not copy automatically. Press and hold the key above to copy manually.
+                    {t("profile.setup.step3.copy_key_error")}
                   </p>
                 )}
               </div>
@@ -437,20 +438,20 @@ export default function ProfilePage() {
                 className="mt-4 transition-transform active:scale-[0.98]"
                 onClick={handleContinueSetupComplete}
               >
-                Done - Continue
+                {t("profile.setup.step3.done")}
               </Button>
             </>
           ) : (
             <>
               <p className="mt-3 text-sm text-[#d4d4d8]">
-                Open your authenticator app on your phone and scan this QR code.
+                {t("profile.setup.step3.desktop_1")}
               </p>
               <div className="mt-3 inline-block rounded-lg bg-white p-3">
-                <img src={setup2FA.qrCodeDataUrl} alt="2FA QR Code" className="h-48 w-48" />
+                <img src={setup2FA.qrCodeDataUrl} alt={t("profile.setup.step3.qr_alt")} className="h-48 w-48" />
               </div>
 
               <p className="mt-4 text-sm text-[#d4d4d8]">
-                If scan does not work, use this manual setup key:
+                {t("profile.setup.step3.desktop_2")}
               </p>
               <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-2 font-mono text-xs text-[#e4e4e7]">
                 {setup2FA.secret}
@@ -461,7 +462,7 @@ export default function ProfilePage() {
                 className="mt-4 transition-transform active:scale-[0.98]"
                 onClick={handleContinueSetupComplete}
               >
-                Done - Continue
+                {t("profile.setup.step3.done")}
               </Button>
             </>
           )}
@@ -469,7 +470,7 @@ export default function ProfilePage() {
           {didScanQr && (
             <form ref={verifyStepRef} onSubmit={handleVerify2FA} className="mt-5 space-y-3">
               <label htmlFor="verificationCode" className="block text-sm text-[#d4d4d8]">
-                Enter the current 6-digit code from your app
+                {t("profile.setup.step3.verify_label")}
               </label>
               <input
                 type="text"
@@ -481,7 +482,7 @@ export default function ProfilePage() {
                 maxLength={6}
                 inputMode="numeric"
                 className="w-full max-w-xs rounded-md border border-white/15 bg-[#0d0e10] px-3 py-2 text-sm text-white outline-none ring-blue-500/40 placeholder:text-[#6b7280] focus:ring"
-                placeholder="123456"
+                placeholder={t("profile.setup.step3.verify_placeholder")}
               />
               <div className="flex gap-3">
                 <Button
@@ -489,7 +490,7 @@ export default function ProfilePage() {
                   className="transition-transform active:scale-[0.98]"
                   disabled={isVerifying || verificationCode.length !== 6}
                 >
-                  {isVerifying ? "Verifying..." : "Verify & Activate 2FA"}
+                  {isVerifying ? t("profile.setup.step3.verifying") : t("profile.setup.step3.verify_button")}
                 </Button>
                 <Button
                   type="button"
@@ -497,19 +498,20 @@ export default function ProfilePage() {
                   onClick={handleGenerate2FA}
                   disabled={isGenerating}
                 >
-                  {accessDevice === "mobile" ? "Regenerate Setup Key" : "Regenerate QR"}
+                  {accessDevice === "mobile" ? t("profile.setup.step3.regenerate_key") : t("profile.setup.step3.regenerate_qr")}
                 </Button>
               </div>
             </form>
           )}
 
           <div className="mt-5 rounded-md border border-white/10 bg-[#0d0e10] px-3 py-3 text-xs text-[#c4c4cc]">
-            <p className="font-semibold text-[#e4e4e7]">If verification fails:</p>
-            <p className="mt-1">1. Wait for a new code in your app, then try again.</p>
-            <p className="mt-1">2. Make sure your phone time is set to automatic.</p>
+            <p className="font-semibold text-[#e4e4e7]">{t("profile.setup.troubleshoot.title")}</p>
+            <p className="mt-1">{t("profile.setup.troubleshoot.item1")}</p>
+            <p className="mt-1">{t("profile.setup.troubleshoot.item2")}</p>
             <p className="mt-1">
-              3. Click {accessDevice === "mobile" ? "Regenerate Setup Key" : "Regenerate QR"} and repeat the setup
-              from Step 1.
+              {t("profile.setup.troubleshoot.item3", {
+                action: accessDevice === "mobile" ? t("profile.setup.step3.regenerate_key") : t("profile.setup.step3.regenerate_qr"),
+              })}
             </p>
           </div>
         </section>
@@ -517,12 +519,12 @@ export default function ProfilePage() {
 
       {is2FAEnabled && (
         <section className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-6">
-          <h2 className="text-lg font-semibold text-emerald-300">2FA is active</h2>
+          <h2 className="text-lg font-semibold text-emerald-300">{t("profile.setup.success.title")}</h2>
           <p className="mt-2 text-sm text-emerald-100/90">
-            Your account now requires a one-time code during sign-in.
+            {t("profile.setup.success.body")}
           </p>
           <p className="mt-2 text-xs text-emerald-100/80">
-            Recommended: sign out and sign in again to confirm the 2FA code prompt appears.
+            {t("profile.setup.success.note")}
           </p>
         </section>
       )}

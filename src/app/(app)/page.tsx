@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { User, BarChart, AlertTriangle, CheckCircle, Sparkles, Loader2, MessageSquare, TrendingUp, Shield, Award, Target, HelpCircle, XCircle, AlertCircle } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 // Types
 type StressResult = {
@@ -13,6 +14,7 @@ type StressResult = {
     challengeDetail?: string;
     challengeLabel: string;
     focus: string;
+    personaReaction?: string;
     summary: string;
     strengths: string[];
     gaps: string[];
@@ -60,6 +62,7 @@ const FIELD_LIMITS = {
 };
 
 export default function HomePage() {
+    const { t, formatDate } = useI18n();
     const [personas, setPersonas] = useState<PersonaOption[]>([]);
     const [personaNames, setPersonaNames] = useState<Record<string, string>>({});
     const [personaType, setPersonaType] = useState<string>("");
@@ -133,7 +136,7 @@ export default function HomePage() {
             } catch (err) {
                 if (!cancelled) {
                     const message =
-                        err instanceof Error ? err.message : "Unable to load initial data.";
+                        err instanceof Error ? err.message : t("stress.error.load_initial");
                     setError(message);
                 }
             }
@@ -197,7 +200,7 @@ export default function HomePage() {
             const json = await res.json();
             setResult(json as StressResult);
         } catch (err) {
-            const message = err instanceof Error ? err.message : "Could not get a response.";
+            const message = err instanceof Error ? err.message : t("stress.error.response");
             setError(message);
         } finally {
             setLoading(false);
@@ -258,7 +261,7 @@ export default function HomePage() {
                 setRefineChanges(Array.isArray(json.changesSummary) ? json.changesSummary : []);
             }
         } catch (err) {
-            const message = err instanceof Error ? err.message : "Could not refine the pitch.";
+            const message = err instanceof Error ? err.message : t("stress.error.refine");
             setRefineError(message);
         } finally {
             setRefineLoading(false);
@@ -271,7 +274,8 @@ export default function HomePage() {
         return 'bg-red-500/20 text-red-400 border-red-500/30';
     };
     
-    const selectedPersonaName = personas.find(p => p.id === personaType)?.name.split('—')[0].trim() || 'Persona';
+    const selectedPersonaName =
+        personas.find(p => p.id === personaType)?.name.split('—')[0].trim() || t("stress.default_persona");
     const analysis = result
         ? {
             confidenceScore: result.confidence,
@@ -286,24 +290,24 @@ export default function HomePage() {
 
     const handleExport = () => {
         if (!analysis) return;
-        const date = new Date().toLocaleDateString();
-        const report = `IDEA STRESS TEST REPORT FOR ${result?.persona || selectedPersonaName}
-Generated: ${date}
-[ THE IDEA ] ${idea}
+        const date = formatDate(new Date(), { dateStyle: "medium" });
+        const report = `${t("stress.report.analysis_header")} ${result?.persona || selectedPersonaName}
+${t("stress.report.generated")}: ${date}
+[ ${t("stress.report.idea_label")} ] ${idea}
 
 ========================================
 
-[ THE VERDICT ] Confidence Score: ${analysis.confidenceScore}/100 Summary: ${analysis.verdict}
+[ ${t("stress.report.verdict_label")} ] ${t("stress.report.confidence_score")}: ${analysis.confidenceScore}/100 ${t("stress.report.summary")}: ${analysis.verdict}
 
-[ STRENGTHS ] ${analysis.strengths.map((s: string) => `+ ${s}`).join('\n')}
+[ ${t("stress.report.strengths_label")} ] ${analysis.strengths.map((s: string) => `+ ${s}`).join('\n')}
 
-[ GAPS ] ${analysis.gaps.map((g: string) => `- ${g}`).join('\n')}
+[ ${t("stress.report.gaps_label")} ] ${analysis.gaps.map((g: string) => `- ${g}`).join('\n')}
 
-[ ACTION PLAN ] ${analysis.actionPlan.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')}
+[ ${t("stress.report.action_plan_label")} ] ${analysis.actionPlan.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')}
 
-[ PRESENTATION FOR THIS PERSONA ] ${analysis.presentation}
+[ ${t("stress.report.presentation_label")} ] ${analysis.presentation}
 
-[ FOLLOW-UP QUESTIONS ] ${analysis.followUpQuestions.map((q: string) => `? ${q}`).join('\n')} `;
+[ ${t("stress.report.followup_label")} ] ${analysis.followUpQuestions.map((q: string) => `? ${q}`).join('\n')} `;
 
         const blob = new Blob([report], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
@@ -321,14 +325,14 @@ Generated: ${date}
 
     const handleExportRefined = () => {
         if (!refinedPitch) return;
-        const date = new Date().toLocaleDateString();
-        const report = `REFINED PITCH FOR ${result?.persona || selectedPersonaName}
-Generated: ${date}
+        const date = formatDate(new Date(), { dateStyle: "medium" });
+        const report = `${t("stress.report.refined_header")} ${result?.persona || selectedPersonaName}
+${t("stress.report.generated")}: ${date}
 
-[ GOAL ]
+[ ${t("stress.report.goal")} ]
 ${goal}
 
-[ REFINED PITCH ]
+[ ${t("stress.report.refined_pitch")} ]
 ${refinedPitch}
 `;
         const blob = new Blob([report], { type: 'text/plain' });
@@ -350,25 +354,24 @@ ${refinedPitch}
             <div className="max-w-4xl mx-auto">
                 <header className="mb-12">
                     <h1 className="text-4xl font-semibold tracking-tight mb-3">
-                        Idea Stress Testing Tool v.1.1
+                        {t("stress.title")}
                     </h1>
                     <p className="text-sm text-[#a1a1aa] max-w-3xl">
-                        I'm built to be an informed, well-trained, and value-additive dissenting expert.
-                        Use me to avoid falling into the confirmation bias trap.
+                        {t("stress.subtitle")}
                     </p>
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                            Persona
+                            {t("stress.field.persona")}
                         </label>
                         <div className="relative">
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a1a1aa]" />
                             <select
                                 value={personaType}
                                 onChange={(e) => setPersonaType(e.target.value)}
-                                aria-label="Select persona"
+                                aria-label={t("stress.aria.select_persona")}
                                 className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all"
                             >
                                 {personas.map((p) => (
@@ -382,14 +385,14 @@ ${refinedPitch}
 
                     <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                            Challenge Level
+                            {t("stress.field.challenge_level")}
                         </label>
                         <div className="relative">
                             <BarChart className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a1a1aa]" />
                             <select
                                 value={challengeLevelId}
                                 onChange={(e) => setChallengeLevelId(e.target.value)}
-                                aria-label="Select challenge level"
+                                aria-label={t("stress.aria.select_challenge")}
                                 className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all"
                             >
                                 {levels.map((l) => (
@@ -406,14 +409,14 @@ ${refinedPitch}
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">
-                                Idea
+                                {t("stress.field.idea")}
                             </label>
                         </div>
                         <textarea
                             value={idea}
                             onChange={(e) => setIdea(e.target.value)}
-                            placeholder="Describe the asset, pitch, or concept you want to stress-test..."
-                            aria-label="Idea description"
+                            placeholder={t("stress.placeholder.idea")}
+                            aria-label={t("stress.aria.idea")}
                             rows={6}
                             className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all resize-none"
                         />
@@ -429,14 +432,14 @@ ${refinedPitch}
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">
-                                Goal
+                                {t("stress.field.goal")}
                             </label>
                         </div>
                         <textarea
                             value={goal}
                             onChange={(e) => setGoal(e.target.value)}
-                            placeholder="What are you trying to achieve with this idea?"
-                            aria-label="Goal description"
+                            placeholder={t("stress.placeholder.goal")}
+                            aria-label={t("stress.aria.goal")}
                             rows={3}
                             className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all resize-none"
                         />
@@ -451,15 +454,15 @@ ${refinedPitch}
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa]">
-                                Focus
+                                {t("stress.field.focus")}
                             </label>
                         </div>
                         <div className="relative">
                             <textarea
                                 value={evaluationFocus}
                                 onChange={(e) => setEvaluationFocus(e.target.value)}
-                                placeholder="Example: Stress-test how clearly we communicate ROI to the CFO."
-                                aria-label="Focus area"
+                                placeholder={t("stress.placeholder.focus")}
+                                aria-label={t("stress.aria.focus")}
                                 rows={2}
                                 className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all resize-none"
                             />
@@ -471,9 +474,9 @@ ${refinedPitch}
                             </span>
                             <button
                                 type="button"
-                                aria-label="Auto-detect risks"
+                                aria-label={t("stress.aria.auto_detect")}
                                 className="absolute right-3 top-3 p-1.5 rounded-md bg-[#4F46E5]/10 hover:bg-[#4F46E5]/20 transition-colors group"
-                                title="Auto-detect Risks"
+                                title={t("stress.button.auto_detect")}
                             >
                                 <Sparkles className="w-4 h-4 text-[#4F46E5] group-hover:text-[#6366F1]" />
                             </button>
@@ -495,10 +498,10 @@ ${refinedPitch}
                     {loading ? (
                         <span className="flex items-center justify-center gap-2">
                             <Loader2 className="w-4 h-4 animate-spin" />
-                            Running Simulation...
+                            {t("stress.button.run_loading")}
                         </span>
                     ) : (
-                        `Stress-test with ${selectedPersonaName}`
+                        t("stress.button.run_with_persona", { persona: selectedPersonaName })
                     )}
                 </button>
                 
@@ -509,14 +512,14 @@ ${refinedPitch}
                         <div ref={resultTopRef} className="animate-scale-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl p-6 shadow-xl">
                             <div className="flex items-start justify-between">
                                 <div className="space-y-1">
-                                    <h2 className="text-2xl font-semibold tracking-tight">{personaNames[personaType] || 'Persona'}</h2>
-                                    <p className="text-sm text-[#a1a1aa]">Stress Test Analysis</p>
+                                    <h2 className="text-2xl font-semibold tracking-tight">{personaNames[personaType] || t("stress.result.persona_fallback")}</h2>
+                                    <p className="text-sm text-[#a1a1aa]">{t("stress.result.analysis_title")}</p>
                                 </div>
                                 <div className={clsx(
                                     "px-4 py-2 rounded-full text-sm font-bold border-2 shadow-lg",
                                     getConfidenceBadgeColor(result.confidence)
                                 )}>
-                                    {result.confidence}% Confidence
+                                    {t("stress.result.confidence", { value: result.confidence })}
                                 </div>
                             </div>
                         </div>
@@ -525,33 +528,41 @@ ${refinedPitch}
                             <div className="animate-fade-in bg-[#0f0f0f] border border-[rgba(255,255,255,0.12)] rounded-xl p-5 shadow-lg">
                                 <details>
                                     <summary className="cursor-pointer text-sm font-semibold text-[#a1a1aa]">
-                                        Ver respuesta cruda del modelo
+                                        {t("stress.debug.raw_response")}
                                     </summary>
                                     <div className="mt-4 space-y-3">
                                         <div className="text-xs text-[#71717a]">
-                                            {result.debug.model ? `Modelo: ${result.debug.model}` : ""}
-                                            {result.debug.temperature !== undefined ? ` · Temp: ${result.debug.temperature}` : ""}
-                                            {result.debug.retried ? ` · Retry: sí (temp ${result.debug.retryTemperature})` : " · Retry: no"}
+                                            {result.debug.model ? `${t("stress.debug.model")}: ${result.debug.model}` : ""}
+                                            {result.debug.temperature !== undefined ? ` · ${t("stress.debug.temperature")}: ${result.debug.temperature}` : ""}
+                                            {result.debug.retried
+                                                ? result.debug.retryTemperature !== undefined
+                                                    ? ` · ${t("stress.debug.retry_with_temp", { temp: result.debug.retryTemperature })}`
+                                                    : ` · ${t("stress.debug.retry_yes")}`
+                                                : ` · ${t("stress.debug.retry_no")}`}
                                         </div>
                                         {result.debug.confidenceBreakdown && (
                                             <div className="text-xs text-[#a1a1aa]">
-                                                Desglose confianza — Problem: {result.debug.confidenceBreakdown.problemValidity}, Solution: {result.debug.confidenceBreakdown.solutionLogic}, Pitch: {result.debug.confidenceBreakdown.pitchClarity}
+                                                {t("stress.debug.confidence_breakdown", {
+                                                    problem: result.debug.confidenceBreakdown.problemValidity,
+                                                    solution: result.debug.confidenceBreakdown.solutionLogic,
+                                                    pitch: result.debug.confidenceBreakdown.pitchClarity,
+                                                })}
                                             </div>
                                         )}
                                         {result.debug.debugRationale && (
                                             <div className="text-xs text-[#a1a1aa]">
-                                                Rationale: {result.debug.debugRationale}
+                                                {t("stress.debug.rationale")}: {result.debug.debugRationale}
                                             </div>
                                         )}
                                         {result.debug.ragHighlights && (
                                             <div className="text-xs text-[#a1a1aa] whitespace-pre-line">
-                                                Highlights: {result.debug.ragHighlights}
+                                                {t("stress.debug.highlights")}: {result.debug.ragHighlights}
                                             </div>
                                         )}
                                         {result.debug.personaContext && (
                                             <details>
                                                 <summary className="cursor-pointer text-xs text-[#a1a1aa]">
-                                                    Ver contexto de la persona
+                                                    {t("stress.debug.view_persona_context")}
                                                 </summary>
                                                 <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto mt-2">
 {result.debug.personaContext}
@@ -561,7 +572,7 @@ ${refinedPitch}
                                         {result.debug.systemPrompt && (
                                             <details>
                                                 <summary className="cursor-pointer text-xs text-[#a1a1aa]">
-                                                    Ver system prompt
+                                                    {t("stress.debug.view_system_prompt")}
                                                 </summary>
                                                 <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto mt-2">
 {result.debug.systemPrompt}
@@ -571,7 +582,7 @@ ${refinedPitch}
                                         {result.debug.userPrompt && (
                                             <details>
                                                 <summary className="cursor-pointer text-xs text-[#a1a1aa]">
-                                                    Ver user prompt
+                                                    {t("stress.debug.view_user_prompt")}
                                                 </summary>
                                                 <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto mt-2">
 {result.debug.userPrompt}
@@ -594,9 +605,9 @@ ${refinedPitch}
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                            Persona Reaction
+                                            {t("stress.result.persona_reaction_title")}
                                         </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">First-person gut check</p>
+                                        <p className="text-xs text-[#a1a1aa] mt-0.5">{t("stress.result.persona_reaction_subtitle")}</p>
                                     </div>
                                 </div>
                                 <p className="text-base leading-relaxed text-[#ededed]">{result.personaReaction}</p>
@@ -612,9 +623,9 @@ ${refinedPitch}
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-bold uppercase tracking-wider text-green-400">
-                                                Strengths
+                                                {t("stress.result.strengths_title")}
                                             </h3>
-                                            <p className="text-xs text-green-400/60 mt-0.5">{result.strengths.length} identified</p>
+                                            <p className="text-xs text-green-400/60 mt-0.5">{t("stress.result.strengths_count", { count: result.strengths.length })}</p>
                                         </div>
                                     </div>
                                     <ul className="space-y-3">
@@ -642,9 +653,9 @@ ${refinedPitch}
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-bold uppercase tracking-wider text-red-400">
-                                                Gaps & Risks
+                                                {t("stress.result.gaps_title")}
                                             </h3>
-                                            <p className="text-xs text-red-400/60 mt-0.5">{result.gaps.length} critical areas</p>
+                                            <p className="text-xs text-red-400/60 mt-0.5">{t("stress.result.gaps_count", { count: result.gaps.length })}</p>
                                         </div>
                                     </div>
                                     <ul className="space-y-3">
@@ -673,9 +684,9 @@ ${refinedPitch}
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                            Priority Action Plan
+                                            {t("stress.result.action_plan_title")}
                                         </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">Recommended next steps</p>
+                                        <p className="text-xs text-[#a1a1aa] mt-0.5">{t("stress.result.action_plan_subtitle")}</p>
                                     </div>
                                 </div>
                                 <ul className="space-y-3">
@@ -699,9 +710,9 @@ ${refinedPitch}
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-bold uppercase tracking-wider text-yellow-400">
-                                            Follow-up Questions
+                                            {t("stress.result.followup_title")}
                                         </h3>
-                                        <p className="text-xs text-[#a1a1aa] mt-0.5">Critical clarifications needed</p>
+                                        <p className="text-xs text-[#a1a1aa] mt-0.5">{t("stress.result.followup_subtitle")}</p>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-1 gap-3">
@@ -727,9 +738,9 @@ ${refinedPitch}
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5]">
-                                                Persona Pitch (First‑Person)
+                                                {t("stress.result.pitch_title")}
                                             </h3>
-                                            <p className="text-xs text-[#a1a1aa] mt-0.5">A first-pass rewrite in this persona's voice</p>
+                                            <p className="text-xs text-[#a1a1aa] mt-0.5">{t("stress.result.pitch_subtitle")}</p>
                                         </div>
                                     </div>
                                     <p className="text-sm text-[#ededed] leading-relaxed whitespace-pre-line">{result.presentation}</p>
@@ -746,9 +757,9 @@ ${refinedPitch}
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-bold uppercase tracking-wider text-[#22d3ee]">
-                                                Refine the Pitch
+                                                {t("stress.refine.title")}
                                             </h3>
-                                            <p className="text-xs text-[#a1a1aa] mt-0.5">Refine the pitch to match this persona</p>
+                                            <p className="text-xs text-[#a1a1aa] mt-0.5">{t("stress.refine.subtitle")}</p>
                                         </div>
                                     </div>
                                     <button
@@ -765,10 +776,10 @@ ${refinedPitch}
                                         {refineLoading ? (
                                             <>
                                                 <Loader2 className="w-4 h-4 animate-spin" />
-                                                Working...
+                                                {t("stress.refine.button_working")}
                                             </>
                                         ) : (
-                                            `Refine for ${selectedPersonaName}`
+                                            t("stress.refine.button_for_persona", { persona: selectedPersonaName })
                                         )}
                                     </button>
                                 </div>
@@ -780,7 +791,7 @@ ${refinedPitch}
                                 {refineQuestions.length > 0 && !refinedPitch && (
                                     <div className="space-y-4">
                                         <p className="text-sm text-[#e2e8f0]">
-                                            {selectedPersonaName} needs a few specifics before the pitch can be tightened.
+                                            {t("stress.refine.error_missing_details", { persona: selectedPersonaName })}
                                         </p>
                                         <div className="space-y-4">
                                             {refineQuestions.map((question, idx) => (
@@ -795,7 +806,7 @@ ${refinedPitch}
                                                         }}
                                                         rows={2}
                                                         className="w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#22d3ee]/40 focus:border-transparent transition-all resize-none"
-                                                        placeholder="Add the missing detail..."
+                                                        placeholder={t("stress.refine.answer_placeholder")}
                                                     />
                                                 </div>
                                             ))}
@@ -814,10 +825,10 @@ ${refinedPitch}
                                             {refineLoading ? (
                                                 <span className="flex items-center justify-center gap-2">
                                                     <Loader2 className="w-4 h-4 animate-spin" />
-                                                    Working...
+                                                    {t("stress.refine.button_working")}
                                                 </span>
                                             ) : (
-                                                "Generate Refined Pitch"
+                                                t("stress.refine.generate_button")
                                             )}
                                         </button>
                                     </div>
@@ -827,17 +838,17 @@ ${refinedPitch}
                                     <div className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] p-4">
-                                                <p className="text-xs uppercase tracking-wider text-[#94a3b8] mb-2">Original Pitch</p>
+                                                <p className="text-xs uppercase tracking-wider text-[#94a3b8] mb-2">{t("stress.refine.original_pitch")}</p>
                                                 <p className="text-sm text-[#e2e8f0] whitespace-pre-line">{idea}</p>
                                             </div>
                                             <div className="rounded-xl border border-[#22d3ee]/30 bg-[#0f172a] p-4 shadow-lg shadow-[#22d3ee]/10">
-                                                <p className="text-xs uppercase tracking-wider text-[#22d3ee] mb-2">Refined Pitch</p>
+                                                <p className="text-xs uppercase tracking-wider text-[#22d3ee] mb-2">{t("stress.refine.refined_pitch")}</p>
                                                 <p className="text-sm text-[#f8fafc] whitespace-pre-line">{refinedPitch}</p>
                                             </div>
                                         </div>
                                         {refineChanges.length > 0 && (
                                             <div className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] p-4">
-                                                <p className="text-xs uppercase tracking-wider text-[#94a3b8] mb-3">What changed</p>
+                                                <p className="text-xs uppercase tracking-wider text-[#94a3b8] mb-3">{t("stress.refine.what_changed")}</p>
                                                 <ul className="space-y-2 text-sm text-[#e2e8f0]">
                                                     {refineChanges.map((change, idx) => (
                                                         <li key={idx} className="flex items-start gap-2">
@@ -860,7 +871,7 @@ ${refinedPitch}
                                     className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] bg-[#22d3ee] rounded-lg transition-all shadow-lg shadow-[#22d3ee]/20 focus:outline-none focus:ring-2 focus:ring-[#22d3ee]/40 hover:bg-[#38bdf8] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[0.99]"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    Download Refined Pitch
+                                    {t("stress.download.refined")}
                                 </button>
                             )}
                             <button
@@ -868,7 +879,7 @@ ${refinedPitch}
                                 className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#ededed] bg-gradient-to-br from-[#171717] to-[#0f0f0f] border border-[rgba(255,255,255,0.15)] rounded-lg transition-all shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-0.5 hover:border-[#4F46E5]/40 hover:shadow-[#4F46E5]/20 active:translate-y-[1px] active:scale-[0.99] active:border-[#4F46E5]/50"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                Download Analysis
+                                {t("stress.download.analysis")}
                             </button>
                         </div>
                     </div>

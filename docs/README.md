@@ -10,6 +10,7 @@ cp .env.example .env.local
 docker-compose up -d
 npm run db:setup
 npm run db:auth:setup
+npm run db:locale:migrate # existing DB upgrade only
 npm run embed
 npm run dev
 # open: http://localhost:3000
@@ -35,8 +36,18 @@ npm run dev
 - Sessions use JWT strategy
 - Middleware protects non-public pages
 - 2FA status (`two_factor_enabled`) is mapped into session/JWT and surfaced in `/profile`
+- UI locale (`locale`) is mapped into session/JWT when set on user
 - Users without 2FA are redirected to `/profile` right after login
 - Protected routes (except `/profile/*`) display a blocking 2FA-required modal until setup is complete
+
+## i18n model
+
+- Supported locales: `es-MX` (default), `en-US`
+- Detection order:
+  - Logged in: DB user locale -> cookie (`sbp_locale`) -> browser locale -> `es-MX`
+  - Logged out: cookie (`sbp_locale`) -> browser locale -> `es-MX`
+- Language switch persists immediately in cookie and, when authenticated, to DB via `PATCH /api/account/locale`
+- Localized scope is frontend UI copy; API payload text is not translated server-side
 
 ## Key APIs
 
@@ -45,6 +56,7 @@ npm run dev
 - `GET/POST /api/copywriter`
 - `POST /api/register`
 - `POST /api/account/password/change`
+- `PATCH /api/account/locale`
 - `GET /api/admin/users`
 - `PATCH /api/admin/users/[id]`
 - `DELETE /api/admin/users/[id]`
@@ -70,3 +82,8 @@ npm run dev
 - Copywriter config: `data/copywriter/**`
 
 Run `npm run embed` after modifying `data/`.
+
+## i18n docs
+
+- `docs/I18N.md` - architecture and implementation
+- `docs/i18n-glossary.md` - approved bilingual terminology

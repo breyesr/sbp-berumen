@@ -10,6 +10,7 @@
     "db:reset": "dotenv -e .env.local -- tsx scripts/db/reset.ts",
     "db:setup": "dotenv -e .env.local -- tsx scripts/db/schema.ts",
     "db:auth:setup": "dotenv -e .env.local -- tsx scripts/db/auth-schema.ts",
+    "db:locale:migrate": "dotenv -e .env.local -- tsx scripts/db/locale-migration.ts",
     "embed": "dotenv -e .env.local -- tsx scripts/db/embed.ts"
   },
   "dependencies": {

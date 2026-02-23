@@ -1,5 +1,6 @@
 import NextAuth, { DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
+import type { AppLocale } from "@/lib/i18n/config";
 
 declare module "next-auth" {
   interface Session {
@@ -9,6 +10,7 @@ declare module "next-auth" {
       apps?: string[];
       personas?: string[];
       two_factor_enabled?: boolean;
+      locale?: AppLocale;
     } & DefaultSession["user"];
   }
 }
@@ -20,5 +22,6 @@ declare module "next-auth/jwt" {
     apps?: string[];
     personas?: string[];
     two_factor_enabled?: boolean;
+    locale?: AppLocale;
   }
 }

@@ -49,6 +49,17 @@ npm run db:auth:setup
 Why `NODE_ENV=production` is needed:
 - `src/lib/clients.ts` selects `POSTGRES_URL` only in production mode; otherwise it may use `POSTGRES_URL_LOCAL`.
 
+### 3.2b Upgrade existing auth DB for locale support (non-destructive)
+
+If your DB already has users and you are adding i18n support, run:
+
+```bash
+NODE_ENV=production \
+POSTGRES_URL='YOUR_VERCEL_DB_URL' \
+OPENAI_API_KEY='dummy-or-real-key' \
+npm run db:locale:migrate
+```
+
 ### 3.3 Ingest knowledge data
 
 ```bash

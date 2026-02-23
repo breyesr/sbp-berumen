@@ -62,6 +62,10 @@ Ensure `Preview` scope includes all required vars if you test auth on preview UR
 - `npm run db:auth:setup`
   - Uses `src/lib/clients.ts` selection logic.
   - To target Vercel DB explicitly, run with `NODE_ENV=production` and set `POSTGRES_URL`.
+- `npm run db:locale:migrate`
+  - Safe for existing DBs where auth schema already exists.
+  - Adds/repairs `users.locale` and locale check constraint.
+  - Uses the same DB selection logic as other DB scripts.
 
 Example (target preview/prod DB):
 

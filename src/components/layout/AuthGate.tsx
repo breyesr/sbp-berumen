@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { SignInButton } from "@/components/auth/SignInButton";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 export default function AuthGate({
   children,
@@ -9,11 +10,12 @@ export default function AuthGate({
   children: React.ReactNode;
 }) {
   const { status } = useSession();
+  const { t } = useI18n();
 
   if (status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
-        Loading...
+        {t("auth_gate.loading")}
       </div>
     );
   }
@@ -21,8 +23,8 @@ export default function AuthGate({
   if (status === "unauthenticated") {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
-        <h1 className="mb-4 text-3xl font-bold">Access Denied</h1>
-        <p className="mb-8">Please sign in to use the application.</p>
+        <h1 className="mb-4 text-3xl font-bold">{t("auth_gate.access_denied_title")}</h1>
+        <p className="mb-8">{t("auth_gate.access_denied_message")}</p>
         <SignInButton />
       </div>
     );

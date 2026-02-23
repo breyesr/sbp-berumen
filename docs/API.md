@@ -67,6 +67,24 @@ Responses:
 - `401` unauthenticated
 - `500` internal error
 
+### `PATCH /api/account/locale`
+Persists authenticated user's UI locale preference.
+
+Request body:
+
+```json
+{ "locale": "es-MX" }
+```
+
+Allowed values:
+- `es-MX`
+- `en-US`
+
+Responses:
+- `200` locale saved
+- `400` invalid locale
+- `401` unauthenticated
+
 ### `GET /api/admin/users`
 Returns all users with `id`, `email`, `two_factor_enabled`, and `roles[]`.
 

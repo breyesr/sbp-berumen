@@ -10,6 +10,7 @@ Next.js app to stress-test business ideas with synthetic personas and generate m
 - `/profile/security`: account access settings (password change).
 - `/admin/users`: admin-only user management (create, role updates, delete).
 - Public auth routes: `/login`, `/login/2fa`.
+- Frontend i18n: `es-MX` and `en-US` with `ES | EN` switch.
 
 ## 2FA enforcement
 
@@ -44,6 +45,8 @@ docker-compose up -d
 ```bash
 npm run db:setup
 npm run db:auth:setup
+# only needed when upgrading an existing DB to i18n locale support
+npm run db:locale:migrate
 ```
 5. Ingest content.
 ```bash
@@ -74,6 +77,7 @@ See `docs/ENVIRONMENT.md` for details.
 - `npm run lint` - lint
 - `npm run db:setup` - create/reset `documents` table + indexes
 - `npm run db:auth:setup` - recreate auth/RBAC tables (destructive for users)
+- `npm run db:locale:migrate` - add/repair `users.locale` on existing DBs
 - `npm run db:reset` - drop project/auth tables (destructive)
 - `npm run embed` - ingest data into vector DB
 
@@ -85,3 +89,5 @@ See `docs/ENVIRONMENT.md` for details.
 - `docs/ENVIRONMENT.md` - environment variables
 - `docs/DEPLOYMENT.md` - Vercel deployment runbook
 - `docs/TESTING.md` - test checklist
+- `docs/I18N.md` - i18n architecture + usage
+- `docs/i18n-glossary.md` - approved bilingual terminology

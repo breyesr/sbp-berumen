@@ -3,8 +3,10 @@
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 function TwoFaVerificationPageContent() {
+  const { t } = useI18n();
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -19,7 +21,7 @@ function TwoFaVerificationPageContent() {
     setLoading(true);
 
     if (!email) {
-      setError("Email is missing. Please try logging in again.");
+      setError(t("auth.twofa.error_missing_email"));
       setLoading(false);
       return;
     }
@@ -33,12 +35,12 @@ function TwoFaVerificationPageContent() {
       });
 
       if (result?.error) {
-        setError("Invalid 2FA code. Please try again.");
+        setError(t("auth.twofa.error_invalid_code"));
       } else {
         router.push("/");
       }
     } catch (err) {
-      setError("An unexpected error occurred during 2FA verification.");
+      setError(t("auth.twofa.error_unexpected"));
       console.error(err);
     } finally {
       setLoading(false);
@@ -48,7 +50,7 @@ function TwoFaVerificationPageContent() {
   if (!email) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-        Redirecting to login...
+        {t("auth.twofa.redirecting")}
       </div>
     );
   }
@@ -56,18 +58,18 @@ function TwoFaVerificationPageContent() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div className="px-8 py-6 mt-4 text-left bg-gray-800 shadow-lg rounded-lg">
-        <h3 className="text-2xl font-bold text-center text-white">2FA Verification</h3>
+        <h3 className="text-2xl font-bold text-center text-white">{t("auth.twofa.title")}</h3>
         <p className="text-center text-gray-400 mt-2">
-          Please enter the 6-digit code from your authenticator app.
+          {t("auth.twofa.subtitle")}
         </p>
         {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mt-4">
             <div>
-              <label className="block text-white" htmlFor="2fa-code">2FA Code</label>
+              <label className="block text-white" htmlFor="2fa-code">{t("auth.twofa.code_label")}</label>
               <input
                 type="text"
-                placeholder="XXXXXX"
+                placeholder={t("auth.twofa.code_placeholder")}
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 bg-gray-700 text-white border-gray-600 text-center tracking-widest"
                 id="2fa-code"
                 value={code}
@@ -82,7 +84,7 @@ function TwoFaVerificationPageContent() {
                 className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900 focus:outline-none"
                 disabled={loading || code.length !== 6}
               >
-                {loading ? "Verifying..." : "Verify Code"}
+                {loading ? t("auth.twofa.button_verifying") : t("auth.twofa.button_verify")}
               </button>
             </div>
           </div>
@@ -93,9 +95,10 @@ function TwoFaVerificationPageContent() {
 }
 
 export default function TwoFaVerificationPage() {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <TwoFaVerificationPageContent />
-      </Suspense>
-    );
-  }
+  const { t } = useI18n();
+  return (
+    <Suspense fallback={<div>{t("auth.twofa.loading")}</div>}>
+      <TwoFaVerificationPageContent />
+    </Suspense>
+  );
+}

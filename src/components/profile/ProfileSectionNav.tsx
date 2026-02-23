@@ -3,17 +3,19 @@
 import Link from "next/link";
 import { clsx } from "clsx";
 import { usePathname } from "next/navigation";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 const links = [
-  { href: "/profile", label: "2FA Setup" },
-  { href: "/profile/security", label: "Security" },
+  { href: "/profile", labelKey: "profile_nav.twofa_setup" as const },
+  { href: "/profile/security", labelKey: "profile_nav.security" as const },
 ];
 
 export default function ProfileSectionNav() {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   return (
-    <nav aria-label="Profile sections" className="rounded-lg border border-white/10 bg-[#0d0e10] p-2">
+    <nav aria-label={t("profile_nav.aria")} className="rounded-lg border border-white/10 bg-[#0d0e10] p-2">
       <ul className="flex flex-wrap gap-2">
         {links.map((link) => {
           const isActive = pathname === link.href;
@@ -29,7 +31,7 @@ export default function ProfileSectionNav() {
                     : "text-[#a1a1aa] hover:bg-white/5 hover:text-[#ededed]"
                 )}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             </li>
           );

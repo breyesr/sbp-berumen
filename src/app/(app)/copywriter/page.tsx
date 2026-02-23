@@ -12,6 +12,7 @@ import {
   Hash,
   AlignLeft,
 } from "lucide-react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 const FIELD_LIMITS = {
   context: { min: 10, max: 600 },
@@ -62,6 +63,7 @@ type CopywriterResponse = {
 };
 
 export default function CopywriterPage() {
+  const { t, formatDate } = useI18n();
   const [personas, setPersonas] = useState<PersonaOption[]>([]);
   const [personaType, setPersonaType] = useState("");
   const [platforms, setPlatforms] = useState<Platform[]>([]);
@@ -117,7 +119,7 @@ export default function CopywriterPage() {
         }
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "Failed to load copywriter data.";
+          err instanceof Error ? err.message : t("copywriter.error.load");
         setError(message);
       }
     };
@@ -214,7 +216,7 @@ export default function CopywriterPage() {
       const data = (await res.json()) as CopywriterResponse;
       setResult(data);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Failed to generate copy.";
+      const msg = err instanceof Error ? err.message : t("copywriter.error.generate");
       setError(msg);
     } finally {
       setLoading(false);
@@ -223,23 +225,23 @@ export default function CopywriterPage() {
 
   const handleExport = () => {
     if (!result) return;
-    const date = new Date().toISOString().slice(0, 10);
+    const date = formatDate(new Date(), { dateStyle: "medium" });
     const lines: string[] = [];
-    lines.push(`COPYWRITER REPORT`);
-    lines.push(`Generated: ${date}`);
-    lines.push(`Persona: ${result.persona}`);
-    if (result.context) lines.push(`Context: ${result.context}`);
-    lines.push(`Goal: ${result.goal}`);
-    lines.push(`Message: ${result.message}`);
+    lines.push(t("copywriter.report.header"));
+    lines.push(`${t("copywriter.report.generated")}: ${date}`);
+    lines.push(`${t("copywriter.report.persona")}: ${result.persona}`);
+    if (result.context) lines.push(`${t("copywriter.field.context")}: ${result.context}`);
+    lines.push(`${t("copywriter.field.goal")}: ${result.goal}`);
+    lines.push(`${t("copywriter.field.message")}: ${result.message}`);
     lines.push(``);
     result.outputs.forEach((o) => {
       lines.push(`--- ${o.platformName} / ${o.formatName} ---`);
-      lines.push(`Primary: ${o.primaryCopy}`);
-      if (o.alternateCopy) lines.push(`Alt: ${o.alternateCopy}`);
-      if (o.cta) lines.push(`CTA: ${o.cta}`);
-      if (o.hashtags?.length) lines.push(`Hashtags: ${o.hashtags.join(" ")}`);
+      lines.push(`${t("copywriter.output.primary")}: ${o.primaryCopy}`);
+      if (o.alternateCopy) lines.push(`${t("copywriter.output.alternate")}: ${o.alternateCopy}`);
+      if (o.cta) lines.push(`${t("copywriter.output.cta")}: ${o.cta}`);
+      if (o.hashtags?.length) lines.push(`${t("copywriter.output.hashtags")}: ${o.hashtags.join(" ")}`);
       if (o.notes?.length) {
-        lines.push(`Notes:`);
+        lines.push(`${t("copywriter.output.notes")}:`);
         o.notes.forEach((n) => lines.push(`- ${n}`));
       }
       lines.push(``);
@@ -262,19 +264,18 @@ export default function CopywriterPage() {
     default: "#4F46E5",
   };
 
-  return (
+    return (
     <div className="bg-[#0a0a0a] text-[#ededed] px-4 py-6 md:py-8">
       <div className="max-w-5xl mx-auto">
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-3">
             <Megaphone className="w-6 h-6 text-[#4F46E5]" />
             <h1 className="text-3xl font-semibold tracking-tight">
-              Copywriter Studio
+              {t("copywriter.title")}
             </h1>
           </div>
           <p className="text-sm text-[#a1a1aa] max-w-3xl">
-            Generate platform-native copy that respects tone, format, and company
-            rules across Instagram, LinkedIn, Facebook, and TikTok.
+            {t("copywriter.subtitle")}
           </p>
         </header>
 
@@ -282,12 +283,12 @@ export default function CopywriterPage() {
           <div className="bg-[#0f0f10] border border-[rgba(255,255,255,0.08)] rounded-xl p-5 shadow-lg shadow-black/30">
             <div className="flex items-center gap-2 mb-4">
               <PenSquare className="w-4 h-4 text-[#4F46E5]" />
-              <p className="text-sm font-semibold text-[#ededed]">Brief</p>
+              <p className="text-sm font-semibold text-[#ededed]">{t("copywriter.section.brief")}</p>
             </div>
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                  Persona
+                  {t("copywriter.field.persona")}
                 </label>
                 <select
                   value={personaType}
@@ -304,13 +305,13 @@ export default function CopywriterPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                  Context
+                  {t("copywriter.field.context")}
                 </label>
                 <textarea
                   value={context}
                   onChange={(e) => setContext(e.target.value)}
                   rows={3}
-                  placeholder="Summarize the situation, audience, timing, constraints, or campaign details."
+                  placeholder={t("copywriter.placeholder.context")}
                   className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all resize-none"
                 />
                 <span
@@ -328,13 +329,13 @@ export default function CopywriterPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                  What we want to say
+                  {t("copywriter.field.message")}
                 </label>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={4}
-                  placeholder="Describe the key message, offer, or announcement."
+                  placeholder={t("copywriter.placeholder.message")}
                   className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all resize-none"
                 />
                 <span
@@ -352,13 +353,13 @@ export default function CopywriterPage() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                  Goal / Objective
+                  {t("copywriter.field.goal")}
                 </label>
                 <textarea
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
                   rows={3}
-                  placeholder="e.g., Drive webinar signups, spark comments, or push demos."
+                  placeholder={t("copywriter.placeholder.goal")}
                   className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all resize-none"
                 />
                 <span
@@ -379,7 +380,7 @@ export default function CopywriterPage() {
           <div className="bg-[#0f0f10] border border-[rgba(255,255,255,0.08)] rounded-xl p-5 shadow-lg shadow-black/30">
             <div className="flex items-center gap-2 mb-4">
               <CheckSquare className="w-4 h-4 text-[#4F46E5]" />
-              <p className="text-sm font-semibold text-[#ededed]">Platforms</p>
+              <p className="text-sm font-semibold text-[#ededed]">{t("copywriter.section.platforms")}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {platforms.map((platform) => (
@@ -403,13 +404,13 @@ export default function CopywriterPage() {
                       <span className="text-sm font-medium">{platform.name}</span>
                     </div>
                     <span className="text-[10px] uppercase tracking-wide text-[#a1a1aa]">
-                      {platform.formats.length} formats
+                      {t("copywriter.platform.formats_count", { count: platform.formats.length })}
                     </span>
                   </div>
                   <p className="text-xs text-[#a1a1aa] line-clamp-2">
                     {platform.copy_guidelines_summary ||
                       platform.platform_purpose ||
-                      "Platform-native guidance"}
+                      t("copywriter.platform.guidance_fallback")}
                   </p>
                 </label>
               ))}
@@ -419,13 +420,13 @@ export default function CopywriterPage() {
           <div className="bg-[#0f0f10] border border-[rgba(255,255,255,0.08)] rounded-xl p-5 shadow-lg shadow-black/30">
             <div className="flex items-center gap-2 mb-4">
               <AlignLeft className="w-4 h-4 text-[#4F46E5]" />
-              <p className="text-sm font-semibold text-[#ededed]">Formats</p>
+              <p className="text-sm font-semibold text-[#ededed]">{t("copywriter.section.formats")}</p>
               <span className="text-[11px] text-[#a1a1aa]">
-                (Grouped by selected platform)
+                {t("copywriter.section.formats_note")}
               </span>
             </div>
             {selectedPlatforms.length === 0 ? (
-              <p className="text-xs text-[#a1a1aa]">Select a platform first.</p>
+              <p className="text-xs text-[#a1a1aa]">{t("copywriter.formats.select_platform_first")}</p>
             ) : (
               <div className="space-y-4">
                 {selectedPlatforms.map((pid) => {
@@ -443,7 +444,7 @@ export default function CopywriterPage() {
                           {plat.name}
                         </span>
                         <span className="text-[11px] text-[#a1a1aa] uppercase">
-                          {plat.formats.length} options
+                          {t("copywriter.formats.options_count", { count: plat.formats.length })}
                         </span>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -481,7 +482,7 @@ export default function CopywriterPage() {
                             <p className="text-xs text-[#a1a1aa] line-clamp-2">
                               {format.tone_preference ||
                                 format.primary_goal_vibe ||
-                                "Format-specific guidelines"}
+                                t("copywriter.format.guidance_fallback")}
                             </p>
                           </label>
                         ))}
@@ -496,11 +497,10 @@ export default function CopywriterPage() {
           <div className="bg-[#0f0f10] border border-[rgba(255,255,255,0.08)] rounded-xl p-4 shadow-lg shadow-black/30">
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-4 h-4 text-[#4F46E5]" />
-              <p className="text-sm font-semibold text-[#ededed]">Action</p>
+              <p className="text-sm font-semibold text-[#ededed]">{t("copywriter.section.action")}</p>
             </div>
             <p className="text-xs text-[#a1a1aa] mb-3">
-              Generate platform-native copy that obeys tone, format, and company
-              rules.
+              {t("copywriter.action.subtitle")}
             </p>
             <button
               onClick={handleSubmit}
@@ -516,18 +516,17 @@ export default function CopywriterPage() {
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating copy...
+                  {t("copywriter.action.button_loading")}
                 </span>
               ) : (
                 <span className="flex items-center justify-center gap-2">
                   <Send className="w-4 h-4" />
-                  Generate copy
+                  {t("copywriter.action.button")}
                 </span>
               )}
             </button>
             <div className="text-[11px] text-[#a1a1aa] mt-3">
-              Validation: persona, message, goal, platform(s), and format(s) are
-              required.
+              {t("copywriter.action.validation")}
             </div>
             {error && (
               <div className="bg-red-500/10 border border-red-500/40 text-red-200 text-sm rounded-lg p-3 mt-4">
@@ -542,9 +541,9 @@ export default function CopywriterPage() {
             <div className="flex items-center gap-3 justify-between">
               <div className="flex items-center gap-2">
                 <Hash className="w-4 h-4 text-[#4F46E5]" />
-                <h2 className="text-lg font-semibold">Generated Copy</h2>
+                <h2 className="text-lg font-semibold">{t("copywriter.results.title")}</h2>
                 <span className="text-sm text-[#a1a1aa]">
-                  Persona: {result.persona}
+                  {t("copywriter.results.persona", { persona: result.persona })}
                 </span>
               </div>
               <button
@@ -567,7 +566,7 @@ export default function CopywriterPage() {
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                Download (.txt)
+                {t("copywriter.download.txt")}
               </button>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -600,14 +599,14 @@ export default function CopywriterPage() {
                         <div className="space-y-2 text-sm text-[#ededed]">
                           <div className="space-y-1">
                             <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                              Primary Copy
+                              {t("copywriter.output.primary")}
                             </p>
                             <p className="leading-relaxed">{item.primaryCopy}</p>
                           </div>
                           {item.alternateCopy && (
                             <div className="space-y-1">
                               <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                Alt Copy
+                                {t("copywriter.output.alternate")}
                               </p>
                               <p className="leading-relaxed">
                                 {item.alternateCopy}
@@ -617,7 +616,7 @@ export default function CopywriterPage() {
                           {item.cta && (
                             <div className="space-y-1">
                               <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                CTA
+                                {t("copywriter.output.cta")}
                               </p>
                               <p>{item.cta}</p>
                             </div>
@@ -625,7 +624,7 @@ export default function CopywriterPage() {
                           {item.hashtags && item.hashtags.length > 0 && (
                             <div className="space-y-1">
                               <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                Hashtags
+                                {t("copywriter.output.hashtags")}
                               </p>
                               <p className="text-[#ededed]">
                                 {item.hashtags.join(" ")}
@@ -635,7 +634,7 @@ export default function CopywriterPage() {
                           {item.notes && item.notes.length > 0 && (
                             <div className="space-y-1">
                               <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                Notes
+                                {t("copywriter.output.notes")}
                               </p>
                               <ul className="list-disc list-inside text-[#ededed]/90">
                                 {item.notes.map((n, idx) => (
@@ -672,7 +671,7 @@ export default function CopywriterPage() {
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                Download (.txt)
+                {t("copywriter.download.txt")}
               </button>
             </div>
           </div>

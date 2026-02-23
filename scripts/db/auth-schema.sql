@@ -17,10 +17,12 @@ CREATE TABLE "users" (
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
     "password" TEXT,
+    "locale" TEXT,
     "two_factor_secret" TEXT,
     "two_factor_enabled" BOOLEAN NOT NULL DEFAULT false,
     "current_session_token" TEXT,
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "users_locale_check" CHECK ("locale" IN ('es-MX', 'en-US'))
 );
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 

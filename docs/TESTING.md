@@ -72,6 +72,15 @@ Current project status relies on manual QA plus runtime validation. This checkli
 - Confirm `/api/auth/session` does not return 500.
 - Confirm admin user creation does not fail with `relation "users" does not exist`.
 
+### I. i18n and locale persistence
+
+- Confirm language switch (`ES | EN`) is visible in header on auth + app pages.
+- Switch to `EN` and verify login, 2FA login, profile, profile security, admin users copy updates immediately.
+- While logged out, refresh page and confirm language is preserved via cookie.
+- While logged in, switch language, sign out/sign in, and confirm preference persists (DB-backed).
+- Confirm `PATCH /api/account/locale` returns `200` and `users.locale` is updated.
+- Confirm no raw translation keys (`[missing:...]`) appear in UI.
+
 ## 3. Suggested future automation
 
 - Integration tests for auth/admin endpoints (`/api/register`, `/api/admin/users/*`, `/api/account/password/change`, `/api/2fa/*`, session behavior).
