@@ -5,7 +5,7 @@
 - [x] **Task 1.1**: Update `src/lib/clients.ts` to increase the Postgres connection pool size and configure connection proxying (e.g., Supabase/PgBouncer) for serverless environments. [DONE: Increased pool size to 10 (env-configurable), added SSL, and tuned timeouts]
 - [x] **Task 1.2**: Implement rate limiting for all API routes (especially AI endpoints) using Upstash/Redis to prevent abuse and cost overruns. [DONE: Implemented global and AI-specific limiters in Middleware using Upstash/Redis]
 - [x] **Task 1.3**: Set up GitHub Actions CI pipeline for automated linting, testing, and type checking before deployment. [DONE: Created .github/workflows/ci.yml and resolved 19+ pre-existing type errors]
-- [ ] **Task 1.4**: Implement structured logging (e.g., Pino) and error tracking (e.g., Sentry) across the backend and edge functions.
+- [x] **Task 1.4**: Implement structured logging (e.g., Pino) and error tracking (e.g., Sentry) across the backend and edge functions. [DONE: Implemented structured JSON logging with Pino, optimized for Vercel/Edge]
 
 ## Epic 2: Frontend De-Monolithization & UX Refinement (High)
 **Owner**: Frontend & UX/UI

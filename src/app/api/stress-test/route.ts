@@ -7,6 +7,7 @@ import { getPersona } from "@/lib/personaProvider";
 import { getChallengeLevel, ChallengeLevel } from "@/lib/challengeLevels";
 import { buildStressSystemPrompt, buildStressUserMessage, describeFocus } from "./prompt";
 import { db } from "@/lib/clients";
+import { logger } from "@/lib/logger";
 
 export const runtime = "nodejs";
 
@@ -66,7 +67,7 @@ async function logUsageToDb(payload: {
       ]
     );
   } catch (err) {
-    console.error("[stress-test] log insert error", err);
+    logger.error({ err, payload }, "[stress-test] database log insert error");
   }
 }
 
@@ -155,6 +156,15 @@ export async function POST(req: Request) {
     // 3. The Passthrough Normalization (No rigging)
     const confidenceScore = Math.min(100, Math.max(1, parsed.data.confidenceScore || 50));
 
+    logger.info(
+      {
+        persona: persona.name,
+        confidence: confidenceScore,
+        verdict: parsed.data.verdict,
+      },
+      "Stress test simulation completed"
+    );
+
     // Map new schema to old response structure for frontend compatibility
     const responsePayload = {
       persona: persona.name,
@@ -190,22 +200,6 @@ export async function POST(req: Request) {
       // tone is part of prompt now, not response
     };
 
-    // Non-blocking usage log to Vercel runtime logs
-    console.log(
-      JSON.stringify(
-        {
-          event: "stress_test_completed",
-          timestamp: new Date().toISOString(),
-          persona: persona.name,
-          confidence_score: confidenceScore,
-          input_idea: body.idea,
-          verdict: parsed.data.verdict,
-        },
-        null,
-        2
-      )
-    );
-
     // Persist usage log (best-effort, non-blocking)
     logUsageToDb({
       event: "stress_test_completed",
@@ -219,7 +213,7 @@ export async function POST(req: Request) {
     return NextResponse.json(responsePayload);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to evaluate";
-    console.error("[stress-test] error", err);
+    logger.error({ err }, "[stress-test] evaluation failed");
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }
