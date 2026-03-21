@@ -21,12 +21,25 @@ const getPgPool = () => {
             ? process.env.POSTGRES_URL 
             : process.env.POSTGRES_URL_LOCAL;
         
+        const isProduction = process.env.NODE_ENV === 'production';
+        const isLocal = connectionString?.includes('localhost') || connectionString?.includes('127.0.0.1');
+
         pgPoolInstance = new Pool({
             connectionString,
-            // Recommended settings for serverless environments
-            max: 1, 
+            // Increased pool size for scalability. 
+            // In serverless environments, this should be balanced with the total number of lambda instances.
+            // Using a connection proxy (like PgBouncer or Supabase Pooling) is highly recommended.
+            max: Number(process.env.POSTGRES_MAX_CONNECTIONS) || (isProduction ? 10 : 1), 
             idleTimeoutMillis: 30000,
-            connectionTimeoutMillis: 2000,
+            connectionTimeoutMillis: 5000,
+            // Enable SSL for production if not a local database. 
+            // Most managed providers (Supabase, Neon) require SSL.
+            ssl: isProduction && !isLocal ? { rejectUnauthorized: false } : false
+        });
+
+        // Error handling for the pool
+        pgPoolInstance.on('error', (err) => {
+            console.error('Unexpected error on idle client', err);
         });
     }
     return pgPoolInstance;

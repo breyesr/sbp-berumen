@@ -2,7 +2,7 @@
 
 ## Epic 1: Infrastructure Resilience & Database Scaling (Critical)
 **Owner**: DevOps & Backend
-- [ ] **Task 1.1**: Update `src/lib/clients.ts` to increase the Postgres connection pool size and configure connection proxying (e.g., Supabase/PgBouncer) for serverless environments.
+- [x] **Task 1.1**: Update `src/lib/clients.ts` to increase the Postgres connection pool size and configure connection proxying (e.g., Supabase/PgBouncer) for serverless environments. [DONE: Increased pool size to 10 (env-configurable), added SSL, and tuned timeouts]
 - [ ] **Task 1.2**: Implement rate limiting for all API routes (especially AI endpoints) using Upstash/Redis to prevent abuse and cost overruns.
 - [ ] **Task 1.3**: Set up GitHub Actions CI pipeline for automated linting, testing, and type checking before deployment.
 - [ ] **Task 1.4**: Implement structured logging (e.g., Pino) and error tracking (e.g., Sentry) across the backend and edge functions.
