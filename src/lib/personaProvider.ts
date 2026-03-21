@@ -8,6 +8,8 @@ export type Bench = {
   cplTargetMXN: [number, number];
   retentionP50: number;
   noShowRangePct: [number, number];
+  channelCPL?: Record<string, [number, number]>;
+  roasTarget?: number;
 };
 
 export type Persona = {
@@ -76,7 +78,7 @@ function deriveVoiceFromJson(j: any): PersonaVoice {
   const donts = [
     "Do not be polite just to be nice",
     "Do not use generic AI marketing jargon",
-    ...pains.slice(0, 2).map((p) => `Avoid triggering pain: ${p}`),
+    ...pains.slice(0, 2).map((p: string) => `Avoid triggering pain: ${p}`),
   ];
 
   return {
@@ -197,7 +199,7 @@ async function readPersonaFile(id: string): Promise<Persona | null> {
       add("regionalNotes", j.regionalNotes);
 
       const voice = normalizeVoice(j.voice) ?? deriveVoiceFromJson(j);
-      const voiceProfile = formatVoiceProfile(voice);
+      const voiceProfile = formatVoiceProfile(voice) ?? undefined;
       const anchors = collectAnchors(j);
       const triggers = buildTriggers(j, anchors);
 
@@ -222,8 +224,8 @@ async function readPersonaFile(id: string): Promise<Persona | null> {
     }
 
     const { data, content } = matter(raw);
-    const voice = normalizeVoice(data.voice) ?? null;
-    const voiceProfile = formatVoiceProfile(voice);
+    const voice = normalizeVoice(data.voice) ?? undefined;
+    const voiceProfile = formatVoiceProfile(voice) ?? undefined;
     const anchors = Array.isArray(data.anchors) ? data.anchors.map(String) : [];
     const triggers = Array.isArray(data.triggers) ? data.triggers.map((t: any) => ({
       label: String(t?.label ?? "Trigger"),

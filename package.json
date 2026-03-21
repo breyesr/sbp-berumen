@@ -7,6 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
+    "type-check": "tsc --noEmit",
     "db:reset": "dotenv -e .env.local -- tsx scripts/db/reset.ts",
     "db:setup": "dotenv -e .env.local -- tsx scripts/db/schema.ts",
     "db:auth:setup": "dotenv -e .env.local -- tsx scripts/db/auth-schema.ts",

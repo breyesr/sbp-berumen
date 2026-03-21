@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
 import { v5 as uuidv5 } from 'uuid';
-import pdf from 'pdf-parse';
+import * as pdf from 'pdf-parse';
 import mammoth from 'mammoth';
 
 // --- CONFIGURATION ---
@@ -76,7 +76,7 @@ async function getTextFromFile(filePath: string): Promise<string> {
         const data = JSON.parse(fileContent.toString('utf-8'));
         return getTextFromPersona(data);
     } else if (extension === '.pdf') {
-        const data = await pdf(fileContent);
+        const data = await (pdf as any)(fileContent);
         return data.text;
     } else if (extension === '.docx') {
         const data = await mammoth.extractRawText({ buffer: fileContent });

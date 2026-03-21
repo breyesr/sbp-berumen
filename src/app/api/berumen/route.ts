@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
   try {
     const body = Body.parse(await req.json());
-    const persona = await getPersona(body.personaType);
+    const persona = await getPersona(body.personaType, "berumen context");
     if (!persona) {
       return NextResponse.json(
         { error: "Persona not found" },

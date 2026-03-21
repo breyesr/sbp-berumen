@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+// @ts-ignore
 import base32 from 'thirty-two';
 
 const TOTP_PERIOD = 30; // seconds

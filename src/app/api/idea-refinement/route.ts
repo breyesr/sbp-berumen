@@ -250,16 +250,16 @@ export async function POST(req: Request) {
         );
       }
 
-      rewriteParsed = {
+      (rewriteParsed as any) = {
         success: true,
         data: repaired.data,
-      } as typeof rewriteParsed;
+      };
     }
 
     return NextResponse.json({
       status: "ok",
-      refinedPitch: rewriteParsed.data.refinedPitch,
-      changesSummary: rewriteParsed.data.changesSummary,
+      refinedPitch: (rewriteParsed as any).data.refinedPitch,
+      changesSummary: (rewriteParsed as any).data.changesSummary,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to refine pitch";

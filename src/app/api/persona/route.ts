@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     });
 
     // 4. Respond with the stream
-    return result.toAIStreamResponse();
+    return result.toTextStreamResponse();
 
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Bad request';

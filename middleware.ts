@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest) {
     // Exclude auth routes from standard rate limiting to avoid blocking login
     if (!nextUrl.pathname.startsWith('/api/auth')) {
       // Identifier: use user ID if logged in, otherwise fallback to IP address
-      const identifier = session?.user?.id || req.ip || "anonymous";
+      const identifier = session?.user?.id || (req as any).ip || "anonymous";
       const { success, limit, remaining, reset } = await checkRateLimit(identifier, nextUrl.pathname);
 
       if (!success) {

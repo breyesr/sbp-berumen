@@ -1,4 +1,4 @@
-import { db } from "../src/lib/clients";
+import { db } from "../../src/lib/clients";
 import fs from "fs";
 import path from "path";
 

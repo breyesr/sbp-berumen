@@ -1,7 +1,7 @@
 // src/app/api/scorecard/route.ts
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getPersona } from "@/lib/personaProvider";
+import { getPersona, Bench } from "@/lib/personaProvider";
 import { getIndustry } from "@/lib/industryProvider";
 import { buildAIDiagnostic, NarrativeInputs } from "@/lib/aiNarrative";
 
@@ -29,14 +29,8 @@ const Body = z.object({
   adSpend: z.number().nonnegative(),
   returnRate: z.string(),
   supportChannels: z.array(z.string()).optional(),
+  idea: z.string().optional(),
 });
-
-type Bench = {
-  cplTargetMXN: [number, number];
-  retentionP50: number;
-  channelCPL?: Record<string, [number, number]>;
-  roasTarget?: number;
-};
 
 const bucketMidpoint = (bucket: string): number => {
   const map: Record<string, number> = {
@@ -67,12 +61,13 @@ function normalizeSupportChannels(raw?: string[], main?: string) {
 export async function POST(req: Request) {
   try {
     const body = Body.parse(await req.json());
-    const persona = await getPersona(body.personaType);
+    const persona = await getPersona(body.personaType, body.idea || "scorecard context");
     const industry = await getIndustry(body.businessType);
 
     const bench: Bench = {
       cplTargetMXN: industry?.bench?.cplTargetMXN ?? persona?.bench?.cplTargetMXN ?? [120, 200],
       retentionP50: industry?.bench?.retentionP50 ?? persona?.bench?.retentionP50 ?? 60,
+      noShowRangePct: industry?.bench?.noShowRangePct ?? persona?.bench?.noShowRangePct ?? [5, 15],
       channelCPL: industry?.bench?.channelCPL ?? persona?.bench?.channelCPL ?? undefined,
       roasTarget: industry?.bench?.roasTarget ?? persona?.bench?.roasTarget ?? 3,
     };
