@@ -1,8 +1,10 @@
-# Synthetic Persona Web - Docs
+# Synthetic Persona Web — Documentation Hub
 
-Reference docs for the current application state.
+Welcome to the documentation for the Synthetic Persona Web project. This hub serves as the central point for understanding the system architecture, development workflows, and live project status.
 
-## Quickstart (local)
+---
+
+## 🚀 Quickstart (Local Development)
 
 ```bash
 npm install
@@ -10,80 +12,71 @@ cp .env.example .env.local
 docker-compose up -d
 npm run db:setup
 npm run db:auth:setup
-npm run db:locale:migrate # existing DB upgrade only
+npm run db:locale:migrate # Existing DB upgrade only
 npm run embed
 npm run dev
 # open: http://localhost:3000
 ```
 
-## Current routes
+---
 
-### Protected app routes (`src/app/(app)`)
-- `/` - Idea Stress Test
-- `/copywriter` - Copywriter
-- `/profile` - profile overview + guided 2FA setup wizard
-- `/profile/security` - security settings + password change
-- `/admin/users` - admin-only user management
+## 🗺️ Documentation Pillars
 
-### Auth routes (`src/app/(public)`)
-- `/login` - credentials login
-- `/login/2fa` - second-factor verification during sign-in
-- `/register` - compatibility route that redirects to `/admin/users` (middleware still requires auth)
+### 🏛️ [Architecture](./architecture)
+*   [**Design Architecture**](./architecture/DESIGN.md) — System-wide design principles and layout.
+*   [**Design System**](./architecture/DESIGN_SYSTEM.md) — UI/UX components and styling guidelines.
+*   [**Page Protection**](./architecture/PAGE_PROTECTION.md) — RBAC and route-level security.
+*   [**I18N Implementation**](./architecture/I18N_IMPLEMENTATION.md) — Multi-language support and routing.
+*   [**Scalability Assessment**](./architecture/SCALABILITY_ASSESSMENT.md) — Current state audit and remediation plan.
+*   [**UX Wireframes**](./architecture/UX_WIREFRAMES.md) — Visual flow and interface design.
 
-## Auth model
+### 📖 [Guides](./guides)
+*   [**Contributing**](./guides/CONTRIBUTING.md) — How to contribute to this repository.
+*   [**Deployment**](./guides/DEPLOYMENT.md) — Vercel deployment and database runbook.
+*   [**Environment**](./guides/ENVIRONMENT.md) — Detailed environment variable configuration.
+*   [**Testing**](./guides/TESTING.md) — QA checklist and manual testing protocols.
 
-- Auth.js credentials provider (`next-auth` v5 beta)
-- Sessions use JWT strategy
-- Middleware protects non-public pages
-- 2FA status (`two_factor_enabled`) is mapped into session/JWT and surfaced in `/profile`
-- UI locale (`locale`) is mapped into session/JWT when set on user
-- Users without 2FA are redirected to `/profile` right after login
-- Protected routes (except `/profile/*`) display a blocking 2FA-required modal until setup is complete
+### 📚 [Reference](./reference)
+*   [**API Reference**](./reference/API.md) — Comprehensive API endpoint documentation.
+*   [**I18N Glossary**](./reference/I18N_GLOSSARY.md) — Bilingual terminology and translations.
 
-## i18n model
+### 📈 [Project Status](./project)
+*   [**Product Backlog**](./project/BACKLOG.md) — Prioritized epics and tasks.
+*   [**Handoff State**](./project/HANDOFF_STATE.md) — Mandatory continuity log for session transitions.
+*   [**Production Status**](./project/PRODUCTION_STATUS.md) — Live environment health and known issues.
+*   [**Changelog**](./project/CHANGELOG.md) — Version history and release notes.
 
-- Supported locales: `es-MX` (default), `en-US`
-- Detection order:
-  - Logged in: DB user locale -> cookie (`sbp_locale`) -> browser locale -> `es-MX`
-  - Logged out: cookie (`sbp_locale`) -> browser locale -> `es-MX`
-- Language switch persists immediately in cookie and, when authenticated, to DB via `PATCH /api/account/locale`
-- Localized scope is frontend UI copy; API payload text is not translated server-side
+---
 
-## Key APIs
+## 🛠️ Technical Overview
 
-- `POST /api/stress-test`
-- `POST /api/idea-refinement`
-- `GET/POST /api/copywriter`
-- `POST /api/register`
-- `POST /api/account/password/change`
-- `PATCH /api/account/locale`
-- `GET /api/admin/users`
-- `PATCH /api/admin/users/[id]`
-- `DELETE /api/admin/users/[id]`
-- `POST /api/2fa/generate`
-- `POST /api/2fa/verify`
-- `GET/POST /api/auth/[...nextauth]`
-- `GET /api/personas`
-- `GET /api/industries`
-- `GET /api/cities`
-- `GET /api/challenge-levels`
-- `POST /api/berumen` (legacy)
-- `POST /api/scorecard` (legacy)
-- `POST /api/persona` (legacy streaming)
-- `POST /api/action-card` (experimental)
+### Core Stack
+- **Framework:** Next.js 16 (App Router), React 19
+- **Styling:** Tailwind CSS v4
+- **Auth:** Auth.js (v5 beta) with Credentials Provider
+- **Database:** Postgres + pgvector for RAG
+- **AI:** OpenAI API for reasoning and embeddings
 
-## Data model and RAG
+### Key Modules
+- `src/lib/clients.ts`: Singleton Postgres/OpenAI clients + env validation.
+- `src/lib/personaProvider.ts`: Persona loading + RAG context merge.
+- `src/lib/rag.ts`: Hybrid search implementation (FTS + Vector).
+- `src/lib/totp.ts`: TOTP generation and verification helpers.
 
-- Personas: `data/personas/<persona_id>/persona.json`
-- Persona knowledge: `data/personas/<persona_id>/knowledge/*`
-- Global knowledge: `data/global-knowledge/*`
-- Industries: `data/industries/*.json`
-- Challenge levels: `data/challengelevels/*.json`
-- Copywriter config: `data/copywriter/**`
+### Data Model & RAG
+The platform uses a Hybrid RAG system over the following data sources:
+- **Personas:** Local metadata in `data/personas/`.
+- **Knowledge:** Ingested from `data/personas/*/knowledge/` and `data/global-knowledge/`.
+- **Context:** Industry and Challenge Level metadata in `data/industries/` and `data/challengelevels/`.
 
-Run `npm run embed` after modifying `data/`.
+Run `npm run embed` after modifying any content in the `data/` directory.
 
-## i18n docs
+---
 
-- `docs/I18N.md` - architecture and implementation
-- `docs/i18n-glossary.md` - approved bilingual terminology
+## 🛡️ Security & Environment
+Required environment variables for local development and production:
+- `OPENAI_API_KEY`
+- `AUTH_SECRET`
+- `POSTGRES_URL` (or `POSTGRES_URL_LOCAL`)
+
+For a full list of configuration options, see the [**Environment Guide**](./guides/ENVIRONMENT.md).
