@@ -15,14 +15,15 @@ This report details the cross-functional scalability audit for the Synthetic Buy
 
 ### 3. AI & LLMOps Reliability
 - **Current State**: Implementations rely heavily on Hybrid RAG (Keyword + Vector) rather than true GraphRAG. Crucially, there is no token management during context injection, leading to potential context-window exhaustion. There are no rate-limiting or exponential backoff mechanisms to protect against OpenAI 429 errors or unbounded looping.
-- **Target State**: Implement a token counting and chunk truncation mechanism in `personaProvider.ts`. Introduce a resilient retry layer with exponential backoff for all LLM calls. Establish global and user-level rate limiting using Upstash/Redis. Consider transitioning to a GraphRAG representation for complex persona knowledge.
+- **Target State**: Transition to a **GraphRAG** representation for complex persona knowledge. Implement a Relationship Extraction pipeline to identify entities and connections during data ingestion. Transition from stateless API calls to a **Stateful Dialogue** model using a dedicated `conversations` table in Postgres. Implement token counting, chunk truncation, and resilient retries with exponential backoff.
 
 ### 4. DevOps & Production Guardrails
 - **Current State**: Deployments rely entirely on Vercel's basic continuous deployment without an intermediate CI pipeline. There is no automated testing, observability (e.g., Sentry, Datadog), or structured logging. Database schema migrations rely on manual script execution.
 - **Target State**: Introduce GitHub Actions for CI (linting, type-checking, tests). Implement structured logging (Pino) and error tracking (Sentry). Migrate database management to Drizzle or Prisma migrations.
 
 ## Prioritized Remediation Strategy
-1. **Critical**: Resolve the Postgres connection pool bottleneck (`max: 1`) and implement API rate limiting.
-2. **High**: Refactor the Frontend monolithic component and introduce streaming for AI operations to fix UX blocking.
-3. **High**: Implement token counting and retry logic for OpenAI API integrations.
-4. **Medium**: Move local persona file reading to DB/Cache and establish CI pipelines.
+1. **Critical**: Resolve the Postgres connection pool bottleneck (`max: 1`) and implement API rate limiting. **[COMPLETE]**
+2. **Critical**: Migrate local persona file reading (Task 4.1) to Postgres to enable user-generated content and eliminate synchronous I/O.
+3. **High**: Refactor the Frontend monolithic component (Task 2.1) and introduce streaming for AI operations (Task 2.3) to fix UX blocking and support the Co-Pilot interface.
+4. **High**: Implement token counting (Task 3.1) and retry logic (Task 3.2) for OpenAI API integrations.
+5. **Medium**: Establish CI pipelines and production observability (Sentry/Pino). **[PARTIALLY COMPLETE: Pino & GitHub Actions Setup]**

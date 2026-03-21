@@ -25,3 +25,27 @@
 **Owner**: Backend
 - [ ] **Task 4.1**: Migrate persona data reading from the local filesystem (`data/personas`) to the database or a Redis caching layer to eliminate synchronous I/O bottlenecks.
 - [ ] **Task 4.2**: Introduce a caching mechanism for frequent AI queries (e.g., semantic caching) to reduce redundant OpenAI calls.
+
+## Epic 5: Dynamic Persona Generation (The "Self-Service" Layer)
+**Owner**: Backend & AI Engineer
+*Dependency: Task 4.1 (DB Migration)*
+- [ ] **Task 5.1**: Develop an Ingestion Portal UI for secure file uploads (PDF, Word, TXT, JSON).
+- [ ] **Task 5.2**: Implement an asynchronous parsing and embedding pipeline to handle large files without blocking the main thread.
+- [ ] **Task 5.3**: Develop Persona Synthesis logic to automatically extract Name, Voice, and Beliefs from uploaded content.
+- [ ] **Task 5.4**: Implement UI status tracking for the indexing and embedding lifecycle.
+
+## Epic 6: Relational Intelligence (GraphRAG Evolution)
+**Owner**: AI Engineer & Backend
+*Dependency: Epic 5 (Ingestion)*
+- [ ] **Task 6.1**: Implement a Relationship Extraction pipeline to identify entities and connections during ingestion.
+- [ ] **Task 6.2**: Design and implement the Graph Schema in Postgres to store relational mapping.
+- [ ] **Task 6.3**: Refactor `src/lib/rag.ts` to include Graph Traversal in the retrieval logic.
+- [ ] **Task 6.4**: Implement Citation Mapping to trace AI reasoning back to specific document relationship nodes.
+
+## Epic 7: Iterative Strategy Co-Pilot & Integrity Scoring
+**Owner**: Backend & AI Engineer & UX_UI
+*Dependency: Task 2.1 (Refactor) and Task 2.3 (Streaming)*
+- [ ] **Task 7.1**: Implement a Stateful Session Database (`conversations` and `messages` tables) to store "Idea Evolution" history.
+- [ ] **Task 7.2**: Develop the "Critical Friend" logic (Integrity Guardrails) with internal Chain-of-Thought (CoT) and Audit Agent review.
+- [ ] **Task 7.3**: Build the "Progress to Market Fit" UI chart to visualize score trends over time.
+- [ ] **Task 7.4**: Implement "Strategic Pivot" logic to offer proactive guidance instead of just passive critiques.
