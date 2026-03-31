@@ -2,6 +2,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import { db } from "@/lib/clients";
 import { hybridSearch } from "@/lib/rag";
 
 export type Bench = {
@@ -16,6 +17,7 @@ export type Persona = {
   id: string;
   name: string;
   role?: string;
+  cluster?: string;
   profile?: {
     goals?: string[];
     pains?: string[];
@@ -160,128 +162,129 @@ export function formatVoiceProfile(voice?: PersonaVoice | null): string | null {
   return lines.length > 0 ? lines.join("\n") : null;
 }
 
+/**
+ * Maps a database row or JSON object to a Persona object.
+ */
+function mapToPersona(id: string, j: any, contextStr?: string): Persona {
+  const name: string = j.name ?? id;
+  const role: string | undefined = j.role;
+  const bench: Bench | undefined = j.bench
+    ? {
+        cplTargetMXN: [Number(j.bench.cplTargetMXN?.[0] ?? 0), Number(j.bench.cplTargetMXN?.[1] ?? 0)] as [number, number],
+        retentionP50: Number(j.bench.retentionP50 ?? 0),
+        noShowRangePct: [Number(j.bench.noShowRangePct?.[0] ?? 0), Number(j.bench.noShowRangePct?.[1] ?? 0)] as [number, number],
+      }
+    : undefined;
+
+  const contextParts: string[] = [];
+  const addContext = (label: string, v: any) => {
+    if (!v) return;
+    if (Array.isArray(v)) contextParts.push(`${label}: ${v.join("; ")}`);
+    else if (typeof v === "string") contextParts.push(`${label}: ${v}`);
+  };
+  addContext("role", j.role);
+  addContext("city", j.city);
+  addContext("demographics", j.demographics);
+  addContext("business", j.business);
+  addContext("goals", j.goals);
+  addContext("pains", j.pains);
+  addContext("objections", j.objections);
+  addContext("motivations", j.motivations);
+  addContext("channels", j.channels);
+  addContext("quotes", j.quotes);
+  addContext("regionalNotes", j.regionalNotes);
+
+  const voice = normalizeVoice(j.voice) ?? deriveVoiceFromJson(j);
+  const voiceProfile = formatVoiceProfile(voice) ?? undefined;
+  const anchors = collectAnchors(j);
+  const triggers = buildTriggers(j, anchors);
+
+  return {
+    id,
+    name,
+    role,
+    profile: {
+      goals: j.goals ?? [],
+      pains: j.pains ?? [],
+      channels: j.channels ?? [],
+      ethics: [],
+    },
+    locale: j.locale ?? "es-MX",
+    context: contextStr || contextParts.join("\n"),
+    bench,
+    voice,
+    voiceProfile,
+    anchors,
+    triggers,
+  };
+}
+
 async function readPersonaFile(id: string): Promise<Persona | null> {
   const personaDir = path.join(DATA_DIR, id);
   const personaFile = path.join(personaDir, 'persona.json');
 
   try {
     const raw = await fs.readFile(personaFile, "utf8");
-    const trimmed = raw.trim();
-
-    if (trimmed.startsWith("{")) {
-      const j = JSON.parse(trimmed);
-      const name: string = j.name ?? id;
-      const role: string | undefined = j.role;
-      const bench: Bench | undefined = j.bench
-        ? {
-            cplTargetMXN: [Number(j.bench.cplTargetMXN?.[0] ?? 0), Number(j.bench.cplTargetMXN?.[1] ?? 0)] as [number, number],
-            retentionP50: Number(j.bench.retentionP50 ?? 0),
-            noShowRangePct: [Number(j.bench.noShowRangePct?.[0] ?? 0), Number(j.bench.noShowRangePct?.[1] ?? 0)] as [number, number],
-          }
-        : undefined;
-
-      const contextParts: string[] = [];
-      const add = (label: string, v: any) => {
-        if (!v) return;
-        if (Array.isArray(v)) contextParts.push(`${label}: ${v.join("; ")}`);
-        else if (typeof v === "string") contextParts.push(`${label}: ${v}`);
-      };
-      add("role", j.role);
-      add("city", j.city);
-      add("demographics", j.demographics);
-      add("business", j.business);
-      add("goals", j.goals);
-      add("pains", j.pains);
-      add("objections", j.objections);
-      add("motivations", j.motivations);
-      add("channels", j.channels);
-      add("quotes", j.quotes);
-      add("regionalNotes", j.regionalNotes);
-
-      const voice = normalizeVoice(j.voice) ?? deriveVoiceFromJson(j);
-      const voiceProfile = formatVoiceProfile(voice) ?? undefined;
-      const anchors = collectAnchors(j);
-      const triggers = buildTriggers(j, anchors);
-
-      return {
-        id,
-        name,
-        role,
-        profile: {
-          goals: j.goals ?? [],
-          pains: j.pains ?? [],
-          channels: j.channels ?? [],
-          ethics: [],
-        },
-        locale: j.locale ?? "es-MX",
-        context: contextParts.join("\n"),
-        bench,
-        voice,
-        voiceProfile,
-        anchors,
-        triggers,
-      };
-    }
-
-    const { data, content } = matter(raw);
-    const voice = normalizeVoice(data.voice) ?? undefined;
-    const voiceProfile = formatVoiceProfile(voice) ?? undefined;
-    const anchors = Array.isArray(data.anchors) ? data.anchors.map(String) : [];
-    const triggers = Array.isArray(data.triggers) ? data.triggers.map((t: any) => ({
-      label: String(t?.label ?? "Trigger"),
-      description: String(t?.description ?? ""),
-    })) : [];
-
-    return {
-      id: data.id ?? id,
-      name: data.name ?? id,
-      role: data.role,
-      profile: data.profile,
-      locale: data.locale,
-      context: (content ?? "").trim(),
-      bench: data.bench,
-      voice,
-      voiceProfile,
-      anchors,
-      triggers,
-    };
+    const j = JSON.parse(raw);
+    return mapToPersona(id, j);
   } catch {
     return null;
   }
 }
 
 export async function getPersona(id: string, userQuery: string): Promise<Persona | null> {
-  const file = await readPersonaFile(id);
-  if (!file) return null;
+  let persona: Persona | null = null;
 
-  // Use the user's query for hybrid search to get relevant context
+  // 1. Try fetching from Database first
+  try {
+    const res = await db.query(
+      `SELECT id, name, role, cluster, metadata, voice, context FROM personas WHERE id = $1`,
+      [id]
+    );
+    if (res.rows[0]) {
+      const row = res.rows[0];
+      persona = {
+        ...mapToPersona(row.id, row.metadata, row.context),
+        cluster: row.cluster
+      };
+    }
+  } catch (err) {
+    console.error("Database error fetching persona, falling back to filesystem", err);
+  }
+
+  // 2. Fallback to filesystem if not in DB
+  if (!persona) {
+    persona = await readPersonaFile(id);
+  }
+
+  if (!persona) return null;
+
+  // 3. Dynamic RAG Context Augmentation
   const searchResults = await hybridSearch(userQuery, id);
   const ragContext = searchResults.map(r => r.content).join("\n\n");
   const ragHighlights = buildRagHighlights(searchResults);
-  const voiceContext = file.voiceProfile ? `Persona voice profile:\n${file.voiceProfile}` : "";
-  const anchorsContext = formatAnchors(file.anchors);
-  const triggersContext = formatTriggers(file.triggers);
-  const strategicDepth = await readStrategicDepthFile(id);
-  const strategicDepthContext = strategicDepth ? `Persona strategic depth:\n${strategicDepth}` : "";
-  const highlightsContext = ragHighlights ? `Persona knowledge highlights (cite at least one if present):\n${ragHighlights}` : "";
-
-  // Combine the dynamic RAG context with the static context from the persona file
-  const context = [voiceContext, triggersContext, anchorsContext, strategicDepthContext, highlightsContext, ragContext, file.context]
+  
+  const voiceContext = persona.voiceProfile ? `Persona voice profile:\n${persona.voiceProfile}` : "";
+  const anchorsContext = formatAnchors(persona.anchors);
+  const triggersContext = formatTriggers(persona.triggers);
+  
+  // Combine all context layers
+  const context = [
+    voiceContext, 
+    triggersContext, 
+    anchorsContext, 
+    highlightsContext(ragHighlights), 
+    ragContext, 
+    persona.context
+  ]
     .filter(Boolean)
     .join("\n\n");
 
-  return { ...file, context, ragHighlights };
+  return { ...persona, context, ragHighlights };
 }
 
-async function readStrategicDepthFile(id: string): Promise<string | null> {
-  const filePath = path.join(DATA_DIR, id, "persona_strategic_depth.md");
-  try {
-    const raw = await fs.readFile(filePath, "utf8");
-    const trimmed = raw.trim();
-    return trimmed.length > 0 ? trimmed : null;
-  } catch {
-    return null;
-  }
+function highlightsContext(highlights: string | null): string {
+  return highlights ? `Persona knowledge highlights (cite at least one if present):\n${highlights}` : "";
 }
 
 function buildRagHighlights(results: { content: string; metadata?: { source_file?: string } }[]): string | null {
@@ -308,37 +311,40 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-async function findPersonaFiles(dir: string): Promise<string[]> {
-    const entries = await fs.readdir(dir, { withFileTypes: true });
-    let files: string[] = [];
-    for (const entry of entries) {
-        const fullPath = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-            files = files.concat(await findPersonaFiles(fullPath));
-        } else if (entry.name === 'persona.json') {
-            files.push(fullPath);
-        }
-    }
-    return files;
-}
-
-export async function listPersonas(): Promise<{ id: string; name: string; role?: string }[]> {
+export async function listPersonas(): Promise<{ id: string; name: string; role?: string; cluster?: string }[]> {
+    // 1. Try listing from Database
     try {
-        const personaFiles = await findPersonaFiles(DATA_DIR);
+        const res = await db.query(`SELECT id, name, role, cluster FROM personas ORDER BY cluster, name ASC`);
+        if (res.rows.length > 0) {
+            return res.rows.map(r => ({
+                id: r.id,
+                name: r.name,
+                role: r.role,
+                cluster: r.cluster
+            }));
+        }
+    } catch (err) {
+        console.error("Database error listing personas, falling back to filesystem", err);
+    }
+
+    // 2. Fallback to filesystem
+    try {
+        const entries = await fs.readdir(DATA_DIR, { withFileTypes: true });
+        const personaIds = entries
+            .filter(e => e.isDirectory())
+            .map(e => e.name);
+
         const metas = await Promise.all(
-            personaFiles.map(async (file) => {
-                const id = path.dirname(file).substring(DATA_DIR.length + 1);
+            personaIds.map(async (id) => {
                 const p = await readPersonaFile(id);
                 return p ? { id: p.id, name: p.name, role: p.role } : null;
             })
         );
 
-        const existing = metas.filter(Boolean) as { id: string; name: string; role?: string }[];
-        
-        return existing;
+        return metas.filter(Boolean) as { id: string; name: string; role?: string; cluster?: string }[];
     } catch (err) {
-        console.error("Failed to list personas", err);
-        return []; // Return empty array if error occurs
+        console.error("Failed to list personas from filesystem", err);
+        return [];
     }
 }
 

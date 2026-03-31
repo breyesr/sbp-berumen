@@ -30,7 +30,7 @@
 
 ## Epic 4: Data Layer Caching & Storage (Medium)
 **Owner**: Backend
-- [ ] **Task 4.1**: Migrate persona data reading from the local filesystem (`data/personas`) to the database or a Redis caching layer to eliminate synchronous I/O bottlenecks.
+- [x] **Task 4.1**: Migrate persona data reading from the local filesystem (`data/personas`) to the database or a Redis caching layer to eliminate synchronous I/O bottlenecks. [DONE: Created personas table, migration script, and refactored provider to prioritize DB]
 - [ ] **Task 4.2**: Introduce a caching mechanism for frequent AI queries (e.g., semantic caching) to reduce redundant OpenAI calls.
 
 ## Epic 5: The "Side-Loading" Ingestion Pipeline (The Intelligence Factory)
