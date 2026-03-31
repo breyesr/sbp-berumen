@@ -12,7 +12,7 @@ interface DebugPanelProps {
 export function DebugPanel({ result, showDebug }: DebugPanelProps) {
     const { t } = useI18n();
 
-    if (!showDebug || !result.debug?.rawModelOutput) return null;
+    if (!showDebug) return null;
 
     return (
         <div className="animate-fade-in bg-[#0f0f0f] border border-[rgba(255,255,255,0.12)] rounded-xl p-5 shadow-lg mb-6">
@@ -22,34 +22,34 @@ export function DebugPanel({ result, showDebug }: DebugPanelProps) {
                 </summary>
                 <div className="mt-4 space-y-3">
                     <div className="text-xs text-[#71717a]">
-                        {result.debug.model ? `${t("stress.debug.model")}: ${result.debug.model}` : ""}
-                        {result.debug.temperature !== undefined ? ` · ${t("stress.debug.temperature")}: ${result.debug.temperature}` : ""}
-                        {result.debug.retried
+                        {result.debug?.model ? `${t("stress.debug.model")}: ${result.debug.model}` : ""}
+                        {result.debug?.temperature !== undefined ? ` · ${t("stress.debug.temperature")}: ${result.debug.temperature}` : ""}
+                        {result.debug?.retried
                             ? result.debug.retryTemperature !== undefined
                                 ? ` · ${t("stress.debug.retry_with_temp", { temp: result.debug.retryTemperature })}`
                                 : ` · ${t("stress.debug.retry_yes")}`
                             : ` · ${t("stress.debug.retry_no")}`}
                     </div>
-                    {result.debug.confidenceBreakdown && (
+                    {result.confidenceBreakdown && (
                         <div className="text-xs text-[#a1a1aa]">
                             {t("stress.debug.confidence_breakdown", {
-                                problem: result.debug.confidenceBreakdown.problemValidity,
-                                solution: result.debug.confidenceBreakdown.solutionLogic,
-                                pitch: result.debug.confidenceBreakdown.pitchClarity,
+                                problem: result.confidenceBreakdown.problemValidity || 0,
+                                solution: result.confidenceBreakdown.solutionLogic || 0,
+                                pitch: result.confidenceBreakdown.pitchClarity || 0,
                             })}
                         </div>
                     )}
-                    {result.debug.debugRationale && (
+                    {result.debugRationale && (
                         <div className="text-xs text-[#a1a1aa]">
-                            {t("stress.debug.rationale")}: {result.debug.debugRationale}
+                            {t("stress.debug.rationale")}: {result.debugRationale}
                         </div>
                     )}
-                    {result.debug.ragHighlights && (
+                    {result.debug?.ragHighlights && (
                         <div className="text-xs text-[#a1a1aa] whitespace-pre-line">
                             {t("stress.debug.highlights")}: {result.debug.ragHighlights}
                         </div>
                     )}
-                    {result.debug.personaContext && (
+                    {result.debug?.personaContext && (
                         <details>
                             <summary className="cursor-pointer text-xs text-[#a1a1aa]">
                                 {t("stress.debug.view_persona_context")}
@@ -59,7 +59,7 @@ export function DebugPanel({ result, showDebug }: DebugPanelProps) {
                             </pre>
                         </details>
                     )}
-                    {result.debug.systemPrompt && (
+                    {result.debug?.systemPrompt && (
                         <details>
                             <summary className="cursor-pointer text-xs text-[#a1a1aa]">
                                 {t("stress.debug.view_system_prompt")}
@@ -69,7 +69,7 @@ export function DebugPanel({ result, showDebug }: DebugPanelProps) {
                             </pre>
                         </details>
                     )}
-                    {result.debug.userPrompt && (
+                    {result.debug?.userPrompt && (
                         <details>
                             <summary className="cursor-pointer text-xs text-[#a1a1aa]">
                                 {t("stress.debug.view_user_prompt")}
@@ -79,9 +79,11 @@ export function DebugPanel({ result, showDebug }: DebugPanelProps) {
                             </pre>
                         </details>
                     )}
-                    <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto">
+                    {result.debug?.rawModelOutput && (
+                        <pre className="whitespace-pre-wrap text-xs text-[#e5e7eb] bg-black/30 border border-white/10 rounded-lg p-4 overflow-x-auto">
 {result.debug.rawModelOutput}
-                    </pre>
+                        </pre>
+                    )}
                 </div>
             </details>
         </div>

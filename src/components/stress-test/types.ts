@@ -1,22 +1,31 @@
 // src/components/stress-test/types.ts
+import { z } from "zod";
 
-export type StressResult = {
+export const SimulationResultSchema = z.object({
+  personaReaction: z.string(),
+  triggeredRedFlags: z.array(z.string()),
+  verdict: z.string(),
+  strengths: z.array(z.string()),
+  gaps: z.array(z.string()),
+  actionPlan: z.array(z.string()),
+  followUpQuestions: z.array(z.string()),
+  presentation: z.string(),
+  confidenceScore: z.number().min(0).max(100),
+  confidenceBreakdown: z.object({
+    problemValidity: z.number().min(0).max(100),
+    solutionLogic: z.number().min(0).max(100),
+    pitchClarity: z.number().min(0).max(100),
+  }).optional(),
+  debugRationale: z.string().optional(),
+});
+
+export type StressResult = z.infer<typeof SimulationResultSchema> & {
     persona?: string;
-    challengeLevel: number;
+    challengeLevel?: number;
     challengeLevelId?: string;
     challengeDetail?: string;
-    challengeLabel: string;
-    focus: string;
-    personaReaction?: string;
-    summary: string;
-    strengths: string[];
-    gaps: string[];
-    improvements: string[];
-    questions: string[];
-    triggeredRedFlags?: string[];
-    presentation: string;
-    confidence: number;
-    tone?: string;
+    challengeLabel?: string;
+    focus?: string;
     debug?: {
         rawModelOutput?: string;
         retried?: boolean;
@@ -27,12 +36,6 @@ export type StressResult = {
         userPrompt?: string;
         personaContext?: string;
         ragHighlights?: string | null;
-        confidenceBreakdown?: {
-            problemValidity: number;
-            solutionLogic: number;
-            pitchClarity: number;
-        } | null;
-        debugRationale?: string | null;
     };
 };
 

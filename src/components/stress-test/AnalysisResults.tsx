@@ -18,7 +18,6 @@ export function AnalysisResults({
     result,
     personaNames,
     personaType,
-    selectedPersonaName,
     showDebug,
 }: AnalysisResultsProps) {
     const { t } = useI18n();
@@ -28,6 +27,11 @@ export function AnalysisResults({
         if (score >= 40) return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
         return 'bg-red-500/20 text-red-400 border-red-500/30';
     };
+
+    const strengths = result.strengths || [];
+    const gaps = result.gaps || [];
+    const actionPlan = result.actionPlan || [];
+    const followUpQuestions = result.followUpQuestions || [];
 
     return (
         <div className="mt-8 space-y-6">
@@ -39,9 +43,9 @@ export function AnalysisResults({
                     </div>
                     <div className={clsx(
                         "px-4 py-2 rounded-full text-sm font-bold border-2 shadow-lg",
-                        getConfidenceBadgeColor(result.confidence)
+                        getConfidenceBadgeColor(result.confidenceScore || 0)
                     )}>
-                        {t("stress.result.confidence", { value: result.confidence })}
+                        {t("stress.result.confidence", { value: result.confidenceScore || 0 })}
                     </div>
                 </div>
             </div>
@@ -74,11 +78,11 @@ export function AnalysisResults({
                                 <h3 className="text-sm font-bold uppercase tracking-wider text-green-400">
                                     {t("stress.result.strengths_title")}
                                 </h3>
-                                <p className="text-xs text-green-400/60 mt-0.5">{t("stress.result.strengths_count", { count: result.strengths.length })}</p>
+                                <p className="text-xs text-green-400/60 mt-0.5">{t("stress.result.strengths_count", { count: strengths.length })}</p>
                             </div>
                         </div>
                         <ul className="space-y-3">
-                            {result.strengths.map((strength, idx) => {
+                            {strengths.map((strength, idx) => {
                                 const icons = [Shield, Award, TrendingUp];
                                 const Icon = icons[idx % icons.length];
                                 return (
@@ -104,11 +108,11 @@ export function AnalysisResults({
                                 <h3 className="text-sm font-bold uppercase tracking-wider text-red-400">
                                     {t("stress.result.gaps_title")}
                                 </h3>
-                                <p className="text-xs text-red-400/60 mt-0.5">{t("stress.result.gaps_count", { count: result.gaps.length })}</p>
+                                <p className="text-xs text-red-400/60 mt-0.5">{t("stress.result.gaps_count", { count: gaps.length })}</p>
                             </div>
                         </div>
                         <ul className="space-y-3">
-                            {result.gaps.map((gap, idx) => {
+                            {gaps.map((gap, idx) => {
                                 const icons = [AlertCircle, XCircle, AlertTriangle];
                                 const Icon = icons[idx % icons.length];
                                 return (
@@ -139,7 +143,7 @@ export function AnalysisResults({
                         </div>
                     </div>
                     <ul className="space-y-3">
-                        {result.improvements.map((action, idx) => (
+                        {actionPlan.map((action, idx) => (
                             <li key={idx} className="flex items-start gap-4 p-4 bg-[rgba(255,255,255,0.03)] rounded-lg border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.06)] transition-all hover:border-[#4F46E5]/30 hover:shadow-md group">
                                 <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[#4F46E5] to-[#6366F1] text-white flex items-center justify-center text-sm font-bold shadow-md group-hover:shadow-lg transition-shadow">
                                     {idx + 1}
@@ -165,7 +169,7 @@ export function AnalysisResults({
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-3">
-                        {result.questions.map((question, idx) => (
+                        {followUpQuestions.map((question, idx) => (
                             <button
                                 key={idx}
                                 className="group px-4 py-3.5 bg-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.1)] hover:border-[#4F46E5]/40 rounded-lg text-sm transition-all text-left shadow-sm hover:shadow-md hover:translate-x-1"

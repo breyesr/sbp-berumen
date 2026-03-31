@@ -1,6 +1,7 @@
 // src/lib/clients.ts
 import { Pool } from 'pg';
 import OpenAI from 'openai';
+import { createOpenAI } from '@ai-sdk/openai';
 
 // --- VALIDATE ENVIRONMENT VARIABLES ---
 if (!process.env.POSTGRES_URL && !process.env.POSTGRES_URL_LOCAL) {
@@ -54,3 +55,7 @@ const getOpenAIClient = () => {
 
 export const db = getPgPool();
 export const openai = getOpenAIClient();
+
+export const aiProvider = createOpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});

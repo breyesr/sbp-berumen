@@ -2,12 +2,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { StressTestForm } from "./StressTestForm";
 import { AnalysisResults } from "./AnalysisResults";
 import { RefinementPanel } from "./RefinementPanel";
 import { DebugPanel } from "./DebugPanel";
-import { StressResult, PersonaOption, ChallengeLevelOption } from "./types";
+import { StressResult, PersonaOption, ChallengeLevelOption, SimulationResultSchema } from "./types";
 
 interface StressTestClientProps {
     initialPersonas: PersonaOption[];
@@ -31,10 +32,17 @@ export function StressTestClient({
     const [goal, setGoal] = useState("");
     const [evaluationFocus, setEvaluationFocus] = useState("");
 
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [result, setResult] = useState<StressResult | null>(null);
     
+    // AI SDK Hook for streaming objects
+    const { object, submit, isLoading: loading, error: aiError } = useObject({
+        api: "/api/stress-test",
+        schema: SimulationResultSchema,
+        onFinish: () => {
+            // Scroll to top of results when finished if needed
+        }
+    });
+
     const [refineLoading, setRefineLoading] = useState(false);
     const [refineError, setRefineError] = useState<string | null>(null);
     const [refineQuestions, setRefineQuestions] = useState<string[]>([]);
@@ -54,14 +62,18 @@ export function StressTestClient({
     }, []);
 
     useEffect(() => {
-        if (result && resultTopRef.current) {
+        if (object && resultTopRef.current) {
             resultTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-    }, [result]);
+    }, [object]);
+
+    useEffect(() => {
+        if (aiError) {
+            setError(aiError.message);
+        }
+    }, [aiError]);
 
     const handleSubmit = async () => {
-        setLoading(true);
-        setResult(null);
         setError(null);
         setRefineError(null);
         setRefineQuestions([]);
@@ -69,31 +81,17 @@ export function StressTestClient({
         setRefinedPitch(null);
         setRefineChanges([]);
 
-        try {
-            const res = await fetch("/api/stress-test", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    personaType,
-                    challengeLevelId,
-                    idea: idea.trim(),
-                    goal: goal.trim(),
-                    evaluationFocus: evaluationFocus.trim(),
-                }),
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const json = await res.json();
-            setResult(json as StressResult);
-        } catch (err) {
-            const message = err instanceof Error ? err.message : t("stress.error.response");
-            setError(message);
-        } finally {
-            setLoading(false);
-        }
+        submit({
+            personaType,
+            challengeLevelId,
+            idea: idea.trim(),
+            goal: goal.trim(),
+            evaluationFocus: evaluationFocus.trim(),
+        });
     };
 
     const handleRefine = async (answers?: string[]) => {
-        if (!result || refineLoading) return;
+        if (!object || refineLoading) return;
 
         setRefineLoading(true);
         setRefineError(null);
@@ -112,12 +110,12 @@ export function StressTestClient({
                     idea: idea.trim(),
                     goal: goal.trim(),
                     stressResult: {
-                        summary: result.summary,
-                        gaps: result.gaps,
-                        improvements: result.improvements,
-                        questions: result.questions,
-                        triggeredRedFlags: result.triggeredRedFlags ?? [],
-                        confidence: result.confidence,
+                        summary: object.verdict,
+                        gaps: object.gaps || [],
+                        improvements: object.actionPlan || [],
+                        questions: object.followUpQuestions || [],
+                        triggeredRedFlags: object.triggeredRedFlags ?? [],
+                        confidence: object.confidenceScore || 0,
                     },
                     missingInfoQuestions: refineQuestions.length ? refineQuestions : undefined,
                     userAnswers: answers,
@@ -156,6 +154,13 @@ export function StressTestClient({
     const selectedPersonaName =
         personaLookup[personaType] || t("stress.default_persona");
 
+    // Map partial object to StressResult type
+    const result: StressResult | null = object ? {
+        ...object as any,
+        persona: selectedPersonaName,
+        // other metadata can be added here if needed
+    } : null;
+
     const handleExport = () => {
         if (!result) return;
         const date = formatDate(new Date(), { dateStyle: "medium" });
@@ -165,23 +170,23 @@ ${t("stress.report.generated")}: ${date}
 
 ========================================
 
-[ ${t("stress.report.verdict_label")} ] ${t("stress.report.confidence_score")}: ${result.confidence}/100 ${t("stress.report.summary")}: ${result.summary}
+[ ${t("stress.report.verdict_label")} ] ${t("stress.report.confidence_score")}: ${result.confidenceScore}/100 ${t("stress.report.summary")}: ${result.verdict}
 
-[ ${t("stress.report.strengths_label")} ] ${result.strengths.map((s: string) => `+ ${s}`).join('\n')}
+[ ${t("stress.report.strengths_label")} ] ${(result.strengths || []).map((s: string) => `+ ${s}`).join('\n')}
 
-[ ${t("stress.report.gaps_label")} ] ${result.gaps.map((g: string) => `- ${g}`).join('\n')}
+[ ${t("stress.report.gaps_label")} ] ${(result.gaps || []).map((g: string) => `- ${g}`).join('\n')}
 
-[ ${t("stress.report.action_plan_label")} ] ${result.improvements.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')}
+[ ${t("stress.report.action_plan_label")} ] ${(result.actionPlan || []).map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')}
 
 [ ${t("stress.report.presentation_label")} ] ${result.presentation}
 
-[ ${t("stress.report.followup_label")} ] ${result.questions.map((q: string) => `? ${q}`).join('\n')} `;
+[ ${t("stress.report.followup_label")} ] ${(result.followUpQuestions || []).map((q: string) => `? ${q}`).join('\n')} `;
 
         const blob = new Blob([report], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        const safePersona = (result.persona || selectedPersonaName || "persona")
+        const safePersona = (selectedPersonaName || "persona")
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/(^-|-$)/g, "");
@@ -194,7 +199,7 @@ ${t("stress.report.generated")}: ${date}
     const handleExportRefined = () => {
         if (!refinedPitch) return;
         const date = formatDate(new Date(), { dateStyle: "medium" });
-        const report = `${t("stress.report.refined_header")} ${result?.persona || selectedPersonaName}
+        const report = `${t("stress.report.refined_header")} ${selectedPersonaName}
 ${t("stress.report.generated")}: ${date}
 
 [ ${t("stress.report.goal")} ]
@@ -207,7 +212,7 @@ ${refinedPitch}
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        const safePersona = (result?.persona || selectedPersonaName || "persona")
+        const safePersona = (selectedPersonaName || "persona")
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/(^-|-$)/g, "");
@@ -262,30 +267,34 @@ ${refinedPitch}
 
                         <DebugPanel result={result} showDebug={showDebug} />
 
-                        <RefinementPanel
-                            result={result}
-                            refineLoading={refineLoading}
-                            refineError={refineError}
-                            refineQuestions={refineQuestions}
-                            refineAnswers={refineAnswers}
-                            setRefineAnswers={setRefineAnswers}
-                            refinedPitch={refinedPitch}
-                            refineChanges={refineChanges}
-                            onRefine={handleRefine}
-                            selectedPersonaName={selectedPersonaName}
-                            originalIdea={idea}
-                            onExportRefined={handleExportRefined}
-                        />
+                        {!loading && (
+                            <RefinementPanel
+                                result={result}
+                                refineLoading={refineLoading}
+                                refineError={refineError}
+                                refineQuestions={refineQuestions}
+                                refineAnswers={refineAnswers}
+                                setRefineAnswers={setRefineAnswers}
+                                refinedPitch={refinedPitch}
+                                refineChanges={refineChanges}
+                                onRefine={handleRefine}
+                                selectedPersonaName={selectedPersonaName}
+                                originalIdea={idea}
+                                onExportRefined={handleExportRefined}
+                            />
+                        )}
 
-                        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col gap-3 pb-12 sm:flex-row sm:justify-end">
-                            <button
-                                onClick={handleExport}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#ededed] bg-gradient-to-br from-[#171717] to-[#0f0f0f] border border-[rgba(255,255,255,0.15)] rounded-lg transition-all shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-0.5 hover:border-[#4F46E5]/40 hover:shadow-[#4F46E5]/20 active:translate-y-[1px] active:scale-[0.99] active:border-[#4F46E5]/50"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                {t("stress.download.analysis")}
-                            </button>
-                        </div>
+                        {!loading && (
+                            <div className="mt-10 pt-6 border-t border-white/10 flex flex-col gap-3 pb-12 sm:flex-row sm:justify-end">
+                                <button
+                                    onClick={handleExport}
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#ededed] bg-gradient-to-br from-[#171717] to-[#0f0f0f] border border-[rgba(255,255,255,0.15)] rounded-lg transition-all shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-0.5 hover:border-[#4F46E5]/40 hover:shadow-[#4F46E5]/20 active:translate-y-[1px] active:scale-[0.99] active:border-[#4F46E5]/50"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    {t("stress.download.analysis")}
+                                </button>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

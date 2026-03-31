@@ -37,6 +37,10 @@ export function RefinementPanel({
 }: RefinementPanelProps) {
     const { t } = useI18n();
 
+    const handleRefineClick = (answers?: string[]) => {
+        onRefine(answers);
+    };
+
     return (
         <div className="animate-fade-in bg-gradient-to-br from-[#111827] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg mt-6">
             <div className="p-6 space-y-5">
@@ -53,7 +57,7 @@ export function RefinementPanel({
                         </div>
                     </div>
                     <button
-                        onClick={() => onRefine()}
+                        onClick={() => handleRefineClick()}
                         disabled={refineLoading}
                         className={clsx(
                             "inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all",
@@ -102,7 +106,7 @@ export function RefinementPanel({
                             ))}
                         </div>
                         <button
-                            onClick={() => onRefine(refineAnswers)}
+                            onClick={() => handleRefineClick(refineAnswers)}
                             disabled={refineLoading || refineAnswers.some((answer) => !answer.trim())}
                             className={clsx(
                                 "w-full py-3 rounded-lg text-sm font-semibold transition-all",

@@ -18,7 +18,7 @@
 **Owner**: Frontend & UX/UI
 - [x] **Task 2.1**: Refactor `src/app/(app)/page.tsx` into smaller, focused components (`StressTestForm`, `ResultsPanel`, `RefinementPanel`). [DONE: Extracted components to src/components/stress-test/]
 - [x] **Task 2.2**: Migrate static data fetching (Personas, Industries) from `useEffect` to Server Components to improve FCP. [DONE: HomePage is now a Server Component fetching initial data]
-- [ ] **Task 2.3**: Implement `Suspense` boundaries and streaming states for long-running AI API calls to improve perceived performance and eliminate UI blocking.
+- [x] **Task 2.3**: Implement `Suspense` boundaries and streaming states for long-running AI API calls to improve perceived performance and eliminate UI blocking. [DONE: Implemented streamObject on backend and experimental_useObject on frontend]
 - [ ] **Task 2.4**: Introduce robust Error Boundaries for isolated component failures rather than entire page crashes.
 
 ## Epic 3: AI Pipeline Optimization & LLMOps Guardrails (High)

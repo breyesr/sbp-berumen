@@ -18,10 +18,10 @@ Initiated the Scalability Assessment and completed the Critical Infrastructure E
 - **[PROGRESS] Epic 2: Frontend De-Monolithization.**
     - **[RESOLVED] Task 2.1**: Refactored the monolithic `page.tsx` into modular components (`StressTestForm`, `AnalysisResults`, `RefinementPanel`, `DebugPanel`) in `src/components/stress-test/`.
     - **[RESOLVED] Task 2.2**: Migrated data fetching for Personas and Challenge Levels to React Server Components in the main `page.tsx`.
+    - **[RESOLVED] Task 2.3**: Implemented Streaming UI for AI results using Vercel AI SDK (`streamObject` and `useObject`), eliminating UI freezing during generation.
 
 ## Active Blockers
 - **Synchronous Disk I/O:** Persona data is still read from the local filesystem on every request. **(High priority blocker for Self-Service Epic)**.
-- **UX Blocking:** AI generations are still handled as single-shot HTTP requests, which can feel "frozen" for long-running operations.
 
 ## Updated Roadmap & Next Steps
 We have expanded the roadmap to include major strategic epics: **Dynamic Persona Generation (Epic 5)**, **GraphRAG Evolution (Epic 6)**, **Iterative Strategy Co-Pilot (Epic 7)**, and **Persona Clustering (Epic 8)**.
