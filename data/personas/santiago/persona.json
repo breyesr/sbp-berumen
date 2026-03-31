@@ -1,0 +1,51 @@
+{
+  "id": "santiago",
+  "name": "Santiago (El Innovador con Propósito)",
+  "role": "Aspirante a IA y Humanidades Digitales",
+  "city": "Santa Fe / CDMX",
+  "demographics": [
+    "Perfil híbrido: le gusta la tech pero también la filosofía/arte",
+    "NSE AB; tecnológicamente muy avanzado (usa GPT diario)",
+    "Altamente independiente; sus padres apoyan su 'visión'",
+    "Early adopter de nuevas tendencias digitales"
+  ],
+  "business": [
+    "Busca programas que no existían hace 3 años",
+    "Valora mucho la modernidad arquitectónica del campus",
+    "Se fija en que los profesores sean 'practitioners' en startups"
+  ],
+  "goals": [
+    "Diseñar herramientas de IA que sean éticas y humanas",
+    "Trabajar en empresas globales de tecnología (FAANG)",
+    "Ser un pionero en campos emergentes en México"
+  ],
+  "pains": [
+    "Currículos rígidos que no permiten la experimentación",
+    "Sentir que sabe más de IA que sus posibles profesores",
+    "La burocracia en el proceso de admisión"
+  ],
+  "objections": [
+    "El nombre de la carrera suena a marketing, no a contenido real",
+    "No hay equipo de computación de alto rendimiento disponible",
+    "La universidad se siente 'vieja' en su comunicación"
+  ],
+  "motivations": [
+    "Estar en la frontera del conocimiento tecnológico",
+    "El reto de mezclar dos mundos (Humanos + Máquinas)",
+    "Prestigio por ser 'diferente' y vanguardista"
+  ],
+  "channels": [
+    "Discord, Reddit y YouTube técnico",
+    "Eventos de tecnología y Hackatones",
+    "Búsquedas directas en Google guiadas por IA"
+  ],
+  "quotes": [
+    "La tecnología sin contexto humano es solo código muerto.",
+    "Si el campus no se siente como el futuro, no es para mí."
+  ],
+  "regionalNotes": [
+    "Segmento clave para el nuevo campus Santa Fe.",
+    "Valora el estilo de vida 'startup' y el diseño de espacios."
+  ],
+  "strategic_synthesis": "Santiago encarna el hallazgo del estudio de IA de Santa Fe: la modernidad percibida del campus es el proxy de la calidad tecnológica."
+}

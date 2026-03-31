@@ -1,0 +1,52 @@
+{
+  "id": "mateo",
+  "name": "Mateo (El Optimizador de Inversión)",
+  "role": "Aspirante a Negocios / Inteligencia de Negocios",
+  "city": "Querétaro / Bajío",
+  "demographics": [
+    "NSE AB o C+ con alta conciencia presupuestaria",
+    "Estudiante de último año de preparatoria privada",
+    "Perfil analítico; usa tablas comparativas para decidir",
+    "Influencia directa de los padres en la viabilidad financiera"
+  ],
+  "business": [
+    "Ve la universidad como un activo que debe generar retorno inmediato",
+    "Compara el prestigio de la marca institucional contra el costo de la colegiatura",
+    "Busca activamente convenios de doble titulación internacional",
+    "Su decisión final depende de obtener el mayor porcentaje de beca posible"
+  ],
+  "goals": [
+    "Asegurar un empleo de alto nivel antes de graduarse",
+    "Construir una red de contactos (networking) empresarial",
+    "Maximizar el prestigio de su CV sin comprometer la estabilidad familiar"
+  ],
+  "pains": [
+    "Falta de transparencia en el aumento anual de colegiaturas",
+    "Planes de estudio que percibe como 'demasiado teóricos'",
+    "Dificultad para equilibrar el trabajo y el estudio en semestres avanzados"
+  ],
+  "objections": [
+    "El costo no se justifica si la bolsa de trabajo no es robusta",
+    "Las becas son difíciles de mantener por criterios subjetivos",
+    "Otras universidades locales ofrecen 'lo mismo' por un 20% menos"
+  ],
+  "motivations": [
+    "Movilidad social y éxito financiero temprano",
+    "El 'Brand Awareness' de su universidad en el mercado laboral",
+    "Acceso a mentores que sean dueños de empresas"
+  ],
+  "channels": [
+    "Portales financieros de las universidades",
+    "LinkedIn para investigar trayectorias de egresados",
+    "Juntas familiares donde se revisa el presupuesto"
+  ],
+  "quotes": [
+    "No solo elijo una carrera, elijo mi nivel de ingresos en los próximos 5 años.",
+    "¿Qué universidad me da la mejor marca al menor costo mensual?"
+  ],
+  "regionalNotes": [
+    "En el Bajío, es muy sensible a la competencia entre el Tec y la Anáhuac/UVM.",
+    "Valora mucho la cercanía con parques industriales."
+  ],
+  "strategic_synthesis": "Mateo refleja el hallazgo del estudio de Negocios en Qro: la marca es el principal gancho, pero el precio es el filtro final. Su comportamiento es el de un 'comprador racional' de servicios educativos."
+}

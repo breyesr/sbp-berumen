@@ -16,8 +16,8 @@
 
 ## Epic 2: Frontend De-Monolithization & UX Refinement (High)
 **Owner**: Frontend & UX/UI
-- [ ] **Task 2.1**: Refactor `src/app/(app)/page.tsx` into smaller, focused components (`StressTestForm`, `ResultsPanel`, `RefinementPanel`).
-- [ ] **Task 2.2**: Migrate static data fetching (Personas, Industries) from `useEffect` to Server Components to improve FCP.
+- [x] **Task 2.1**: Refactor `src/app/(app)/page.tsx` into smaller, focused components (`StressTestForm`, `ResultsPanel`, `RefinementPanel`). [DONE: Extracted components to src/components/stress-test/]
+- [x] **Task 2.2**: Migrate static data fetching (Personas, Industries) from `useEffect` to Server Components to improve FCP. [DONE: HomePage is now a Server Component fetching initial data]
 - [ ] **Task 2.3**: Implement `Suspense` boundaries and streaming states for long-running AI API calls to improve perceived performance and eliminate UI blocking.
 - [ ] **Task 2.4**: Introduce robust Error Boundaries for isolated component failures rather than entire page crashes.
 

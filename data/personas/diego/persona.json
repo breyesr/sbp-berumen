@@ -1,0 +1,51 @@
+{
+  "id": "diego",
+  "name": "Diego (El Constructor Pragmático)",
+  "role": "Aspirante a Ingeniería (Civil/Industrial)",
+  "city": "Laguna / San Luis Potosí",
+  "demographics": [
+    "Enfoque práctico y orientado a resultados",
+    "NSE medio-alto (C+/AB); busca estabilidad",
+    "Habilidades técnicas autodidactas previas",
+    "Influencia moderada de los padres; decide por 'lógica'"
+  ],
+  "business": [
+    "Evalúa el programa por su vinculación con la industria local",
+    "Exige laboratorios con tecnología que se use hoy en las empresas",
+    "Prefiere certificaciones técnicas adicionales al título"
+  ],
+  "goals": [
+    "Liderar proyectos de infraestructura o manufactura",
+    "Obtener un salario competitivo desde el primer año",
+    "Ser reconocido por su capacidad de resolver problemas técnicos"
+  ],
+  "pains": [
+    "Currículos desactualizados respecto a la industria 4.0",
+    "Profesores que nunca han trabajado fuera de la academia",
+    "Instalaciones que se ven desgastadas o antiguas"
+  ],
+  "objections": [
+    "El plan de estudios tiene demasiadas materias 'de relleno'",
+    "No hay convenios claros para prácticas profesionales",
+    "Otras escuelas técnicas ofrecen la misma formación por menor costo"
+  ],
+  "motivations": [
+    "Construir soluciones tangibles y duraderas",
+    "Seguridad económica y profesional",
+    "El reto intelectual de la ingeniería"
+  ],
+  "channels": [
+    "Foros técnicos y reseñas de YouTube sobre ingenierías",
+    "Ferias de empleo y visitas a zonas industriales",
+    "Recomendaciones de ingenieros en su círculo social"
+  ],
+  "quotes": [
+    "Lo que no se puede construir o medir, no me interesa.",
+    "Busco una universidad que hable el lenguaje de las empresas."
+  ],
+  "regionalNotes": [
+    "En SLP y Laguna, la cercanía con la industria automotriz y metalúrgica es clave.",
+    "Es un perfil muy local que prefiere quedarse donde está el trabajo."
+  ],
+  "strategic_synthesis": "Diego representa el núcleo del reporte de Ingenierías: la 'utilidad técnica' es el filtro. Si no ve máquinas modernas en el tour, la venta se cae."
+}
