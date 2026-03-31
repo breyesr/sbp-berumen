@@ -38,9 +38,6 @@ export function StressTestClient({
     const { object, submit, isLoading: loading, error: aiError } = useObject({
         api: "/api/stress-test",
         schema: SimulationResultSchema,
-        onFinish: () => {
-            // Scroll to top of results when finished if needed
-        }
     });
 
     const [refineLoading, setRefineLoading] = useState(false);
@@ -52,6 +49,7 @@ export function StressTestClient({
     
     const [showDebug, setShowDebug] = useState(false);
     const resultTopRef = useRef<HTMLDivElement | null>(null);
+    const isFirstChunkRef = useRef(true);
 
     useEffect(() => {
         const envEnabled = process.env.NEXT_PUBLIC_STRESS_DEBUG === "1";
@@ -61,9 +59,23 @@ export function StressTestClient({
         setShowDebug(envEnabled && queryEnabled);
     }, []);
 
+    // Handle intelligent scrolling during streaming
     useEffect(() => {
         if (object && resultTopRef.current) {
-            resultTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+            if (isFirstChunkRef.current) {
+                // First chunk: smooth jump to the start of results
+                resultTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+                isFirstChunkRef.current = false;
+            } else {
+                // During streaming: only scroll if user is already near the bottom
+                const threshold = 200; // pixels from bottom
+                const position = window.scrollY + window.innerHeight;
+                const height = document.documentElement.scrollHeight;
+                
+                if (height - position < threshold) {
+                    window.scrollTo({ top: height, behavior: "instant" });
+                }
+            }
         }
     }, [object]);
 
@@ -80,6 +92,7 @@ export function StressTestClient({
         setRefineAnswers([]);
         setRefinedPitch(null);
         setRefineChanges([]);
+        isFirstChunkRef.current = true; // Reset for new request
 
         submit({
             personaType,
@@ -158,7 +171,6 @@ export function StressTestClient({
     const result: StressResult | null = object ? {
         ...object as any,
         persona: selectedPersonaName,
-        // other metadata can be added here if needed
     } : null;
 
     const handleExport = () => {
@@ -263,6 +275,7 @@ ${refinedPitch}
                             personaType={personaType}
                             selectedPersonaName={selectedPersonaName}
                             showDebug={showDebug}
+                            loading={loading}
                         />
 
                         <DebugPanel result={result} showDebug={showDebug} />

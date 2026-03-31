@@ -12,17 +12,21 @@ interface AnalysisResultsProps {
     personaType: string;
     selectedPersonaName: string;
     showDebug: boolean;
+    loading?: boolean;
 }
 
 export function AnalysisResults({
     result,
     personaNames,
     personaType,
+    selectedPersonaName,
     showDebug,
+    loading = false,
 }: AnalysisResultsProps) {
     const { t } = useI18n();
 
     const getConfidenceBadgeColor = (score: number) => {
+        if (score === 0) return 'bg-gray-500/20 text-gray-400 border-gray-500/30 animate-pulse';
         if (score >= 70) return 'bg-green-500/20 text-green-400 border-green-500/30';
         if (score >= 40) return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
         return 'bg-red-500/20 text-red-400 border-red-500/30';
@@ -34,23 +38,25 @@ export function AnalysisResults({
     const followUpQuestions = result.followUpQuestions || [];
 
     return (
-        <div className="mt-8 space-y-6">
+        <div className="mt-8 space-y-6 overflow-anchor-none">
             <div className="animate-scale-in bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl p-6 shadow-xl">
                 <div className="flex items-start justify-between">
                     <div className="space-y-1">
-                        <h2 className="text-2xl font-semibold tracking-tight">{personaNames[personaType] || t("stress.result.persona_fallback")}</h2>
+                        <h2 className="text-2xl font-semibold tracking-tight">{selectedPersonaName}</h2>
                         <p className="text-sm text-[#a1a1aa]">{t("stress.result.analysis_title")}</p>
                     </div>
                     <div className={clsx(
-                        "px-4 py-2 rounded-full text-sm font-bold border-2 shadow-lg",
+                        "px-4 py-2 rounded-full text-sm font-bold border-2 shadow-lg transition-colors duration-500",
                         getConfidenceBadgeColor(result.confidenceScore || 0)
                     )}>
-                        {t("stress.result.confidence", { value: result.confidenceScore || 0 })}
+                        {result.confidenceScore && result.confidenceScore > 0 
+                            ? t("stress.result.confidence", { value: result.confidenceScore })
+                            : t("stress.result.analyzing") || "..."}
                     </div>
                 </div>
             </div>
 
-            <div className="animate-slide-in-up stagger-1 bg-gradient-to-r from-[#4F46E5]/10 via-[#4F46E5]/5 to-transparent border-l-4 border-[#4F46E5] rounded-r-xl overflow-hidden shadow-lg">
+            <div className="animate-slide-in-up bg-gradient-to-r from-[#4F46E5]/10 via-[#4F46E5]/5 to-transparent border-l-4 border-[#4F46E5] rounded-r-xl overflow-hidden shadow-lg min-h-[140px]">
                 <div className="p-6">
                     <div className="flex items-center gap-3 pb-4 border-b border-[#4F46E5]/20 mb-4">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
@@ -63,12 +69,17 @@ export function AnalysisResults({
                             <p className="text-xs text-[#a1a1aa] mt-0.5">{t("stress.result.persona_reaction_subtitle")}</p>
                         </div>
                     </div>
-                    <p className="text-base leading-relaxed text-[#ededed]">{result.personaReaction}</p>
+                    <p className={clsx(
+                        "text-base leading-relaxed text-[#ededed] transition-opacity",
+                        loading && !result.personaReaction ? "opacity-50" : "opacity-100"
+                    )}>
+                        {result.personaReaction || (loading ? "..." : "")}
+                    </p>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="animate-slide-in-up stagger-2 bg-gradient-to-br from-green-500/10 to-green-500/5 border-2 border-green-500/30 rounded-xl overflow-hidden shadow-lg">
+                <div className="animate-slide-in-up bg-gradient-to-br from-green-500/10 to-green-500/5 border-2 border-green-500/30 rounded-xl overflow-hidden shadow-lg min-h-[200px]">
                     <div className="p-6">
                         <div className="flex items-center gap-3 pb-4 border-b border-green-500/20 mb-5">
                             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/30 to-green-500/10 flex items-center justify-center shadow-md">
@@ -94,11 +105,12 @@ export function AnalysisResults({
                                     </li>
                                 );
                             })}
+                            {loading && strengths.length === 0 && <li className="animate-pulse text-sm text-green-400/50">...</li>}
                         </ul>
                     </div>
                 </div>
 
-                <div className="animate-slide-in-up stagger-3 bg-gradient-to-br from-red-500/10 to-red-500/5 border-2 border-red-500/30 rounded-xl overflow-hidden shadow-lg">
+                <div className="animate-slide-in-up bg-gradient-to-br from-red-500/10 to-red-500/5 border-2 border-red-500/30 rounded-xl overflow-hidden shadow-lg min-h-[200px]">
                     <div className="p-6">
                         <div className="flex items-center gap-3 pb-4 border-b border-red-500/20 mb-5">
                             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/30 to-red-500/10 flex items-center justify-center shadow-md">
@@ -124,12 +136,13 @@ export function AnalysisResults({
                                     </li>
                                 );
                             })}
+                            {loading && gaps.length === 0 && <li className="animate-pulse text-sm text-red-400/50">...</li>}
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div className="animate-slide-in-up stagger-4 bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg">
+            <div className="animate-slide-in-up bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.15)] rounded-xl overflow-hidden shadow-lg min-h-[200px]">
                 <div className="p-6">
                     <div className="flex items-center gap-3 pb-4 border-b border-[rgba(255,255,255,0.1)] mb-5">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4F46E5]/30 to-[#4F46E5]/10 flex items-center justify-center shadow-md">
@@ -151,6 +164,7 @@ export function AnalysisResults({
                                 <span className="text-sm text-[#ededed] pt-1.5 leading-relaxed">{action}</span>
                             </li>
                         ))}
+                        {loading && actionPlan.length === 0 && <li className="animate-pulse text-sm text-[#4F46E5]/50">...</li>}
                     </ul>
                 </div>
             </div>
