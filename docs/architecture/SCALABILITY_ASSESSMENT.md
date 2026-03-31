@@ -27,3 +27,10 @@ This report details the cross-functional scalability audit for the Synthetic Buy
 3. **High**: Refactor the Frontend monolithic component (Task 2.1) and introduce streaming for AI operations (Task 2.3) to fix UX blocking and support the Co-Pilot interface.
 4. **High**: Implement token counting (Task 3.1) and retry logic (Task 3.2) for OpenAI API integrations.
 5. **Medium**: Establish CI pipelines and production observability (Sentry/Pino). **[PARTIALLY COMPLETE: Pino & GitHub Actions Setup]**
+
+## Future Architectural Evolution
+The next phase of the architecture focuses on **Relational Intelligence** and **Strategy Co-Pilot** functionality. This shift involves:
+- **Graph-Based Ingestion**: Automatically mapping relationships between research data points upon upload.
+- **Stateful Interaction Models**: Maintaining session history for multi-turn persona-user collaboration.
+- **Multi-Tenant Access Control**: Implementing "Persona Clustering" and granular user-level permissions to support multi-client environments.
+- **Adversarial Integrity Guardrails**: Implementing "Audit Agent" patterns to ensure scoring remains objective and data-backed.

@@ -1,5 +1,12 @@
 # Product Backlog & Epics
 
+## Epic 0: Platform Pivot & Railway Bridge (Priority: Immediate)
+**Owner**: DevOps & Backend
+*Goal: Move high-latency AI logic away from Vercel to eliminate timeout constraints and prepare for the Intelligence Factory.*
+- [ ] **Task 0.1**: Set up a Railway-hosted Node.js environment with shared access to the production Postgres/Redis.
+- [ ] **Task 0.2**: Migrate `/api/stress-test` and `/api/persona` (and associated RAG logic) to the Railway container.
+- [ ] **Task 0.3**: Configure Vercel as a "Thin Client" that proxies complex AI requests to the Railway backend via a secure private API.
+
 ## Epic 1: Infrastructure Resilience & Database Scaling (Critical)
 **Owner**: DevOps & Backend
 - [x] **Task 1.1**: Update `src/lib/clients.ts` to increase the Postgres connection pool size and configure connection proxying (e.g., Supabase/PgBouncer) for serverless environments. [DONE: Increased pool size to 10 (env-configurable), added SSL, and tuned timeouts]
@@ -26,18 +33,18 @@
 - [ ] **Task 4.1**: Migrate persona data reading from the local filesystem (`data/personas`) to the database or a Redis caching layer to eliminate synchronous I/O bottlenecks.
 - [ ] **Task 4.2**: Introduce a caching mechanism for frequent AI queries (e.g., semantic caching) to reduce redundant OpenAI calls.
 
-## Epic 5: Dynamic Persona Generation (The "Self-Service" Layer)
-**Owner**: Backend & AI Engineer
-*Dependency: Task 4.1 (DB Migration)*
-- [ ] **Task 5.1**: Develop an Ingestion Portal UI for secure file uploads (PDF, Word, TXT, JSON).
-- [ ] **Task 5.2**: Implement an asynchronous parsing and embedding pipeline to handle large files without blocking the main thread.
-- [ ] **Task 5.3**: Develop Persona Synthesis logic to automatically extract Name, Voice, and Beliefs from uploaded content.
-- [ ] **Task 5.4**: Implement UI status tracking for the indexing and embedding lifecycle.
+## Epic 5: The "Side-Loading" Ingestion Pipeline (The Intelligence Factory)
+**Owner**: AI Engineer & Backend
+*Strategy: Separate heavy document processing from the web UI to ensure reliability and cost-control.*
+- [ ] **Task 5.1**: Develop a standalone "Ingestion Script" (Python/Node) to process raw transcripts into "Behavioral Nodes" (Beliefs, Tone, Logic).
+- [ ] **Task 5.2**: Implement the "Entity Extraction" logic to automatically map relationships between transcript data points (pre-populating the Graph).
+- [ ] **Task 5.3**: Create a "Side-Loading" utility to batch-upload processed Persona Knowledge into the production `documents` and `entities` tables.
+- [ ] **Task 5.4**: Build a "Persona Validator" UI (Admin-only) to review and approve synthesized persona beliefs before they go live.
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
-*Dependency: Epic 5 (Ingestion)*
-- [ ] **Task 6.1**: Implement a Relationship Extraction pipeline to identify entities and connections during ingestion.
+*Dependency: Epic 0 (Railway) and Epic 5 (Side-Loading)*
+- [ ] **Task 6.1**: Implement Graph Traversal logic in the Railway-hosted RAG service to fetch "Connected Ideas" instead of just similar text.
 - [ ] **Task 6.2**: Design and implement the Graph Schema in Postgres to store relational mapping.
 - [ ] **Task 6.3**: Refactor `src/lib/rag.ts` to include Graph Traversal in the retrieval logic.
 - [ ] **Task 6.4**: Implement Citation Mapping to trace AI reasoning back to specific document relationship nodes.
@@ -49,3 +56,12 @@
 - [ ] **Task 7.2**: Develop the "Critical Friend" logic (Integrity Guardrails) with internal Chain-of-Thought (CoT) and Audit Agent review.
 - [ ] **Task 7.3**: Build the "Progress to Market Fit" UI chart to visualize score trends over time.
 - [ ] **Task 7.4**: Implement "Strategic Pivot" logic to offer proactive guidance instead of just passive critiques.
+
+## Epic 8: Persona Clustering & Multi-Tenant Access (High)
+**Owner**: Backend & UX/UI & Admin
+*Goal: Organize personas into logical clusters (e.g., "Student Personas") and control access at the user level.*
+- [ ] **Task 8.1**: Update the database schema and persona metadata to support "Cluster" labels (e.g., `cluster: "Marketing"`).
+- [ ] **Task 8.2**: Refactor `src/components/PersonaSelect.tsx` to display personas in a hierarchical/grouped dropdown structure.
+- [ ] **Task 8.3**: Implement a many-to-many permission system (`user_persona_access`) to restrict persona visibility based on the user's account.
+- [ ] **Task 8.4**: Update the `GET /api/personas` endpoint to return filtered and grouped persona data based on the authenticated session.
+- [ ] **Task 8.5**: Extend the `/admin/users` UI to allow administrators to manage cluster and persona assignments for specific users.
