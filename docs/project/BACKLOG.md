@@ -65,3 +65,12 @@
 - [ ] **Task 8.3**: Implement a many-to-many permission system (`user_persona_access`) to restrict persona visibility based on the user's account.
 - [ ] **Task 8.4**: Update the `GET /api/personas` endpoint to return filtered and grouped persona data based on the authenticated session.
 - [ ] **Task 8.5**: Extend the `/admin/users` UI to allow administrators to manage cluster and persona assignments for specific users.
+
+## Epic 9: Deterministic Scoring Engine (DSE) (High)
+**Owner**: AI Engineer & Backend & UX/UI
+*Goal: Transition from subjective LLM vibes to a data-backed, weighted mathematical scoring model.*
+- [ ] **Task 9.1**: Define the specialized Micro-Agent Scorer prompts (Value Advocate, Feasibility/Goal, Lens Scorer).
+- [ ] **Task 9.2**: Implement a parallel processing pipeline in the backend to trigger and aggregate micro-agent results within Vercel timeout limits.
+- [ ] **Task 9.3**: Develop the weighted scoring utility in TypeScript (Value 50%, Feasibility 30%, Focus 20%) to move math out of the LLM.
+- [ ] **Task 9.4**: Implement a "Reasoning Window" in the UI to display the specific logic and justification provided by each micro-agent.
+- [ ] **Task 9.5**: Build a "Consistency Anchor" using Semantic Caching to ensure identical scores across different user accounts for the same input.

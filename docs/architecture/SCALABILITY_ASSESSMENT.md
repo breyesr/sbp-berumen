@@ -29,8 +29,10 @@ This report details the cross-functional scalability audit for the Synthetic Buy
 5. **Medium**: Establish CI pipelines and production observability (Sentry/Pino). **[PARTIALLY COMPLETE: Pino & GitHub Actions Setup]**
 
 ## Future Architectural Evolution
-The next phase of the architecture focuses on **Relational Intelligence** and **Strategy Co-Pilot** functionality. This shift involves:
+The next phase of the architecture focuses on **Relational Intelligence**, **Deterministic Scoring**, and **Strategy Co-Pilot** functionality. This shift involves:
 - **Graph-Based Ingestion**: Automatically mapping relationships between research data points upon upload.
+- **Micro-Agent Architecture**: Decomposing large evaluation prompts into specialized, isolated scorers (Value, Feasibility, Lens) to eliminate LLM bias and improve consistency.
+- **Deterministic Math Engine**: Moving scoring calculations from LLM prompts to hard-coded backend logic for objective result verification.
 - **Stateful Interaction Models**: Maintaining session history for multi-turn persona-user collaboration.
 - **Multi-Tenant Access Control**: Implementing "Persona Clustering" and granular user-level permissions to support multi-client environments.
 - **Adversarial Integrity Guardrails**: Implementing "Audit Agent" patterns to ensure scoring remains objective and data-backed.
