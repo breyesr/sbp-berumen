@@ -5,6 +5,7 @@ import { MessageSquare, TrendingUp, Shield, Award, AlertTriangle, Target, HelpCi
 import { clsx } from 'clsx';
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { StressResult } from "./types";
+import { ScoringBreakdown } from "./ScoringBreakdown";
 
 interface AnalysisResultsProps {
     result: StressResult;
@@ -55,6 +56,16 @@ export function AnalysisResults({
                     </div>
                 </div>
             </div>
+
+            {result.confidenceBreakdown && (
+              <div className="animate-slide-in-up">
+                <ScoringBreakdown 
+                  confidenceScore={result.confidenceScore || 0}
+                  breakdown={result.confidenceBreakdown as any}
+                  rationale={result.scoringRationale as any}
+                />
+              </div>
+            )}
 
             <div className="animate-slide-in-up bg-gradient-to-r from-[#4F46E5]/10 via-[#4F46E5]/5 to-transparent border-l-4 border-[#4F46E5] rounded-r-xl overflow-hidden shadow-lg min-h-[140px]">
                 <div className="p-6">

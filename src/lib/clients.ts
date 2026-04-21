@@ -2,6 +2,7 @@
 import { Pool } from 'pg';
 import OpenAI from 'openai';
 import { createOpenAI } from '@ai-sdk/openai';
+import { Redis } from '@upstash/redis';
 
 // --- VALIDATE ENVIRONMENT VARIABLES ---
 if (!process.env.POSTGRES_URL && !process.env.POSTGRES_URL_LOCAL) {
@@ -55,6 +56,13 @@ const getOpenAIClient = () => {
 
 export const db = getPgPool();
 export const openai = getOpenAIClient();
+
+export const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    })
+    : null;
 
 export const aiProvider = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
