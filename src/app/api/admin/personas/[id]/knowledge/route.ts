@@ -4,12 +4,13 @@ import { auth } from "@/lib/auth";
 import { isAdminRole } from "@/lib/rbac";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { ingestFileContent } from "@/lib/ingestion";
 
 export const runtime = "nodejs";
 
 /**
  * POST /api/admin/personas/[id]/knowledge
- * Uploads a knowledge file for a specific persona.
+ * Uploads and EMBEDS a knowledge file for a specific persona.
  */
 export async function POST(
   req: Request,
@@ -29,25 +30,31 @@ export async function POST(
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // Ensure the persona directory exists in the filesystem (fallback/legacy support)
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    // 1. Save to local filesystem (Fallback/Backup)
     const personaDir = path.join(process.cwd(), "data", "personas", id);
     const knowledgeDir = path.join(personaDir, "knowledge");
     
     try {
       await fs.mkdir(knowledgeDir, { recursive: true });
+      await fs.writeFile(path.join(knowledgeDir, file.name), buffer);
     } catch (err) {
-      console.error("Failed to create knowledge directory", err);
+      console.error("FileSystem sync failed, but proceeding with DB embedding", err);
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const filePath = path.join(knowledgeDir, file.name);
-    
-    await fs.writeFile(filePath, buffer);
+    // 2. Process and Embed into DB (RAG)
+    const ingestResult = await ingestFileContent({
+      buffer,
+      filename: file.name,
+      personaId: id,
+    });
 
-    // TODO: Trigger Task 5.4 (Ingest/Embed Pipeline) here in the next phase.
-    console.log(`Knowledge file saved for persona ${id}: ${file.name}`);
-
-    return NextResponse.json({ success: true, filename: file.name });
+    return NextResponse.json({ 
+      success: true, 
+      filename: file.name,
+      chunks: ingestResult.chunks 
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

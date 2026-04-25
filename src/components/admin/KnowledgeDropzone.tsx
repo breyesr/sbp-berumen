@@ -63,7 +63,7 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
           type="file"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           onChange={handleFileChange}
-          accept=".pdf,.txt,.docx"
+          accept=".pdf,.txt,.docx,.md,.json"
           disabled={uploading}
         />
         
@@ -78,7 +78,7 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
             <>
               <Upload className="w-10 h-10 text-[#71717a]" />
               <p className="text-sm text-[#ededed]">Haz clic o arrastra un archivo aquí</p>
-              <p className="text-xs text-[#a1a1aa]">PDF, TXT o DOCX (Máx. 10MB)</p>
+              <p className="text-xs text-[#a1a1aa]">PDF, TXT, DOCX, MD o JSON (Máx. 10MB)</p>
             </>
           )}
         </div>
