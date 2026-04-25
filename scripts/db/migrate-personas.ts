@@ -38,12 +38,15 @@ async function main() {
             const personaId = path.dirname(filePath).substring(DATA_DIR.length + 1);
             
             // Determine Cluster from path (e.g. "marketing/alejandro" -> cluster: "marketing")
-            const pathParts = personaId.split(path.sep);
-            const cluster = pathParts.length > 1 ? pathParts[0] : "General";
-            const finalId = pathParts[pathParts.length - 1];
-
             const raw = await fs.readFile(filePath, "utf8");
             const data = JSON.parse(raw);
+
+            // Determine Cluster: 1. From JSON, 2. From path, 3. Default "General"
+            const pathParts = personaId.split(path.sep);
+            const pathCluster = pathParts.length > 1 ? pathParts[0] : "General";
+            const cluster = data.cluster || pathCluster;
+            
+            const finalId = pathParts[pathParts.length - 1];
 
             // Fetch strategic depth if available
             let strategicDepth = "";

@@ -2,6 +2,7 @@
   "name": "Pedro",
   "role": "Gerente de Mercadotecnia e Insights",
   "city": "Ciudad de México",
+  "cluster": "Medical & Health",
   "demographics": [
     "Profesional senior con más de 15 años de experiencia en investigación de mercados, analytics y machine learning",
     "Trayectoria en consumo masivo, tabaco, agricultura y pharma",
@@ -64,5 +65,4 @@
     "Alta presión por velocidad y activación comercial",
     "Fuerte escrutinio legal y regulatorio sobre manejo de datos"
   ]
-  
 }

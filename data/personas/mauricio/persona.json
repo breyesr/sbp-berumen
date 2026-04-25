@@ -2,6 +2,7 @@
   "name": "Mauricio",
   "role": "Jefe de Investigación de Mercados",
   "city": "Nuevo León",
+  "cluster": "Medical & Health",
   "demographics": [
     "Profesional analítico con perfil tranquilo y colaborativo",
     "Poco tiempo en el rol actual (≈2 años), en etapa de consolidación",
@@ -63,5 +64,4 @@
     "Las decisiones dependen de ventanas de tiempo muy claras",
     "La investigación compite por relevancia frente a otras prioridades institucionales"
   ]
-  
 }

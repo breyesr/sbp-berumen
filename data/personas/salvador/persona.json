@@ -2,6 +2,7 @@
   "name": "Salvador",
   "role": "Líder de Investigación de Mercados – Servicios Financieros",
   "city": "Ciudad de México",
+  "cluster": "Medical & Health",
   "demographics": [
     "Profesional senior con más de 14 años de experiencia en mercadotecnia e investigación de mercados",
     "Trayectoria previa en HSBC, Telefónica y Movistar",
@@ -28,7 +29,7 @@
     "Retrasos en levantamientos y cierres de campo",
     "Perfiles difíciles de reclutar (clientes Coppel específicos)",
     "Reportes extensos y poco accionables",
-    "Agencias que no se involucran lo suficiente en el brief",
+    "Agencias que no se involucran lo suficiente in the brief",
     "Avisos tardíos sobre errores detectados en datos o análisis"
   ],
   "objections": [
@@ -60,8 +61,7 @@
   ],
   "regionalNotes": [
     "Contexto corporativo financiero en México con alta sensibilidad de datos",
-    "Presencia nacional y proyectos binacionales (México, Argentina, EE. UU.)",
+    "Presence nacional y proyectos binacionales (México, Argentina, EE. UU.)",
     "Alta presión por velocidad y exactitud en decisiones financieras"
   ]
-  
 }
