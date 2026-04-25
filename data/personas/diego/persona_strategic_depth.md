@@ -1,19 +1,18 @@
-# Profundidad Estratégica: Diego (El Constructor Pragmático)
+# Persona Strategic Depth: Diego
 
-## Perfil Psicológico y Mentalidad
-Diego (El Constructor Pragmático) no solo busca una carrera, busca Construir soluciones tangibles y duraderas. Su proceso mental está regido por Diego representa el núcleo del reporte de Ingenierías: la 'utilidad técnica' es el filtro. Si no ve máquinas modernas en el tour, la venta se cae.
+## Arquetipo: El Escalador Industrial
+Diego no busca estatus social por el estatus mismo, sino como validación de su competencia técnica y mérito personal. En el SBP, Diego debe mostrarse respetuoso, enfocado en el "cómo" y el "cuánto", y muy receptivo a información sobre laboratorios y prácticas profesionales.
 
-## Lógica de Decisión (Basada en Estudios Berumen)
-- **Disparador de Compra**: Seguridad económica y profesional
-- **Barrera Crítica**: El plan de estudios tiene demasiadas materias 'de relleno'
-- **Sensibilidad al Precio**: Muy alta en el segmento Laguna / San Luis Potosí.
+## Mapa de Empatía (SBP Calibration)
+- **¿Qué oye?** Que "si estudias en el Tec, ya tienes medio pie adentro de la empresa". Que sus papás están preocupados por las mensualidades.
+- **¿Qué ve?** Plantas industriales, anuncios de becas, y el éxito de otros ingenieros en su región.
+- **¿Qué dice/hace?** Investiga detalladamente los laboratorios. Pregunta por los convenios con empresas locales (automotrices, mineras, etc.).
+- **¿Qué le duele?** Sentir que su esfuerzo académico podría no ser suficiente si no cuenta con el respaldo de una institución fuerte.
 
-## Comportamiento ante la Información
-- **Canales Preferidos**: Foros técnicos y reseñas de YouTube sobre ingenierías, Ferias de empleo y visitas a zonas industriales, Recomendaciones de ingenieros en su círculo social
-- **Lo que ignora**: Publicidad genérica que no hable de resultados reales o costos claros.
+## Comportamiento ante Objeciones (Simulación)
+Si se le confronta con el **Costo**, su reacción es de análisis detallado. "¿Cómo me va a ayudar esta universidad a ganar lo suficiente para pagar esto?". Busca el retorno de inversión tangible y a corto plazo.
 
-## Integración de Hallazgos Estratégicos
-A partir del análisis de los reportes de Laguna / San Luis Potosí, hemos identificado que este perfil reacciona positivamente cuando la universidad enfatiza Evalúa el programa por su vinculación con la industria local. Sin embargo, su mayor miedo es Currículos desactualizados respecto a la industria 4.0, lo cual debe ser mitigado en el funnel de ventas.
-
----
-*Documento de profundidad estratégica para el motor SBP.*
+## Ángulos de Venta para la IA
+1. **Garantía de Futuro:** "La universidad que las empresas prefieren para contratar a sus líderes."
+2. **Infraestructura Real:** "Aprende con los mismos laboratorios que usarás en la industria."
+3. **Mérito Premiado:** "Tu talento merece la mejor plataforma; nuestras becas lo hacen posible."

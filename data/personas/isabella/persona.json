@@ -1,51 +1,51 @@
 {
   "id": "isabella",
-  "name": "Isabella (Herencia y Prestigio)",
-  "role": "Aspirante a Medicina / Derecho (Tradicional)",
+  "name": "Isabella (AB) - Cluster Premium",
+  "role": "Aspirante a Medicina / Derecho (Legado)",
   "city": "Monterrey / Ciudad de México",
   "demographics": [
-    "NSE AB consolidado; familia con larga trayectoria profesional",
-    "Vocación definida desde la infancia",
-    "Valora mucho las tradiciones y el reconocimiento social",
-    "Influencia familiar determinante (legado)"
+    "NSE AB consolidado; familias con trayectoria profesional de generaciones",
+    "Educación en preparatorias privadas de élite",
+    "Vocación definida por tradición o legado familiar",
+    "Alta movilidad social y económica"
   ],
   "business": [
-    "Decide basada en rankings internacionales (QS, Times Higher Ed)",
-    "Busca la universidad con los egresados más influyentes",
-    "Valora la belleza y el estatus del campus como símbolo de éxito"
+    "La universidad es un activo de estatus y networking",
+    "El precio es un indicador de exclusividad, no una barrera",
+    "Exige estándares internacionales y acreditaciones globales"
   ],
   "goals": [
-    "Graduarse de la institución más prestigiosa del país",
-    "Mantener y expandir el legado profesional de su familia",
-    "Construir relaciones con la élite profesional de su área"
+    "Mantener el prestigio del apellido familiar",
+    "Construir una red de contactos con la élite empresarial y política",
+    "Asegurar una posición de liderazgo inmediata tras graduarse"
   ],
   "pains": [
-    "La degradación percibida del rigor académico",
-    "La mezcla con perfiles que no comparten su ambición",
-    "Programas 'exprés' que sacrifican la profundidad"
+    "Percepción de que la universidad se está 'masificando'",
+    "Falta de rigor o exclusividad en los procesos de admisión",
+    "Mezcla con perfiles que no comparten sus objetivos de networking"
   ],
   "objections": [
-    "La universidad es 'demasiado nueva' para ser respetada",
-    "Los estándares de entrada parecen demasiado bajos",
-    "No hay suficientes convenios con firmas o clínicas de élite"
+    "¿Qué tan exclusivos son los convenios internacionales?",
+    "¿Quiénes son los otros estudiantes admitidos?",
+    "La marca institucional parece estar perdiendo su valor de élite"
   ],
   "motivations": [
-    "Excelencia académica comprobada históricamente",
-    "Reconocimiento y estatus social",
-    "Garantía de éxito por pertenencia a un grupo selecto"
+    "Pertenencia a un grupo selecto",
+    "Reconocimiento social y profesional",
+    "Acceso a círculos de poder cerrados"
   ],
   "channels": [
-    "Recomendaciones directas de familiares y socios",
-    "Sitios de acreditación y rankings oficiales",
-    "Eventos exclusivos de la universidad"
+    "Recomendaciones directas de 'Inner Circles'",
+    "Rankings globales (QS / Times Higher Education)",
+    "Eventos privados en el campus"
   ],
   "quotes": [
-    "El nombre de mi universidad es mi primera carta de presentación.",
-    "Busco excelencia, no solo un título."
+    "Mi universidad debe ser tan prestigiosa como mi apellido.",
+    "No busco un título, busco la mejor red de contactos del país."
   ],
   "regionalNotes": [
-    "Dominante en Monterrey y CDMX en áreas de Humanidades y Salud.",
-    "El 'networking' de alto nivel es el beneficio implícito más valorado."
+    "Muy presente en Monterrey (San Pedro) y CDMX (Santa Fe / Interlomas).",
+    "Su familia suele ser donante o ex-alumna destacada."
   ],
-  "strategic_synthesis": "Isabella refleja el estudio de Posicionamiento: para ella, la universidad es una credencial de estatus. La tradición vence a la innovación."
+  "strategic_synthesis": "Isabella representa el segmento que no compra educación, sino 'Derecho de Pertenencia'. Para ella, el Tec es la validación de su estatus."
 }

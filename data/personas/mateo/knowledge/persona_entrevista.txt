@@ -1,11 +1,581 @@
-Narrativa del Candidato: Mateo (El Optimizador de Inversión)
-==================================================
 
-P: ¿Cómo va tu búsqueda de universidad?
-R: No solo elijo una carrera, elijo mi nivel de ingresos en los próximos 5 años. Siento que es una decisión enorme. Lo que más me da vueltas en la cabeza es Falta de transparencia en el aumento anual de colegiaturas. Para mí, lo ideal sería encontrar una opción que me asegure Construir una red de contactos (networking) empresarial.
+--- FUENTE: rawData/Transcripciones/Transcripciones Cdmx/E_NEGOCIOS_CDMX.docx ---
+NSE: AB
+Perfil: Negocios
+[Orador 2]
+Muy bien Valeria, este pues para comenzar con la entrevista me gustaría que te presentaras brevemente, por favor comentame tu nombre, tu edad y la escuela en la que estudias.
 
-P: ¿Qué te hace descartar una opción de inmediato?
-R: Si veo El costo no se justifica si la bolsa de trabajo no es robusta, me retiro. No tengo tiempo para propuestas que no sean claras. Como dicen los reportes de mi zona, En el Bajío, es muy sensible a la competencia entre el Tec y la Anáhuac/UVM., y eso pesa mucho en mi casa.
+[Orador 1]
+Hola, soy Valeria, tengo 15 años y estudio en la universidad.
 
-P: ¿Cómo te imaginas tu primer día de clases?
-R: Me imagino en un lugar que cumpla con Compara el prestigio de la marca institucional contra el costo de la colegiatura. Quiero sentir que mi inversión vale la pena.
+[Orador 2]
+Ok, lo entiendo muy bien, y platicame un poco de cómo es tu rutina típica entre la escuela y tu casa.
+
+[Orador 1]
+Pues me levanto a las cinco o seis, dependería, porque depende la hora de entrada, voy a la escuela, tengo pues todas mis clases y salvo a las tres, básicamente todos los días, y ya de ahí pasa por mí y mi papá si puede, o si no, en mi casa.
+
+[Orador 2]
+Ok, muy bien, normalmente es a diario que sales a las tres. Muy bien, y platicame, ¿quiénes viven contigo y qué tan involucrados están en tus decisiones escolares?
+
+[Orador 1]
+Bien, con mi hermano menor por un año y mi papá es mi mamá. Pues tal vez quien más involucre sea mi mamá, como la quien esté más enterada y teniendo pues que ve en todo lo que sé es colar.
+
+[Orador 2]
+Muy bien, ahora platicame un poco, ¿qué cosas son más importantes para ti en esta etapa de tu vida?
+
+[Orador 1]
+Mis calificaciones, pues mis amistades, cumplir también con lo de la casa, la escuela, o sea cumplir con todos los deberes.
+
+[Orador 2]
+¿Y cómo te describirías como persona?
+
+[Orador 1]
+Honesta empática es que no es lo que se desforza, disciplinada.
+
+[Orador 2]
+Disciplinada, muy bien, y platicame normalmente en tu tiempo libre, ¿qué te gusta hacer? dibujar, escuchar música, leer, ver películas, también muy bien y ¿qué te motiva o te impulsa a esforzarte?
+
+[Orador 1]
+cumplir metas.
+
+[Orador 2]
+Muy bien, ahora este cuando piensas en tu futuro ¿cómo te imaginas dentro de 5 años?
+
+[Orador 1]
+5 años, en la universidad estudiando pues negocios o la carrera que me interesa.
+
+[Orador 2]
+Muy bien, y dentro de 10 años ¿cómo te imaginas?
+
+[Orador 1]
+Pues, poco que ya esté haciendo de verdad como cumpliéndola, ya creándola.
+
+[Orador 2]
+Ya creándola muy bien, y platicame un poco ¿qué papel juega la universidad en ese futuro que imaginas?
+
+[Orador 1]
+Yo creo que mucho, también para ya estar en un nivel en el que aprendes algo más dirigido a lo que quieres hacer, aunque también depende mucho de la persona, porque la universidad no te lo va a dar todo, tienes que esforzar tu tiempo por aparte, pero creo que si estudiar todos los días algo que va más dirigido a lo que piensas hacer.
+
+[Orador 2]
+Muy bien, y ¿qué esperas lograr estudiando una carrera profesional?
+
+[Orador 1]
+Aprender y tal vez háblame un poco las puertas a las posibilidades en lo que planeas hacer.
+
+[Orador 2]
+Correcto, ahora este, ¿para ti qué significa una educación profesional hoy en día?
+
+[Orador 1]
+Como, o sea, un estudio ya más dirigido, un estudio sobre la carrera que planeas hacer, o sea, ya todo lo que necesitas saber o todo lo que lleva esa carrera.
+
+[Orador 2]
+Ok, muy bien, ahora este, platicame ¿qué diferencias percibes entre estudiar una carrera y recibir una verdadera formación profesional?
+
+[Orador 1]
+Pues, una formación tal vez se ve como, no solo aprenderlo sino ya tener todas las fases de este trabajo, o sea, también como una ya.
+
+[Orador 2]
+Ok, y mira, ¿qué debe ofrecer una universidad para que consideres que realmente prepara para el futuro?
+
+[Orador 1]
+Puede ser un...
+
+[Orador 2]
+Lo que se te venga la mente y ¿qué crees que debe ofrecer una universidad?
+
+[Orador 1]
+Mucha información sobre la carrera o posible, o sea, un trabajo o una visión más realista.
+
+[Orador 2]
+Una visión más realista, muy bien. ¿Ahora qué experiencias, ya sea propias o cercanas, han influido en tu visión sobre la educación profesional?
+
+[Orador 1]
+Podría ser como cuando te pedios externos, como que te hablan de una profesión, ya de forma educativa o gente que lo estudió, de estures más como una perspectiva más, como real de eso.
+
+[Orador 2]
+Ok, muy bien. Ahora, pasando al siguiente tema, vamos a hacer un pequeño ejercicio. ¿Me gustaría que me platicaras qué pasos has dado en tu búsqueda para elegir la universidad?
+
+[Orador 1]
+Pues, yo, para la universidad, yo pensaba, pues, en una, desde que iba a entrar a la prepa, en el examen, como también pensando en eso, y planeo volver a hacer el examen, pero para la universidad, porque yo planeo estudiarlo en una, o sea, se lo he tenido muy amante, de no ser así, pues, también medio he investigado, pero tendría que investigar más a fondo, universidades que vayan más dirigidas a lo que voy a estudiar, o sea, universidades que sean hasta como más reconocidas por esa carrera o ese tipo de carreras.
+
+[Orador 2]
+Ok, mira, ahorita, por ejemplo, pues, tienes definido que quieres estudiar la carrera en negocios, ¿verdad? Por ejemplo, ya tienes visualizadas opciones que pudieron decir de universidades.
+
+[Orador 1]
+No realmente tendrá que realizar bien en búsqueda, y también, pues, hablarlo con personas que lo hayan estudiado y sepan más sobre todo eso.
+
+[Orador 2]
+Ok, entonces ahorita, más o menos, pues, simplemente tienes la carrera ahí, este, más o menos definida, pero pues, apenas vas a evaluar las opciones, vas a pedir recomendaciones, opiniones. Ok, muy bien. Ahora, este, hubo algún momento o situación que te hizo pensar, pues, que ya tienes que verlo de la universidad?
+
+[Orador 1]
+Sí, por ejemplo, cuando este, en las secundarias finales, municios de prepas, los preguntaban, todavía, o sea, al ver como que había mucha gente que lo dudaba, o había gente que lo decía transseguro, me decía pensar que yo ya tenía que tener muy en mente, muy segura lo que iba a estudiar, porque ya cada vez estábamos más cerca de que tengamos que escogerlo ya bien para la universidad. Entonces, ese es el sentimiento como que cada vez se va siendo más real que se acerca la universidad, pues, no he hecho pensarlo.
+
+[Orador 2]
+Ok, muy bien. Ahora, este, bueno, me platicas que no has empezado tu búsqueda todavía, pero me gustaría saber, en tu caso, ¿tú buscarías o si, o llegas a buscar la carrera en diferentes universidades o seleccionarías, selecciones primero a la universidad y bueno, pues, ya de ahí, reviso la oferta académica.
+
+[Orador 1]
+Creo que iniciaría buscando la carrera en distintas universidades y, pues, buscaría en universidades que me vayan interesando y ya de ahí, como, hago mejor el análisis y de ahí iría descartando para solo evaluar más a fondo las que sienta que cumplen mayor lo que estoy buscando.
+
+[Orador 2]
+Ok, muy bien. Ahora, platicame, ¿qué pasos has seguido hasta ahora para informarte?
+
+[Orador 1]
+Pasos? Puedes preguntarle a mi papá, es claro, investigar y, pues, he preguntado, ¿quiénes cercanos a mí, a la familia o amigos que estén interesados, como, ¿quiénes saben algo? O sea, ¿qué conocen, lo opinan?
+
+Ya, pues, de ahí también hago mi evaluación mental, voy viendo más o menos con experiencias ajenas o opiniones con las más o menos.
+
+[Orador 2]
+Ok, muy bien. ¿Y en tu caso, en dónde buscas información?
+
+[Orador 1]
+Pues, cuando no es como con gente cierta, ¿no? Lo busco sino en internet. En internet tengo un memeto a a buscar más o menos o videos de gente que lo haya estudiado y esté dando su opinión también para ver no solo como los datos exactos sino también las opiniones de gente que lo haya estudiado.
+
+[Orador 2]
+Ok, muy bien. Ahora, ¿qué tan importante es para ti que una universidad tenga disponible información en canales, perdón, esta información online?
+
+[Orador 1]
+Pues, mucho, también para poder informarse o sea, poder buscarlo de forma más accesible necesitan, creo yo creo que necesitan tenerse información.
+
+[Orador 2]
+Ok. ¿Y cómo influye esto en tu elección de universidad?
+
+[Orador 1]
+Pues, yo creo que mucho. No me puedo informar en la universidad sino hay forma inchefeciva datos de ella. Si no conozco directamente a alguien que haya ido no puedo saber de esa universidad.
+
+[Orador 2]
+Ok, muy bien. Ahora sí, ¿qué tan importante es para ti que una universidad tenga disponible información en canales tradicionales como la televisión, la radio, espectaculares, tal vez espectaculares porque pues de cierta forma los tendría en mente, los vería y vería como contemplarnos para después investigarlos más a fondo.
+
+[Orador 1]
+Tal vez la televisión y la radio no me interaya mucho pero sí que intentará hacerse como darse a conocer para de ahí tomar la idea de la investigación.
+
+[Orador 2]
+Ok, muy bien. ¿Y cómo influye esto en tu elección de universidad?
+
+[Orador 1]
+Pues, yo creo que iría más que nada porque los conozco. O sea, si ya tengo en mente que existe la universidad ya la contemplo como una posibilidad.
+
+[Orador 2]
+Ok, muy bien. Ahora, ¿qué información es la que buscas en las universidades?
+
+[Orador 1]
+Pues, ¿cuánto duran tal vez precios, becas, mi carrera? ¿Cuánto duran mi carrera y cuántos ramos hay? Porque siempre hay mucho ramos de una carrera.
+
+También, ¿cuál es todo? ¿Cuántos hay a qué van dirigidos?
+
+[Orador 2]
+Ok.
+
+[Orador 1]
+Y pues, ¿qué tan buena es? En forma de gente que ha ido y la he evaluado, ¿qué tan buena es?
+
+[Orador 2]
+Muy bien. ¿Todo eso buscas información? Bueno, ahora vamos a hacer un pequeño ejercicio.
+
+Te voy a compartir mi pantalla. Me dices cuando ya la estés viendo.
+
+[Orador 1]
+Ya.
+
+[Orador 2]
+¿Y si la alcanzas a ver o la hacer con poco más?
+
+[Orador 1]
+No, si lo alcanzas.
+
+[Orador 2]
+Bueno, muy bien. Me gustaría que organizaras los siguientes atributos según la importancia que se le debe de dar. Está programa de estudios, profesores, la vida estudiantil, actividades extracurriculares, el prestigio de la universidad, infraestructura, ubicación.
+
+¿Cómo los organizarías, en este caso, de mayor importancia?
+
+[Orador 1]
+Pues, en primeras, el prestigio de la universidad. Ok. Creo.
+
+En segunda, la ubicación.
+
+[Orador 2]
+Ubicación, muy bien.
+
+[Orador 1]
+Luego, la infraestructura.
+
+[Orador 2]
+Ok.
+
+[Orador 1]
+Luego, el programa de estudios.
+
+[Orador 2]
+No.
+
+[Orador 1]
+Es, luego, los profesores.
+
+[Orador 2]
+Ok.
+
+[Orador 1]
+Y por último, pues, la vida de estudiantil, los extracurriculares.
+
+[Orador 2]
+Ok. Muy bien. Bueno, voy a dejar de compartir mi pantalla.
+
+Ahora, por ejemplo, de estos tres atributos, los primeros tres que me mencionaste, que es el prestigio de la universidad, la ubicación, infraestructura. ¿Por qué te parecen que son los más relevantes?
+
+[Orador 1]
+Bueno, creo que son los más relevantes para mí, porque no solo sería como ir a una universidad, porque sea universidad y porque esté cerca. O sea, creo que me importaría que pues no me quede del otro lado de la ciudad, pero también que sea una buena universidad. O sea, sí, no solo la cercanía, no solo por ir a la universidad, sino que sepa qué es buena.
+
+La infraestructura, pues, saber no lo que es buena, sino como saber bien cómo funciona. O sea, conocer qué es buena y pues todos los aspectos. Entonces, ya cuando sabes que es una buena universidad, la conoces, sabes cómo funciona y no te quedas cerca, creo que es un aspecto muy importante.
+
+[Orador 2]
+Ok, muy bien. Ahora, ¿has asistido a eventos ya sea en la prepa o en la universidad? O sea, de estos temas de, pues, en la búsqueda de la carrera.
+
+[Orador 1]
+Sí, en la prepa he asistido a algunos.
+
+[Orador 2]
+Ok, en este caso, ¿cómo te enteraste?
+
+[Orador 1]
+Pues para acá, para la prepa, fue en una plática y pues nos dieron la parte que nos dieron folletos. Toda la plática nos lo estuvieron explicando. Yo, la vez que terminó, fuimos a hablar con personas que nos llevara más información.
+
+Todavía antes de escoger, usamos mucha información.
+
+[Orador 2]
+Ok, muy bien. Y plática, ¿cómo fue tu experiencia?
+
+[Orador 1]
+Pues, fue muy interesante. O sea, yo la escogí porque en serio me gustó. O sea, la plática me llamó la atención, me gustó cómo hablaron los profesores que hablaron, cómo abordaron los temas, las explicaciones.
+
+Este, a la hora de buscar más información, todas las personas estaban como muy dispuestas a explicártelo. La forma en la que te hablaban de la escuela fue lo que me interesó.
+
+[Orador 2]
+Ok, muy bien. ¿Y ese tipo de eventos influyen en tu decisión de elección?
+
+[Orador 1]
+Sí, yo creo que sí, la forma en la que te hablan los profesores que te expliquen, o sea, el lugar, los y te dan folletos, todo eso yo creo que fue influyendo.
+
+[Orador 2]
+Me influyendo, muy bien. Ahora, ¿tienes identificadas fechas clave que implican la búsqueda de universidad, tales como ferias, visitas, exámenes, etcétera?
+
+[Orador 1]
+Fechas claves que les sirven como la que en la escuela dan muchas pláticas o webinas que son básicamente como esto. Pero nada más podemos ver al profesor que nos está hablando. Y en esas pues nos hablan de temas fríos.
+
+Yo creo que esos, los que son presenciales y con nuestros asesores escolares, sobre todo esas pequeñas pláticas, pues te dan información. Yo creo que todas esas y no sé si van a ir a ver en los universidades al aportar, no lo sé, pero pues si no, seguramente buscaría una forma de conocer más ya externo con mis padres.
+
+[Orador 2]
+Ok, muy bien. Y ahora, ¿por qué medios has mantenido comunicación con las universidades?
+
+[Orador 1]
+Pues, yo como tal no, pero cuando he investigado la que ha buscado información ya directo con ellos, ha sido mi mamá. Y ha buscado la forma, yo no sé cómo, pero pues consultarlos directamente.
+
+[Orador 2]
+Bueno, imagino que ha se ha comunicado directamente este o tal vez también ha asistido personalmente a las universidades.
+
+[Orador 1]
+Pues, sí, de hecho, siempre que vamos a entrar en una escuela, me va a buscar como, incluso si puede asistir, a preguntar si podemos ver, o sea, si puedo entrar a ver más o menos cómo funciona, si nos pueden entregar algún folleto o algo así para ver qué es lo que te ofrece, cómo es.
+
+[Orador 2]
+Ok, muy bien. Ahora, ¿me platicabas un poco? Pues, que todavía estás en tu decisión de universidad.
+
+La carrera tal vez ya la tienes definida, pero pues la universidad todavía no, pues no, todavía no lo tienes decidido. En este caso, ¿qué expectativas crees que pueden llegar a ocurrir para completar el camino? ¿Tienes alguna expectativa ahí?
+
+Pues, más que nada, pues ya para tener esa decisión final.
+
+[Orador 1]
+Sí, o sea, en mi investigación, como hasta que, o sea, primero encontré las universidades que siento, que ofrecen todo lo que ahorita tengo en mente que necesitan, pero también ampliar mi idea de como los rasgos que califico, o sea, saber mejor qué es que tengo que valorar, porque igual y yo contemplo como lo más importante, lo que no podría ser como lo que más precioso de una universidad. Entonces, una que siento que cumpla todo eso y más, o sea, una que siento que sí me lo, que me va a brindar todo lo que estoy buscando y pues saber bien todo lo que necesito, más que nada, buscar en una universidad.
+
+[Orador 2]
+Ok, muy bien. Ahora, en lo que llevas de recorrido del camino, ¿cuáles han sido los momentos memorables o qué más recuerdes?
+
+[Orador 1]
+O sea, del camino de lo que llevo de prepar?
+
+[Orador 2]
+No, no, en el recorrido del camino, a pues al elegir tu carrera en este caso, bueno, la universidad no tanto, pero ahí en ese recorrido algún momento, pues qué más recuerdas, qué tengas, bueno, qué sea memorable para ti.
+
+[Orador 1]
+Pues una plática familiar en una comida, donde pues estaban preguntando y entonces no me pregunté. Entonces, pues no puse a hacer análisis, o sea, en mi cabeza antes de contestar y pues ya cuando lo comenté y como que les gustara, más o menos ya, de lo que iba dirigido y entonces empezaron a buscar los errores, a buscar como escuelas, a buscar diferentes ramos, a investigar y que me dieran, o sea, como opiniones, siempre se convirtían en una plática que también me interesó, porque me estaban dando información, estaba gustando la idea y pues tanto, como hablando de esto.
+
+[Orador 2]
+Ok, muy bien. Y por ejemplo, de esa plática o en ese momento qué más recuerdas, qué emoción predominó en ti?
+
+[Orador 1]
+Emoción.
+
+[Orador 2]
+Emoción, o sea, como que ya estabas ansiosa por la carrera y ya estudiarla.
+
+[Orador 1]
+Sí.
+
+[Orador 2]
+Muy bien.
+
+[Orador 1]
+Emoción.
+
+[Orador 2]
+Ahora, cambiando un poco de tema, ¿quiénes influyen más en tu decisión sobre qué universidad elegir?
+
+[Orador 1]
+Pues mis padres, yo creo.
+
+[Orador 2]
+Ok, tus padres. Y ahora, plátame a tus papás, ¿qué te dicen sobre dónde o qué estudiar?
+
+[Orador 1]
+Pues cuando busco están cerca, o sea, como también para ellos opinar e investigar también, pero yo creo que me incluyen en mi decisión, porque también ellos están informándose al mismo tiempo que yo, entonces también ellos están formando como ideas o opiniones y de cierta forma, como son mis papás, con todos sus opiniones también influyen en las mías decisiones.
+
+[Orador 2]
+Ok, muy bien. Ahora, ¿qué papel juegan en tu decisión, en primera a tus amigos y compañeros?
+
+[Orador 1]
+Pues, yo creo que sigo un poco. No, no tanto, no sigo, permites pues que sus opiniones afecten tanto algo que ya tengo en mente. No, porque siempre va a haber que ofrecen o finen cosas positivas, cosas negativas o algo de lo que quieres hacer, o hacerte querer pensar que quieras estudiar otra cosa.
+
+Entonces, pues si no los dejas influir tanto, no, pero yo creo que sí influye un poco más cuando que sí te importa la opinión de la otra persona. Pero eso ya más como aquella dirigida o si sí, o sea más que nada, como cuestionártelo.
+
+[Orador 2]
+Si, si, cuestionártelo. Ahora, ¿qué papel juegan en tu decisión, la escuela, los orientadores?
+
+[Orador 1]
+Yo creo que mucho, porque los consideras una audición realista como del trabajo, como que te quieren informar bien de todo, entonces lo que te digan es influyosa, como que fueras tomando nota en tu cabeza, más que nada vas tomando nota en la información que te van dando, de las ventajas y disventajas y todo eso para formar tu decisión, más que nada como que son partes de la estructura hasta llegar a la decisión final.
+
+[Orador 2]
+¿Qué, y por último, las redes sociales, qué papel juegan en tu decisión?
+
+[Orador 1]
+Creo que también mucho. Como decía de los videos de gente que lo estudió y opina, yo creo que influye porque también es como escucharlo de una persona que ya lo vivió, entonces pues influye, claro, porque lo contentas como de, ah bueno, esta persona así sabe, ya lo pasó, entonces es como una pequeña y entonces yo creo que tiene que ver, cuando alguien que lo estudió no te lo recomienda, yo creo que también hace que lo pienses, que lo, que lo analices, en final pues depende de la persona, no, si lo tomas toda en cuenta.
+
+[Orador 2]
+Ok, muy bien. ¿Y a quién escuchas más cuando tienes dudas importantes?
+
+[Orador 1]
+A mí más.
+
+[Orador 2]
+Muy bien.
+
+[Orador 1]
+Yo creo que siempre lo consulto, como más que nada.
+
+[Orador 2]
+Ok, lo consultas con ella, muy bien. Cambiando un poco de tema, cuando escuches el término excelencia académica, ¿qué es lo primero que viene tu mente?
+
+[Orador 1]
+Excelencia académica, como buenas notas, desempeño, como, ajá, como pienso excelencia, buenas notas, o sea, cumplir con todas las, que todas las materias tenían buena credición.
+
+[Orador 2]
+Ok, muy bien. ¿Cómo sabes o te das cuenta que una universidad es académicamente excelente?
+
+[Orador 1]
+Cuando, así todos sus, los que se graduaron de ahí, pueden decir que se graduaron con buena credificación, o que de ahí salen a, o sea, salen más preparados, es cuando más o menos puedes decir que la universidad los preparó bien.
+
+[Orador 2]
+Ok. ¿Y ahora qué señales o evidencias te generan confianza? Aquí, aquí tengo notados, por ejemplo el ranking, las acreditaciones, los profesores, la investigación, infraestructura, la exigencia, los egresados.
+
+[Orador 1]
+Los egresados, los profesores, o sea, luego no siempre es muy fácil de saber de los profesores, pero con algo de tiempo, o sea, hay gente que los conozca, puedes saber más o menos cómo son y cómo enseñan, porque luego no son los profesores, los hace buenos profesores, ni impartiendo su material. Yo creo que los egresados, los profesores, la exigencia, o sea, tiene que ser, yo creo que un punto neutro en la exigencia. Pues y como las acreditaciones también hablan mucho con la universidad, es de un ciento que va como con los egresados, las acreditaciones, los egresados.
+
+[Orador 2]
+Ok, muy bien. Ahora, ¿qué diferencias hay en una universidad buena de una excelente?
+
+[Orador 1]
+Pues, una buena suena como que te conformas, como que tiene aspectos que no, es que tiene aspectos que no lo hacen excelente, porque lo hacen solamente una buena universidad, una que es excelente es que cumple, yo creo que con todo lo que estás buscando, o sea, lo da todo, no creo que haya, pero sí que la consideres más que buena, mucho más que buena, una buena es que no, no lo llena.
+
+[Orador 2]
+Ok, muy bien. Ahora, para ti la excelencia académica siempre justifica un mayor costo y por qué?
+
+[Orador 1]
+Yo creo que varias veces sí. Cuando la universidad sabe que es de excelencia, puedes saber que pueden subir el precio porque mucha gente queda a sus hijos ahí, porque es una universidad que no, la universidad no te asegura cosas, pero sentirán el sabor, que es excelencia que sí lo hará, entonces aceptarán pagar un costo más alto con tal de ese sentimiento de que les brindará esa excelencia también, pues a sus hijos, al graduarse.
+
+Yo creo que pues sí o no, o sea, depende de la universidad y la excelencia.
+
+[Orador 2]
+Ok, depende de la universidad, muy bien. ¿Y qué universidades tienes en mente actualmente para estudiar la licenciatura?
+
+[Orador 1]
+Yo, o sea, es que yo sé que quiero ser, porque me llamo mucho la atención es la una, o sea, ni el poli la una, la una es la que yo quiero ser. Pero también quisiera, o sea, parte de la misión, buscar una que sea dedicada más o menos a lo que voy a estudiar, o sea, la una es muy científica y hay muchas cosas, entonces también quisiera buscar una que sea como más dirigida a eso, o sea, como más específica a eso.
+
+[Orador 2]
+Ok, muy bien. Ahora en tu caso, ¿cuáles se atraen más y por qué?
+
+[Orador 1]
+Es que, bueno, no sé muy bien qué un, pero el por qué sería como sus egresados en cuanto a mi carrera, su reconocimiento en cuanto, ajá, que tenga que ver con mi carrera o relacionadas, cuantas, o sea, a saber como cuantas, cuantas personas que yo conozco han estudiado y porque yo creo que tenemos, yo no sé qué tiene que ver, la verdad que gente que yo conozca haya ido a saber qué tan buena es y ya de ahí investigar como si fuera para mi carrera, yo creo que si esa parte de la UNAM, pues que haya que ser realmente buena en mi carrera.
+
+[Orador 2]
+Ok, muy bien. ¿Y hay alguna universidad que hay al descartado?
+
+[Orador 1]
+Si, bueno, la UNITEP en escuela también es una universidad, no diría qué le has descartado como al 100%, pero yo no había pensado en decirme en universidad, no, en mi profesorio, si pensaba como en la UNAM o en otra universidad. Es una posibilidad, pero no la consideras.
+
+[Orador 2]
+Ok, y ahí pues qué pasó, este, para que la dejara fuera o más bien para que no la consideres.
+
+[Orador 1]
+Aunque me gusta mucho como universidad, como que estoy buscando otra, o sea, o valido otra cosa, o sea, porque aquí incluso en carteles he visto como que les gusta la informática, la robótica, y aunque me gusta como preparatoria, pero que como universidad no va tan dirigida a lo que estoy postrando o lo que tengo en mente.
+
+[Orador 2]
+Ya, ok, muy bien. Y cuando comparas universidades qué aspectos son indispensables para ti?
+
+[Orador 1]
+No, la excelencia, pero no como que estén catalogadas por todo el mundo con excelencia, sino la que yo considero por mi investigación que es la mejor.
+
+[Orador 2]
+Ok.
+
+[Orador 1]
+La dejanía, porque puede que sea la mejor universidad, pero si va a ser que me sea imposible asistir a todo, ni todo en mi carrera, porque me quedé muy lejos, o sea, tampoco se podría. El precio, pues sí, el precio, porque podrá ser la mejor y todo, pero no me puede que esté a un ojo de la cara, o una vez que vuelvo así, no sé, pero creo que esos aspectos, una vez que ya considero que son la buena universidad, es lo necesario.
+
+[Orador 2]
+Ok, muy bien. Necesitas saberles. ¿Y qué aspectos crees que pueden llegar a ser negociables?
+
+[Orador 1]
+Como los profesores, porque me imagino que habría como opiniones como que un profesor es muy exigente o algo así, y ese aspecto, o sea, que esas consideraciones, esas opiniones, es información, yo creo que podría considerarse porque no siempre es válida, no siempre es cierta, entonces sería como un aspecto decisivo. Luego si ya considero que la universidad es buena en serio, aspectos como opiniones ajenas, tampoco, o sea, perdería morosías de muy segura de la universidad.
+
+[Orador 2]
+Ok, muy bien. Si tuvieras que elegir solo dos o tres factores clave, ¿cuáles serían?
+
+[Orador 1]
+Los claves son, ¿qué tan bueno o excelente la consideré? La ubicación, también va de cojón, y el precio. Bueno, es que con la excelencia yo considero, ¿qué tan buena es la escuela?
+
+Y eso ya llena muchos factores de lo que busco. Los otros dos pues ya son, más como, la parte más realista que busco en la universidad, ¿ya cuánto cuesta y qué tan lejos te quedas? O sea, ya después de que buscas algo que te guste, ¿ya alguna más realista?
+
+[Orador 2]
+Sí, sí, sí, te entiendo. Ahora, ¿qué haría que elegieras una universidad sobre otra similar?
+
+[Orador 1]
+Como una experiencia ahí, como acá en mi preparatoria, que placo, la plática fue la que me hizo decidir que esa escuela, o sea, yo creo que tal vez una plática o uno se encontraba una forma como de saber algo más de la escuela, pero de forma como de vivirlo sería lo que me voy a decidirlo, porque de forma, puede que de una imagen o de un texto no te compensa algo, pero una vez estás ahí que lo estás experimentando, que lo estás viendo, cambia la perspectiva.
+
+[Orador 2]
+Dame la perspectiva, muy bien. ¿Y qué te haría decir, esta universidad es la indicada?
+
+[Orador 1]
+Uno, ver que mis papás les gusta, la aprueban y yo al estar ahí, no solo me gustan, sino que me ve ahí. O sea, cuando usted conoce, hayamos ido a verlo o algo así, y pase por ahí, que sí me imagine ahí, pero como día a día estoy estudiando.
+
+[Orador 2]
+Muy bien. Ahora, cambiando un poco de tema, ¿cómo imaginas la experiencia ideal en la universidad?
+
+[Orador 1]
+Como estudiando, no sé, una actividad sobre mi carrera en alguna de las materias y estar haciéndonos una actividad, o sea, pero que realmente me gusta, o sea, que ni siquiera se sienta pesado como luego, cuando es una materia que no entiende si parece otro idioma, o sea, que me guste, entonces no me importa estar ahí haciendo una tarea, porque me gusta lo que estoy haciendo, me gusta lo que estoy aprendiendo, y me gusta como darle tiempo a eso. Yo creo que eso sería como un escenario que me guste.
+
+[Orador 2]
+Ok, muy bien. ¿Y qué esperas de los profesores y las clases?
+
+[Orador 1]
+Pues de los profesores que sepan, que sepan del tema que están explicando, y pues que les interese, que no vayan ahí nada más por y no, que les interese, pues que aprendas, y también como atapa su atención, que te guste la materia que ellos están explicando. Yo creo que eso.
+
+[Orador 2]
+Ok, muy bien. ¿Para ti qué tan importante es la experiencia social?
+
+[Orador 1]
+Yo creo que también mucho. O sea, si tú el cerco del que te rodeas, incluye cómo es esa etapa.
+
+[Orador 2]
+Ok. ¿Y cómo será o sería el ambiente universitario ideal para ti?
+
+[Orador 1]
+Pues yo creo que está dándolo todo en mis materias, esforzando mucho, pero sin embargo, aún así como pues hacer una ensamistad escraro, hacer un tene muy duquito, o sea, sin dejar de lado todo lo social, también dar esforzarme al máximo en mis materias.
+
+[Orador 2]
+Ok. Ahora, para ti qué tan importante es la experiencia internacional?
+
+[Orador 1]
+Interesional, yo creo que mucho, o sea, sí, mucho también. No, creo que no todas las universidades podrían brindarte lo, realmente, o sea, o mucho, pero yo creo que es un aspecto muy importante.
+
+[Orador 2]
+¿Y qué experiencias de internacionalización te gustaría vivir?
+
+[Orador 1]
+Pues yo desde siempre quería irme a un intercambio, irme a un intercambio como en la Tierra, pero o sea, no solo aprender muy en el idioma, sino como siempre aprender cosas nuevas en diferentes lugares, yo creo que sería como para irme a un intercambio y ampliar mi conocimiento, no quedarme con lo que me enseñan en un lugar sino ir sabiendo más.
+
+[Orador 2]
+Ok, muy bien. Pasando, otro tema, qué tan importante es para ti que la universidad te ayude a conseguir trabajo?
+
+[Orador 1]
+Pues como ayudarte a conseguir, o sea, sí, yo creo que sí es importante. Más que nada, pues no, como que te den contactos y entonces sepas en qué lugares puedes trabajar como, porque luego estudias algo y no sabes qué empresas te pueden contratar, pues más que nada, como que te digan que existe esto, esto y esto, y ahí también como te den una guía para encontrar un empleo, yo creo que pues es muy importante porque que los estudios no quieren decir que salgas de ahí ya sabiendo todo.
+
+[Orador 2]
+Ok, muy bien. Y qué entiendes por buena empleabilidad?
+
+[Orador 1]
+O sea, que es la mayoría, creería que significa que la mayoría de los sus egresados fueron empleados, o sea, que por una no tendría que ser con una carrera específica, pero, por ejemplo, que de una carrera el 99% de los egresados hayan sido tan buenos en lo que estudiaron, en lo que se editan, que al salir hayan encontrado un empleo.
+
+[Orador 2]
+Ok, muy bien. Y qué esperas en términos de prácticas o contacto con empresas?
+
+[Orador 1]
+Pues espero, como, abrir, hay muchas opciones, muchas puertas, como conocer muchos tipos de empleo, o sea, o sea, como relacionado a mi carrera, cada empresa como quien me ofrece o ver más o menos cómo es ya la vida laboral.
+
+[Orador 2]
+Ok, muy bien. Cambiando de tema de nuevo, qué tan importante es el costo al elegir la universidad y por qué?
+
+[Orador 1]
+Pues mucho también. O sea, no irse a una universidad que te sea incociable. También ser realistas porque las carreras pueden dar mucho tiempo y no te pueda salir y no fue la cara.
+
+[Orador 2]
+Ok, muy bien. ¿Esperas obtener algún tipo de beca o de apoyo?
+
+[Orador 1]
+Si, si os puedo ganarme alguna vez.
+
+[Orador 2]
+Bien. ¿Y esto te parece importante para tomar tu decisión de universidad?
+
+[Orador 1]
+Totalmente.
+
+[Orador 2]
+Bien. ¿Y cuándo sientes que una universidad vale lo que cuesta?
+
+[Orador 1]
+Cuando estoy segura de que la universidad es más que buena, es excelente y tiene toda la razón de comprarte lo que te cobre. O sea, como que si sientes como que te están cobrando lo que vale la experiencia y o sea académicamente, socialmente y ya lo laboral después de la universidad. O sea, las puertas que de cierta forma te abren esa universidad.
+
+Todas las opciones que te abren.
+
+[Orador 2]
+Muy bien. Pues ya para ir cerrando ya en esta última etapa de la entrevista, las últimas preguntas, ¿qué cosas te generan más dudas o inseguridad?
+
+[Orador 1]
+Ya en el momento decisivo dudarte en mi carrera o no encontrar como la universidad que tengo desde ahorita, que ahorita apenas voy empezando, que tengo desde ahorita el mente. O sea, ya cuando sea lo más importante que el plan empiece a fallar, pero que se me daría mucho bien.
+
+[Orador 2]
+Ok, muy bien. ¿Qué podría hacer que retraces o canceles tu inscripción a una universidad?
+
+[Orador 1]
+Lo más de algún factor, no sé, de salud. Porque por cualquier otra cosa yo creo que aún así intentaría hacer todos los documentos de asociación. O sea, lo posible es por no dejarlo, no posponerlo.
+
+[Orador 2]
+Ok, muy bien. ¿Y qué debería hacer una universidad para conectar mejor contigo y que te sientas más segura en tu decisión?
+
+[Orador 1]
+Trinderme la mayor información realista o experiencia realista estudiando hoy. O sea, no solo lo que te venden. O sea, como viven lo de verdad para ayudarme a estar seguro.
+
+[Orador 2]
+Ok. ¿Y ahora qué consejo le darías a una universidad que quiere atraer a estudiantes como tú?
+
+[Orador 1]
+Pláticas como yo creo que hay alguna plática con los que consideran que son como sus mejores profesores, pero no solo por exigentes, sino como esos, como disipología o algo así, porque son los profesores que hablan con nosotros, la mayoría de las veces. Y saben cómo hablarte y cómo expresarte las cosas bien. También que te den mucha información aquí y a tus papás, porque la decisión al final no solo la tomas tú, no siempre la medio de las veces.
+
+Entonces, que la mejor información como a todos y la oportunidad tal vez de ver la universidad. Porque eso tiene mucho que ver. Poder estar adentro de la universidad todavía antes de que te puedes estudiar ahí.
+
+Te ayuda como a decidir.
+
+[Orador 2]
+Ok, muy bien. Muy bien, Valeria, ya por último. ¿Hay algo importante que no te haya preguntado y me quieras compartir?
+
+[Orador 1]
+No, creo que no.
+
+[Orador 2]
+Ok, muy bien. Bueno, pues te agradezco mucho por tu tiempo y por tu participación. El paso siguiente, la persona que te contactó, pues va a volver a buscarte para el tema del incentivo por haber aceptado la participación de la entrevista.
+
+¿Te parece? Sí. Muy bien.
+
+Te agradezco mucho y que pases una excelente tarde.
+
+[Orador 1]
+Gracias, igualmente.
+
+[Orador 2]
+Hasta luego, gracias.
+

@@ -1,19 +1,18 @@
-# Profundidad Estratégica: Camila (Líder Sustentable)
+# Persona Strategic Depth: Camila
 
-## Perfil Psicológico y Mentalidad
-Camila (Líder Sustentable) no solo busca una carrera, busca Salvar el planeta y su comunidad. Su proceso mental está regido por Camila extrae el hallazgo del estudio EHE: para este grupo, el propósito es el producto. No compran una carrera, compran una identidad de cambio.
+## Arquetipo: La Activista Digital
+Camila es idealista, crítica y altamente autónoma. En el SBP, su tono debe ser fresco, directo y centrado en los valores. No responde bien a la jerarquía tradicional; busca un diálogo de tú a tú con la institución.
 
-## Lógica de Decisión (Basada en Estudios Berumen)
-- **Disparador de Compra**: Ser parte de la nueva economía verde
-- **Barrera Crítica**: El programa parece una versión 'maquillada' de administración tradicional
-- **Sensibilidad al Precio**: Muy alta en el segmento CDMX / Monterrey.
+## Mapa de Empatía (SBP Calibration)
+- **¿Qué oye?** Que "el mundo necesita un cambio urgente". Que las carreras tradicionales están muriendo.
+- **¿Qué ve?** Comunidades globales en Discord/Reddit, activismo digital, y la posibilidad de trabajar de forma remota.
+- **¿Qué dice/hace?** Investiga el impacto real de los egresados. Participa en foros sobre sostenibilidad y ética digital.
+- **¿Qué le duele?** Sentir que está atrapada en un sistema educativo que prioriza el lucro sobre el impacto.
 
-## Comportamiento ante la Información
-- **Canales Preferidos**: TikTok y comunidades activistas en redes sociales, Documentales y charlas de líderes de opinión, Rankings de universidades sustentables
-- **Lo que ignora**: Publicidad genérica que no hable de resultados reales o costos claros.
+## Comportamiento ante Objeciones (Simulación)
+Si se le confronta con la **Modalidad Online**, su respuesta es positiva: "Es lo más inteligente y ecológico". Solo le preocupa si la calidad académica y la red de contactos son igual de fuertes que en el modelo presencial.
 
-## Integración de Hallazgos Estratégicos
-A partir del análisis de los reportes de CDMX / Monterrey, hemos identificado que este perfil reacciona positivamente cuando la universidad enfatiza Evalúa la ética de la universidad antes que su prestigio. Sin embargo, su mayor miedo es El 'Greenwashing' en la publicidad universitaria, lo cual debe ser mitigado en el funnel de ventas.
-
----
-*Documento de profundidad estratégica para el motor SBP.*
+## Ángulos de Venta para la IA
+1. **Liderazgo con Alma:** "Convierte tu pasión por el mundo en tu profesión, con las herramientas más avanzadas."
+2. **Estudia a tu Ritmo, Cambia el Mundo:** "La flexibilidad que necesitas para ser quien quieres ser."
+3. **Comunidad de Innovadores:** "No estás sola; únete a la red más grande de agentes de cambio digital."

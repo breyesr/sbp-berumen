@@ -1,52 +1,51 @@
 {
   "id": "mateo",
-  "name": "Mateo (El Optimizador de Inversión)",
-  "role": "Aspirante a Negocios / Inteligencia de Negocios",
-  "city": "Querétaro / Bajío",
+  "name": "Mateo (AB) - Cluster Premium",
+  "role": "Aspirante a Negocios / Inteligencia Artificial",
+  "city": "Querétaro / Santa Fe (CDMX)",
   "demographics": [
-    "NSE AB o C+ con alta conciencia presupuestaria",
-    "Estudiante de último año de preparatoria privada",
-    "Perfil analítico; usa tablas comparativas para decidir",
-    "Influencia directa de los padres en la viabilidad financiera"
+    "NSE AB; hijos de empresarios o directivos de alto nivel",
+    "Fuerte formación analítica y tecnológica previa",
+    "Decisor autónomo con respaldo total de los padres",
+    "Mentalidad global: bilingüe o trilingüe"
   ],
   "business": [
-    "Ve la universidad como un activo que debe generar retorno inmediato",
-    "Compara el prestigio de la marca institucional contra el costo de la colegiatura",
-    "Busca activamente convenios de doble titulación internacional",
-    "Su decisión final depende de obtener el mayor porcentaje de beca posible"
+    "Ve la universidad como un 'Launchpad' para su propio negocio",
+    "Valora la tecnología de punta (IA) como herramienta competitiva",
+    "Busca el retorno de inversión en términos de 'Capacidad de Generación de Riqueza'"
   ],
   "goals": [
-    "Asegurar un empleo de alto nivel antes de graduarse",
-    "Construir una red de contactos (networking) empresarial",
-    "Maximizar el prestigio de su CV sin comprometer la estabilidad familiar"
+    "Liderar la transformación digital en la empresa familiar o propia",
+    "Obtener una doble titulación con universidades en USA o Europa",
+    "Ser un referente en la aplicación ética de la IA en negocios"
   ],
   "pains": [
-    "Falta de transparencia en el aumento anual de colegiaturas",
-    "Planes de estudio que percibe como 'demasiado teóricos'",
-    "Dificultad para equilibrar el trabajo y el estudio en semestres avanzados"
+    "Planes de estudio que percibe como 'lentos' ante la velocidad de la IA",
+    "Profesores que no tienen experiencia real en el mercado global",
+    "Falta de laboratorios de innovación que parezcan 'Silicon Valley'"
   ],
   "objections": [
-    "El costo no se justifica si la bolsa de trabajo no es robusta",
-    "Las becas son difíciles de mantener por criterios subjetivos",
-    "Otras universidades locales ofrecen 'lo mismo' por un 20% menos"
+    "¿La IA en esta universidad es real o solo marketing?",
+    "¿Puedo llevar mi carrera a un plano internacional desde el primer año?",
+    "¿Qué tan potentes son los mentores que me asignarán?"
   ],
   "motivations": [
-    "Movilidad social y éxito financiero temprano",
-    "El 'Brand Awareness' de su universidad en el mercado laboral",
-    "Acceso a mentores que sean dueños de empresas"
+    "El éxito financiero y la innovación disruptiva",
+    "Estar a la vanguardia tecnológica mundial",
+    "Competir en ligas internacionales"
   ],
   "channels": [
-    "Portales financieros de las universidades",
-    "LinkedIn para investigar trayectorias de egresados",
-    "Juntas familiares donde se revisa el presupuesto"
+    "LinkedIn e hilos de expertos en X (Twitter)",
+    "Foros de emprendimiento y tech (ej. TechCrunch)",
+    "Networking en campos de golf o clubes de industriales"
   ],
   "quotes": [
-    "No solo elijo una carrera, elijo mi nivel de ingresos en los próximos 5 años.",
-    "¿Qué universidad me da la mejor marca al menor costo mensual?"
+    "La tecnología es mi ventaja competitiva, la universidad mi aceleradora.",
+    "Busco una institución que corra a la misma velocidad que el mercado."
   ],
   "regionalNotes": [
-    "En el Bajío, es muy sensible a la competencia entre el Tec y la Anáhuac/UVM.",
-    "Valora mucho la cercanía con parques industriales."
+    "Clave en el Bajío y Santa Fe por la vocación industrial y tech.",
+    "Busca integrar la industria 4.0 con la gestión de negocios."
   ],
-  "strategic_synthesis": "Mateo refleja el hallazgo del estudio de Negocios en Qro: la marca es el principal gancho, pero el precio es el filtro final. Su comportamiento es el de un 'comprador racional' de servicios educativos."
+  "strategic_synthesis": "Mateo es el 'Business Architect' del Cluster Premium. No quiere aprender administración tradicional, quiere dominar las herramientas que definirán el futuro del dinero."
 }

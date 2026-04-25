@@ -1,51 +1,51 @@
 {
   "id": "diego",
-  "name": "Diego (El Constructor Pragmático)",
-  "role": "Aspirante a Ingeniería (Civil/Industrial)",
-  "city": "Laguna / San Luis Potosí",
+  "name": "Diego (C+) - Cluster Value Seeker",
+  "role": "Aspirante a Ingeniería Civil / Industrial",
+  "city": "Laguna / San Luis Potosí / Sonora",
   "demographics": [
-    "Enfoque práctico y orientado a resultados",
-    "NSE medio-alto (C+/AB); busca estabilidad",
-    "Habilidades técnicas autodidactas previas",
-    "Influencia moderada de los padres; decide por 'lógica'"
+    "NSE C+; primera generación con acceso a universidad de élite",
+    "Fuerte influencia de los padres en la decisión financiera",
+    "Proviene de escuelas preparatorias de costo medio o becado",
+    "Perfil práctico y orientado al trabajo técnico"
   ],
   "business": [
-    "Evalúa el programa por su vinculación con la industria local",
-    "Exige laboratorios con tecnología que se use hoy en las empresas",
-    "Prefiere certificaciones técnicas adicionales al título"
+    "La universidad es una inversión que DEBE pagarse sola (ROI)",
+    "Evalúa el costo-beneficio de cada peso invertido en colegiatura",
+    "Busca activamente becas de alto porcentaje para poder entrar"
   ],
   "goals": [
-    "Liderar proyectos de infraestructura o manufactura",
-    "Obtener un salario competitivo desde el primer año",
-    "Ser reconocido por su capacidad de resolver problemas técnicos"
+    "Conseguir un empleo bien remunerado en la industria local de inmediato",
+    "Obtener certificaciones técnicas que le den ventaja competitiva",
+    "Escalar socioeconómicamente a través de su profesión"
   ],
   "pains": [
-    "Currículos desactualizados respecto a la industria 4.0",
-    "Profesores que nunca han trabajado fuera de la academia",
-    "Instalaciones que se ven desgastadas o antiguas"
+    "Miedo a terminar la carrera con una deuda impagable",
+    "Incertidumbre sobre si los laboratorios están a la altura del precio",
+    "Preocupación por la falta de contactos directos con la industria"
   ],
   "objections": [
-    "El plan de estudios tiene demasiadas materias 'de relleno'",
-    "No hay convenios claros para prácticas profesionales",
-    "Otras escuelas técnicas ofrecen la misma formación por menor costo"
+    "¿Qué porcentaje real de beca puedo obtener con mi promedio?",
+    "¿La bolsa de trabajo garantiza que me contratarán rápido?",
+    "La colegiatura ha subido más que el ingreso de mi familia"
   ],
   "motivations": [
-    "Construir soluciones tangibles y duraderas",
-    "Seguridad económica y profesional",
-    "El reto intelectual de la ingeniería"
+    "Seguridad económica familiar",
+    "Orgullo de pertenecer a una marca reconocida por mérito propio",
+    "Dominio de herramientas técnicas modernas"
   ],
   "channels": [
-    "Foros técnicos y reseñas de YouTube sobre ingenierías",
-    "Ferias de empleo y visitas a zonas industriales",
-    "Recomendaciones de ingenieros en su círculo social"
+    "Ferias de becas y financiamiento",
+    "Reseñas en YouTube sobre laboratorios y vida real en el campus",
+    "Conversaciones familiares sobre presupuesto educativo"
   ],
   "quotes": [
-    "Lo que no se puede construir o medir, no me interesa.",
-    "Busco una universidad que hable el lenguaje de las empresas."
+    "Mi título tiene que valer cada peso que mi familia está sacrificando.",
+    "Busco la mejor ingeniería que mi beca pueda pagar."
   ],
   "regionalNotes": [
-    "En SLP y Laguna, la cercanía con la industria automotriz y metalúrgica es clave.",
-    "Es un perfil muy local que prefiere quedarse donde está el trabajo."
+    "Muy común en zonas industriales del norte y bajío.",
+    "Valora la cercanía con empresas automotrices y de manufactura."
   ],
-  "strategic_synthesis": "Diego representa el núcleo del reporte de Ingenierías: la 'utilidad técnica' es el filtro. Si no ve máquinas modernas en el tour, la venta se cae."
+  "strategic_synthesis": "Diego es el 'Eficientista' del Cluster Value. Su decisión es racional y colectiva (familiar). Si no ve un camino claro al empleo, no se inscribe."
 }
