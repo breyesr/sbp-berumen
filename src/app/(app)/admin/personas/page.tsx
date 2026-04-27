@@ -44,7 +44,6 @@ export default function AdminPersonasPage() {
   const [activePersona, setActivePersona] = useState<PersonaRecord | null>(null);
   const [drawerMode, setDrawerMode] = useState<'train' | 'edit' | null>(null);
   const [viewingDossier, setViewingDossier] = useState<PersonaRecord | null>(null);
-  const [editForm, setEditForm] = useState<Partial<PersonaRecord>>({});
   
   // Filter/Sort states
   const [searchQuery, setSearchBar] = useState("");
@@ -386,8 +385,9 @@ export default function AdminPersonasPage() {
       {viewingDossier && <PersonaDossier persona={viewingDossier} onClose={() => setViewingDossier(null)} />}
       {activePersona && drawerMode && (
           <IntelligenceDrawer 
+            key={`${activePersona.id}-${drawerMode}`}
             persona={activePersona}
-            clusters={clusters}
+            clusters={availableClusters.map(name => ({ id: name, name }))}
             mode={drawerMode}
             onClose={() => { setActivePersona(null); setDrawerMode(null); }}
             onSave={handleSaveEdit}
