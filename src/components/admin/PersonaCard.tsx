@@ -65,9 +65,7 @@ export function PersonaCard({ persona, onEdit, onTrain, onViewDossier, onDelete 
       {/* Actions */}
       <div className="mt-6 flex items-center gap-2 pt-4 border-t border-white/5">
         <Button 
-          variant="secondary" 
-          size="sm" 
-          className="flex-1 h-8 bg-white/5 hover:bg-indigo-500/20 text-zinc-300 hover:text-indigo-200 border-none transition-all"
+          className="flex-1 h-8 bg-white/5 hover:bg-indigo-500/20 text-zinc-300 hover:text-indigo-200 border-none transition-all shadow-none"
           onClick={onTrain}
         >
           <Brain className="w-3.5 h-3.5 mr-2" />

@@ -344,7 +344,7 @@ export default function AdminPersonasPage() {
                         </div>
                     </div>
                     <div className="flex gap-3 pt-4">
-                        <Button variant="outline" type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl">Cancel</Button>
+                        <Button type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
                         <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-indigo-500/20 shadow-lg">Initialize</Button>
                     </div>
                 </form>
