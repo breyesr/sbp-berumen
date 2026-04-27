@@ -14,7 +14,7 @@ export async function GET() {
 
   try {
     const res = await db.query(
-      `SELECT id, name, role, cluster, metadata, updated_at 
+      `SELECT id, name, role, cluster, metadata, context, updated_at 
        FROM personas 
        ORDER BY cluster ASC, name ASC`
     );
