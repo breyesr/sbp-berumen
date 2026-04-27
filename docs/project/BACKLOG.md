@@ -75,27 +75,27 @@
 ## Epic 10: Multi-Tenant Cluster Permissions (High)
 **Owner**: Backend & UX/UI
 *Goal: Control user access to personas at the cluster level to support B2B and multi-team environments.*
-- [ ] **Task 10.1**: Create the `user_cluster_access` junction table in Postgres.
+- [x] **Task 10.1**: Create the `user_cluster_access` junction table in Postgres. [DONE]
 - [ ] **Task 10.2**: Update the Admin Users UI (`/admin/users`) to include an "Access Control" panel for cluster assignment.
 - [ ] **Task 10.3**: Implement Authorization Middleware to validate persona access based on user-cluster entitlements.
 - [ ] **Task 10.4**: Refactor `GET /api/personas` to return only authorized personas based on the session's clusters.
 - [ ] **Task 10.5**: Implement Super-Admin "Global View" bypass for unrestricted access.
 
-## Epic 11: Optimized Copywriter Engine (Performance)
+## Epic 11: Optimized Copywriter Engine (Performance) [DONE]
 **Owner**: Lead & Backend
 *Goal: Match the Copywriter's performance and streaming capabilities to the Stress Test engine.*
-- [ ] **Task 11.1**: Migrate Copywriter logic to `streamObject` (AI SDK) to support real-time result generation.
-- [ ] **Task 11.2**: Refactor the Copywriter results view to support incremental streaming and loading skeletons.
-- [ ] **Task 11.3**: Break down the Copywriter form and results into modular, reusable components for better performance.
+- [x] **Task 11.1**: Migrate Copywriter logic to `streamObject` (AI SDK) to support real-time result generation. [DONE]
+- [x] **Task 11.2**: Refactor the Copywriter results view to support incremental streaming and loading skeletons. [DONE]
+- [x] **Task 11.3**: Break down the Copywriter form and results into modular, reusable components for better performance. [DONE]
 
-## Epic 12: Unified Strategic Access (Dossier Integration)
+## Epic 12: Unified Strategic Access (Dossier Integration) [DONE]
 **Owner**: UX/UI & Frontend
 *Goal: Provide immediate access to persona intelligence across the entire platform.*
-- [ ] **Task 12.1**: Implement a "View Persona Dossier" button next to the persona selector in Stress Test and Copywriter pages.
-- [ ] **Task 12.2**: Refactor the `PersonaDossier` into a shared UI component that adapts to user vs. admin context.
+- [x] **Task 12.1**: Implement a "View Persona Dossier" button next to the persona selector in Stress Test and Copywriter pages. [DONE]
+- [x] **Task 12.2**: Refactor the `PersonaDossier` into a shared UI component that adapts to user vs. admin context. [DONE]
 
-## Epic 13: Advanced Cluster Navigation UX
+## Epic 13: Advanced Cluster Navigation UX [DONE]
 **Owner**: UX/UI
 *Goal: Simplify navigation when multiple clusters are present.*
-- [ ] **Task 13.1**: Upgrade `PersonaSelect` to use a searchable combobox or grouped tab interface.
-- [ ] **Task 13.2**: Add visual "Cluster Context" indicators in the main workspace.
+- [x] **Task 13.1**: Upgrade `PersonaSelect` to use a searchable combobox or grouped tab interface. [DONE]
+- [x] **Task 13.2**: Add visual "Cluster Context" indicators in the main workspace. [DONE]

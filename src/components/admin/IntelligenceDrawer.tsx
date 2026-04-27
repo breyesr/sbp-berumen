@@ -75,11 +75,15 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, s
           ) : (
             <div className="space-y-8">
               <div className="space-y-2">
-                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Nombre de la Persona</label>
+                <div className="flex justify-between items-center">
+                    <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Nombre de la Persona</label>
+                    <span className="text-[10px] text-zinc-600 font-bold">{(form.name || '').length}/40</span>
+                </div>
                 <input
                   type="text"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  maxLength={40}
+                  onChange={(e) => setForm({ ...form, name: e.target.value.slice(0, 40) })}
                   className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500/50 transition-colors"
                 />
               </div>

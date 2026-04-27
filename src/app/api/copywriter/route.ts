@@ -1,7 +1,8 @@
 // src/app/api/copywriter/route.ts
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import OpenAI from "openai";
+import { streamObject } from "ai";
+import { openai } from "@ai-sdk/openai";
 import fs from "fs/promises";
 import path from "path";
 import { getPersona } from "@/lib/personaProvider";
@@ -277,26 +278,7 @@ Instructions:
 - If information feels sparse, still produce best-effort compliant copy rather than omitting the output.
 - Provide outputs only for the selected platform-format pairs.
 - Include hashtags only if they fit the platform guidance.
-- Be concise; front-load hooks per platform best practices.
-
-Return JSON with this shape:
-{
-  "outputs": [
-    {
-      "platformId": "<id>",
-      "platformName": "<name>",
-      "formatId": "<id>",
-      "formatName": "<name>",
-      "primaryCopy": "<the main copy or caption>",
-      "alternateCopy": "<optional alt copy>",
-      "hashtags": ["#tag1", "#tag2"],
-      "cta": "<one CTA>",
-      "notes": ["<constraints or reminders applied>"]
-    }
-  ]
-}
-
-Return only JSON.`;
+- Be concise; front-load hooks per platform best practices.`;
 }
 
 export async function GET() {
@@ -307,14 +289,6 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "OPENAI_API_KEY not configured" },
-      { status: 500 }
-    );
-  }
-
   try {
     const body = await req.json();
     const parsed = RequestSchema.safeParse(body);
@@ -380,7 +354,6 @@ export async function POST(req: Request) {
       );
     }
 
-    const openai = new OpenAI({ apiKey });
     const prompt = buildPrompt({
       personaName: persona.name,
       personaContext: persona.context,
@@ -393,68 +366,45 @@ export async function POST(req: Request) {
       selectedFormats,
     });
 
-    const completion = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-      temperature: 0.2,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: prompt },
-        {
-          role: "user",
-          content: "Generate the copy following the platform and format requirements.",
-        },
-      ],
+    const result = await streamObject({
+        model: openai(process.env.OPENAI_MODEL || "gpt-4o-mini"),
+        schema: OutputSchema,
+        system: prompt,
+        prompt: "Generate the copy following the platform and format requirements.",
+        temperature: 0.2,
+        onFinish: ({ object }) => {
+             // Structured log for audit
+            console.log(
+                JSON.stringify(
+                {
+                    event: "copywriter_generated_stream_finished",
+                    timestamp: new Date().toISOString(),
+                    persona: persona.name,
+                    platforms: platformIds,
+                    formats,
+                    goal,
+                    message,
+                    context,
+                },
+                null,
+                2
+                )
+            );
+
+            // Persist usage log (best-effort, non-blocking)
+            logUsageToDb({
+                event: "copywriter_generated",
+                persona: persona.name,
+                platforms: platformIds,
+                formats,
+                goal,
+                message,
+                context,
+            }).catch(() => {});
+        }
     });
 
-    const raw = completion.choices[0]?.message?.content ?? "{}";
-    const parsedOutput = OutputSchema.safeParse(JSON.parse(raw));
-
-    if (!parsedOutput.success) {
-      return NextResponse.json(
-        {
-          error: "Malformed model output",
-          details: parsedOutput.error.format(),
-        },
-        { status: 500 }
-      );
-    }
-
-    // Structured log for audit
-    console.log(
-      JSON.stringify(
-        {
-          event: "copywriter_generated",
-          timestamp: new Date().toISOString(),
-          persona: persona.name,
-          platforms: platformIds,
-          formats,
-          goal,
-          message,
-          context,
-        },
-        null,
-        2
-      )
-    );
-
-    // Persist usage log (best-effort, non-blocking)
-    logUsageToDb({
-      event: "copywriter_generated",
-      persona: persona.name,
-      platforms: platformIds,
-      formats,
-      goal,
-      message,
-      context,
-    }).catch(() => {});
-
-    return NextResponse.json({
-      persona: persona.name,
-      goal,
-      message,
-      context,
-      outputs: parsedOutput.data.outputs,
-    });
+    return result.toTextStreamResponse();
   } catch (err) {
     const message =
       err instanceof Error ? err.message : "Failed to generate copy";

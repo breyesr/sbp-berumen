@@ -11,8 +11,29 @@ import {
   Send,
   Hash,
   AlignLeft,
+  Sparkles,
+  Download,
 } from "lucide-react";
 import { useI18n } from "@/components/i18n/I18nProvider";
+import PersonaSelect from "@/components/PersonaSelect";
+import { experimental_useObject as useObject } from "@ai-sdk/react";
+import { z } from "zod";
+
+const OutputSchema = z.object({
+  outputs: z.array(
+    z.object({
+      platformId: z.string(),
+      platformName: z.string(),
+      formatId: z.string(),
+      formatName: z.string(),
+      primaryCopy: z.string(),
+      alternateCopy: z.string().optional(),
+      hashtags: z.array(z.string()).optional(),
+      cta: z.string().optional(),
+      notes: z.array(z.string()).optional(),
+    })
+  ),
+});
 
 const FIELD_LIMITS = {
   context: { min: 10, max: 600 },
@@ -20,7 +41,7 @@ const FIELD_LIMITS = {
   goal: { min: 5, max: 400 },
 };
 
-type PersonaOption = { id: string; name: string; role?: string };
+type PersonaOption = { id: string; name: string; role?: string; cluster?: string };
 
 type Platform = {
   id: string;
@@ -72,9 +93,18 @@ export default function CopywriterPage() {
   const [context, setContext] = useState("");
   const [message, setMessage] = useState("");
   const [goal, setGoal] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<CopywriterResponse | null>(null);
+
+  const { object, submit, isLoading: submitting, error: aiError } = useObject({
+    api: "/api/copywriter",
+    schema: OutputSchema,
+  });
+
+  useEffect(() => {
+    if (aiError) {
+      setError(aiError.message);
+    }
+  }, [aiError]);
 
   useEffect(() => {
     let cancelled = false;
@@ -104,6 +134,7 @@ export default function CopywriterPage() {
             p.role?.trim() && p.role !== p.name
               ? `${p.name} — ${p.role}`
               : p.name,
+          cluster: p.cluster,
         }));
         setPersonas(personaList);
         if (personaList.length > 0) setPersonaType(personaList[0].id);
@@ -134,25 +165,6 @@ export default function CopywriterPage() {
       .filter((p) => selectedPlatforms.includes(p.id))
       .flatMap((p) => p.formats);
   }, [platforms, selectedPlatforms]);
-
-  const groupedOutputs = useMemo(() => {
-    if (!result) return [];
-    const map = new Map<
-      string,
-      { platformId: string; platformName: string; items: CopyOutput[] }
-    >();
-    result.outputs.forEach((o) => {
-      if (!map.has(o.platformId)) {
-        map.set(o.platformId, {
-          platformId: o.platformId,
-          platformName: o.platformName,
-          items: [],
-        });
-      }
-      map.get(o.platformId)!.items.push(o);
-    });
-    return Array.from(map.values());
-  }, [result]);
 
   const togglePlatform = (id: string) => {
     setSelectedPlatforms((prev) => {
@@ -189,54 +201,34 @@ export default function CopywriterPage() {
     selectedFormats.length > 0;
 
   const handleSubmit = async () => {
-    if (!isFormValid || loading) return;
-    setLoading(true);
+    if (!isFormValid || submitting) return;
     setError(null);
-    setResult(null);
-    try {
-      const res = await fetch("/api/copywriter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          personaType,
-          context: context.trim(),
-          message: message.trim(),
-          goal: goal.trim(),
-          platforms: selectedPlatforms,
-          formats: selectedFormats,
-        }),
-      });
-      if (!res.ok) {
-        const errBody = await res.json().catch(() => ({}));
-        const msg = errBody?.error
-          ? `${res.status} ${errBody.error}`
-          : `HTTP ${res.status}`;
-        throw new Error(msg);
-      }
-      const data = (await res.json()) as CopywriterResponse;
-      setResult(data);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : t("copywriter.error.generate");
-      setError(msg);
-    } finally {
-      setLoading(false);
-    }
+    submit({
+      personaType,
+      context: context.trim(),
+      message: message.trim(),
+      goal: goal.trim(),
+      platforms: selectedPlatforms,
+      formats: selectedFormats,
+    });
   };
 
   const handleExport = () => {
-    if (!result) return;
+    if (!object?.outputs) return;
+    const selectedPersonaName = personas.find(p => p.id === personaType)?.name || personaType;
     const date = formatDate(new Date(), { dateStyle: "medium" });
     const lines: string[] = [];
     lines.push(t("copywriter.report.header"));
     lines.push(`${t("copywriter.report.generated")}: ${date}`);
-    lines.push(`${t("copywriter.report.persona")}: ${result.persona}`);
-    if (result.context) lines.push(`${t("copywriter.field.context")}: ${result.context}`);
-    lines.push(`${t("copywriter.field.goal")}: ${result.goal}`);
-    lines.push(`${t("copywriter.field.message")}: ${result.message}`);
+    lines.push(`${t("copywriter.report.persona")}: ${selectedPersonaName}`);
+    if (context) lines.push(`${t("copywriter.field.context")}: ${context}`);
+    lines.push(`${t("copywriter.field.goal")}: ${goal}`);
+    lines.push(`${t("copywriter.field.message")}: ${message}`);
     lines.push(``);
-    result.outputs.forEach((o) => {
-      lines.push(`--- ${o.platformName} / ${o.formatName} ---`);
-      lines.push(`${t("copywriter.output.primary")}: ${o.primaryCopy}`);
+    object.outputs.forEach((o) => {
+        if (!o) return;
+      lines.push(`--- ${o.platformName || "Platform"} / ${o.formatName || "Format"} ---`);
+      lines.push(`${t("copywriter.output.primary")}: ${o.primaryCopy || ""}`);
       if (o.alternateCopy) lines.push(`${t("copywriter.output.alternate")}: ${o.alternateCopy}`);
       if (o.cta) lines.push(`${t("copywriter.output.cta")}: ${o.cta}`);
       if (o.hashtags?.length) lines.push(`${t("copywriter.output.hashtags")}: ${o.hashtags.join(" ")}`);
@@ -286,22 +278,12 @@ export default function CopywriterPage() {
               <p className="text-sm font-semibold text-[#ededed]">{t("copywriter.section.brief")}</p>
             </div>
             <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                  {t("copywriter.field.persona")}
-                </label>
-                <select
-                  value={personaType}
-                  onChange={(e) => setPersonaType(e.target.value)}
-                  className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all"
-                >
-                  {personas.map((p) => (
-                    <option key={p.id} value={p.id} className="bg-[#171717]">
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <PersonaSelect
+                options={personas}
+                value={personaType}
+                onChange={setPersonaType}
+                labelText={t("copywriter.field.persona")}
+              />
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
@@ -504,16 +486,16 @@ export default function CopywriterPage() {
             </p>
             <button
               onClick={handleSubmit}
-              disabled={!isFormValid || loading}
+              disabled={!isFormValid || submitting}
               className={clsx(
                 "w-full py-3 px-4 rounded-lg font-semibold text-sm transition-all",
                 "focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:ring-offset-2 focus:ring-offset-[#0a0a0a]",
-                isFormValid && !loading
+                isFormValid && !submitting
                   ? "bg-[#4F46E5] hover:bg-[#6366F1] text-white shadow-lg shadow-[#4F46E5]/20"
                   : "bg-[rgba(255,255,255,0.05)] text-[#a1a1aa] cursor-not-allowed"
               )}
             >
-              {loading ? (
+              {submitting ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   {t("copywriter.action.button_loading")}
@@ -536,143 +518,103 @@ export default function CopywriterPage() {
           </div>
         </div>
 
-        {result && (
+        {object?.outputs && (
           <div className="mt-10 space-y-6">
             <div className="flex items-center gap-3 justify-between">
               <div className="flex items-center gap-2">
                 <Hash className="w-4 h-4 text-[#4F46E5]" />
                 <h2 className="text-lg font-semibold">{t("copywriter.results.title")}</h2>
                 <span className="text-sm text-[#a1a1aa]">
-                  {t("copywriter.results.persona", { persona: result.persona })}
+                   {personas.find(p => p.id === personaType)?.name}
                 </span>
               </div>
               <button
                 onClick={handleExport}
                 className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#ededed] bg-gradient-to-br from-[#171717] to-[#0f0f0f] border border-[rgba(255,255,255,0.15)] rounded-lg transition-all shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-0.5 hover:border-[#4F46E5]/40 hover:shadow-[#4F46E5]/20 active:translate-y-[1px] active:scale-[0.99] active:border-[#4F46E5]/50"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-500"
-                >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                {t("copywriter.download.txt")}
+                <Download className="w-4 h-4" />
+                {t("copywriter.button.export")}
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {groupedOutputs.map((group) => (
-                <div
-                  key={group.platformId}
-                  className="bg-gradient-to-br from-[#171717] to-[#0a0a0a] border border-[rgba(255,255,255,0.12)] rounded-xl p-5 shadow-xl"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-sm text-[#a1a1aa] uppercase tracking-wide">
-                        {group.platformName}
-                      </p>
+
+            <div className="grid grid-cols-1 gap-6">
+              {object.outputs.map((o, idx) => {
+                if (!o) return null;
+                const color = platformColors[o.platformId || ""] || platformColors.default;
+                return (
+                  <div
+                    key={idx}
+                    className="bg-[#0f0f10] border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-xl"
+                  >
+                    <div 
+                        className="px-5 py-3 border-b border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)] flex items-center justify-between"
+                        style={{ borderLeft: `4px solid ${color}` }}
+                    >
+                      <div>
+                        <span className="text-[10px] uppercase font-bold tracking-wider" style={{ color }}>
+                          {o.platformName || "..."}
+                        </span>
+                        <h3 className="text-sm font-semibold text-[#ededed]">
+                          {o.formatName || "..."}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                  <div className="space-y-4">
-                    {group.items.map((item) => (
-                      <div
-                        key={item.formatId}
-                        className="rounded-lg border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.02)] p-4 space-y-3"
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="text-sm font-semibold">
-                            {item.formatName}
-                          </p>
-                          <span className="text-[11px] text-[#a1a1aa] uppercase">
-                            {item.formatId}
-                          </span>
-                        </div>
-                        <div className="space-y-2 text-sm text-[#ededed]">
-                          <div className="space-y-1">
-                            <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                              {t("copywriter.output.primary")}
-                            </p>
-                            <p className="leading-relaxed">{item.primaryCopy}</p>
-                          </div>
-                          {item.alternateCopy && (
-                            <div className="space-y-1">
-                              <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                {t("copywriter.output.alternate")}
-                              </p>
-                              <p className="leading-relaxed">
-                                {item.alternateCopy}
-                              </p>
-                            </div>
-                          )}
-                          {item.cta && (
-                            <div className="space-y-1">
-                              <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                {t("copywriter.output.cta")}
-                              </p>
-                              <p>{item.cta}</p>
-                            </div>
-                          )}
-                          {item.hashtags && item.hashtags.length > 0 && (
-                            <div className="space-y-1">
-                              <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                {t("copywriter.output.hashtags")}
-                              </p>
-                              <p className="text-[#ededed]">
-                                {item.hashtags.join(" ")}
-                              </p>
-                            </div>
-                          )}
-                          {item.notes && item.notes.length > 0 && (
-                            <div className="space-y-1">
-                              <p className="text-[#a1a1aa] text-xs uppercase tracking-wide">
-                                {t("copywriter.output.notes")}
-                              </p>
-                              <ul className="list-disc list-inside text-[#ededed]/90">
-                                {item.notes.map((n, idx) => (
-                                  <li key={idx}>{n}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                    <div className="p-5 space-y-4">
+                      <div>
+                        <p className="text-[10px] uppercase font-bold text-[#a1a1aa] mb-2">
+                          {t("copywriter.output.primary")}
+                        </p>
+                        <div className="bg-black/20 rounded-lg p-4 text-sm text-[#ededed] whitespace-pre-line border border-[rgba(255,255,255,0.05)]">
+                          {o.primaryCopy || <div className="h-20 animate-pulse bg-white/5 rounded" />}
                         </div>
                       </div>
-                    ))}
+
+                      {o.alternateCopy && (
+                        <div>
+                          <p className="text-[10px] uppercase font-bold text-[#a1a1aa] mb-2">
+                            {t("copywriter.output.alternate")}
+                          </p>
+                          <div className="bg-black/10 rounded-lg p-4 text-xs text-[#a1a1aa] whitespace-pre-line italic border border-[rgba(255,255,255,0.03)]">
+                            {o.alternateCopy}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {o.cta && (
+                          <div>
+                            <p className="text-[10px] uppercase font-bold text-[#a1a1aa] mb-1">CTA</p>
+                            <p className="text-sm text-[#4F46E5] font-semibold">{o.cta}</p>
+                          </div>
+                        )}
+                        {o.hashtags && o.hashtags.length > 0 && (
+                          <div>
+                            <p className="text-[10px] uppercase font-bold text-[#a1a1aa] mb-1">
+                              {t("copywriter.output.hashtags")}
+                            </p>
+                            <p className="text-xs text-[#a1a1aa]">{o.hashtags.join(" ")}</p>
+                          </div>
+                        )}
+                      </div>
+
+                      {o.notes && o.notes.length > 0 && (
+                        <div className="pt-3 border-t border-[rgba(255,255,255,0.05)]">
+                           <p className="text-[10px] uppercase font-bold text-[#a1a1aa] mb-2">
+                            {t("copywriter.output.notes")}
+                          </p>
+                          <ul className="space-y-1">
+                            {o.notes.map((n, i) => (
+                              <li key={i} className="text-[11px] text-[#a1a1aa] flex gap-2">
+                                <span className="text-[#4F46E5]">•</span> {n}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-10 pt-6 border-t border-gray-100 flex justify-end pb-12">
-              <button
-                onClick={handleExport}
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#ededed] bg-gradient-to-br from-[#171717] to-[#0f0f0f] border border-[rgba(255,255,255,0.15)] rounded-lg transition-all shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-0.5 hover:border-[#4F46E5]/40 hover:shadow-[#4F46E5]/20 active:translate-y-[1px] active:scale-[0.99] active:border-[#4F46E5]/50"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-gray-500"
-                >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                {t("copywriter.download.txt")}
-              </button>
+                );
+              })}
             </div>
           </div>
         )}

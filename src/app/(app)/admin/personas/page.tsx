@@ -352,12 +352,17 @@ export default function AdminPersonasPage() {
                 </div>
                 <form onSubmit={handleCreatePersona} className="space-y-5">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Name</label>
-                        <input type="text" value={createName} onChange={(e) => setCreateName(e.target.value)} required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Role</label>
-                        <input type="text" value={createRole} onChange={(e) => setCreateRole(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors" />
+                        <div className="flex justify-between items-center px-1">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Nombre</label>
+                            <span className="text-[9px] text-zinc-600 font-bold">{createName.length}/40</span>
+                        </div>
+                        <input 
+                            type="text" 
+                            value={createName} 
+                            onChange={(e) => setCreateName(e.target.value.slice(0, 40))} 
+                            maxLength={40}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors" 
+                        />
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Cluster</label>
@@ -373,7 +378,7 @@ export default function AdminPersonasPage() {
                         </div>
                     </div>
                     <div className="flex gap-3 pt-4">
-                        <Button variant="outline" type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
+                        <Button type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
                         <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-indigo-500/20 shadow-lg">Initialize</Button>
                     </div>
                 </form>

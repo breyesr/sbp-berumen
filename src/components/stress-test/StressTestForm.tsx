@@ -5,6 +5,7 @@ import { User, BarChart, Sparkles, Loader2 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaOption, ChallengeLevelOption, FIELD_LIMITS } from "./types";
+import PersonaSelect from "@/components/PersonaSelect";
 
 interface StressTestFormProps {
     personas: PersonaOption[];
@@ -55,26 +56,12 @@ export function StressTestForm({
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">
-                        {t("stress.field.persona")}
-                    </label>
-                    <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a1a1aa]" />
-                        <select
-                            value={personaType}
-                            onChange={(e) => setPersonaType(e.target.value)}
-                            aria-label={t("stress.aria.select_persona")}
-                            className="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all"
-                        >
-                            {personas.map((p) => (
-                                <option key={p.id} value={p.id} className="bg-[#171717]">
-                                    {p.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
+                <PersonaSelect
+                    options={personas}
+                    value={personaType}
+                    onChange={setPersonaType}
+                    labelText={t("stress.field.persona")}
+                />
 
                 <div>
                     <label className="block text-xs font-semibold uppercase tracking-wider text-[#a1a1aa] mb-2">

@@ -1,35 +1,35 @@
 # Handoff State (Continuous Execution Protocol)
 
 ## Current Session Timestamp
-**Date**: April 24, 2026 (Updated after Epic 9 completion & Admin UI Overhaul)
+**Date**: April 27, 2026
 
 ## Objective
-The platform has evolved from a basic prototype to a stable **Intelligence Factory**. We have implemented a deterministic, agent-driven scoring engine and a fully autonomous admin dashboard for persona management and bulk RAG ingestion.
+UX and Performance alignment for the Intelligence Factory. Standardized Copywriter performance with streaming and upgraded the Persona selection experience.
 
 ## Accomplished
-- **[RESOLVED] Epic 9: Deterministic Scoring Engine.**
-    - Specialized Micro-Agents (Value 50%, Feasibility 30%, Lens 20%) now drive all evaluations.
-    - Moved math out of LLMs into deterministic TypeScript logic.
-    - Implemented **Consistency Anchors** via Redis caching (identical inputs = identical scores).
-- **[RESOLVED] Phase 1: Admin Intelligence Dashboard.**
-    - Developed a high-density management dashboard at `/admin/personas`.
-    - **Bulk Ingestion Pipeline**: Enabled browser-based uploads for `.pdf, .txt, .md, .json, .docx` with real-time embedding.
-    - **Executive Persona Dossiers**: Redesigned dossier view with strategic synthesis, demographics, and psychographics.
-    - **Dynamic Clustering**: Added database-backed cluster management and filtering.
-- **[RESOLVED] Epic 4 & 8: Data Layer & Clustering.**
-    - Fully migrated personas to Postgres.
-    - Refactored UI selectors to support grouped/clustered views.
+- **[RESOLVED] Epic 13: Advanced Cluster Navigation UX.**
+    - Refactored `PersonaSelect` into a modern Smart Selector.
+    - Implemented tabbed cluster navigation and real-time search.
+    - Added "View Dossier" (i) button with modal integration for deep persona intelligence access.
+- **[RESOLVED] Epic 11: Optimized Copywriter Engine.**
+    - Migrated `/api/copywriter` to `streamObject` (AI SDK) for real-time generation.
+    - Refactored Copywriter frontend to use `useObject` for streaming delivery speed parity with Stress Test.
+    - Updated UI with Obsidian/Glassmorphism results view and export functionality.
+- **[RESOLVED] Epic 10: Multi-Tenant Foundations.**
+    - **Task 10.1**: Created `user_cluster_access` junction table in Postgres via `scripts/db/clusters-access-schema.sql`.
+- **Infrastructure**:
+    - Created `GET /api/personas/[id]` to fetch full persona metadata for dossiers.
+    - Fixed Next.js 15+ Route Handler type issues (Promise-based params).
+    - Updated i18n messages with missing Copywriter keys.
 
 ## Active Blockers
-- **None critical.** Systems are stable. The "authOptions" build error was resolved by migrating to the NextAuth v5 `auth()` pattern.
+- **None.** All systems are operational and type-safe.
 
 ## Priority Roadmap for Incoming Team
-1. **Dossier Integration (Epic 12)**: Implement the "View Dossier" button in Stress Test and Copywriter pages. Users need immediate access to the "Ficha Técnica" before pitching.
-2. **Cluster Navigation UX (Epic 13)**: Refactor `PersonaSelect` to a searchable combobox or grouped tab interface. The current dropdown is too deep for many clusters.
-3. **Copywriter Performance (Epic 11)**: Refactor the Copywriter backend and UI to use `streamObject` (AI SDK). It currently lacks the streaming speed of the Stress Test engine.
-4. **Multi-Tenancy (Epic 10)**: Task 10.1. Implement the `user_cluster_access` schema to start restricting persona visibility by user account.
+1. **Multi-Tenant Permissions (Epic 10)**: Task 10.2 & 10.3. Update Admin Users UI to manage cluster access and implement middleware/API logic to restrict persona visibility based on `user_cluster_access`.
+2. **Identity Synthesis (Epic 5)**: Task 5.6. Implement automatic metadata updates after knowledge ingestion.
+3. **GraphRAG Evolution (Epic 6)**: Start implementing Graph Traversal logic for relational intelligence.
 
 ## Important Context Notes
-- **NextAuth v5**: We are now using the `auth()` function. DO NOT import `authOptions` or use `getServerSession`.
-- **Environment**: Ensure `UPSTASH_REDIS_REST_URL` and `TOKEN` are set for caching and rate limiting.
-- **DSE Rule**: Scoring agents must remain "Blind" (stateless) to maintain scoring integrity across user accounts.
+- **Streaming**: Both Stress Test and Copywriter now use the `useObject` pattern. Maintain this for all high-latency AI generation.
+- **Dossier**: The `PersonaDossier` component is now shared across Admin and App views via `PersonaSelect`.
