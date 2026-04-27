@@ -7,7 +7,7 @@ import { isAdminRole } from "@/lib/rbac";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
 import { IntelligenceDrawer } from "@/components/admin/IntelligenceDrawer";
-import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown } from "lucide-react";
+import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw } from "lucide-react";
 
 type PersonaRecord = {
   id: string;
@@ -36,6 +36,7 @@ export default function AdminPersonasPage() {
   // UI states
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   
@@ -43,6 +44,7 @@ export default function AdminPersonasPage() {
   const [activePersona, setActivePersona] = useState<PersonaRecord | null>(null);
   const [drawerMode, setDrawerMode] = useState<'train' | 'edit' | null>(null);
   const [viewingDossier, setViewingDossier] = useState<PersonaRecord | null>(null);
+  const [editForm, setEditForm] = useState<Partial<PersonaRecord>>({});
   
   // Filter/Sort states
   const [searchQuery, setSearchBar] = useState("");
@@ -88,6 +90,23 @@ export default function AdminPersonasPage() {
       void loadData();
     }
   }, [status, isAdmin]);
+
+  const handleSync = async () => {
+    setSyncing(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const res = await fetch("/api/admin/personas/sync", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setMessage(`Sincronización exitosa: ${data.migrated.length} personas actualizadas.`);
+      await loadData();
+    } catch (err: any) {
+      setError("Fallo en la sincronización: " + err.message);
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const handleCreatePersona = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,6 +215,17 @@ export default function AdminPersonasPage() {
           </div>
 
           <div className="flex items-center gap-3">
+             {/* Sync Button */}
+             <Button 
+                onClick={handleSync}
+                disabled={syncing}
+                className="rounded-xl h-10 border-white/10 bg-transparent hover:bg-white/5 text-zinc-400 hover:text-white transition-all shadow-none border"
+                title="Sincronizar con archivos del repositorio"
+            >
+                {syncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCcw className="w-4 h-4" />}
+                <span className="ml-2 hidden md:inline">Sincronizar DB</span>
+            </Button>
+
              {/* Search */}
              <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
@@ -344,7 +374,7 @@ export default function AdminPersonasPage() {
                         </div>
                     </div>
                     <div className="flex gap-3 pt-4">
-                        <Button type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
+                        <Button variant="outline" type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
                         <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-indigo-500/20 shadow-lg">Initialize</Button>
                     </div>
                 </form>
