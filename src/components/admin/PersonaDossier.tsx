@@ -141,9 +141,9 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
             </section>
           </div>
 
-          {/* Advanced Section: Full Strategic Depth */}
-          <section className="pt-10 border-t border-white/5 space-y-6">
-             {isAdmin ? (
+          {/* Advanced Section: Full Strategic Depth (Admin Only) */}
+          {isAdmin && (
+            <section className="pt-10 border-t border-white/5 space-y-6">
                 <details className="group">
                     <summary className="flex items-center justify-between cursor-pointer list-none">
                         <div className="flex items-center gap-2 text-zinc-500 group-hover:text-zinc-300 transition-colors">
@@ -156,18 +156,8 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
                         {persona.context || "No hay información técnica adicional cargada en el núcleo."}
                     </div>
                 </details>
-             ) : (
-                <div className="flex items-center justify-between opacity-50 grayscale select-none">
-                    <div className="flex items-center gap-2 text-zinc-500">
-                        <Lock className="w-4 h-4" />
-                        <h3 className="text-xs font-black uppercase tracking-[0.3em]">Detalles Estratégicos Avanzados</h3>
-                    </div>
-                    <span className="text-[10px] font-black text-indigo-500 uppercase tracking-widest bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">
-                        Admin Only
-                    </span>
-                </div>
-             )}
-          </section>
+            </section>
+          )}
         </div>
 
         {/* Footer */}
