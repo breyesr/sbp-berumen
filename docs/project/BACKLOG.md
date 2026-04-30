@@ -81,12 +81,15 @@
 - [x] **Task 10.4**: Refactor `GET /api/personas` to return only authorized personas based on the session's clusters. [DONE]
 - [x] **Task 10.5**: Implement Super-Admin "Global View" bypass for unrestricted access. [DONE]
 
-## Epic 11: Optimized Copywriter Engine (Performance) [DONE]
+## Epic 11: Optimized Copywriter Engine & UX (High Priority) [DONE]
 **Owner**: Lead & Backend
-*Goal: Match the Copywriter's performance and streaming capabilities to the Stress Test engine.*
-- [x] **Task 11.1**: Migrate Copywriter logic to `streamObject` (AI SDK) to support real-time result generation. [DONE]
-- [x] **Task 11.2**: Refactor the Copywriter results view to support incremental streaming and loading skeletons. [DONE]
-- [x] **Task 11.3**: Break down the Copywriter form and results into modular, reusable components for better performance. [DONE]
+- [x] **Task 11.1**: Migrate Copywriter logic to `streamObject` (AI SDK). [DONE]
+- [x] **Task 11.2**: Refactor the Copywriter results view to support incremental streaming. [DONE]
+- [x] **Task 11.3**: Transform Copywriter into the **Collapsible Intelligence Factory** architecture. [DONE]
+    - [x] Replicate collapsible step state management.
+    - [x] Integrate `PersonaCard` grid for selection.
+    - [x] Group results by Platform and optimize card sizing.
+    - [x] Standardize with "Factory Floor" aesthetic and Intelligence Assistant tooltips.
 
 ## Epic 12: Unified Strategic Access (Dossier Integration) [DONE]
 **Owner**: UX/UI & Frontend

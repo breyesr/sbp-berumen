@@ -6,6 +6,17 @@ This project adheres to Semantic Versioning and follows a simplified Keep a Chan
 ⸻
 
 [Unreleased]
+  • **[UX/UI] Collapsible Intelligence Factory Architecture**: Standardized the platform design language.
+    - Replicated the Stress Test accordion workflow in the Copywriter tool.
+    - Integrated high-density Persona Tiles with cluster filtering.
+    - Optimized result layout with platform-grouped containers and compact cards.
+  • **[Backend] Persona Status Management**:
+    - Added `is_active` toggle to the `personas` table.
+    - Implemented Admin UI for enabling/disabling personas without deleting data.
+    - Automated DB-sync logic to ensure schema consistency across environments.
+  • **[Refinement] Hotfixes & i18n**:
+    - Restored persona visibility for non-admins with empty cluster assignments.
+    - Fixed missing i18n keys for cluster selection and tooltips.
   • Credentials auth + guided 2FA onboarding flow on `/profile`.
   • Users without 2FA are redirected to `/profile` after login and blocked by a modal on other protected pages.
   • Session now propagates `two_factor_enabled` for accurate profile status.

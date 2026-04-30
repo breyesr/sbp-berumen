@@ -5,6 +5,15 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Refined Intelligence Factory, Multi-Tenant Admin)**
 
 ## Latest Deployments
+- **Epic 11: Copywriter Intelligence Factory (April 30, 2026)**:
+    - **Step-by-Step Refactor**: Migrated Copywriter to the 3-step collapsible workflow (Persona -> Strategy -> Grouped Output).
+    - **Platform Grouping**: Dramatically reduced vertical scroll by grouping outputs in platform-specific containers with side-by-side card layouts.
+    - **Intelligence Assistant**: Integrated tooltips and guidance for Brief creation (Context, Message, Goal).
+    - **Server-Side Hydration**: Optimized initial data load by pre-fetching platforms and personas on the server.
+- **Epic 5 Refinement: Persona Status Management (April 30, 2026)**:
+    - **Soft-Disable**: Added `is_active` toggle to personas for granular visibility control.
+    - **Admin Dashboard**: Enhanced `/admin/personas` with eye/eye-off toggles and status filtering.
+    - **Self-Healing Sync**: Database synchronization tool now automatically injects status columns and initializes values.
 - **Epic 14: Collapsible Intelligence Factory (April 29, 2026)**:
     - **Strategic Thread Architecture**: Migrated to a unified vertical accordion with a left-aligned connecting thread for a seamless process flow.
     - **Compact Identity Tiles**: High-density "Choose Your Fighter" grid with cluster-based grouping and visual separators.

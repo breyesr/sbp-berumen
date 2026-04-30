@@ -141,7 +141,7 @@ async function loadCompanyGuidelines(): Promise<Record<string, any>> {
   }
 }
 
-async function loadPlatforms(): Promise<PlatformWithFormats[]> {
+export async function loadPlatforms(): Promise<PlatformWithFormats[]> {
   try {
     const entries = await fs.readdir(PATHS.platformsRoot, {
       withFileTypes: true,
