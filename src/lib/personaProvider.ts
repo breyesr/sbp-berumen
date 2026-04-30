@@ -317,14 +317,21 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
     // 1. Try listing from Database
     try {
         let query = `SELECT id, name, role, cluster FROM personas`;
+        let conditions: string[] = [];
         let params: any[] = [];
 
-        if (!isAdmin && allowedClusters.length > 0) {
-            query += ` WHERE cluster = ANY($1) OR cluster IS NULL OR cluster = 'general'`;
-            params.push(allowedClusters);
-        } else if (!isAdmin) {
-            // Default to 'general' and NULL clusters if nothing else is specified
-            query += ` WHERE cluster IS NULL OR cluster = 'general'`;
+        if (!isAdmin) {
+            // If they have assigned clusters, restrict to those
+            if (allowedClusters && allowedClusters.length > 0) {
+                conditions.push(`(cluster = ANY($${params.length + 1}) OR cluster IS NULL OR LOWER(cluster) = 'general')`);
+                params.push(allowedClusters);
+            }
+            // If allowedClusters is empty, we don't add more restrictions, 
+            // allowing them to see all personas by default.
+        }
+
+        if (conditions.length > 0) {
+            query += ` WHERE ` + conditions.join(` AND `);
         }
 
         query += ` ORDER BY cluster, name ASC`;

@@ -675,6 +675,7 @@ export const esMXMessages: TranslationDictionary = {
   "stress.identity.intensity": "Intensidad de Inteligencia",
   "stress.identity.continue": "Continuar a Información",
   "stress.identity.summary_target": "Objetivo",
+  "stress.identity.all_clusters": "Todos los Perfiles",
   "stress.strategy.execute": "Ejecutar Análisis de Inteligencia",
   "stress.strategy.execute_with": "Ejecutar Stress Test con {{name}}",
   "stress.strategy.loading": "Ejecutando Análisis...",
