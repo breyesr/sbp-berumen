@@ -311,18 +311,33 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(): Promise<{ id: string; name: string; role?: string; cluster?: string }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: string; name: string; role?: string; cluster?: string }[]> {
+    const { allowedClusters = [], isAdmin = false } = options || {};
+
     // 1. Try listing from Database
     try {
-        const res = await db.query(`SELECT id, name, role, cluster FROM personas ORDER BY cluster, name ASC`);
-        if (res.rows.length > 0) {
-            return res.rows.map(r => ({
-                id: r.id,
-                name: r.name,
-                role: r.role,
-                cluster: r.cluster
-            }));
+        let query = `SELECT id, name, role, cluster FROM personas`;
+        let params: any[] = [];
+
+        if (!isAdmin && allowedClusters.length > 0) {
+            query += ` WHERE cluster = ANY($1)`;
+            params.push(allowedClusters);
+        } else if (!isAdmin) {
+            // If not admin and no clusters, they see nothing (or maybe only "general"?)
+            // For now, strict: no clusters = no access, unless we decide 'general' is public.
+            query += ` WHERE cluster = ANY($1)`;
+            params.push([]); 
         }
+
+        query += ` ORDER BY cluster, name ASC`;
+        
+        const res = await db.query(query, params);
+        return res.rows.map(r => ({
+            id: r.id,
+            name: r.name,
+            role: r.role,
+            cluster: r.cluster
+        }));
     } catch (err) {
         console.error("Database error listing personas, falling back to filesystem", err);
     }
@@ -337,7 +352,16 @@ export async function listPersonas(): Promise<{ id: string; name: string; role?:
         const metas = await Promise.all(
             personaIds.map(async (id) => {
                 const p = await readPersonaFile(id);
-                return p ? { id: p.id, name: p.name, role: p.role } : null;
+                if (!p) return null;
+                
+                // Filesystem filtering logic
+                if (!isAdmin && allowedClusters.length > 0) {
+                   if (!p.cluster || !allowedClusters.includes(p.cluster)) return null;
+                } else if (!isAdmin) {
+                   return null;
+                }
+
+                return { id: p.id, name: p.name, role: p.role, cluster: p.cluster };
             })
         );
 

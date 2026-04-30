@@ -11,6 +11,12 @@ type UserRecord = {
   email: string;
   two_factor_enabled: boolean;
   roles: string[];
+  clusters: string[];
+};
+
+type Cluster = {
+  id: string;
+  name: string;
 };
 
 export default function AdminUsersPage() {
@@ -19,33 +25,48 @@ export default function AdminUsersPage() {
   const isAdmin = useMemo(() => isAdminRole(session?.user?.roles), [session?.user?.roles]);
 
   const [users, setUsers] = useState<UserRecord[]>([]);
+  const [availableClusters, setAvailableClusters] = useState<Cluster[]>([]);
   const [createEmail, setCreateEmail] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [createRole, setCreateRole] = useState<UserRole>("user");
   const [draftRoles, setDraftRoles] = useState<Record<string, UserRole>>({});
+  const [draftClusters, setDraftClusters] = useState<Record<string, string[]>>({});
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [submittingCreate, setSubmittingCreate] = useState(false);
   const [rowBusy, setRowBusy] = useState<Record<string, boolean>>({});
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
-  const loadUsers = async () => {
+  const loadData = async () => {
     setLoadingUsers(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/admin/users", { method: "GET" });
-      const data = await response.json();
-      if (!response.ok) {
+      const [usersRes, clustersRes] = await Promise.all([
+        fetch("/api/admin/users", { method: "GET" }),
+        fetch("/api/admin/clusters", { method: "GET" })
+      ]);
+
+      const usersData = await usersRes.json();
+      const clustersData = await clustersRes.json();
+
+      if (!usersRes.ok || !clustersRes.ok) {
         setError(t("admin.error.load_users"));
         return;
       }
 
-      const nextUsers = data.users as UserRecord[];
+      const nextUsers = usersData.users as UserRecord[];
       setUsers(nextUsers);
+      setAvailableClusters(clustersData.clusters as Cluster[]);
+      
       setDraftRoles(
         Object.fromEntries(
           nextUsers.map((user) => [user.id, user.roles.includes("admin") ? "admin" : "user"])
+        )
+      );
+      setDraftClusters(
+        Object.fromEntries(
+          nextUsers.map((user) => [user.id, user.clusters || []])
         )
       );
     } catch {
@@ -57,7 +78,7 @@ export default function AdminUsersPage() {
 
   useEffect(() => {
     if (status === "authenticated" && isAdmin) {
-      void loadUsers();
+      void loadData();
     }
   }, [status, isAdmin]);
 
@@ -87,7 +108,7 @@ export default function AdminUsersPage() {
         setCreateEmail("");
         setCreatePassword("");
         setCreateRole("user");
-        await loadUsers();
+        await loadData();
       }
     } catch {
       setError(t("admin.error.create_user"));
@@ -96,8 +117,9 @@ export default function AdminUsersPage() {
     }
   };
 
-  const handleRoleUpdate = async (userId: string) => {
+  const handleUpdateUser = async (userId: string) => {
     const nextRole = draftRoles[userId];
+    const nextClusters = draftClusters[userId];
     if (!nextRole) return;
 
     setError(null);
@@ -108,7 +130,7 @@ export default function AdminUsersPage() {
       const response = await fetch(`/api/admin/users/${encodeURIComponent(userId)}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role: nextRole }),
+        body: JSON.stringify({ role: nextRole, clusters: nextClusters }),
       });
       await response.json().catch(() => null);
 
@@ -116,13 +138,23 @@ export default function AdminUsersPage() {
         setError(t("admin.error.update_role"));
       } else {
         setMessage(t("admin.message.role_updated"));
-        await loadUsers();
+        await loadData();
       }
     } catch {
       setError(t("admin.error.update_role"));
     } finally {
       setRowBusy((current) => ({ ...current, [userId]: false }));
     }
+  };
+
+  const toggleCluster = (userId: string, clusterId: string) => {
+    setDraftClusters(current => {
+      const userClusters = current[userId] || [];
+      const next = userClusters.includes(clusterId)
+        ? userClusters.filter(id => id !== clusterId)
+        : [...userClusters, clusterId];
+      return { ...current, [userId]: next };
+    });
   };
 
   const handleDeleteUser = async (userId: string, email: string) => {
@@ -239,12 +271,14 @@ export default function AdminUsersPage() {
                   <th className="px-2 py-2">{t("admin.table.email")}</th>
                   <th className="px-2 py-2">{t("admin.table.twofa")}</th>
                   <th className="px-2 py-2">{t("admin.table.role")}</th>
+                  <th className="px-2 py-2">{t("admin.table.clusters") || "Clusters"}</th>
                   <th className="px-2 py-2">{t("admin.table.actions")}</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => {
                   const selectedRole = draftRoles[user.id] ?? (user.roles.includes("admin") ? "admin" : "user");
+                  const selectedClusters = draftClusters[user.id] || [];
                   const isSelf = user.id === session.user.id;
                   const busy = Boolean(rowBusy[user.id]);
 
@@ -273,10 +307,26 @@ export default function AdminUsersPage() {
                         </select>
                       </td>
                       <td className="px-2 py-3">
+                         <div className="flex flex-col gap-1 max-h-32 overflow-y-auto pr-2">
+                           {availableClusters.map(cluster => (
+                             <label key={cluster.id} className="flex items-center gap-2 cursor-pointer text-xs">
+                               <input 
+                                 type="checkbox" 
+                                 checked={selectedClusters.includes(cluster.id)}
+                                 onChange={() => toggleCluster(user.id, cluster.id)}
+                                 disabled={busy}
+                                 className="rounded border-white/15 bg-[#0d0e10]"
+                               />
+                               {cluster.name}
+                             </label>
+                           ))}
+                         </div>
+                      </td>
+                      <td className="px-2 py-3">
                         <div className="flex flex-wrap gap-2">
                           <Button
                             type="button"
-                            onClick={() => void handleRoleUpdate(user.id)}
+                            onClick={() => void handleUpdateUser(user.id)}
                             disabled={busy}
                           >
                             {busy ? t("admin.button.saving") : t("admin.button.save_role")}

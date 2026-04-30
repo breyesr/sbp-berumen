@@ -19,10 +19,12 @@ export async function GET() {
         u.id,
         u.email,
         u.two_factor_enabled,
-        COALESCE(array_remove(array_agg(DISTINCT r.name), NULL), ARRAY[]::TEXT[]) AS roles
+        COALESCE(array_remove(array_agg(DISTINCT r.name), NULL), ARRAY[]::TEXT[]) AS roles,
+        COALESCE(array_remove(array_agg(DISTINCT uca."clusterId"), NULL), ARRAY[]::TEXT[]) AS clusters
       FROM users u
       LEFT JOIN user_roles ur ON u.id = ur."userId"
       LEFT JOIN roles r ON ur."roleId" = r.id
+      LEFT JOIN user_cluster_access uca ON u.id = uca."userId"
       GROUP BY u.id, u.email, u.two_factor_enabled
       ORDER BY u.email ASC`
     );

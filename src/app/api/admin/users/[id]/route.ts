@@ -58,9 +58,10 @@ export async function PATCH(req: Request, context: RouteContext) {
     const payload = await req.json();
     const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : undefined;
     const role = payload.role === "admin" || payload.role === "user" ? (payload.role as UserRole) : undefined;
+    const clusters = Array.isArray(payload.clusters) ? (payload.clusters as string[]) : undefined;
 
-    if (!email && !role) {
-      return NextResponse.json({ error: "At least one field (email or role) is required" }, { status: 400 });
+    if (!email && !role && !clusters) {
+      return NextResponse.json({ error: "At least one field (email, role, or clusters) is required" }, { status: 400 });
     }
 
     const client = await db.connect();
@@ -107,6 +108,16 @@ export async function PATCH(req: Request, context: RouteContext) {
         );
       }
 
+      if (clusters) {
+        await client.query('DELETE FROM user_cluster_access WHERE "userId" = $1', [targetUserId]);
+        for (const clusterId of clusters) {
+          await client.query(
+            'INSERT INTO user_cluster_access ("userId", "clusterId") VALUES ($1, $2)',
+            [targetUserId, clusterId]
+          );
+        }
+      }
+
       if (email) {
         await client.query("UPDATE users SET email = $1 WHERE id = $2", [email, targetUserId]);
       }
@@ -116,10 +127,12 @@ export async function PATCH(req: Request, context: RouteContext) {
           u.id,
           u.email,
           u.two_factor_enabled,
-          COALESCE(array_remove(array_agg(DISTINCT r.name), NULL), ARRAY[]::TEXT[]) AS roles
+          COALESCE(array_remove(array_agg(DISTINCT r.name), NULL), ARRAY[]::TEXT[]) AS roles,
+          COALESCE(array_remove(array_agg(DISTINCT uca."clusterId"), NULL), ARRAY[]::TEXT[]) AS clusters
         FROM users u
         LEFT JOIN user_roles ur ON u.id = ur."userId"
         LEFT JOIN roles r ON ur."roleId" = r.id
+        LEFT JOIN user_cluster_access uca ON u.id = uca."userId"
         WHERE u.id = $1
         GROUP BY u.id, u.email, u.two_factor_enabled`,
         [targetUserId]

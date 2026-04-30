@@ -1,35 +1,33 @@
 # Handoff State (Continuous Execution Protocol)
 
 ## Current Session Timestamp
-**Date**: April 27, 2026
+**Date**: April 29, 2026
 
 ## Objective
-UX and Performance alignment for the Intelligence Factory. Standardized Copywriter performance with streaming and upgraded the Persona selection experience.
+Enable Multi-Tenant Cluster Permissions and synchronize project state.
 
 ## Accomplished
-- **[RESOLVED] Epic 13: Advanced Cluster Navigation UX.**
-    - Refactored `PersonaSelect` into a modern Smart Selector.
-    - Implemented tabbed cluster navigation and real-time search.
-    - Added "View Dossier" (i) button with modal integration for deep persona intelligence access.
-- **[RESOLVED] Epic 11: Optimized Copywriter Engine.**
-    - Migrated `/api/copywriter` to `streamObject` (AI SDK) for real-time generation.
-    - Refactored Copywriter frontend to use `useObject` for streaming delivery speed parity with Stress Test.
-    - Updated UI with Obsidian/Glassmorphism results view and export functionality.
-- **[RESOLVED] Epic 10: Multi-Tenant Foundations.**
-    - **Task 10.1**: Created `user_cluster_access` junction table in Postgres via `scripts/db/clusters-access-schema.sql`.
+- **[RESOLVED] Epic 10: Multi-Tenant Cluster Permissions.**
+    - Extended Auth system: JWT and Session now include authorized `clusters`.
+    - Implemented Data Isolation: `personaProvider.listPersonas` now filters by cluster access for non-admin users.
+    - Updated Admin UI: `/admin/users` now features a Cluster Access Control panel for granular user entitlement management.
+    - Implemented Admin Bypass: Admins retain global visibility across all clusters.
 - **Infrastructure**:
-    - Created `GET /api/personas/[id]` to fetch full persona metadata for dossiers.
-    - Fixed Next.js 15+ Route Handler type issues (Promise-based params).
-    - Updated i18n messages with missing Copywriter keys.
+    - Created `GET /api/admin/clusters` to fetch available clusters for management.
+    - Updated `GET /api/admin/users` and `PATCH /api/admin/users/[id]` to support multi-tenant metadata.
+- **Documentation**:
+    - Synchronized `PRODUCTION_STATUS.md` to reflect resolution of Copywriter and Navigation issues.
+    - Updated `BACKLOG.md` to reflect completion of Epic 10.
 
 ## Active Blockers
-- **None.** All systems are operational and type-safe.
+- **None.** The multi-tenant foundation is live and secure.
 
 ## Priority Roadmap for Incoming Team
-1. **Multi-Tenant Permissions (Epic 10)**: Task 10.2 & 10.3. Update Admin Users UI to manage cluster access and implement middleware/API logic to restrict persona visibility based on `user_cluster_access`.
+1. **Collapsible Intelligence Factory (Epic 14)**: Implement the step-by-step collapsible UI refactor, including the "Choose Your Fighter" persona cards and assistant tooltips.
 2. **Identity Synthesis (Epic 5)**: Task 5.6. Implement automatic metadata updates after knowledge ingestion.
-3. **GraphRAG Evolution (Epic 6)**: Start implementing Graph Traversal logic for relational intelligence.
+3. **Ingestion Tracker (Epic 5)**: Task 5.5. Add an "Ingestion Status" tracker to show RAG processing progress.
+4. **GraphRAG Evolution (Epic 6)**: Start implementing Graph Traversal logic for relational intelligence.
 
 ## Important Context Notes
-- **Streaming**: Both Stress Test and Copywriter now use the `useObject` pattern. Maintain this for all high-latency AI generation.
-- **Dossier**: The `PersonaDossier` component is now shared across Admin and App views via `PersonaSelect`.
+- **Filtering**: Persona filtering is enforced at the `personaProvider` level. All components using `listPersonas` are now automatically cluster-aware.
+- **Admin Users**: The new cluster checkboxes in `/admin/users` update the junction table in real-time upon saving.

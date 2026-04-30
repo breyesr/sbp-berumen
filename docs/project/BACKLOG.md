@@ -72,14 +72,14 @@
 - [x] **Task 9.4**: Implement "Reasoning Window" in the UI. [DONE]
 - [x] **Task 9.5**: Build "Consistency Anchor" using Redis caching. [DONE]
 
-## Epic 10: Multi-Tenant Cluster Permissions (High)
+## Epic 10: Multi-Tenant Cluster Permissions (High) [DONE]
 **Owner**: Backend & UX/UI
 *Goal: Control user access to personas at the cluster level to support B2B and multi-team environments.*
 - [x] **Task 10.1**: Create the `user_cluster_access` junction table in Postgres. [DONE]
-- [ ] **Task 10.2**: Update the Admin Users UI (`/admin/users`) to include an "Access Control" panel for cluster assignment.
-- [ ] **Task 10.3**: Implement Authorization Middleware to validate persona access based on user-cluster entitlements.
-- [ ] **Task 10.4**: Refactor `GET /api/personas` to return only authorized personas based on the session's clusters.
-- [ ] **Task 10.5**: Implement Super-Admin "Global View" bypass for unrestricted access.
+- [x] **Task 10.2**: Update the Admin Users UI (`/admin/users`) to include an "Access Control" panel for cluster assignment. [DONE]
+- [x] **Task 10.3**: Implement Authorization Middleware to validate persona access based on user-cluster entitlements. [DONE]
+- [x] **Task 10.4**: Refactor `GET /api/personas` to return only authorized personas based on the session's clusters. [DONE]
+- [x] **Task 10.5**: Implement Super-Admin "Global View" bypass for unrestricted access. [DONE]
 
 ## Epic 11: Optimized Copywriter Engine (Performance) [DONE]
 **Owner**: Lead & Backend
@@ -99,3 +99,13 @@
 *Goal: Simplify navigation when multiple clusters are present.*
 - [x] **Task 13.1**: Upgrade `PersonaSelect` to use a searchable combobox or grouped tab interface. [DONE]
 - [x] **Task 13.2**: Add visual "Cluster Context" indicators in the main workspace. [DONE]
+
+## Epic 14: Collapsible Intelligence Factory (High Priority)
+**Owner**: UX/UI & Frontend
+*Goal: Transform the Stress Test into a structured, step-by-step collapsible workflow to reduce cognitive load.*
+- [ ] **Task 14.1**: Develop `CollapsibleStep` wrapper component with Framer Motion height animations and summary badges.
+- [ ] **Task 14.2**: Implement `PersonaCard` ("Choose Your Fighter") grid with single-click selection and dossier integration.
+- [ ] **Task 14.3**: Refactor `StressTestClient` state management to handle `currentStep` logic ('identity' | 'strategy' | 'results' | 'refinement').
+- [ ] **Task 14.4**: Integrate "Intelligence Assistant" tooltips (Expectation, Mechanism, Example) for all strategy input fields.
+- [ ] **Task 14.5**: Implement auto-expansion and scroll-into-view logic for Section 3 (Results) triggered by streaming onset.
+- [ ] **Task 14.6**: Wrap `RefinementPanel` in the collapsible architecture as the final step.

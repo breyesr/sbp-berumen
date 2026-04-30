@@ -9,6 +9,7 @@ declare module "next-auth" {
       roles?: string[];
       apps?: string[];
       personas?: string[];
+      clusters?: string[];
       two_factor_enabled?: boolean;
       locale?: AppLocale;
     } & DefaultSession["user"];
@@ -21,6 +22,7 @@ declare module "next-auth/jwt" {
     roles?: string[];
     apps?: string[];
     personas?: string[];
+    clusters?: string[];
     two_factor_enabled?: boolean;
     locale?: AppLocale;
   }
