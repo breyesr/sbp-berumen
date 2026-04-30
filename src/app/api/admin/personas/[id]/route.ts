@@ -22,7 +22,7 @@ export async function PATCH(
 
   try {
     const body = await req.json();
-    const { name, role, cluster, metadata, context } = body;
+    const { name, role, cluster, metadata, context, is_active } = body;
 
     const res = await db.query(
       `UPDATE personas 
@@ -31,10 +31,11 @@ export async function PATCH(
            cluster = COALESCE($3, cluster),
            metadata = COALESCE($4, metadata),
            context = COALESCE($5, context),
+           is_active = COALESCE($6, is_active),
            updated_at = CURRENT_TIMESTAMP
-       WHERE id = $6
+       WHERE id = $7
        RETURNING *`,
-      [name, role, cluster, metadata, context, id]
+      [name, role, cluster, metadata, context, is_active, id]
     );
 
     if (res.rowCount === 0) {

@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "personas" (
     "name" TEXT NOT NULL,
     "role" TEXT,
     "cluster" TEXT DEFAULT 'General',
+    "is_active" BOOLEAN DEFAULT true,
     "metadata" JSONB NOT NULL, -- Stores goals, pains, channels, etc.
     "voice" JSONB,             -- Stores tone, style, phrases
     "context" TEXT,            -- Combined context string for RAG grounding

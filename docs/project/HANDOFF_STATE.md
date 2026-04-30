@@ -13,9 +13,16 @@ Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestio
 - **[MERGED TO MAIN] Epic 10: Multi-Tenant Cluster Permissions.**
     - Server-side isolation and Admin management UI.
     - API resilience and fallback logic.
+- **[RESOLVED] Persona Status Management (Epic 5 Refinement).**
+    - Added `is_active` column to `personas` table.
+    - Updated `listPersonas` to filter inactive personas for non-admins.
+    - Added UI toggle and filtering in `/admin/personas`.
+    - Integrated status management in `IntelligenceDrawer`.
+    - **[HOTFIX]** Restored persona visibility for non-admins with empty cluster assignments.
+    - **[HOTFIX]** Fixed missing `stress.identity.all_clusters` i18n key in Spanish.
 - **Stability**:
-    - Verified `npm run build` success on `main` branch.
-    - Working tree clean.
+    - Verified `npm run build` success.
+    - Initialized missing `clusters` and `user_cluster_access` tables.
 
 ## Active Blockers
 - **None.** The platform is stable and production-ready on `main`.
