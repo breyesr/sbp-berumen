@@ -1,9 +1,10 @@
 "use client";
 
-import { X, Brain, Pencil, Save, Loader2, Sparkles, ChevronDown } from "lucide-react";
+import { X, Brain, Pencil, Save, Loader2, Sparkles, ChevronDown, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { KnowledgeDropzone } from "./KnowledgeDropzone";
 import React, { useState } from "react";
+import { clsx } from "clsx";
 
 interface IntelligenceDrawerProps {
   persona: any;
@@ -112,8 +113,27 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, s
                 />
               </div>
 
+              <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/10 group">
+                <div className="space-y-1">
+                    <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Estado del Agente</label>
+                    <p className="text-[10px] text-zinc-600 font-medium tracking-tight">Los agentes desactivados no aparecerán en los selectores.</p>
+                </div>
+                <button 
+                    type="button"
+                    onClick={() => setForm({ ...form, is_active: !form.is_active })}
+                    className={clsx(
+                        "flex items-center gap-2 px-4 py-2 rounded-xl border transition-all",
+                        form.is_active 
+                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(52,211,153,0.1)]" 
+                            : "bg-zinc-500/10 text-zinc-500 border-zinc-500/20"
+                    )}
+                >
+                    {form.is_active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                    <span className="text-xs font-bold uppercase tracking-wider">{form.is_active ? "Activo" : "Desactivado"}</span>
+                </button>
+              </div>
+
               <div className="space-y-2">
-                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Profundidad Estratégica (Dossier)</label>
                 <textarea
                   value={form.context}
                   onChange={(e) => setForm({ ...form, context: e.target.value })}

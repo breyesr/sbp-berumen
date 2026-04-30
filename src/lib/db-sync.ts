@@ -31,6 +31,14 @@ export async function syncPersonasFromFilesystem() {
         const schemaSql = await fs.readFile(schemaPath, "utf8");
         await db.query(schemaSql);
 
+        // Ensure is_active exists (Hotfix for existing environments)
+        try {
+            await db.query(`ALTER TABLE "personas" ADD COLUMN IF NOT EXISTS "is_active" BOOLEAN DEFAULT true;`);
+            await db.query(`UPDATE "personas" SET "is_active" = true WHERE "is_active" IS NULL;`);
+        } catch (err) {
+            console.warn("Could not apply is_active hotfix, might already exist.", err);
+        }
+
         // 2. Find all persona files
         const personaFiles = await findPersonaFiles(DATA_DIR);
 

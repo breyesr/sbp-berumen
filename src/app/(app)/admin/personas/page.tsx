@@ -7,13 +7,15 @@ import { isAdminRole } from "@/lib/rbac";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
 import { IntelligenceDrawer } from "@/components/admin/IntelligenceDrawer";
-import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw } from "lucide-react";
+import { clsx } from "clsx";
+import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power } from "lucide-react";
 
 type PersonaRecord = {
   id: string;
   name: string;
   role: string;
   cluster: string;
+  is_active: boolean;
   metadata: any;
   context: string;
   updated_at: string;
@@ -48,6 +50,7 @@ export default function AdminPersonasPage() {
   // Filter/Sort states
   const [searchQuery, setSearchBar] = useState("");
   const [filterCluster, setFilterCluster] = useState("all");
+  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "inactive">("all");
   const [sortBy, setSortBy] = useState<"name" | "updated_at">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
@@ -163,6 +166,20 @@ export default function AdminPersonasPage() {
     }
   };
 
+  const handleToggleStatus = async (id: string, currentStatus: boolean) => {
+    try {
+      const res = await fetch(`/api/admin/personas/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_active: !currentStatus }),
+      });
+      if (!res.ok) throw new Error("Failed to update status");
+      await loadData();
+    } catch (err) {
+      setError("No se pudo cambiar el estado.");
+    }
+  };
+
   const filteredPersonas = useMemo(() => {
     let result = [...personas];
     if (searchQuery) {
@@ -171,6 +188,9 @@ export default function AdminPersonasPage() {
     }
     if (filterCluster !== "all") {
       result = result.filter(p => p.cluster === filterCluster);
+    }
+    if (filterStatus !== "all") {
+      result = result.filter(p => filterStatus === "active" ? p.is_active : !p.is_active);
     }
     result.sort((a, b) => {
       const valA = a[sortBy] || "";
@@ -240,6 +260,20 @@ export default function AdminPersonasPage() {
             <div className="relative group">
                 <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
                 <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value as any)}
+                    className="bg-black/20 border border-white/10 rounded-xl pl-9 pr-10 py-2.5 text-xs text-zinc-300 outline-none hover:border-white/20 transition-colors appearance-none cursor-pointer w-full md:w-auto"
+                >
+                    <option value="all">All Status</option>
+                    <option value="active">Active Only</option>
+                    <option value="inactive">Inactive Only</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none" />
+            </div>
+
+            <div className="relative group">
+                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+                <select
                     value={filterCluster}
                     onChange={(e) => setFilterCluster(e.target.value)}
                     className="bg-black/20 border border-white/10 rounded-xl pl-9 pr-10 py-2.5 text-xs text-zinc-300 outline-none hover:border-white/20 transition-colors appearance-none cursor-pointer w-full md:w-auto"
@@ -273,6 +307,7 @@ export default function AdminPersonasPage() {
                                 <ArrowUpDown className="w-3 h-3" />
                             </div>
                         </th>
+                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Status</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Cluster</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Core Role</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-white transition-colors" onClick={() => { setSortBy("updated_at"); setSortOrder(sortOrder === "asc" ? "desc" : "asc"); }}>
@@ -298,6 +333,20 @@ export default function AdminPersonasPage() {
                                     <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
                                     <span className="text-[10px] text-zinc-600 font-mono tracking-tighter uppercase">{p.id}</span>
                                 </div>
+                            </td>
+                            <td className="px-6 py-4">
+                                <button 
+                                    onClick={() => handleToggleStatus(p.id, p.is_active)}
+                                    className={clsx(
+                                        "flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all",
+                                        p.is_active 
+                                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20" 
+                                            : "bg-zinc-500/10 text-zinc-500 border-zinc-500/20 hover:bg-zinc-500/20 opacity-60"
+                                    )}
+                                >
+                                    {p.is_active ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                                    <span className="text-[9px] font-black tracking-widest uppercase">{p.is_active ? "Active" : "Disabled"}</span>
+                                </button>
                             </td>
                             <td className="px-6 py-4">
                                 <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[9px] font-black tracking-widest uppercase">

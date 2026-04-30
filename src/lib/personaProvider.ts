@@ -18,6 +18,7 @@ export type Persona = {
   name: string;
   role?: string;
   cluster?: string;
+  is_active?: boolean;
   profile?: {
     goals?: string[];
     pains?: string[];
@@ -238,14 +239,15 @@ export async function getPersona(id: string, userQuery: string): Promise<Persona
   // 1. Try fetching from Database first
   try {
     const res = await db.query(
-      `SELECT id, name, role, cluster, metadata, voice, context FROM personas WHERE id = $1`,
+      `SELECT id, name, role, cluster, is_active, metadata, voice, context FROM personas WHERE id = $1`,
       [id]
     );
     if (res.rows[0]) {
       const row = res.rows[0];
       persona = {
         ...mapToPersona(row.id, row.metadata, row.context),
-        cluster: row.cluster
+        cluster: row.cluster,
+        is_active: row.is_active
       };
     }
   } catch (err) {
@@ -255,6 +257,7 @@ export async function getPersona(id: string, userQuery: string): Promise<Persona
   // 2. Fallback to filesystem if not in DB
   if (!persona) {
     persona = await readPersonaFile(id);
+    if (persona) persona.is_active = true; // Filesystem personas are active by default
   }
 
   if (!persona) return null;
@@ -311,20 +314,30 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: string; name: string; role?: string; cluster?: string }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
     const { allowedClusters = [], isAdmin = false } = options || {};
 
     // 1. Try listing from Database
     try {
-        let query = `SELECT id, name, role, cluster FROM personas`;
+        let query = `SELECT id, name, role, cluster, is_active FROM personas`;
+        let conditions: string[] = [];
         let params: any[] = [];
 
-        if (!isAdmin && allowedClusters.length > 0) {
-            query += ` WHERE cluster = ANY($1) OR cluster IS NULL OR cluster = 'general'`;
-            params.push(allowedClusters);
-        } else if (!isAdmin) {
-            // Default to 'general' and NULL clusters if nothing else is specified
-            query += ` WHERE cluster IS NULL OR cluster = 'general'`;
+        if (!isAdmin) {
+            // Non-admins only see active personas
+            conditions.push(`is_active = true`);
+            
+            // If they have assigned clusters, restrict to those
+            if (allowedClusters && allowedClusters.length > 0) {
+                conditions.push(`(cluster = ANY($${params.length + 1}) OR cluster IS NULL OR LOWER(cluster) = 'general')`);
+                params.push(allowedClusters);
+            }
+            // If allowedClusters is empty, we don't add more restrictions, 
+            // allowing them to see all active personas by default.
+        }
+
+        if (conditions.length > 0) {
+            query += ` WHERE ` + conditions.join(` AND `);
         }
 
         query += ` ORDER BY cluster, name ASC`;
@@ -334,7 +347,8 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             id: r.id,
             name: r.name,
             role: r.role,
-            cluster: r.cluster
+            cluster: r.cluster,
+            is_active: r.is_active
         }));
     } catch (err) {
         console.error("Database error listing personas, falling back to filesystem", err);
@@ -359,11 +373,11 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
                    return null;
                 }
 
-                return { id: p.id, name: p.name, role: p.role, cluster: p.cluster };
+                return { id: p.id, name: p.name, role: p.role, cluster: p.cluster, is_active: true };
             })
         );
 
-        return metas.filter(Boolean) as { id: string; name: string; role?: string; cluster?: string }[];
+        return metas.filter(Boolean) as { id: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
     } catch (err) {
         console.error("Failed to list personas from filesystem", err);
         return [];

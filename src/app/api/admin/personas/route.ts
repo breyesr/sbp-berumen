@@ -14,7 +14,7 @@ export async function GET() {
 
   try {
     const res = await db.query(
-      `SELECT id, name, role, cluster, metadata, context, updated_at 
+      `SELECT id, name, role, cluster, is_active, metadata, context, updated_at 
        FROM personas 
        ORDER BY cluster ASC, name ASC`
     );
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { name, role, cluster, metadata } = body;
+    const { name, role, cluster, metadata, is_active } = body;
 
     if (!name || !cluster) {
       return NextResponse.json({ error: "Name and Cluster are required" }, { status: 400 });
@@ -41,10 +41,10 @@ export async function POST(req: Request) {
     const id = name.toLowerCase().replace(/\s+/g, "-") + "-" + randomUUID().slice(0, 4);
 
     await db.query(
-      `INSERT INTO personas (id, name, role, cluster, metadata, context)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO personas (id, name, role, cluster, is_active, metadata, context)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING *`,
-      [id, name, role || "", cluster, metadata || {}, ""]
+      [id, name, role || "", cluster, is_active !== false, metadata || {}, ""]
     );
 
     return NextResponse.json({ success: true, id });
