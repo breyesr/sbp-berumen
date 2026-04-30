@@ -3,13 +3,21 @@ import { listPersonas } from "@/lib/personaProvider";
 import { listChallengeLevels } from "@/lib/challengeLevels";
 import { StressTestClient } from "@/components/stress-test/StressTestClient";
 import { PersonaOption, ChallengeLevelOption } from "@/components/stress-test/types";
+import { auth } from "@/lib/auth";
+import { isAdminRole } from "@/lib/rbac";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-    // 1. Fetch data on the server
+    const session = await auth();
+    const isAdmin = isAdminRole(session?.user?.roles);
+
+    // 1. Fetch data on the server with auth context
     const [personaList, levelList] = await Promise.all([
-        listPersonas(),
+        listPersonas({
+            allowedClusters: session?.user?.clusters,
+            isAdmin
+        }),
         listChallengeLevels()
     ]);
 

@@ -2,21 +2,24 @@
 
 ## Environment Summary
 - **Current Stack**: Next.js 16, Postgres with pgvector, Vercel Node.js Functions, OpenAI API, Upstash Redis.
-- **Status**: **STABLE & FEATURE-COMPLETE (DSE, Admin UI, Intelligence Factory)**
+- **Status**: **STABLE & FEATURE-COMPLETE (Refined Intelligence Factory, Multi-Tenant Admin)**
 
 ## Latest Deployments
+- **Epic 14: Collapsible Intelligence Factory (April 29, 2026)**:
+    - **Strategic Thread Architecture**: Migrated to a unified vertical accordion with a left-aligned connecting thread for a seamless process flow.
+    - **Compact Identity Tiles**: High-density "Choose Your Fighter" grid with cluster-based grouping and visual separators.
+    - **Optimized Refinement Flow**: Decoupled refinement triggers into Phase 3; reserved Phase 4 for integrated Q&A and comparison.
+    - **Precision Navigation**: Refined scroll-to-top logic with layout stabilization for perfect block framing.
+    - **Full i18n**: 100% localization for all factory steps in English and Spanish.
+- **Epic 10: Multi-Tenant Cluster Permissions (April 29, 2026)**:
+    - **Entitlement Isolation**: Extended Auth/JWT to enforce cluster-based persona visibility.
+    - **Admin Access Control**: Built a granular management panel for assigning users to persona clusters.
+    - **API Resilience**: Implemented robust fallbacks to prevent dashboard crashes during DB migrations.
 - **Epic 11 & 13: Factory Performance & Cluster UX (April 27, 2026)**:
-    - **Streaming Copywriter**: Migrated to `streamObject` for real-time AI generation, matching Stress Test performance.
-    - **Smart Selector**: Refactored `PersonaSelect` with searchable, tabbed cluster navigation.
-    - **Strategic Dossier**: Integrated deep persona intelligence access across the app workspace.
-- **Epic 9: Deterministic Scoring Engine (April 24, 2026)**:
-    - Shifted from subjective AI vibes to weighted mathematical models.
-    - Implemented Parallel Micro-Agent processing.
-- **Phase 1: Admin Intelligence Dashboard (April 24, 2026)**:
-    - Bulk Ingestion Pipeline and Executive Persona Dossiers.
+    - Streaming Copywriter and initial tabbed selector.
 
 ## Known Active Issues
-- **None Critical.** All core user paths (Stress Test, Copywriter, Admin) are fully optimized.
+- **None.** Platform is fully optimized for current roadmap features.
 
 ## Observability
 - **Monitoring**: Structured JSON Logs (Pino).

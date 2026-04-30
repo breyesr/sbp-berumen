@@ -1,0 +1,912 @@
+Recorder: Bern
+Timezone: America/Monterrey
+Start: 2026-04-28 10:33:09.926000-06:00
+End: 2026-04-28 12:00:08.892000-06:00
+
+[189] Interlocutor desconocido: Come again?
+[196] Interlocutor 1: Some weird shit, dude.
+[198] Interlocutor 2: Yeah, I think teams had better ones.
+[208] Interlocutor 1: Yeah, these are stupid.
+[213] Interlocutor 1: Hey, man. I did what I could, but it's not easy when you have no idea what you're preparing for.
+[221] Interlocutor 2: Ha ha ha.
+[224] Interlocutor 1: I'll tell you the outline so that you get an idea. Here it is. So you get an idea of where... Mine had his ad.
+[250] Interlocutor 1: See if this works, it's never worked.
+[266] Interlocutor 1: Here we go. Share.
+[272] Interlocutor 2: Allow
+[279] Interlocutor 2: Or not.
+[281] Interlocutor 1: Every time it updates, I have to do the permissions again.
+[286] Interlocutor 2: Okay.
+[288] Interlocutor 1: Hang on. Do you see it?
+[295] Interlocutor 1: So let me do it this way. My thought is this: I don't really... okay, so. We'll be back up.
+[315] Interlocutor 1: It's two different things. One thing is they want to give them what's called a leave behind document, which is like we're going to send it with an email.
+[324] Interlocutor 1: That's it. Then the other part is they're going to want a call. That's what he said in his text. He said we're going to send it. Then we're going to get a call.
+[335] Interlocutor 1: The leave behind is different. It has to be more self-explanatory. It has to have more detail.
+[340] Interlocutor 1: The presentation that we're going to do can be more dynamic. It can be more like a sales presentation.
+[348] Interlocutor 1: Keep that in mind.
+[351] Interlocutor 1: Leave behind is what I want to look at with you right now, which is basically this, right?
+[359] Interlocutor 1: The title is self-explanatory, let me start here. Slide two would be basically this, right? Which is what is it, what is this thing?
+[374] Interlocutor 1: And then we go into the evidence part, which is like what is the situation right now for you as a client.
+[386] Interlocutor 1: Takes a long time. You've got to wait for cycles and sprints and information to come in. So you've got this big gap.
+[393] Interlocutor 1: We will intervene to make sure you have on-demand data for your decision-making. 24-7.
+[404] Interlocutor 1: The actual solution is the agency data with your data and publicly sourced data and it creates a private market oracle. We just explain it doesn't hallucinate. It only trains on your data and on real market data. It is not a commercial model. It's not ChatGPT.
+[431] Interlocutor 1: This is where I explain what it is, where it's like it's a rag-driven system. It won't mess up, you know?
+[441] Interlocutor 1: Then we say there are three different use cases.
+[448] Interlocutor 1: I forget what curriculum is in Spanish, so I just wrote curriculum with an accent. What's it called?
+[457] Interlocutor 2: It's, I think it's the same thing.
+[460] Interlocutor 1: Oh, like the course.
+[460] Interlocutor 2: Oh, yeah.
+[465] Interlocutor 2: I think it's curriculum or it could be plan de estudios.
+[471] Interlocutor 1: Yeah, that. So basically it's three different use cases: the curriculum, maybe marketing admissions or something, and then fundraising.
+[488] Interlocutor 2: And remember that we're adding the copywriters. So we also have that.
+[495] Interlocutor 1: Yeah, so I didn't know what to do there, right? So I was like, my thought is we go through, we focus on this.
+[503] Interlocutor 1: It's hard to do it all at the same time. So we do...
+[508] Interlocutor 1: Yeah, I was thinking we would focus on the intelligence. And then maybe during the pitch, we do the copywriters.
+[521] Interlocutor 2: I don't know.
+[522] Interlocutor 1: The copywriter is... both. I don't want it to be confused with the core product. The core product is market research.
+[531] Interlocutor 2: Yeah, but I...
+[535] Interlocutor 2: I see the copywriter as the gateway drug. It's super easy to explain. It's super easy to understand and it's super applicable.
+[569] Interlocutor 2: I don't know.
+[571] Interlocutor 1: Okay, let me throw it into the market oracle part where we explain what intelligent really is. It's just research, but it also has a copywriter.
+[583] Interlocutor 1: How does it work? What do you use it for? And then here, we'll have to—why does it keep jumping like that? We'll have to do...
+[607] Interlocutor 1: To be right there.
+[611] Interlocutor 1: Okay. Whatever.
+[617] Interlocutor 1: So we do use cases. And then I guess an implementation path, which is like you have to ingest the data.
+[629] Interlocutor 1: Well, I guess first you have to share the data, your data, your client data. Then we ingest it, then we train it, then we launch it somewhere about four to six weeks.
+[638] Interlocutor 1: We need a name for this thing. This is for like intelligent pro, which is my understanding of what they want. They don't want the out-of-the-box.
+[653] Interlocutor 1: Do they want the out-of-the-box one?
+[655] Interlocutor 2: Oh, yeah.
+[658] Interlocutor 1: Because remember, it's these two.
+[658] Interlocutor 2: I don't know, we send those two.
+[666] Interlocutor 2: I have the same information that you have, so I don't know.
+[672] Interlocutor 2:  If they are currently focused on the out of the box or the pro, we can give them both options unless these guys say something different.
+[704] Interlocutor 2:  They're probably not clear on what they want yet.
+[720] Interlocutor 1:  Well, that's fine. I put a comment here for you to figure that out.
+[722] Interlocutor 2:  No, it's okay.
+[724] Interlocutor 1:  I'm running with the market oracle. What I'm trying to avoid is if we're going to do a leave behind document where you're just going to email it in advance of a call.
+[737] Interlocutor 1:  It's going to get lost if we try to do it, you know, like how many documents have you got with the reading? I'm not reading this.
+[740] Interlocutor 2:  Yeah, no.
+[744] Interlocutor 2:  You know what I was thinking?
+[749] Interlocutor 2:  What if we do this as...
+[753] Interlocutor 2:  We do the document, but we do a one minute, two minute notebook video with all the core parts.
+[765] Interlocutor 2: I think it'll be easier to digest.
+[766] Interlocutor 1: I mean, yeah.
+[772] Interlocutor 1: It makes sense. The only thing I would say is, what is this called?
+[780] Interlocutor 2: Because this information is pretty good. I think we got all the bases covered.
+[795] Interlocutor 1: Yeah, and then they do the demo. So if you're doing the pre-read where you're sending this in advance, this is what I want to cover. And then at the end of it, I want to be like, there's a demo coming.
+[808] Interlocutor 1: I don't hate the idea of making a product video.
+[815] Interlocutor 1: What I don't want to do is make a notebook LM video because that just goes off of the text.
+[821] Interlocutor 1: It's not going to have the screenshot. It's not going to have the product demo. It's going to be like an animated PowerPoint.
+[829] Interlocutor 1: So if we do a product video, then we need to do a proper product video.
+[834] Interlocutor 2: Give me a second. I think I still have access to Premiere.
+[842] Interlocutor 1: Yeah, you have the whole Adobe suite for the whole year.
+[846] Interlocutor 2: Yeah, so we could.
+[849] Interlocutor 1: I mean, look, I can make a product video.
+[849] Interlocutor 2: Start.
+[854] Interlocutor 1: With AI, that's not going to take very long. More what I'm thinking is if we do a 30-second video, it's like a sizzle reel, like an app demo. It's not hard to do, but I'm just wondering if that's the path for this particular—because remember who we're talking about.
+[877] Interlocutor 2: Yeah.
+[880] Interlocutor 1: Dinosaur education industry people. They're used to the academic rigor of having to do the papers and the reading and the curriculum and the planning and all this other stuff.
+[893] Interlocutor 1: I don't actually know who he's talking to. We don't know what their role is. We don't know what they do. If you send me as the marketing guy a product video, I'm going to be like, that's cool. If you send Tony a product video, he's going to be like, what does it do?
+[908] Interlocutor 1: We can send both. I don't mind. My thought is just we're kind of flying blind here.
+[915] Interlocutor 2: Yeah.
+[917] Interlocutor 1: If you hear me out, here's my proposal. I can build this into a PDF, like a one pager, like a two pager, and then send that as a pre-reading along with a 30 second product video.
+[933] Interlocutor 1: And then we focus on the video as the primary collateral and the PDF as supporting collateral, even to the actual presentation.
+[945] Interlocutor 1: Then we think about something more like this, right? Which is like, what is it? How does it work? What problem are we solving for? The architecture. So it's more like actually doing a sales pitch once we have the actual call booked.
+[978] Interlocutor 1: Maybe check with your guy. Maybe just send him a message and be like, hey, look, we're thinking about doing a one pager in advance with supporting video or something. And then once we have the actual call scheduled, then we do a presentation.
+[1000] Interlocutor 1: So if you could. His approach is to, he kind of told them a little bit about it. He did a couple, I also don't know which slides he presented. He just said the slides.
+[1009] Interlocutor 2: If he presented what I sent him.
+[1015] Interlocutor 2: It's just this.
+[1018] Interlocutor 1: That's it.
+[1023] Interlocutor 2: It's this one, like, what can it do? And the other part that is a little bit of how this works and the models that we have, and that's it.
+[1045] Interlocutor 1: Do I have this?
+[1047] Interlocutor 2: Yeah, it's in the shared folder. Give me just a second.
+[1057] Interlocutor 2: Never mind. Yeah, this is in the shared folder.
+[1065] Interlocutor 2: So you have it and this is almost the same text as theirs that we have.
+[1075] Interlocutor 1: Okay.
+[1078] Interlocutor 1: So what do you think about that approach?
+[1080] Interlocutor 2: Yeah, so it's pretty cool.
+[1081] Interlocutor 1: If we do it with a simple one pager, like an infographic, and then a supporting video, and then we plan for the presentation with the team, right? Because we're not going to go in without them.
+[1100] Interlocutor 2: Yeah.
+[1100] Interlocutor 1: Make sense?
+[1101] Interlocutor 2: Yeah, makes perfect sense.
+[1102] Interlocutor 1: But the outline is there. So what I think I'll do is I'll take that outline, condense it into a product document, and then send it with a product video.
+[1119] Interlocutor 1: They schedule the demo and then in the demo we think more about how do we extrapolate that one pager into a presentation that's like eight or ten slides.
+[1134] Interlocutor 1: Then make sure we spend most of the time building out the use cases for the demo.
+[1144] Interlocutor 1: So make sure we take a lot of time, have five different use cases, five different filters, different—all that. And by then we're going to need to have the full loop, which is idea score, iteration, refeed it, and then watch it react differently.
+[1165] Interlocutor 1: You fix that already or not? I don't know. Did you fix that already?
+[1169] Interlocutor 2: Kind of.
+[1173] Interlocutor 1: If it's worthwhile to you. What I found is I think we just abandon the multi-agent orchestration, right? I don't think we need it.
+[1182] Interlocutor 2: Yeah, that's already placed.
+[1187] Interlocutor 2: It's three little guys analyzing the questions. I'll show it when we finish this project.
+[1197] Interlocutor 2: I'll show you the advantage when...
+[1204] Interlocutor 1: Well, I'm pretty much done. That's the plan. So if you're good with that, what I'll do is I'll just turn this into a PDF instead of a presentation and try to work on the video so that they can have it this week.
+[1222] Interlocutor 2: Yeah, that's some...
+[1224] Interlocutor 2: This is great.
+[1229] Interlocutor 2: Okay, so here we go.
+[1237] Interlocutor 2: Are you ready?
+[1240] Interlocutor 2: For this not to work.
+[1242] Interlocutor 1: I mean, if it's the same environment that I have, I already know it doesn't work.
+[1246] Interlocutor 2: Ha, ha, ha, ha.
+[1248] Interlocutor 2: Okay, I'm just going to share you a couple of things they have done.
+[1256] Interlocutor 2: Let me...
+[1259] Interlocutor 2: Okay, here we go.
+[1264] Interlocutor 1: Also, your language filter doesn't do anything, by the way.
+[1268] Interlocutor 2: Yeah, it does.
+[1270] Interlocutor 1: It doesn't.
+[1273] Interlocutor 2: Yeah, challenge level.
+[1275] Interlocutor 1: Yeah, but it still responds to you.
+[1277] Interlocutor 1: In Spanish.
+[1280] Interlocutor 2: Even if you type in English.
+[1283] Interlocutor 2: Oh, shit. Okay.
+[1284] Interlocutor 1: Well, at least it did for me. I don't know if you've changed something, but yeah.
+[1289] Interlocutor 2: Okay, one of the first things I did was add this.
+[1295] Interlocutor 1: Oh, that's cool.
+[1296] Interlocutor 2: That the CRM—this is for us. Right now it's just for us.
+[1302] Interlocutor 1: That don't happen to you.
+[1304] Interlocutor 2: Yeah, you have.
+[1308] Interlocutor 1: We're done.
+[1308] Interlocutor 2: And here you.
+[1310] Interlocutor 2: Yeah, you do.
+[1311] Interlocutor 1: No, I don't. I'm looking at it right now. No, I don't.
+[1314] Interlocutor 2: Are you a lucky?
+[1317] Interlocutor 1: You want me to sign out and sign back in?
+[1319] Interlocutor 2: No, it should show up.
+[1322] Interlocutor 1: It definitely doesn't.
+[1326] Interlocutor 2: Let me see.
+[1328] Interlocutor 1: Let's...
+[1328] Interlocutor 2: Yeah, you should. You have admin access.
+[1332] Interlocutor 1: Unless you changed the domain or something, this is what my UI looks like.
+[1336] Interlocutor 2: No, it's...
+[1338] Interlocutor 2: Oh, let me see.
+[1347] Interlocutor 2: Weird.
+[1348] Interlocutor 2: I'll try to see why you don't have it, but you should have.
+[1359] Interlocutor 2: Anyway, I heard you can feel like the clusters of people.
+[1368] Interlocutor 1: Yeah, this is cool.
+[1368] Interlocutor 2: And you can add data here for the little dudes.
+[1377] Interlocutor 2: You can edit.
+[1381] Interlocutor 1: Can you change that name, please?
+[1384] Interlocutor 2: Yeah, yeah, really.
+[1388] Interlocutor 2: And...
+[1389] Interlocutor 1: Pick any other name.
+[1391] Interlocutor 2: Ha, ha, ha, ha.
+[1393] Interlocutor 2: And you can see like a little dossier.
+[1398] Interlocutor 1: Oh, that's great.
+[1398] Interlocutor 2: Yeah, that's right, of the dudes.
+[1402] Interlocutor 2: And then you go to the express test.
+[1407] Interlocutor 2: And you can choose the person you want.
+[1413] Interlocutor 2: You can see the dossier of the guy you're seeing to look at.
+[1416] Interlocutor 1: Hey, this is a cool feature.
+[1419] Interlocutor 2: Yeah, because now you know who you're taking in.
+[1425] Interlocutor 2: And then you go with the idea.
+[1434] Interlocutor 1: Are you still hard-coding 60-40?
+[1438] Interlocutor 2: 64?
+[1440] Interlocutor 1: For the scoring.
+[1442] Interlocutor 1: Like 60 idea, 40 objective.
+[1445] Interlocutor 2: Oh, no, look at this.
+[1446] Interlocutor 1: We're doing 15-30.
+[1450] Interlocutor 2: Yeah, it's 50, 20, 30, I think.
+[1457] Interlocutor 2: I added like a...
+[1463] Interlocutor 2: Oh, it's not here. Oh, no, it's loaded. Okay, look at this.
+[1468] Interlocutor 1: Yeah, I saw that.
+[1468] Interlocutor 2: This is going to be hidden unless you think it adds value.
+[1475] Interlocutor 2: But this is for us to be able to look at how it is scoring the ideas.
+[1483] Interlocutor 1: You know what, before we move on, I'm thinking I think the weight is off, dude. I think.
+[1497] Interlocutor 1: What feedback do you want to prioritize? I'm assuming that is labeled as...
+[1505] Interlocutor 1: I actually have no idea which one of these three is.
+[1509] Interlocutor 1: which from the top.
+[1514] Interlocutor 2: What
+[1514] Interlocutor 1: So if you, yeah.
+[1516] Interlocutor 2: From this.
+[1516] Interlocutor 1: So you've got one, two, three on.
+[1520] Interlocutor 1: Right here, the DSE.
+[1525] Interlocutor 1: What do they correspond to? Is it in order? Is it?
+[1527] Interlocutor 2: Oh, no, no, no. This is...
+[1532] Interlocutor 2: The thing that they are evaluating is this, the pitch. And they have a...
+[1538] Interlocutor 1: Just what's in the dialogue box of the pitch.
+[1541] Interlocutor 2: Yeah, of the pitch and they compare this against what you want to achieve and what you want to
+[1552] Interlocutor 1: focus on.
+[1552] Interlocutor 2: focus on and the person in the background.
+[1554] Interlocutor 1: Focus is constant.
+[1558] Interlocutor 1: Yeah, so focus, buyer persona, and level of rigor is all context.
+[1567] Interlocutor 2: Yeah, basically.
+[1567] Interlocutor 1: And then they're evaluating the idea.
+[1574] Interlocutor 1: Should they not be evaluating the quality of the idea and the quality of the objective?
+[1580] Interlocutor 2: Yeah, it...
+[1582] Interlocutor 2: The quality of the objective.
+[1586] Interlocutor 1: Like whether it's like
+[1588] Interlocutor 1: qualitative
+[1590] Interlocutor 1: whether you've identified the metrics you want to measure, what you see, what I'm saying
+[1595] Interlocutor 2: Yeah.
+[1602] Interlocutor 2: Maybe, yeah.
+[1604] Interlocutor 1: That was what I always had in my head. So I've been working on it in that direction where it's like
+[1610] Interlocutor 1: The idea is evaluated against criteria.
+[1615] Interlocutor 1: The goals, objectives against criteria and then the focus is part of the context
+[1623] Interlocutor 2: Okay.
+[1624] Interlocutor 1: Because otherwise, if they put it in the objective, they're like
+[1628] Interlocutor 1: More leads.
+[1632] Interlocutor 1: You're not
+[1634] Interlocutor 1: measuring the quality of their definition of the objective versus anything objective.
+[1641] Interlocutor 1: You're taking the idea and you're seeing how it relates to their definition of an objective right now.
+[1648] Interlocutor 2: Yeah
+[1648] Interlocutor 1: but you're not grading them independently.
+[1652] Interlocutor 2: Okay, so...
+[1657] Interlocutor 2: Yeah, for that to work, it would have to be like an independent
+[1664] Interlocutor 2: non-persona evaluator
+[1668] Interlocutor 1: Exactly. So that's the logic that I had that I've been working on is taking
+[1673] Interlocutor 1: like a dumb agent with a cheaper model that only has one context, which is evaluate the idea based on this.
+[1685] Interlocutor 1: And then the other one is evaluate the objective based on this. And then you have a third model or a third agent.
+[1690] Interlocutor 1: that uses a more expensive model that can synthesize
+[1694] Interlocutor 1: your persona, your rigor, the focus, and the independent scores that they handed off.
+[1701] Interlocutor 1: And then it gives you the percentage.
+[1703] Interlocutor 2: Yeah, I think the only thing that I need to add is the...
+[1709] Interlocutor 2: this criteria evaluation on the objective and the
+[1713] Interlocutor 1: Yeah, I think the pitch is good.
+[1716] Interlocutor 1: The focus is part of the context, which is great. I would only apply the same logic you did for the pitch, apply it to the objective so that you have two independent scores.
+[1727] Interlocutor 1: and they get synthesized into one holistic story.
+[1731] Interlocutor 2: And you know what I think?
+[1734] Interlocutor 1: And I would weigh them heavier. I think the objective should be weighed at least at 40.
+[1734] Interlocutor 2: I think what I'm going to do.
+[1740] Interlocutor 1: Because the objective is crucial. The objective is like, what are you measuring?
+[1746] Interlocutor 2: You know what I think?
+[1750] Interlocutor 2: would be really helpful because
+[1753] Interlocutor 2: The idea part, I think it's kind of super easy to come by, right? Like I want to do this.
+[1759] Interlocutor 1: Yeah, it's just like dump whatever.
+[1764] Interlocutor 2: And this is where they are going to struggle if you're the user and you're getting your goals and your evaluation. This is, we're going back to the cover prompt thing.
+[1779] Interlocutor 2: Maybe instead of them putting a goal we can assess this and then suggest why
+[1791] Interlocutor 2: what kind of goals based on the persona they could be pointing towards. Or maybe they put something and we improve it.
+[1799] Interlocutor 1: I would start with something easier.
+[1801] Interlocutor 1: I would start with something easier. I would say
+[1805] Interlocutor 1: Just with regard to the tech, sorry, with regard to the
+[1810] Interlocutor 1: development load I would say the idea pitch is self-explanatory however
+[1817] Interlocutor 1: For UI consistency, I would say every dialogue box
+[1823] Interlocutor 1: Should probably have the little eye, the same that you have for your persona.
+[1827] Interlocutor 1: Just with a little three bullets. That's like
+[1832] Interlocutor 1: For your pitch, make sure you do one, two, three. For your objective, make sure you do one, two, three. What's the focus?
+[1840] Interlocutor 1: Here's an example of what a good focus is, you know, and that can be it. That can be like the MVP.
+[1845] Interlocutor 2: Yeah, I already have that in the backlog. I'm going to add this today like a toolbox.
+[1855] Interlocutor 2: how they should work it out.
+[1856] Interlocutor 1: You know, like a little eye.
+[1858] Interlocutor 2: Yeah.
+[1858] Interlocutor 1: And then I think to answer your question, the actual logic itself.
+[1866] Interlocutor 1: You could probably do this in stages. It might be more useful. I keep going back to the idea of having a flow. Right. Where it's like
+[1875] Interlocutor 1: multiple pages, it's like you know and exactly what you were saying is like
+[1881] Interlocutor 1: Flow one is you just give me the picture.
+[1884] Interlocutor 1: raw, dirty, whatever. Just give it to me, give me the objective, give me everything.
+[1888] Interlocutor 1: Next page. It will evaluate your idea first, give you feedback, your objective first, give you feedback.
+[1896] Interlocutor 1: That's probably the focus is whatever the focus is context.
+[1901] Interlocutor 1: And it'll tell you, are you good? Do you want to keep going or do you want to iterate before we score it?
+[1906] Interlocutor 1: And then it's like, okay, what are they?
+[1910] Interlocutor 1: Well, what I don't. I think that's one path and that puts the burden onto the user to be clear about what they want.
+[1921] Interlocutor 1: The other path is more like Tom Cowboy, where it's like, we will take a shot at it and then we will give you recommendations as to what we believe would make this better.
+[1932] Interlocutor 1: And we will ask you a couple of questions.
+[1936] Interlocutor 1: And we do the whole flow and then we give you our recommendations. So it's two different ways.
+[1943] Interlocutor 2: What I like about the cowboy prompt is you can't be lazy, you know?
+[1954] Interlocutor 1: If you think about consumer behavior and behavioral psychology, if you want to give them the dopamine hit, then you have to finish your portal.
+[1967] Interlocutor 1: You have to allow them to be lazy, you have to do the heavy lifting. And then at the very beginning they know the more you give me, the more I give you.
+[1981] Interlocutor 1: Don't blame me if it's not as good as you thought it was going to be. You're being lazy, you know.
+[1985] Interlocutor 2: Yeah.
+[1987] Interlocutor 1: But if you want the dopamine hit, which I think when we talk about a business, when we talk about getting people, getting that traction, then hit them with the dopamine, do the prompt couple.
+[1996] Interlocutor 2: Yeah, because we need to go all TikTok and Instagram on this because we want them to be hooked and using this.
+[2007] Interlocutor 2: Yeah, we want them to be hooked on using this because if
+[2011] Interlocutor 1: It's how they get GPP, so you may as well.
+[2016] Interlocutor 2: Yeah, because if we make them think they'll be like us.
+[2020] Interlocutor 2: What's the point of this, you know?
+[2025] Interlocutor 1: What about this?
+[2030] Interlocutor 1: Because I think you will have different personalities. You'll have people like me who will get a lot of value from a template.
+[2042] Interlocutor 1: If you can give me something to download and fill out, with an example, like a little manual, and they just download or it opens a different dialogue box. I don't know, whatever. You give me a template, and then I can upload my template.
+[2058] Interlocutor 1: That's great. That's open and shut. It's for people who want to take.
+[2062] Interlocutor 1: And then the other flow is the prompt cowboy flow where you're like, this single box, maybe you even get rid of the three boxes and you just say it's a single box.
+[2077] Interlocutor 1: Prompt cowboy will take a run at what they think you want, you validate it or edit, and then it scores it.
+[2090] Interlocutor 2: I think that's a good way to go.
+[2097] Interlocutor 2: You feel this?
+[2098] Interlocutor 1: Because I'm cowboy right now just with one box with the figures. What if you did that?
+[2103] Interlocutor 2: Yeah. You feel this in a very lazy way, maybe not the idea pitch, but you can feel this, like you said here, like get more leads, and then here you put whatever and then you send it, it gets evaluated, you get your suggestions, like instead of get more leads, you get
+[2128] Interlocutor 2: Get more leads to increase blah blah blah whatever, and then you're like, are you okay with this? Yeah, okay, let's get it.
+[2133] Interlocutor 1: With metrics and stuff.
+[2138] Interlocutor 2: And that way, I think it might be easier for the user to use.
+[2157] Interlocutor 2: And we add the template thing like you said. This guy already asked for Armando.
+[2164] Interlocutor 1: And it's easy. That's super easy.
+[2165] Interlocutor 2: Yeah, that's super easy.
+[2168] Interlocutor 1: Here's a thought, though, before we get carried away.
+[2173] Interlocutor 1: Remember the use case.
+[2175] Interlocutor 1: In the core of this is not a prompt cowboy.
+[2179] Interlocutor 1: So we're not developing ideas. We're scoring ideas based on our personas.
+[2188] Interlocutor 1: Right. So we can shorten the past. We can help them be a little bit lazy.
+[2196] Interlocutor 1: But if we do it all for them, what is the value of the tool? It just becomes a prompting tool.
+[2207] Interlocutor 1: Because it's circular logic. You're basically being like, okay, you are Camilla. I'm Camilla now.
+[2214] Interlocutor 1: Be lazy with Camilla. Camilla will tell you what Camilla wants. What does that do for me if I'm trying to launch a campaign? If you're just telling me what you want, you're not being a resource for me, you're being sycophantic.
+[2224] Interlocutor 2: Yeah.
+[2229] Interlocutor 1: For yourself. Like you, it's like somebody coming to me to be like, oh, I have this idea. Can you define it the way you want it? And they'll be like, well, then why did you ask me? You know what I mean? So I think we have to find a middle ground where it's like, prompt cowboy laziness, but let's not forget to keep it valid.
+[2251] Interlocutor 2: We could, you know what?
+[2255] Interlocutor 2: We could separate them.
+[2262] Interlocutor 1: It's a flow, dude. It comes back to the flow. I think you're right.
+[2264] Interlocutor 2: Yeah, but we can make two different tools.
+[2265] Interlocutor 1: Hit them with the...
+[2270] Interlocutor 2: And get them together in the flow. So you have here like idea refining, stress test, and copywriting. So you start with the idea refining tool. Like I have this idea, I have this meta, this objective, and I have this.
+[2293] Interlocutor 2: And this is my focus, right? In case you're still working out whatever you want to go, and then you click here to refine.
+[2306] Interlocutor 2: And you're like, okay, it's done, I like it, let's move on to the source state. So you click and select your stress test, do it. If you already have the idea refined, no need to start there. You can go directly to the stress test and you have three different tools.
+[2328] Interlocutor 2: Going to the same purpose, and once you get your idea refined, you can tell it, now I want copies for this idea, and you go to the copywriting and boom.
+[2345] Interlocutor 1: I think it's one flow.
+[2348] Interlocutor 1: I think the welcome, like the homepage or the step zero, is with a disclaimer that says, still not sure? Do you need help defining your idea or defining what you want to test?
+[2372] Interlocutor 1: And you would click that and it would help you define it. That's more like Prompt Cowboys.
+[2381] Interlocutor 1: The core value proposition, remember, is we will adapt your personalities and then allow you to shorten your path to validating ideas that you're going to spend money on. That's the core value proposition.
+[2405] Interlocutor 1: It's not a one-size-fits-all for everybody. So it's like, in order for us to deliver on that promise, that's what we need to be able to focus on first: make sure that when somebody logs in, that's what they're getting from the tool first.
+[2425] Interlocutor 1: The other stuff is like features that will help them get that value out of the tool. So one of those tools is the validator, but I don't—I'm thinking as a user, I don't know if I need help or not. Do you know what I mean?
+[2444] Interlocutor 1: I might think I have a really good idea and I'm structured and I do it and then it's like, wait, what the fuck? So that's why I'm thinking the flow is crucial because here you're asking the user to educate themselves, train themselves.
+[2458] Interlocutor 1: If there's a flow, there's got to be an onboarding, right? Which is, it asks you questions. It's like, who are you? How ready are you to stress your idea?
+[2471] Interlocutor 1: And then it goes right into the stress testing. Or it tells you if you're like, I have a loose idea, but I need to ideate. I need to nail it down. And so it's like an ideator, right? And you would click that option.
+[2494] Interlocutor 1: As an MVP, this works fine. It's like a prototype. But I think for production, if you want to start to split them into like a validator, a stress tester, and a copywriter, I think we need to cluster the validator with the stress test, separate the calculator in a different part of the UI, maybe even in a different selection when you log in, I don't know, because it's not related to the core offering.
+[2526] Interlocutor 1: And it did the same thing as the other one does. So I don't want to put it together, right?
+[2530] Interlocutor 2: Yeah.
+[2530] Interlocutor 1: I think it sends the wrong message to the user. I really like the idea of incorporating a Prompt Cowboy style because I keep coming back to the stress tester and I don't know how to do it. It keeps giving me a 40.
+[2545] Interlocutor 1: Let me help you be less stuck. Here's a feature. That's awesome. I think that's a really good idea. But what I wouldn't want to do is have them be like, I keep using your data and nothing works.
+[2560] Interlocutor 2: Yeah, because that's basically its part, right? You need to focus on this, you need to focus on that. Let's help you, let's refine it.
+[2563] Interlocutor 1: Exactly.
+[2568] Interlocutor 2: I'll ask you questions.
+[2572] Interlocutor 1: Exactly.
+[2575] Interlocutor 1: If it's exactly like Prompt Cowboy, then it will assume and answer all of this stuff based on the little information you give it, you know, structure.
+[2585] Interlocutor 1: But the risk we run in that scenario is that they're going to be like, your validator sucks. I put it into your thing and it gives me 30%. Why isn't it doing everything for me?
+[2597] Interlocutor 2: Yeah, exactly.
+[2598] Interlocutor 1: So I think it has to be somewhere in the middle, right? I think you're on the right track.
+[2601] Interlocutor 2: Yeah, but—
+[2603] Interlocutor 2: But with Cowboy Prompt you can, you can either give it more context, like let's say this, right? Now, let's see.
+[2622] Interlocutor 2: I don't know, this one. It's like, what the fuck is this, right? And maybe a drop down with three little options you can select or you can type whatever you want here.
+[2634] Interlocutor 1: Like when Claude asks you questions, Claude gives you options to choose from.
+[2640] Interlocutor 2: Yeah, exactly.
+[2644] Interlocutor 1: Yeah, so maybe it's that. Maybe it's like, give me just four sentences. Based on those four sentences, these are my follow-up questions for you.
+[2658] Interlocutor 1: Once you answer these questions, this is my draft. Make sure you validate it. And then it pushes you into the stress tester once you validate it.
+[2669] Interlocutor 1: It doesn't do all the lifting for you, but it helps you flesh out, organize, and define the idea so that you can actually test it in a valuable way.
+[2680] Interlocutor 2: Yeah.
+[2684] Interlocutor 1: That worked.
+[2685] Interlocutor 2: Yeah, I think it works.
+[2688] Interlocutor 1: I mean, I think that'd be a really cool feature.
+[2691] Interlocutor 2: Yeah.
+[2695] Interlocutor 1: Because you're right, people will come in here, they're going to put two lines of text in here and one line of text here and they're going to hit click and they're going to be like, fuck your tool.
+[2705] Interlocutor 1: Because they guys are in TikTok brain. We got to hit them with the dopamine so that they're not mad at us and help them make good prompts.
+[2721] Interlocutor 1: Yeah, I think that's cool. I think when you log in, you should still see this. They should be the core, but there should be a little window or some button. It says, I need help.
+[2741] Interlocutor 2: Yeah, like here maybe.
+[2746] Interlocutor 1: I don't see your cursor, but yes.
+[2748] Interlocutor 2: Sorry, like here, maybe.
+[2756] Interlocutor 1: All right, for sure. Because then you're talking about integrating that Prompt Cowboy style feature in different parts of the flow. I think certainly do it at the end when you've already filled this in and you've got the results and all that. Definitely put that there. I would also put it in a blank form. I would put it at the very top.
+[2779] Interlocutor 1: And I would say right from idea, it would be a little thing that's like, I need help. I don't really know.
+[2787] Interlocutor 1: You click that and it goes into your prompt cowboy.
+[2795] Interlocutor 2: Okay.
+[2796] Interlocutor 1: That way you're covering both bases. You're covering the user that has a pretty good idea but needs help iterating, and you're covering the user that is TikTok brain and doesn't want to do this.
+[2811] Interlocutor 1: So even if you upload the template, you go through, you hit the button, you get a 72.
+[2817] Interlocutor 1: You get the whole assessment, you get the ideas, like this is how you would make it better. Do you want help?
+[2825] Interlocutor 1: We will help you incorporate these ideas.
+[2827] Interlocutor 2: Yeah, you know what? Maybe in the eye.
+[2832] Interlocutor 1: Yeah, exactly.
+[2833] Interlocutor 2: That's awesome.
+[2835] Interlocutor 2: In their slide, how this works and you can have their click like a need idea to generate a better pitch, click here, and then you go to the other two.
+[2853] Interlocutor 1: Yes, I would agree. I would put it there and I would definitely what you said is put it at the end of the flow.
+[2861] Interlocutor 1: So that you can combine to. When you keep them in here, you know?
+[2871] Interlocutor 1: I would separate the copywriter in the UI.
+[2878] Interlocutor 1: And I would do your stress test in your cowboy style as one thing, right when the user authenticates.
+[2890] Interlocutor 1: If it's a user that is not you or me, we need to have an onboarding for them. We need to have them put their name, their role, their function, their level, understanding of things. They have to have an onboarding.
+[2906] Interlocutor 1: So that we can learn from them.
+[2913] Interlocutor 2: Right now we just have like email and I'm two of eight, that's it.
+[2924] Interlocutor 1: Yeah. So if we do a little—
+[2924] Interlocutor 2: But I can have everything.
+[2927] Interlocutor 1: Just to get an idea of who they are.
+[2936] Interlocutor 1: And I do think we should start thinking about how we can make this dynamic.
+[2941] Interlocutor 1: So it'll be like, okay, so your profile has been created, you log in, first thing you see is do you need to write copy or do you want to?
+[2949] Interlocutor 1: You want market research, right?
+[2951] Interlocutor 1: Click my research.
+[2953] Interlocutor 1: Who do you need the market research from? Click your persona, how?
+[2959] Interlocutor 1: How demanding do you want them to be? One, two, three, click, done, next. What's your idea?
+[2965] Interlocutor 1: Next, what's your objective?
+[2968] Interlocutor 1: What do you want me to focus on?
+[2972] Interlocutor 1: That's all. It just moves the idea into an actual agent flow. And I would speak to the user in the first person. Right. To say, what is your—tell me your idea.
+[2986] Interlocutor 1: What is the objective you want? How do you want me to focus?
+[2997] Interlocutor 1: The results can probably be like this. This page is, I think, good for results at the end because it recaps everything. It recaps the persona.
+[3006] Interlocutor 1: There's all the URL, what the objective was, and it gives you the results.
+[3011] Interlocutor 1: It's paginated.
+[3013] Interlocutor 1: Until here, then it's a one-page story.
+[3019] Interlocutor 1: You get what I'm saying?
+[3023] Interlocutor 1: So I log in as a user and I'm like, I see two tiles, and they make market research.
+[3031] Interlocutor 1: And it just asks you questions one at a time. It tells me, who do you want me to be? Click Alex.
+[3037] Interlocutor 1: How demanding you are. One, these are tiles,
+[3041] Interlocutor 1: Right? And it's on a page. You click all that, you define it, you'll be able to tell me your idea, tell me your objective, what do you want me to focus?
+[3051] Interlocutor 1: It's three different tiles in three different pages, right?
+[3055] Interlocutor 2: Okay.
+[3056] Interlocutor 1: Like submit, I'm ready, tell me.
+[3059] Interlocutor 1: When I tell you, then you get this one page right here, exactly the way you have it. So that if I need to make edits or anything, I can just go back and, you know what I mean?
+[3069] Interlocutor 2: Yeah, good joke.
+[3072] Interlocutor 1: The more you make it bite-sized, the more likely you are to keep them in there.
+[3077] Interlocutor 2: Yeah, because it's too much information.
+[3081] Interlocutor 1: It's me with people like you.
+[3081] Interlocutor 2: Yeah, and you know what? If we do it paginated when you go to the—
+[3091] Interlocutor 2: First page is this too, right?
+[3094] Interlocutor 2: Yeah.
+[3095] Interlocutor 1: Your first page is your persona. Well, your first page is market research or copy.
+[3100] Interlocutor 2: Yeah. Well, I think we saw the market research or copy with the many.
+[3101] Interlocutor 1: When you quit talking.
+[3108] Interlocutor 1: You know, that's what I mean. The first thing you see is what do you want to do?
+[3112] Interlocutor 2: Yeah.
+[3112] Interlocutor 1: Oh, I have. Look at this.
+[3114] Interlocutor 1: Then you see all of the different personas available to your user. Click. Then you see how they manage.
+[3121] Interlocutor 2: Yeah.
+[3123] Interlocutor 1: Can you tell me your idea? I told you, next.
+[3124] Interlocutor 2: Yeah, and we can have like pictures of these dudes.
+[3131] Interlocutor 1: It is exactly the way that it's like Street Fighter.
+[3135] Interlocutor 2: Yeah.
+[3137] Interlocutor 1: Like, choose your fighter, right?
+[3139] Interlocutor 2: Yeah.
+[3141] Interlocutor 1: That's exactly how I had envisioned it. It's like choose your fighter, choose your level of rigor.
+[3146] Interlocutor 1: And then it kicks you into the flow where it's like, tell me your idea. This is your idea. And then it's up to you if right then is there you want to evaluate.
+[3152] Interlocutor 2: And then we can. The first step.
+[3155] Interlocutor 2: Yeah, the first step could be evaluate your idea structure.
+[3160] Interlocutor 2: And we get like your goal is super shitty, do you need help fixing this? Yes. Okay. Let's fix it. And we give you options.
+[3174] Interlocutor 2: No, I will do it myself so they fix themselves. Now the score is, I don't know,
+[3184] Interlocutor 2: 80, we have to have like a range.
+[3189] Interlocutor 1: Yeah, arranged.
+[3190] Interlocutor 2: Yeah, arranged to say like 80-200 is good enough to start testing with the persona, so your prompt is ready to test. We don't give them this card there because
+[3204] Interlocutor 1: No, of course, it's back in the logic.
+[3206] Interlocutor 2: Yeah.
+[3209] Interlocutor 2: And once it's ready to test, we submit to the next stage, that is the persona, and then you have all the shit. Yeah, I think that works.
+[3220] Interlocutor 1: Because then...
+[3222] Interlocutor 1: At the very end, then you sort of get your full report.
+[3226] Interlocutor 1: You know, where it's like, this is what you told me. This is who I am. This is how strict I am. This is what you told me. And this is what your score is.
+[3236] Interlocutor 1: And then you fold in that part where it's like,
+[3239] Interlocutor 1: You can make it better this way.
+[3242] Interlocutor 1: Do you want to do it or do you want me to help you?
+[3245] Interlocutor 1: When you click the button, they'll help you. Okay, I'll go help you. I'll do my version, my draft,
+[3251] Interlocutor 1: incorporating all the stuff I told you to do.
+[3255] Interlocutor 1: You validated that, run it again.
+[3259] Interlocutor 2: Yeah, I like it.
+[3261] Interlocutor 1: You know what I mean? And then I think,
+[3264] Interlocutor 1: Then you've got yourself a web ad.
+[3266] Interlocutor 2: Yeah, and it's easier to...
+[3273] Interlocutor 2: to also make it mobile first.
+[3276] Interlocutor 1: Totally. Think the way my brain sees it, like a fucking mentee. I hate mentees, but it's like that's the flow. You get the question, you answer it, you go to the next one. You get the question, you answer it, you go to the next one. And then at the end, it gives you the score.
+[3292] Interlocutor 1: Very simple, right? Just backward, forward. That's all you got to do.
+[3298] Interlocutor 1: Can you fight or choose your strictness level? Give me your idea, all this other shit. Here's your report. You can download it. You can do whatever you want. If you want help, do you not want help? We're done here.
+[3308] Interlocutor 2: Yeah, and maybe...
+[3309] Interlocutor 1: And then you give them the action to be like, okay, this is done. I see that it's a marketing campaign. Do you want to write some copy?
+[3319] Interlocutor 1: Just to populate.
+[3322] Interlocutor 2: Yeah, and maybe let them add like some context documents or whatever.
+[3328] Interlocutor 1: Yeah, like a rag. Yeah, sure.
+[3332] Interlocutor 2: Okay. Yeah, sounds good.
+[3333] Interlocutor 1: I mean, look.
+[3335] Interlocutor 1: If you're going to do an uploading
+[3338] Interlocutor 1: and parsing feature like a PDF or whatever,
+[3344] Interlocutor 1: that's going to be
+[3346] Interlocutor 1: rush the token usage. So I think we need to
+[3350] Interlocutor 1: It's fine. It's totally fine. I just think we need to have the conversation about it.
+[3355] Interlocutor 1: licensing costs.
+[3357] Interlocutor 1: say
+[3360] Interlocutor 1: like every other large language model.
+[3363] Interlocutor 1: The more you demand of it in your session, the more likely you are to hit your limit.
+[3370] Interlocutor 1: The same shit that they're pulling now, dude, where it's like you're hitting that limit every fucking 30 minutes.
+[3376] Interlocutor 1: Like you need more credits, you're going to have to put a credit card.
+[3380] Interlocutor 1: And we can give them more credit, but we can't just be absorbing infinite API costs.
+[3388] Interlocutor 2: Yeah, true.
+[3389] Interlocutor 1: We'll talk them over the same way you got to talk them over. Like at the beginning, do whatever you want. You have these massive token leaks.
+[3397] Interlocutor 1: And now that you're three telephones.
+[3402] Interlocutor 1: No more, you got to pay me.
+[3406] Interlocutor 1: But I think it's just something to keep in mind because if you limit their tokens
+[3410] Interlocutor 1: Too early?
+[3412] Interlocutor 1: They're going to tell you to go fuck yourself.
+[3413] Interlocutor 2: Yeah, no, I think...
+[3418] Interlocutor 2: The way we have it right now, it works because it's like unlimited tokens. Well, it's very low in tokens.
+[3427] Interlocutor 2: You get good results and
+[3428] Interlocutor 1: Well, that's because of the motto.
+[3431] Interlocutor 1: That's because of the model, you know?
+[3433] Interlocutor 2: Yeah, but you still get really good results with a very cheap model.
+[3439] Interlocutor 1: Yeah, I agree.
+[3442] Interlocutor 1: Have you considered?
+[3444] Interlocutor 1: folding in like a Gemini 3.
+[3450] Interlocutor 2: Yeah, but I...
+[3456] Interlocutor 2: I'm trying to keep the costs.
+[3459] Interlocutor 2: really long for the testing part.
+[3462] Interlocutor 1: I think a Gemini 2.5 is really cheap.
+[3468] Interlocutor 1: The only reason I think about that is because if you're using 4.0 mini
+[3473] Interlocutor 1: for all this scoring,
+[3476] Interlocutor 1: you still need one, at least one generation smarter
+[3480] Interlocutor 1: to do the aggregation.
+[3483] Interlocutor 1: So if your 4-0 mini is doing the idea score, your 4-0 mini is doing the objective score,
+[3491] Interlocutor 1: then your Gemini 2.5 should do the aggregation of those two scores and the final percentage because it's smart
+[3501] Interlocutor 1: You know, it's like getting two junior analysts
+[3504] Interlocutor 1: to present their case and then having a senior analyst actually give the recommendation.
+[3509] Interlocutor 2: Yeah, so use the pro mini.
+[3512] Interlocutor 1: For the dumb ones, you still need.
+[3515] Interlocutor 2: Yeah, okay. Yeah, I think it will work.
+[3516] Interlocutor 1: And then for the smarter one, just the one notch above it. If that's Haiku or if it's Gemini 2.5.
+[3525] Interlocutor 1: Also, Gemini 2.5 is also just faster, that call is, because this is a little slow. And if you're on the virtual,
+[3532] Interlocutor 1: I'll be to your timeout at nine seconds, like 9.9.
+[3537] Interlocutor 1: It happens real close, man. It's like eight seconds, eight and a half seconds.
+[3541] Interlocutor 2: Yeah.
+[3542] Interlocutor 2: Yeah, that's why I have the...
+[3546] Interlocutor 2: 
+[3548] Interlocutor 2: The loading of the information building, because if you remember the first version, it used to wait till all the information was done and then printed, and you could spend like five seconds turning up.
+[3565] Interlocutor 1: Yeah, nothing.
+[3565] Interlocutor 2: Yeah.
+[3567] Interlocutor 1: How many calls are you doing, though? Are you doing four calls or is it one call with context?
+[3574] Interlocutor 2: I think it's two calls with context.
+[3584] Interlocutor 1: Yeah. So then you could probably do one dumb call, one smart call.
+[3592] Interlocutor 1: And especially if it's paginated, you could probably have it assigning the score to it ahead of time.
+[3604] Interlocutor 1: And then the only thing that the user would wait for at the end would be the smarter model to give you the final score with the report. And that is a reasonable expectation for a user.
+[3616] Interlocutor 1: To be like, okay, we've gone through all this. Now it's really going to give me a comprehensive report. It's going to take a little while.
+[3622] Interlocutor 1: That's fine. But right now, I'm thinking that the perception is going to be that we—
+[3629] Interlocutor 1: They don't understand how comprehensive the report really is. And they're just like, this thing's fucking slow. But if—
+[3636] Interlocutor 1: You start doing it in chunks and it's paginated.
+[3640] Interlocutor 1: And we're doing the back-end lodging of scoring it once they hit next.
+[3645] Interlocutor 1: In the moment.
+[3648] Interlocutor 1: Yeah, then I think—
+[3653] Interlocutor 1: Then I think it would work. The only thing to solve for would be—
+[3658] Interlocutor 1: That the focus—
+[3660] Interlocutor 1: Is not defined until the end.
+[3664] Interlocutor 1: So how do you inject that into your context?
+[3668] Interlocutor 2: Okay, come again. I think I lost you.
+[3670] Interlocutor 1: So you get the flow, the new flow we want, right? Which is choose your fighter, choose your level of rigor, tell me your idea, tell me your objective. What do you want me to focus on?
+[3682] Interlocutor 2: So you would separate—
+[3682] Interlocutor 1: You're not going—
+[3685] Interlocutor 2: The pitch from the objective, from the focus.
+[3689] Interlocutor 1: If you want it to be a flow like that—
+[3692] Interlocutor 1: You would have to—
+[3695] Interlocutor 2: But wouldn't that get tedious?
+[3700] Interlocutor 1: Or you could, I guess you could group them.
+[3703] Interlocutor 2: Yeah, what I was—
+[3704] Interlocutor 1: But then there's really no benefit.
+[3706] Interlocutor 2: What I was thinking is three pages. Choose your fighter and your level.
+[3712] Interlocutor 2: Pitch.
+[3714] Interlocutor 2: Goals.
+[3716] Interlocutor 2: Focus.
+[3718] Interlocutor 2: Rebellion. And then test the idea.
+[3727] Interlocutor 2: Because if you get like—think when you have you ever—
+[3733] Interlocutor 2: Use these apps like—
+[3736] Interlocutor 2: For exercising or learning or whatever and it's like a flow of—
+[3749] Interlocutor 2: To any question, it's like, fuck this, I'm not going to do this.
+[3757] Interlocutor 1: I'm just wondering if there's a difference.
+[3760] Interlocutor 1: For the user, like a tangible difference.
+[3764] Interlocutor 1: Between a single scroll—
+[3768] Interlocutor 1: And—
+[3769] Interlocutor 1: Three pages.
+[3771] Interlocutor 1: You know what I mean? Is there truly a difference?
+[3776] Interlocutor 2: Well, I think that—
+[3780] Interlocutor 2: Yeah, I think there is.
+[3786] Interlocutor 2: Well, I don't know.
+[3788] Interlocutor 2: You know what?
+[3791] Interlocutor 1: We'd have to benchmark it. Yeah, we could do that. We'd have to benchmark it. I think.
+[3791] Interlocutor 2: Let's say we tested.
+[3797] Interlocutor 1: Because I think it's two different core ideas of what the platform does, right? One is more—
+[3805] Interlocutor 1: Like almost academic where you're filling out a bunch of shit, it's a single scroll and you're just doing all—it's very dense, right?
+[3812] Interlocutor 2: Yeah.
+[3813] Interlocutor 1: The other one is almost like a game.
+[3819] Interlocutor 1: It's two very different ideas of what the UX would be.
+[3825] Interlocutor 1: And if it's going to be a game, it's a little bit like creating a character, which takes a little bit of investment, right?
+[3833] Interlocutor 1: When you create a character you have to define a bunch of different parameters before you're done.
+[3839] Interlocutor 1: What we could do that usually helps reduce the friction—
+[3844] Interlocutor 1: Is make it numbered from the beginning where it'd be like this is step one of four.
+[3850] Interlocutor 1: You can see it right away, it's like okay, now this is step two of four and it's like sliding tiles.
+[3857] Interlocutor 1: Instead of just clicking next and not knowing when it's going to stop, you know?
+[3861] Interlocutor 2: Yeah.
+[3863] Interlocutor 1: We can reduce, so I think we can solve for that friction through the UI.
+[3869] Interlocutor 1: Rather than thinking about changing the flow.
+[3878] Interlocutor 1: If I as a user, I'm like, okay, choose your person.
+[3881] Interlocutor 1: How much of an asshole, three done, then it's like tell me your idea and I can see here it's like one of three.
+[3889] Interlocutor 1: I go next.
+[3891] Interlocutor 1: Two of them. Done. Three of two. I'm cool.
+[3895] Interlocutor 1: But if I have no idea how many arrows I'm going to have to click—
+[3900] Interlocutor 1: And be like, I'm not doing this, you know, or if I see the 11—
+[3904] Interlocutor 1: Can have a—
+[3905] Interlocutor 2: Yeah, exactly.
+[3905] Interlocutor 1: You know.
+[3907] Interlocutor 1: But if I can see that three—
+[3909] Interlocutor 1: That's low friction, you know?
+[3914] Interlocutor 1: My thought is if you put them—
+[3917] Interlocutor 1: If you put them all together—
+[3920] Interlocutor 1: Then maybe just collapse it. What if we start there? What if we have a choose your fighter, but it's a dropdown?
+[3928] Interlocutor 1: And then it just collapses when you're done.
+[3931] Interlocutor 1: That's what Prompted Cowboy did.
+[3936] Interlocutor 1: And then we don't have to worry about pagination. It's still single scroll, but it's not so overwhelming.
+[3941] Interlocutor 1: It's just collapsing and I can open it and close it if I want.
+[3946] Interlocutor 2: Yeah, I think so.
+[3947] Interlocutor 1: I think that might be better.
+[3949] Interlocutor 1: It's also a lower barrier for the development.
+[3954] Interlocutor 2: Yeah.
+[3955] Interlocutor 1: Maybe like this collapsing and then that way it also gives us a little bit more room to play with the UI because you can have a choose your fighter style—
+[3964] Interlocutor 1: Dropdown and it'll collapse.
+[3966] Interlocutor 1: Right? And then one, two, three.
+[3969] Interlocutor 1: You can collapse it. I think it's easier for everybody.
+[3973] Interlocutor 2: Yeah, because that way you...
+[3978] Interlocutor 1: You decide.
+[3979] Interlocutor 2: Yeah, you have the best of both worlds.
+[3984] Interlocutor 1: We don't have to worry about the fault of the ATI and how we're going to solve for the injection of the context and where it's the same backend logic. The only thing we're solving is the UI on the front end.
+[3984] Interlocutor 2: If you want to do it in, yeah.
+[3995] Interlocutor 2: Yeah.
+[3997] Interlocutor 1: It makes sense.
+[3997] Interlocutor 2: Yeah, I like that.
+[3998] Interlocutor 1: That's better, right? Like that's easier to do.
+[4003] Interlocutor 1: And then when you get your report, you can also collapse parts of the report or the whole report or whatever.
+[4010] Interlocutor 2: Yeah.
+[4011] Interlocutor 1: You could even probably have an animation where the report pops up in a different part.
+[4017] Interlocutor 1: That's the new version of Cowboy now where it dissolves and then it pops a new window.
+[4025] Interlocutor 1: Would listen to like—
+[4028] Interlocutor 2: Yeah, I like that. It's kind of right.
+[4035] Interlocutor 1: Yeah, let's do that.
+[4039] Interlocutor 1: And then think about—
+[4040] Interlocutor 1: I'm still working on the telemetry, making sure we have a baseline measurement.
+[4047] Interlocutor 1: My UI is still not the administrator UI, just so you know.
+[4054] Interlocutor 1: I'll work on just a couple tweaks. There's also security tweaks that I think we need to figure out.
+[4062] Interlocutor 1: The 2FA is open.
+[4066] Interlocutor 2: Oh, okay.
+[4066] Interlocutor 1: We probably need to edit it a little bit.
+[4071] Interlocutor 1: So there's just a couple of security tweaks that I think we probably need to make sure that we get fixed before we push.
+[4082] Interlocutor 1: I think this is a good next step.
+[4086] Interlocutor 2: How old?
+[4089] Interlocutor 2: How are we going to integrate your thing with my thing later? Because I haven't done that before.
+[4098] Interlocutor 1: So we could do a pull request and try to merge it later.
+[4107] Interlocutor 2: Because you're working on a fork, right? Not in a branch.
+[4107] Interlocutor 1: Or I could—
+[4111] Interlocutor 1: Corporate and I branched out. So I branched.
+[4116] Interlocutor 2: Yeah.
+[4116] Interlocutor 1: But I have my own environment.
+[4119] Interlocutor 1: But now I'm six commits behind you and I don't know what's going on anymore.
+[4128] Interlocutor 2: I think we need to find a better way to do this.
+[4130] Interlocutor 1: I agree. I thought I told you.
+[4133] Interlocutor 2: Ha, ha, ha.
+[4136] Interlocutor 1: Are you sure we should both be working on this? So the—okay.
+[4140] Interlocutor 1: Maybe I'll just work on—
+[4144] Interlocutor 2: Can you work on—
+[4148] Interlocutor 2: On my repository?
+[4150] Interlocutor 1: I can, but I don't want to push a commit and mess you up.
+[4161] Interlocutor 2: Maybe we could—
+[4161] Interlocutor 1: And if I keep the commitment and I forfeit that, then I'm never going to get anything done.
+[4170] Interlocutor 1: Unless we work on a schedule.
+[4175] Interlocutor 2: Yeah, I think so.
+[4177] Interlocutor 1: A relief schedule where you only relieve—
+[4178] Interlocutor 2: Like, we need to clearly define the scopes of your tasks and my tasks and what we can touch.
+[4193] Interlocutor 2: And then we commit on—
+[4199] Interlocutor 2: I don't know, Fridays or Tuesdays when we see each other.
+[4201] Interlocutor 1: I think it's worth a thanks because—
+[4206] Interlocutor 1: Like you do your part, commit, I'll pull it.
+[4211] Interlocutor 1: I do my part to make—
+[4213] Interlocutor 1: When you pull it, you see what I'm saying?
+[4215] Interlocutor 2: Yeah.
+[4217] Interlocutor 1: That we're not—
+[4219] Interlocutor 1: Or we have to have a backlog where we push at the same time.
+[4228] Interlocutor 1: Maybe we should just have a staging environment.
+[4231] Interlocutor 1: Because we're working directly in production and I think that's the cardinal sin. It's really stupid.
+[4235] Interlocutor 2: Yeah, we are.
+[4238] Interlocutor 1: We should probably have our NV1 and then our staging and then production, right?
+[4246] Interlocutor 2: Yeah.
+[4246] Interlocutor 1: And we should not only be giving them water.
+[4251] Interlocutor 1: You're working 100% local, right?
+[4255] Interlocutor 1: No, I'm in versatile. I mean, I'm doing my all.
+[4259] Interlocutor 2: Mm-mm.
+[4259] Interlocutor 1: But I have my own advice.
+[4261] Interlocutor 2: Yeah.
+[4263] Interlocutor 1: This is stupid. We should probably—
+[4267] Interlocutor 1: Have an NV1 repo that we can just mess with.
+[4273] Interlocutor 2: Yeah.
+[4274] Interlocutor 1: And we just have to make sure that when we're updating our NV1, we're pulling at the same time. So once you've pushed to see—
+[4281] Interlocutor 2: Go ahead.
+[4283] Interlocutor 1: I can bring it from staging into NV1 and I'm always updating.
+[4288] Interlocutor 1: If I'm working in my environment, you're working in your environment before it goes to staging.
+[4294] Interlocutor 1: We're still not synced, which is okay.
+[4297] Interlocutor 1: If you can have your env, I can have my env.
+[4300] Interlocutor 1: You work on yours, I work on mine. You push to staging.
+[4305] Interlocutor 1: And then I can—
+[4307] Interlocutor 1: I can pull when staging is done.
+[4311] Interlocutor 1: Michel Amin.
+[4313] Interlocutor 2: Yeah, I think so.
+[4314] Interlocutor 1: If we're both pushing staging, we're overriding each other's.
+[4321] Interlocutor 2: Yeah.
+[4322] Interlocutor 1: Because if I only work in my sandbox, then you push, I update my repo with your changes, and then I push, and then you update your repo with mine.
+[4333] Interlocutor 2: Okay.
+[4333] Interlocutor 1: And you can control production.
+[4336] Interlocutor 1: Because then we can have these conversations in stages.
+[4343] Interlocutor 2: Yeah, okay.
+[4344] Interlocutor 1: In your personal environment or whatever you want, and then what I do in my sandbox.
+[4350] Interlocutor 1: It doesn't matter. But we centralize it in one staging environment, one production environment.
+[4359] Interlocutor 1: I only work on my env one.
+[4363] Interlocutor 2: Okay.
+[4365] Interlocutor 1: And I won't touch the stuff you're working on so that I'm not overriding. For example, I would only work on the security stuff and the telemetry.
+[4374] Interlocutor 2: Yep.
+[4376] Interlocutor 1: Which is not sexy at all. That's my...
+[4380] Interlocutor 2: Okay.
+[4385] Interlocutor 1: If that makes sense.
+[4388] Interlocutor 1: You said, I'm going to delete my stuff. That's what I'm going to do today.
+[4393] Interlocutor 1: Because I have saved it locally. I'm going to delete it all from here.
+[4397] Interlocutor 1: It's not just messy. I'm six behind, but you're one behind me.
+[4404] Interlocutor 1: You set up whatever structure you want and then I'll fork it once you're ready.
+[4411] Interlocutor 1: I'm going to delete myself.
+[4414] Interlocutor 2: Okay, so...
+[4419] Interlocutor 2: Bye.
+[4420] Interlocutor 2: Update main
+[4422] Interlocutor 1: So we're... Yeah, maintenance production.
+[4424] Interlocutor 2: Yeah.
+[4426] Interlocutor 2: And then...
+[4429] Interlocutor 2: I'll create what, like a new branch or?
+[4437] Interlocutor 1: Yeah, I think we need to have a cadence of how often main is updated.
+[4444] Interlocutor 2: No, but I mean for staging, we do that in...
+[4444] Interlocutor 1: If you want to do it.
+[4448] Interlocutor 1: Staging is your environment.
+[4450] Interlocutor 1: The environment you do in Vercel.
+[4455] Interlocutor 2: Okay.
+[4455] Interlocutor 1: Same as main.
+[4457] Interlocutor 2: I know what it is but I don't know because I haven't set up a staging environment before.
+[4470] Interlocutor 2: So what I have been doing is, let me show you.
+[4476] Interlocutor 1: You just go into the same Vercel project and create a new environment.
+[4483] Interlocutor 1: You can point it to the main. Or you can point it to...
+[4489] Interlocutor 2: Oh, I see what you're saying.
+[4492] Interlocutor 1: Yeah, so if you go where I go.
+[4492] Interlocutor 2: Because right now, what I've been doing is before...
+[4499] Interlocutor 1: Working on me.
+[4500] Interlocutor 2: I work in a branch and then here you can test the branch.
+[4510] Interlocutor 1: Yeah, but that's still in the same environment, isn't it?
+[4514] Interlocutor 2: Yeah, it is.
+[4515] Interlocutor 2: So what you're saying...
+[4516] Interlocutor 1: If you get rid of that...
+[4517] Interlocutor 2: So what you're saying is I create...
+[4517] Interlocutor 1: I'll probably just...
+[4521] Interlocutor 3: So what you're saying is I create a new project.
+[4523] Interlocutor 2: And I point it to a new branch.
+[4526] Interlocutor 1: I think we can do it. It's incredible.
+[4529] Interlocutor 1: Get rid of that action required. If you scroll down behind that, behind the gateway credits button on the left.
+[4538] Interlocutor 1: I think that's it. Are we there? Keep going.
+[4543] Interlocutor 1: Settings.
+[4544] Interlocutor 2: It's wonderful.
+[4545] Interlocutor 1: Little settings and then environments.
+[4552] Interlocutor 1: On the left.
+[4557] Interlocutor 2: Oh, okay.
+[4557] Interlocutor 1: And then here you've got, there it is right there, your preview.
+[4561] Interlocutor 1: That's your staging. And then your dev is your env watch.
+[4566] Interlocutor 1: So dev is yours. Do whatever you want with the preview.
+[4570] Interlocutor 1: Preview is where you and I should be having our weekly calls and where we should be agreeing to push the final version.
+[4580] Interlocutor 3: Well, the preview is just what I have been doing.
+[4585] Interlocutor 1: Yeah, but it doesn't have a custom – so it's not like its own environment. You'd have to set this up.
+[4592] Interlocutor 1: So that we have a staging environment. Like a pre-prod.
+[4598] Interlocutor 1: That's where we work and we only push to prod when everything is done.
+[4609] Interlocutor 1: Instead of constantly updating production, you're only updating pre-production.
+[4614] Interlocutor 2: Okay.
+[4615] Interlocutor 1: And your main would be in your pre-production or if you want to do like a main pre-prod branch.
+[4627] Interlocutor 1: You know what I'm saying?
+[4629] Interlocutor 2: Yeah.
+[4629] Interlocutor 1: My whole purpose is I'll have my dev environment, you'll have your dev environment.
+[4638] Interlocutor 1: We can work in the same project and coordinate our push if we can't because you can just do it from this. That's the other thing. We can work in the branch. That's your dev branch.
+[4653] Interlocutor 1: And I can push all my stuff and you can commit it.
+[4659] Interlocutor 1: So if I commit, then you're not catching up or not syncing. I just leave it all in the queue and you just...
+[4665] Interlocutor 1: We just run the risk of there being errors.
+[4669] Interlocutor 2: Yeah.
+[4672] Interlocutor 3: Yeah, let's try it.
+[4675] Interlocutor 1: Maybe we're not touching production, which is really just worse.
+[4677] Interlocutor 3: It's the best practice anyway.
+[4679] Interlocutor 2: Worst that can happen is that...
+[4684] Interlocutor 2: We broke something and we have to go back.
+[4688] Interlocutor 1: Which is all the more reason we should have a staging.
+[4690] Interlocutor 3: Yeah.
+[4694] Interlocutor 1: Yeah, and then we can just do all of our stuff in staging. And then once we test it, we like it, we like the flow, we can push it to production.
+[4700] Interlocutor 2: Have you ever done this, like from being responsible for an environment and for all the...
+[4710] Interlocutor 3: So we're on the same page.
+[4710] Interlocutor 1: Oh, wait.
+[4712] Interlocutor 1: I did it at...
+[4714] Interlocutor 1: Don't ask me why it was me.
+[4715] Interlocutor 3: Are there a mix of good?
+[4717] Interlocutor 1: They're like, why was it me?
+[4719] Interlocutor 2: No idea.
+[4721] Interlocutor 1: But I was in Drupal controlling.
+[4724] Interlocutor 1: Push, not the architecture, but the push and the CNN.
+[4727] Interlocutor 2: Yeah, but that's super easy, right?
+[4729] Interlocutor 1: I had to put me at least.
+[4733] Interlocutor 2: Yeah, that I did that to other Mexico with drunk. Do you have to...
+[4741] Interlocutor 1: But this is an art.
+[4743] Interlocutor 3: No, I know it is hard. I just have never done it.
+[4748] Interlocutor 1: I guess we'll have to figure out that couple of things.
+[4751] Interlocutor 1: Because really, if we're both working on the same code base for the same project, we should be working in the same project in the same environment.
+[4756] Interlocutor 2: Yeah, exactly. That's my point. Okay, I'll figure that out.
+[4768] Interlocutor 1: I'm not going to touch anything right now. I'm going to work on the video and the PDF.
+[4772] Interlocutor 1: You figure out the structure how you want.
+[4775] Interlocutor 1: And, but that's the whole thing, right? So we're building this backwards because we're supposed to have a backlog. We're supposed to be able to pick it up, work on it individually.
+[4783] Interlocutor 2: Yeah, I do have a backlog.
+[4784] Interlocutor 1: Machine.
+[4786] Interlocutor 3: The way I've been working
+[4786] Interlocutor 1: Oh, well, that's what we should be doing.
+[4788] Interlocutor 2: The way I've been working is, I think I told you this last week.
+[4793] Interlocutor 2: I have my Gemini agents set up. And we have a backlog and we have like
+[4804] Interlocutor 3: Like a log of what's been done so every time we finish a task
+[4813] Interlocutor 2: I asked them to update what we achieved, how we're achieving.
+[4819] Interlocutor 2: And prepare the path for the next dev team to come so every time I start a task I
+[4829] Interlocutor 2: Start a new chat in an environment because if not context gets all work so
+[4837] Interlocutor 3: Everything is being documented.
+[4841] Interlocutor 2: I'll send you the...
+[4845] Interlocutor 2: The MDs for the agents that I have. So you can...
+[4849] Interlocutor 2: Give it a look.
+[4850] Interlocutor 1: Yeah, it's been a moment.
+[4851] Interlocutor 2: To instructions.
+[4857] Interlocutor 3: I forgot where I was going with this but everything is recommended so we should
+[4867] Interlocutor 1: Well, then that's how we should do it.
+[4867] Interlocutor 2: If Claude comes in and looks at the logs, it should have no problem.
+[4879] Interlocutor 2: Moving forward where I left.
+[4883] Interlocutor 1: Yeah, so that's. Ideally, the flow would be. I add, for example, the telemetry.
+[4890] Interlocutor 1: To the backlog.
+[4893] Interlocutor 1: It gets assigned to me, I pick it up, I return it during the sprint.
+[4898] Interlocutor 1: You push it.
+[4901] Interlocutor 1: Wherever you need to push it to. And then we look at it on.
+[4908] Interlocutor 2: Okay.
+[4908] Interlocutor 1: That's what we should be working on.
+[4910] Interlocutor 2: Yeah.
+[4912] Interlocutor 1: I work off your backlog, I add to your backlog, and then I pull the things that I'm working on and then I send them to your repo, you commit it, you push it. We test it on staging and then we push to production if it's ready.
+[4928] Interlocutor 1: Design the flow. Just let me know when to jump in. I'm going to have my hands full with
+[4935] Interlocutor 1: The marketing stuff anyway.
+[4937] Interlocutor 1: So I'm not going to touch this anymore because I feel like I'm just burning credits. I'm just burning tokens.
+[4942] Interlocutor 3: Now, yeah, but don't delete your stuff. We'll see if we can add it without breaking anything.
+[4943] Interlocutor 1: And then.
+[4950] Interlocutor 1: Yeah, I'm going to leave it be for now. Send me your agents so that at least we're working with the same team.
+[4953] Interlocutor 2: Yeah.
+[4960] Interlocutor 1: But I'm not going to do anything until I'm done with the marketing stuff.
+[4964] Interlocutor 1: And until you figure that out.
+[4967] Interlocutor 2: From what we have right now.
+[4977] Interlocutor 2: Can you see my screen?
+[4979] Interlocutor 2: No, I still drink.
+[4983] Interlocutor 1: The wheels are falling off. We're going to have to cap these calls at 45 minutes.
+[4987] Interlocutor 2: Yeah.
+[4988] Interlocutor 1: Really talked over like very well.
+[4991] Interlocutor 2: Yeah.
+[4993] Interlocutor 2: We're right now here with everything I showed you.
+[4998] Interlocutor 2: No, this is not it.
+[5002] Interlocutor 2: With all the cards and all the chips.
+[5007] Interlocutor 3: Is there anything
+[5012] Interlocutor 3: I think this could work for a demo right now.
+[5016] Interlocutor 2: Or do we need to focus on...
+[5021] Interlocutor 3: Something special for the demo.
+[5023] Interlocutor 2: Yep.
+[5024] Interlocutor 1: If on the UI,
+[5026] Interlocutor 1: The absolute only thing we change right now is.
+[5031] Interlocutor 2: To drop down. Yeah, collapsing.
+[5031] Interlocutor 1: Collapse it?
+[5033] Interlocutor 1: Then we're ready. If you don't touch the logic, don't do anything else, just make the UI styling.
+[5039] Interlocutor 1: Like that.
+[5040] Interlocutor 1: Then I think we're ready.
+[5044] Interlocutor 2: Okay, cool. I'll focus on the UI.
+[5049] Interlocutor 2: Fixing the collapsing stuff.
+[5052] Interlocutor 2: And then...
+[5054] Interlocutor 2: I'll work on our workflow.
+[5058] Interlocutor 2: To start working together.
+[5061] Interlocutor 1: Great.
+[5064] Interlocutor 1: I think the most important thing for the demo will also have to answer to the lack of memory. There's no history.
+[5074] Interlocutor 1: Be ready for that question.
+[5079] Interlocutor 1: But other than that, yeah, I think this is good to go.
+[5083] Interlocutor 3: Well, for the lack of memory.
+[5083] Interlocutor 1: I'll do the PDFs, I'll work on the PDF.
+[5087] Interlocutor 2: You can download your results.
+[5091] Interlocutor 1: But you don't have the chat history.
+[5095] Interlocutor 3: But it's not really a chat.
+[5099] Interlocutor 1: I do. You tell him that. See how it goes.
+[5102] Interlocutor 2: Yeah.
+[5105] Interlocutor 2: It's coming.
+[5107] Interlocutor 1: Not really a chat, don't worry about it.
+[5109] Interlocutor 2: Yeah.
+[5111] Interlocutor 1: Because I think that's going to be the one thing they ask. It's definitely something that doesn't remember anything, you know.
+[5119] Interlocutor 1: Get you ready for the question, maybe not, you don't need to have the feature.
+[5123] Interlocutor 1: And yeah, I think we're good. Just let me know whenever you're ready.
+[5129] Interlocutor 1: Oh, and I don't have this environment. I have the other environment.
+[5134] Interlocutor 3: No, I just see this because—
+[5138] Interlocutor 2: I just realized I haven't pushed this to me.
+[5142] Interlocutor 2: Because it's...
+[5145] Interlocutor 2: Now it is a meme. Let's keep it.
+[5149] Interlocutor 1: But is it deployed or is this local?
+[5152] Interlocutor 3: Yeah, it is applied.
+[5154] Interlocutor 1: Is it my license?
+[5156] Interlocutor 2: Yeah, here you are.
+[5159] Interlocutor 2: Acteam.
+[5160] Interlocutor 1: And you have an admin. This is me. I have an admin.
+[5164] Interlocutor 3: I don't know why.
+[5166] Interlocutor 1: I'll try it again.
+[5168] Interlocutor 1: And then, you know.
+[5169] Interlocutor 3: Have you...
+[5170] Interlocutor 2: Okay, I'll create another user.
+[5177] Interlocutor 2: He would have run.
+[5180] Interlocutor 1: And if you want to push this to staging right away.
+[5180] Interlocutor 2: Okay.
+[5184] Interlocutor 1: And we just work and test, we do everything in staging, that'd be great.
+[5188] Interlocutor 2: I got it.
+[5190] Interlocutor 1: So that when we do the demos or we give it to the client or whatever, they're not in the same thing we are.
+[5198] Interlocutor 1: Yay, we're kind of looking.
+[5201] Interlocutor 2: Yeah.
+[5201] Interlocutor 1: Like we kind of know what we're doing.
+[5204] Interlocutor 1: This is cool.
+[5206] Interlocutor 2: Awesome.
+[5206] Interlocutor 1: Okay.
+[5209] Interlocutor 2: Oh, yeah.

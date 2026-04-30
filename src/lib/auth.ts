@@ -21,23 +21,39 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       if ((user || trigger === "update" || token.two_factor_enabled === undefined) && token.id) {
-        const permissionsResult = await db.query(
-          `SELECT r.name as role, a.name as app, up."personaId", uca."clusterId", u.two_factor_enabled, u.locale
-           FROM users u
-           LEFT JOIN user_roles ur ON u.id = ur."userId"
-           LEFT JOIN roles r ON ur."roleId" = r.id
-           LEFT JOIN role_applications ra ON r.id = ra."roleId"
-           LEFT JOIN applications a ON ra."applicationId" = a.id
-           LEFT JOIN user_personas up ON u.id = up."userId"
-           LEFT JOIN user_cluster_access uca ON u.id = uca."userId"
-           WHERE u.id = $1`,
-          [token.id]
-        );
+        let permissionsResult;
+        try {
+          permissionsResult = await db.query(
+            `SELECT r.name as role, a.name as app, up."personaId", uca."clusterId", u.two_factor_enabled, u.locale
+             FROM users u
+             LEFT JOIN user_roles ur ON u.id = ur."userId"
+             LEFT JOIN roles r ON ur."roleId" = r.id
+             LEFT JOIN role_applications ra ON r.id = ra."roleId"
+             LEFT JOIN applications a ON ra."applicationId" = a.id
+             LEFT JOIN user_personas up ON u.id = up."userId"
+             LEFT JOIN user_cluster_access uca ON u.id = uca."userId"
+             WHERE u.id = $1`,
+            [token.id]
+          );
+        } catch (dbError) {
+          console.warn("User cluster access table might be missing, falling back to basic auth query.");
+          permissionsResult = await db.query(
+            `SELECT r.name as role, a.name as app, up."personaId", u.two_factor_enabled, u.locale
+             FROM users u
+             LEFT JOIN user_roles ur ON u.id = ur."userId"
+             LEFT JOIN roles r ON ur."roleId" = r.id
+             LEFT JOIN role_applications ra ON r.id = ra."roleId"
+             LEFT JOIN applications a ON ra."applicationId" = a.id
+             LEFT JOIN user_personas up ON u.id = up."userId"
+             WHERE u.id = $1`,
+            [token.id]
+          );
+        }
 
         token.roles = [...new Set(permissionsResult.rows.map(r => r.role).filter(Boolean))];
         token.apps = [...new Set(permissionsResult.rows.map(r => r.app).filter(Boolean))];
         token.personas = [...new Set(permissionsResult.rows.map(r => r.personaId).filter(Boolean))];
-        token.clusters = [...new Set(permissionsResult.rows.map(r => r.clusterId).filter(Boolean))];
+        token.clusters = [...new Set(permissionsResult.rows.map((r: any) => r.clusterId).filter(Boolean))];
         token.two_factor_enabled = Boolean(permissionsResult.rows[0]?.two_factor_enabled);
         token.locale = normalizeLocale(permissionsResult.rows[0]?.locale);
       }

@@ -320,13 +320,11 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
         let params: any[] = [];
 
         if (!isAdmin && allowedClusters.length > 0) {
-            query += ` WHERE cluster = ANY($1)`;
+            query += ` WHERE cluster = ANY($1) OR cluster IS NULL OR cluster = 'general'`;
             params.push(allowedClusters);
         } else if (!isAdmin) {
-            // If not admin and no clusters, they see nothing (or maybe only "general"?)
-            // For now, strict: no clusters = no access, unless we decide 'general' is public.
-            query += ` WHERE cluster = ANY($1)`;
-            params.push([]); 
+            // Default to 'general' and NULL clusters if nothing else is specified
+            query += ` WHERE cluster IS NULL OR cluster = 'general'`;
         }
 
         query += ` ORDER BY cluster, name ASC`;

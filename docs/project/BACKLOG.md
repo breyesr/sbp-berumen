@@ -100,12 +100,12 @@
 - [x] **Task 13.1**: Upgrade `PersonaSelect` to use a searchable combobox or grouped tab interface. [DONE]
 - [x] **Task 13.2**: Add visual "Cluster Context" indicators in the main workspace. [DONE]
 
-## Epic 14: Collapsible Intelligence Factory (High Priority)
+## Epic 14: Collapsible Intelligence Factory (High Priority) [DONE]
 **Owner**: UX/UI & Frontend
 *Goal: Transform the Stress Test into a structured, step-by-step collapsible workflow to reduce cognitive load.*
-- [ ] **Task 14.1**: Develop `CollapsibleStep` wrapper component with Framer Motion height animations and summary badges.
-- [ ] **Task 14.2**: Implement `PersonaCard` ("Choose Your Fighter") grid with single-click selection and dossier integration.
-- [ ] **Task 14.3**: Refactor `StressTestClient` state management to handle `currentStep` logic ('identity' | 'strategy' | 'results' | 'refinement').
-- [ ] **Task 14.4**: Integrate "Intelligence Assistant" tooltips (Expectation, Mechanism, Example) for all strategy input fields.
-- [ ] **Task 14.5**: Implement auto-expansion and scroll-into-view logic for Section 3 (Results) triggered by streaming onset.
-- [ ] **Task 14.6**: Wrap `RefinementPanel` in the collapsible architecture as the final step.
+- [x] **Task 14.1**: Develop `CollapsibleStep` wrapper component with Framer Motion height animations and summary badges. [DONE]
+- [x] **Task 14.2**: Implement `PersonaCard` ("Choose Your Fighter") grid with single-click selection and dossier integration. [DONE]
+- [x] **Task 14.3**: Refactor `StressTestClient` state management to handle `currentStep` logic ('identity' | 'strategy' | 'results' | 'refinement'). [DONE]
+- [x] **Task 14.4**: Integrate "Intelligence Assistant" tooltips (Expectation, Mechanism, Example) for all strategy input fields. [DONE]
+- [x] **Task 14.5**: Implement auto-expansion and scroll-into-view logic for Section 3 (Results) triggered by streaming onset. [DONE]
+- [x] **Task 14.6**: Wrap `RefinementPanel` in the collapsible architecture as the final step. [DONE]
