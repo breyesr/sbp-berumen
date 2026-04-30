@@ -13,19 +13,19 @@ Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestio
 - **[MERGED TO MAIN] Epic 10: Multi-Tenant Cluster Permissions.**
     - Server-side isolation and Admin management UI.
     - API resilience and fallback logic.
-- **[MERGED TO MAIN] Copywriter Collapsible Refactor (Epic 11).**
-    - Transitioned to the **Intelligence Factory** 3-step workflow.
+- **[COMPLETED] Copywriter Collapsible Refactor (Epic 11).**
+    - Transitioned to the **Intelligence Factory** 3-step workflow on `feat/persona-status-management`.
     - Integrated `PersonaCard` grid for unified persona selection.
     - Combined Brief Inputs & Platform selection into a single "Factory Floor" block.
     - Implemented platform-grouped results with compact, high-density cards.
     - Synchronized all tooltips with the **Intelligence Assistant** design.
-- **[MERGED TO MAIN] Persona Status Management (Epic 5 Refinement).**
+- **[COMPLETED] Persona Status Management (Epic 5 Refinement).**
     - Added `is_active` toggle to the `personas` table with auto-migration in `db-sync.ts`.
     - Enhanced `/admin/personas` with visibility toggles and status filtering.
     - Hotfixed persona visibility for non-admins and resolved missing i18n keys.
 - **Stability**:
     - Verified `npm run build` success on both `main` and `feat/persona-status-management`.
-    - All branches are synchronized and pushed to GitHub.
+    - **Note:** `main` was rolled back to `14eccbb` for final UI validation. `feat/persona-status-management` remains the source of truth for current development.
 
 ## Active Blockers
 - **None.** The platform is stable and production-ready on `main`.
