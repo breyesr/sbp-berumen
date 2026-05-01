@@ -37,8 +37,9 @@ Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestio
 - **None.** The platform is stable and production-ready on `main`.
 
 ## Priority Roadmap for Incoming Team
-1. **Intelligence Matrix UX (Epic 15)**: Implement the tabbed matrix refactor in the Copywriter tool to solve format selection friction.
-2. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
+1. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
+2. **Identity Synthesis (Epic 5)**: Task 5.6. Automatically update persona metadata after knowledge file upload.
+3. **Ingestion Tracker (Epic 5)**: Task 5.5. Real-time progress visualization for RAG ingestion.
 
 ## Performance Note
 The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.
