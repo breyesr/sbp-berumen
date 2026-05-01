@@ -7,6 +7,12 @@
 Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestion Tracker).
 
 ## Accomplished
+- **[COMPLETED] The Intelligence Matrix (Epic 15).**
+    - Refactored Copywriter into a 3-phase vertical production pipeline: Briefing -> Propagation -> Matrix.
+    - Implemented a high-density, context-aware tabbed matrix for format selection.
+    - Added "Auto-Select Primary" logic, "Select All" bulk controls, and coverage badges.
+    - Locked the vertical footprint while increasing input space for complex briefs.
+    - Integrated a sticky "Factory Ledger" for real-time production status.
 - **[MERGED TO MAIN] Epic 14: Collapsible Intelligence Factory UI.**
     - Unified Strategic Thread layout and group Persona Tiles.
     - Optimized navigation and i18n support.
@@ -31,9 +37,8 @@ Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestio
 - **None.** The platform is stable and production-ready on `main`.
 
 ## Priority Roadmap for Incoming Team
-1. **Identity Synthesis (Epic 5)**: Task 5.6. Automatically update persona metadata after knowledge file upload.
-2. **Ingestion Tracker (Epic 5)**: Task 5.5. Real-time progress visualization for RAG ingestion.
-3. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
+1. **Intelligence Matrix UX (Epic 15)**: Implement the tabbed matrix refactor in the Copywriter tool to solve format selection friction.
+2. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
 
 ## Performance Note
 The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.

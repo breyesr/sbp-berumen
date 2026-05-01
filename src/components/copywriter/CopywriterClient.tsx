@@ -36,7 +36,8 @@ export function CopywriterClient({
     
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(initialPlatforms[0] ? [initialPlatforms[0].id] : []);
     const [selectedFormats, setSelectedFormats] = useState<string[]>(initialPlatforms[0]?.formats[0] ? [initialPlatforms[0].formats[0].id] : []);
-    
+    const [activeTab, setActiveTab] = useState<string>(initialPlatforms[0]?.id || "");
+
     const [context, setContext] = useState("");
     const [message, setMessage] = useState("");
     const [goal, setGoal] = useState("");
@@ -128,14 +129,33 @@ export function CopywriterClient({
           const exists = prev.includes(id);
           if (exists) {
             const next = prev.filter((p) => p !== id);
+            
+            // Clean up formats for the removed platform
             setSelectedFormats((formats) =>
               formats.filter((f) => {
                 const fmt = availableFormats.find((af) => af.id === f);
                 return fmt ? next.includes(fmt.platform_id) : false;
               })
             );
+
+            // Update active tab if we removed the current one
+            if (activeTab === id) {
+                setActiveTab(next[0] || "");
+            }
+
             return next;
           }
+
+          // Adding a platform: Auto-select its first format
+          const platform = platforms.find(p => p.id === id);
+          if (platform && platform.formats.length > 0) {
+              const firstFormatId = platform.formats[0].id;
+              setSelectedFormats(prevF => [...prevF, firstFormatId]);
+          }
+
+          // Set as active tab
+          setActiveTab(id);
+
           return [...prev, id];
         });
     };
@@ -261,6 +281,9 @@ export function CopywriterClient({
                                 togglePlatform={togglePlatform}
                                 selectedFormats={selectedFormats}
                                 toggleFormat={toggleFormat}
+                                setSelectedFormats={setSelectedFormats}
+                                activeTab={activeTab}
+                                setActiveTab={setActiveTab}
                                 loading={loading}
                                 onSubmit={handleSubmit}
                                 selectedPersonaName={selectedPersonaName}

@@ -5,6 +5,11 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Refined Intelligence Factory, Multi-Tenant Admin)**
 
 ## Latest Deployments
+- **Epic 15: The Intelligence Matrix (April 30, 2026)**:
+    - **Linear Production Pipeline**: Refactored Copywriter into a logical 3-phase vertical flow (Briefing -> Propagation -> Matrix).
+    - **Contextual Tab System**: Isolated configuration per network via a horizontal platform switcher.
+    - **High-Density Matrix**: Optimized format selection with branded chips in an expandable grid (up to 5 columns).
+    - **Smart Production Tools**: Integrated "Auto-Select Primary" formats, "Select All" bulk toggles, and a sticky "Production Ledger" summary footer.
 - **Epic 11: Copywriter Intelligence Factory (April 30, 2026)**:
     - **Step-by-Step Refactor**: Migrated Copywriter to the 3-step collapsible workflow (Persona -> Strategy -> Grouped Output).
     - **Platform Grouping**: Dramatically reduced vertical scroll by grouping outputs in platform-specific containers with side-by-side card layouts.

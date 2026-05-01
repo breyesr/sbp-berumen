@@ -28,3 +28,4 @@ A cross-functional scalability assessment and continuous development cycle. The 
 - **UX_UI (UX/UI Designer)**: Owns user flow integrity and interface performance logic.
 - **AI_Engineer**:AI Systems Engineer focused on GraphRAG, RAG, and custom persona model training.
 - **llmops_engineer**:LLMOps Engineer focused on API rate limits, loop prevention, and token management.
+- **appsec_engineer**: Threat modeling, SAST/DAST integration, and zero-trust security architecture.

@@ -112,3 +112,14 @@
 - [x] **Task 14.4**: Integrate "Intelligence Assistant" tooltips (Expectation, Mechanism, Example) for all strategy input fields. [DONE]
 - [x] **Task 14.5**: Implement auto-expansion and scroll-into-view logic for Section 3 (Results) triggered by streaming onset. [DONE]
 - [x] **Task 14.6**: Wrap `RefinementPanel` in the collapsible architecture as the final step. [DONE]
+
+## Epic 15: The Intelligence Matrix (Copywriter UX Refactor) [DONE]
+**Owner**: UX/UI & Frontend
+*Goal: Solve the "format selection nightmare" by shifting from a linear list to a high-density, context-aware tabbed matrix.*
+- [x] **Task 15.1**: Implement "Auto-Select Primary" logic: Toggling a platform ON automatically selects its first format. [DONE]
+- [x] **Task 15.2**: Build the `PlatformTabSystem`: A horizontal, icon-driven tab bar for selected networks in Section 2. [DONE]
+- [x] **Task 15.3**: Develop the `FormatChipGrid`: A 2/3-column grid of compact pills with platform-specific branding (colors/icons). [DONE]
+- [x] **Task 15.4**: Add "Bulk Matrix Controls": A "Select All" toggle per platform tab to reduce click-fatigue. [DONE]
+- [x] **Task 15.5**: Implement "Coverage Badges" on Platform Cards to show selected/total formats at a glance. [DONE]
+- [x] **Task 15.6**: Add a sticky "Factory Ledger" summary footer to Section 2 for immediate feedback on generation scale. [DONE]
+
