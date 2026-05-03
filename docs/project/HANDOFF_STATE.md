@@ -4,7 +4,7 @@
 **Date**: April 30, 2026 (Morning)
 
 ## Objective
-Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestion Tracker).
+Deployment of the Intelligence Wizard (Epic 16) and infrastructure scaling (Epic 0) to support high-concurrency multi-persona refinement.
 
 ## Accomplished
 - **[COMPLETED] The Intelligence Matrix (Epic 15).**
@@ -37,9 +37,10 @@ Production stabilization and transition to Epic 5 (Identity Synthesis & Ingestio
 - **None.** The platform is stable and production-ready on `main`.
 
 ## Priority Roadmap for Incoming Team
-1. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
-2. **Identity Synthesis (Epic 5)**: Task 5.6. Automatically update persona metadata after knowledge file upload.
-3. **Ingestion Tracker (Epic 5)**: Task 5.5. Real-time progress visualization for RAG ingestion.
+1. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
+2. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
+3. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
+4. **Identity Synthesis (Epic 5)**: Task 5.6. Automatically update persona metadata after knowledge file upload.
 
 ## Performance Note
 The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.

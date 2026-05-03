@@ -123,3 +123,19 @@
 - [x] **Task 15.5**: Implement "Coverage Badges" on Platform Cards to show selected/total formats at a glance. [DONE]
 - [x] **Task 15.6**: Add a sticky "Factory Ledger" summary footer to Section 2 for immediate feedback on generation scale. [DONE]
 
+## Epic 16: The Intelligence Wizard (High Priority)
+**Owner**: AI Engineer & UX/UI & Frontend
+*Goal: Reduce user friction by co-authoring the strategic prompt and iteratively refining the pitch based on persona feedback.*
+
+### Stage 01: Strategic Distillation (Phase 2)
+- [ ] **Task 16.1**: Develop `/api/wizard/questions` to analyze lazy prompts and return 3 strategic questions (with 3 suggested answers each).
+- [ ] **Task 16.2**: Build the `WizardDrawer` UI component inside the Phase 2 block with an "Unapplied Changes" counter.
+- [ ] **Task 16.3**: Implement streaming distillation logic (`/api/wizard/distill`) to auto-populate Idea, Goal, and Focus fields.
+- [ ] **Task 16.4**: Create the "Snapshot & Revert" state management mechanism for user safety.
+
+### Stage 02: Intelligence Refinement (Phase 4)
+- [ ] **Task 16.5**: Refactor `RefinementPanel` to support guided, persona-specific Q&A based on Phase 3 gaps.
+- [ ] **Task 16.6**: Develop the Side-by-Side comparison UI with a "Download Refined Strategy" capability.
+- [ ] **Task 16.7**: Implement the "Iteration Loop" to re-trigger evaluation from Phase 4 directly into Phase 3.
+- [ ] **Task 16.8**: Add "Refinement History" local state to track the evolution of the idea across loops.
+
