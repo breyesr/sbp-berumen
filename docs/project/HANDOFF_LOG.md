@@ -64,3 +64,16 @@ This file serves as a permanent historical record of all development sessions. E
 **Learnings:**
 - ESLint 9 requires at least one matched file to avoid exit code 2; targeting a static config file (`postcss.config.mjs`) is a robust way to bypass global linting in restricted environments.
 - Explicit session checking in client components is a common source of CI-blocking type errors.
+
+---
+
+## [2026-05-03] Memory & Persistence Strategic Planning
+**Team:** Lead & Backend & PM
+**Accomplishments:**
+- Designed the 'Memory & Persistence' system (Epic 19).
+- Finalized the "State-Snapshot" architectural approach using JSONB for session hydration.
+- Defined the integration strategy for Stress Test and Copywriter "Intelligence Factory" flows.
+- Updated `BACKLOG.md` and `HANDOFF_STATE.md` with the new high-priority roadmap.
+**Learnings:**
+- Storing full component state as a snapshot (JSONB) is more resilient to future AI logic changes than storing only the input parameters.
+- Automatic resume logic ("Contextual Resume") is essential for maintaining the "Intelligence Factory" workflow across multi-day sessions.

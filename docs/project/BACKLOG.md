@@ -170,3 +170,15 @@
 - [ ] **Task 18.4**: Update the registration flow (`/api/register`) to optionally capture these details during account creation.
 - [ ] **Task 18.5**: Integrate profile completeness indicators or "Onboarding Checklist" to encourage users to fill in their details.
 
+
+## Epic 19: Memory & Persistence (User History) (High Priority)
+**Owner**: Backend & UX/UI & Frontend
+*Goal: Allow users to persist, revisit, and iterate on their previous Stress Test and Copywriter sessions.*
+
+- [ ] **Task 19.1**: **Schema Evolution**: Create the `user_history` table in Postgres with columns for `userId`, `type` (stress-test/copywriter), `name` (auto-generated title), and `data` (JSONB state).
+- [ ] **Task 19.2**: **History CRUD API**: Develop the `/api/history` endpoints for listing, fetching, saving, and deleting session snapshots.
+- [ ] **Task 19.3**: **Stress Test Integration**: Refactor `StressTestClient` to support state hydration from history and implement auto-save triggers after generation/refinement.
+- [ ] **Task 19.4**: **Copywriter Integration**: Refactor `CopywriterClient` to support state hydration and persistence logic.
+- [ ] **Task 19.5**: **The History Ledger**: Build a unified "Recent Activity" or "History" UI component (Sidebar or Dashboard) to allow users to quickly switch between active and past sessions.
+- [ ] **Task 19.6**: **Contextual Resume**: Implement logic to detect when a user is returning to a session and restore the "Intelligence Factory" step progress automatically.
+

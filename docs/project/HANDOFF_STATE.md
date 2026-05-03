@@ -38,11 +38,12 @@ Deployment of the Intelligence Wizard (Epic 16) and infrastructure scaling (Epic
 
 ## Priority Roadmap for Incoming Team
 1. **2FA UX Extreme Distinction (Epic 17)**: Implement the "Visual Distinction + Test Scan Check" strategy in the user profile to resolve TOTP enrollment confusion. This is the **immediate high-priority task** to prevent user onboarding friction.
-2. **Account & Profile Management (Epic 18)**: Begin schema updates and UI design to capture first name, last name, phone, and company details.
-3. **Persona Photo Field (Epic 5)**: Implement Task 5.7 to add photo support for personas in the admin dashboard and UI.
-4. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
-5. **SMS 2FA Integration (Epic 17)**: Begin Phase 2 planning for Twilio integration and database schema updates.
-6. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
+2. **Memory & Persistence (Epic 19)**: Implement the `user_history` JSONB state-snapshot system to allow users to revisit and resume Stress Test and Copywriter sessions.
+3. **Account & Profile Management (Epic 18)**: Begin schema updates and UI design to capture first name, last name, phone, and company details.
+4. **Persona Photo Field (Epic 5)**: Implement Task 5.7 to add photo support for personas in the admin dashboard and UI.
+5. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
+6. **SMS 2FA Integration (Epic 17)**: Begin Phase 2 planning for Twilio integration and database schema updates.
+7. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
 
 ## Performance Note
 The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.
