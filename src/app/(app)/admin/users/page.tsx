@@ -264,7 +264,7 @@ export default function AdminUsersPage() {
                 {users.map((user) => {
                   const selectedRole = draftRoles[user.id] ?? (user.roles.includes("admin") ? "admin" : "user");
                   const selectedClusters = draftClusters[user.id] || [];
-                  const isSelf = user.id === session.user.id;
+                  const isSelf = user.id === session?.user?.id;
                   const busy = Boolean(rowBusy[user.id]);
 
                   return (
@@ -317,8 +317,6 @@ export default function AdminUsersPage() {
                           <Button
                             onClick={() => void handleUpdateUser(user.id)}
                             disabled={busy}
-                            variant="secondary"
-                            size="sm"
                           >
                             {busy ? t("admin.button.saving") : t("admin.button.save_role")}
                           </Button>

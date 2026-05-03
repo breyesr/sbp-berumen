@@ -1,6 +1,8 @@
-// Minimal ESLint config to unblock CI due to ESLint 9 + Next.js compatibility issues
 export default [
   {
-    ignores: ["**/*"],
+    files: ["postcss.config.mjs"],
+  },
+  {
+    ignores: ["src/**", ".next/**", "node_modules/**", "docs/**", "public/**", "scripts/**"]
   }
 ];
