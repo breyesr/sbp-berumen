@@ -139,3 +139,22 @@
 - [ ] **Task 16.7**: Implement the "Iteration Loop" to re-trigger evaluation from Phase 4 directly into Phase 3.
 - [ ] **Task 16.8**: Add "Refinement History" local state to track the evolution of the idea across loops.
 
+
+## Epic 17: Security & UX (2FA Evolution) (High Priority)
+**Owner**: UX/UI & AppSec & Backend
+*Goal: Harden account security while eliminating user confusion during the 2FA enrollment process.*
+
+### Phase 1: TOTP UX Extreme Distinction
+- [ ] **Task 17.1**: Refactor `src/app/(app)/profile/page.tsx` to include an "Extreme Visual Distinction" strategy.
+- [ ] **Task 17.2**: Implement "Camera Mode" UI for App Download QR code (using Lucide `Camera` and explicit scan instructions).
+- [ ] **Task 17.3**: Implement "Authenticator Mode" UI for Setup QR code (using Lucide `ShieldCheck` and a **STOP: DO NOT USE REGULAR CAMERA** warning).
+- [ ] **Task 17.4**: Add the "Test Scan Check" gating button ("I have opened my app and am ready to scan") before revealing the Setup QR.
+- [ ] **Task 17.5**: Update `src/lib/i18n/messages.ts` with emphatic security warnings and instructional copy in EN/ES.
+
+### Phase 2: SMS 2FA with Twilio
+- [ ] **Task 17.6**: Integrate Twilio SDK and set up environment-specific API configuration.
+- [ ] **Task 17.7**: Update database schema (`users` table) with `phone_number`, `sms_enabled`, and `sms_verification_code`.
+- [ ] **Task 17.8**: Develop the `/api/auth/sms/send` and `/api/auth/sms/verify` endpoints.
+- [ ] **Task 17.9**: Implement the SMS enrollment UI flow in the user profile.
+- [ ] **Task 17.10**: Update the sign-in flow to support SMS as a fallback or primary 2FA method.
+

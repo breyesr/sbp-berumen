@@ -37,10 +37,10 @@ Deployment of the Intelligence Wizard (Epic 16) and infrastructure scaling (Epic
 - **None.** The platform is stable and production-ready on `main`.
 
 ## Priority Roadmap for Incoming Team
-1. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
-2. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
-3. **GraphRAG (Epic 6)**: Start Graph Traversal implementation.
-4. **Identity Synthesis (Epic 5)**: Task 5.6. Automatically update persona metadata after knowledge file upload.
+1. **2FA UX Extreme Distinction (Epic 17)**: Implement the "Visual Distinction + Test Scan Check" strategy in the user profile to resolve TOTP enrollment confusion. This is the **immediate high-priority task** to prevent user onboarding friction.
+2. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
+3. **SMS 2FA Integration (Epic 17)**: Begin Phase 2 planning for Twilio integration and database schema updates.
+4. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
 
 ## Performance Note
 The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.
