@@ -42,6 +42,7 @@
 - [x] **Task 5.4**: Create the `/api/admin/ingest` pipeline to trigger chunking and embedding from the UI. [DONE]
 - [ ] **Task 5.5**: Add an "Ingestion Status" tracker to show RAG processing progress.
 - [ ] **Task 5.6**: Implement "Identity Synthesis": Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
+- [ ] **Task 5.7**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
 
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
@@ -157,4 +158,15 @@
 - [ ] **Task 17.8**: Develop the `/api/auth/sms/send` and `/api/auth/sms/verify` endpoints.
 - [ ] **Task 17.9**: Implement the SMS enrollment UI flow in the user profile.
 - [ ] **Task 17.10**: Update the sign-in flow to support SMS as a fallback or primary 2FA method.
+
+
+## Epic 18: Account & Profile Management (Medium Priority)
+**Owner**: Backend & UX/UI
+*Goal: Expand the user profile to capture essential business and personal identity details.*
+
+- [ ] **Task 18.1**: Update database schema (`users` table) to include `first_name`, `last_name`, `phone`, and `company` (enterprise) columns.
+- [ ] **Task 18.2**: Develop a unified "Account Settings" UI in `/profile` to manage personal details and enterprise affiliation.
+- [ ] **Task 18.3**: Implement API endpoints for fetching and updating extended user profile data.
+- [ ] **Task 18.4**: Update the registration flow (`/api/register`) to optionally capture these details during account creation.
+- [ ] **Task 18.5**: Integrate profile completeness indicators or "Onboarding Checklist" to encourage users to fill in their details.
 
