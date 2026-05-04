@@ -88,7 +88,8 @@ This file serves as a permanent historical record of all development sessions. E
 - Developed the **"Fast Track" (Expert Path)** to allow skipping download steps immediately.
 - Defaulted to **Google Authenticator** to simplify user choice and onboarding speed.
 - Stabilized Step 3 UI with `min-height` and `scrollIntoView` to eliminate layout "jumps".
-- Updated project documentation (`BACKLOG.md`, `PRODUCTION_STATUS.md`, `HANDOFF_STATE.md`).
+- Updated project documentation (`BACKLOG.md`, `PRODUCTION_STATUS.md`, `HANDOFF_STATE.md`, `DEPLOYMENT.md`).
+- Developed **Staging Bootstrap Script** (`scripts/db/bootstrap-staging.ts`) to automate environment initialization and Admin user creation.
 - Merged and pushed changes to the `staging` branch.
 **Learnings:**
 - Visual jumps in transitions (centered vs. left-aligned) significantly degrade the perception of "security" and "professionalism." Stability is trust.
