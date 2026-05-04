@@ -15,6 +15,10 @@ Deployment of the 2FA UX Extreme Distinction flow (Epic 17) to eliminate user co
     - Updated i18n dictionaries for EN and ES with punchy, actionable instructions.
     - **Defaulted to Google Authenticator** to simplify the onboarding experience.
     - Merged and pushed to `staging`.
+- **[UTILITY] Staging Bootstrap Script.**
+    - Created `scripts/db/bootstrap-staging.ts` to automate full environment initialization.
+    - Handles schema creation (Auth, Personas, Clusters) and initial Admin user creation.
+    - Resolves the "Empty DB" and "Missing Admin" issues for new environments.
 - **[COMPLETED] The Intelligence Matrix (Epic 15).**
     - Refactored Copywriter into a 3-phase vertical production pipeline: Briefing -> Propagation -> Matrix.
     - Implemented a high-density, context-aware tabbed matrix for format selection.
