@@ -145,12 +145,12 @@
 **Owner**: UX/UI & AppSec & Backend
 *Goal: Harden account security while eliminating user confusion during the 2FA enrollment process.*
 
-### Phase 1: TOTP UX Extreme Distinction
-- [ ] **Task 17.1**: Refactor `src/app/(app)/profile/page.tsx` to include an "Extreme Visual Distinction" strategy.
-- [ ] **Task 17.2**: Implement "Camera Mode" UI for App Download QR code (using Lucide `Camera` and explicit scan instructions).
-- [ ] **Task 17.3**: Implement "Authenticator Mode" UI for Setup QR code (using Lucide `ShieldCheck` and a **STOP: DO NOT USE REGULAR CAMERA** warning).
-- [ ] **Task 17.4**: Add the "Test Scan Check" gating button ("I have opened my app and am ready to scan") before revealing the Setup QR.
-- [ ] **Task 17.5**: Update `src/lib/i18n/messages.ts` with emphatic security warnings and instructional copy in EN/ES.
+### Phase 1: TOTP UX Extreme Distinction [DONE]
+- [x] **Task 17.1**: Refactor `src/app/(app)/profile/page.tsx` to include an "Extreme Visual Distinction" strategy. [DONE]
+- [x] **Task 17.2**: Implement "Camera Mode" UI for App Download QR code (using Lucide `Camera` and explicit scan instructions). [DONE]
+- [x] **Task 17.3**: Implement "Authenticator Mode" UI for Setup QR code (using Lucide `ShieldCheck` and supportive guidance). [DONE]
+- [x] **Task 17.4**: Add the "Test Scan Check" gating button ("I have opened my app and am ready to scan") before revealing the Setup QR. [DONE]
+- [x] **Task 17.5**: Update `src/lib/i18n/messages.ts` with emphatic security warnings and instructional copy in EN/ES. [DONE]
 
 ### Phase 2: SMS 2FA with Twilio
 - [ ] **Task 17.6**: Integrate Twilio SDK and set up environment-specific API configuration.

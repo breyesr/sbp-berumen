@@ -5,6 +5,11 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Refined Intelligence Factory, Multi-Tenant Admin)**
 
 ## Latest Deployments
+- **Epic 17: 2FA UX Extreme Distinction (May 4, 2026)**:
+    - **Expert Path (Fast Track)**: Added an immediate skip option for power users with existing apps.
+    - **Extreme Visual Distinction**: Implemented Blue (Camera) and Amber (Authenticator) themes to resolve QR scan confusion.
+    - **Stabilized Transitions**: Integrated `min-height` containers and `scrollIntoView` logic to eliminate UI "jumps" during enrollment.
+    - **Authenticator Focus**: Defaulted exclusively to Google Authenticator to simplify onboarding choice.
 - **Epic 15: The Intelligence Matrix (April 30, 2026)**:
     - **Linear Production Pipeline**: Refactored Copywriter into a logical 3-phase vertical flow (Briefing -> Propagation -> Matrix).
     - **Contextual Tab System**: Isolated configuration per network via a horizontal platform switcher.
