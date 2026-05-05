@@ -1,4 +1,4 @@
-# Product Backlog & Epics
+# Product Backlog & Epics (Active)
 
 ## Epic 0: Platform Pivot & Railway Bridge (Priority: Immediate)
 **Owner**: DevOps & Backend
@@ -6,13 +6,6 @@
 - [ ] **Task 0.1**: Set up a Railway-hosted Node.js environment with shared access to the production Postgres/Redis.
 - [ ] **Task 0.2**: Migrate `/api/stress-test` and `/api/persona` (and associated RAG logic) to the Railway container.
 - [ ] **Task 0.3**: Configure Vercel as a "Thin Client" that proxies complex AI requests to the Railway backend via a secure private API.
-
-## Epic 1: Infrastructure Resilience & Database Scaling (Critical) [DONE]
-**Owner**: DevOps & Backend
-- [x] **Task 1.1**: Update `src/lib/clients.ts` to increase the Postgres connection pool size. [DONE]
-- [x] **Task 1.2**: Implement rate limiting for all API routes using Upstash/Redis. [DONE]
-- [x] **Task 1.3**: Set up GitHub Actions CI pipeline. [DONE]
-- [x] **Task 1.4**: Implement structured logging (Pino). [DONE]
 
 ## Epic 2: Frontend De-Monolithization & UX Refinement (High)
 **Owner**: Frontend & UX/UI
@@ -27,22 +20,6 @@
 - [ ] **Task 3.2**: Add exponential backoff and retry logic for OpenAI.
 - [ ] **Task 3.3**: Refactor hybrid search into a unified SQL query.
 - [ ] **Task 3.4**: Optimize ingestion script for concurrency.
-
-## Epic 4: Data Layer Caching & Storage (Medium) [DONE]
-**Owner**: Backend
-- [x] **Task 4.1**: Migrate persona data to the database. [DONE]
-- [x] **Task 4.2**: Implement caching for AI queries (using Redis). [DONE]
-
-## Epic 5: The Admin Intelligence Dashboard (The Intelligence Factory) [DONE]
-**Owner**: AI Engineer & Backend & UX/UI
-*Goal: Provide a web-based UI for managing personas and uploading knowledge, eliminating the need for manual scripts.*
-- [x] **Task 5.1**: Build the Admin Persona Management UI (`/admin/personas`) to list, search, and filter personas. [DONE]
-- [x] **Task 5.2**: Implement the "Persona Editor" form to modify metadata (Name, Role, Cluster, Pains) directly in the DB. [DONE]
-- [x] **Task 5.3**: Build the "Knowledge Dropzone" for browser-based file uploads (PDF/TXT) tied to specific personas. [DONE]
-- [x] **Task 5.4**: Create the `/api/admin/ingest` pipeline to trigger chunking and embedding from the UI. [DONE]
-- [x] **Task 5.5**: Add an "Ingestion Status" tracker to show RAG processing progress. [DONE]
-- [ ] **Task 5.6**: Implement "Identity Synthesis": Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
-- [ ] **Task 5.7**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
 
 
 ## Epic 20: Persona Refactor & ID Migration (High Priority)
@@ -93,6 +70,18 @@ Modified workflow for `syncPersonasFromFilesystem`:
 - [ ] **Task 21.1**: **Migration**: Create a SQL script to add the `last_synced_at` column.
 - [ ] **Task 21.2**: **Implementation**: Update `src/lib/db-sync.ts` to implement the comparison logic and the surgical `UPDATE`.
 - [ ] **Task 21.3**: **Validation**: Edit a persona's name in UI -> Run Sync -> Confirm persistence.
+
+
+## Epic 22: Cluster Management Infrastructure (Medium Priority)
+**Owner**: Backend & UX/UI
+*Goal: Provide a dedicated interface for administrators to manage, rename, and delete persona clusters while maintaining data integrity.*
+
+**Tasks:**
+- [ ] **Task 22.1**: **API Expansion**: Implement `POST`, `PATCH`, and `DELETE` methods in `src/app/api/admin/clusters/route.ts`.
+- [ ] **Task 22.2**: **Rename Logic**: Ensure that renaming a cluster ID (e.g., `students` -> `estudiantes`) triggers a bulk update in the `personas` table for all associated records.
+- [ ] **Task 22.3**: **Delete Logic**: When a cluster is deleted, reset all associated personas to 'General' and remove the cluster record.
+- [ ] **Task 22.4**: **Admin UI**: Create `/admin/clusters/page.tsx` with a high-density management table (Name, Description, Count of Personas).
+- [ ] **Task 22.5**: **Navigation**: Add a "Manage Clusters" action button in the `Intelligence Factory` header.
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend

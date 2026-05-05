@@ -32,6 +32,14 @@
 - **Migrations & Schema Changes**: **STRICT HUMAN APPROVAL REQUIRED.** AI teams must obtain explicit permission from the Person in the Middle before modifying any database schema or running migration scripts.
 - **Zero-Trust Secrets**: Never log or commit credentials. Use environment-specific variables managed via platform-native tools.
 
+## Performance & Context Hygiene (Mandatory)
+To maintain high response speeds and prevent context saturation, all agents must:
+1. **Delegate Verbose Tasks**: Use subagents (`invoke_agent`) for multi-step investigations, batch edits, or large file reviews. This "compresses" session history into a single summary.
+2. **Surgical Reads**: Never read files >500 lines in full if possible. Use `grep_search` to find line numbers and `read_file` with `start_line/end_line` for targeted analysis.
+3. **Partition Documentation**: Keep `BACKLOG.md` and `HANDOFF_LOG.md` focused on active/recent items. Move completed/old items to `/docs/project/ARCHIVE_*.md`.
+4. **Exclude Large Data**: Avoid searching or reading files in `reports/` or `node_modules/` unless explicitly requested.
+5. **Skill Management**: Activate skills only when necessary for the current task. Prefer delegating to a subagent that activates the skill internally to keep the main chat history lean.
+
 ## Handoff & Continuity Protocol (CRITICAL)
 1. **Context Limits**: When context limits approach, the current session MUST pause.
 2. **State Snapshot**: Before termination, the `pm` agent must compile all current progress into `/docs/project/HANDOFF_STATE.md` and append to `/docs/project/HANDOFF_LOG.md`.
