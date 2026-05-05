@@ -63,6 +63,37 @@
 - [ ] **Task 20.6**: **API Optimization**: Update persona PATCH endpoints to handle granular updates for cluster and status changes from the inline UI.
 
 
+## Epic 21: Persona Synchronization & Data Integrity (High Priority)
+**Owner**: Backend
+*Goal: Ensure that synchronization between the filesystem and database is non-destructive and respects manual edits made via the UI.*
+
+### 1. The Problem
+The current "Sincronizar DB" feature uses an `ON CONFLICT (id) DO UPDATE` query that unconditionally overwrites all database fields (`name`, `role`, `cluster`, `metadata`, `context`) with the data found in the repository files (`persona.json` and `persona_strategic_depth.md`). This effectively erases any manual edits made via the Admin UI.
+
+### 2. Proposed Strategy: "Intelligent Sync"
+We will implement a tracking mechanism to distinguish between System Syncs and Human Edits.
+
+#### A. Schema Update
+*   Add a `last_synced_at` (TIMESTAMP) column to the `personas` table.
+*   **Logic:**
+    *   When the **Sync** runs, it updates `last_synced_at`.
+    *   When a **Human** edits via the UI, only `updated_at` (managed by the DB trigger) changes.
+
+#### B. Refined Sync Logic
+Modified workflow for `syncPersonasFromFilesystem`:
+1.  **Check Existence:** For each persona file, check if it already exists in the database.
+2.  **Detect Human Edits:** Compare `db_persona.updated_at` vs `db_persona.last_synced_at`. If `updated_at > last_synced_at`, a human made changes post-sync.
+3.  **Apply Merge Rules:**
+    *   **Metadata (Name, Role, Cluster):** If a human edit is detected, **do not** overwrite these fields from the JSON file.
+    *   **Context (Markdown):** Update the `context` field *only if* the file's content has changed, preserving the human-edited metadata.
+    *   **New Personas:** If the persona doesn't exist, create it as usual.
+4.  **Final Update:** Update `last_synced_at` to the current time to mark the successful sync.
+
+### 3. Execution Steps
+- [ ] **Task 21.1**: **Migration**: Create a SQL script to add the `last_synced_at` column.
+- [ ] **Task 21.2**: **Implementation**: Update `src/lib/db-sync.ts` to implement the comparison logic and the surgical `UPDATE`.
+- [ ] **Task 21.3**: **Validation**: Edit a persona's name in UI -> Run Sync -> Confirm persistence.
+
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
 - [ ] **Task 6.1**: Implement Graph Traversal logic.
