@@ -49,12 +49,13 @@ Deployment of the 2FA UX Extreme Distinction flow (Epic 17) to eliminate user co
 - **None.** The platform is stable and production-ready on `main`.
 
 ## Priority Roadmap for Incoming Team
-1. **SMS 2FA with Twilio (Epic 17 - Phase 2)**: Integrate Twilio SDK and develop the SMS-based enrollment and sign-in verification flow.
-2. **Memory & Persistence (Epic 19)**: Implement the `user_history` JSONB state-snapshot system to allow users to revisit and resume Stress Test and Copywriter sessions.
-3. **Account & Profile Management (Epic 18)**: Begin schema updates and UI design to capture first name, last name, phone, and company details.
-4. **Persona Photo Field (Epic 5)**: Implement Task 5.7 to add photo support for personas in the admin dashboard and UI.
-5. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
-6. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
+1. **Persona Refactor & ID Migration (Epic 20)**: Execute the database migration to numerical IDs and implement the inline management UI in `/admin/personas`.
+2. **SMS 2FA with Twilio (Epic 17 - Phase 2)**: Integrate Twilio SDK and develop the SMS-based enrollment and sign-in verification flow.
+3. **Memory & Persistence (Epic 19)**: Implement the `user_history` JSONB state-snapshot system to allow users to revisit and resume Stress Test and Copywriter sessions.
+4. **Account & Profile Management (Epic 18)**: Begin schema updates and UI design to capture first name, last name, phone, and company details.
+5. **Persona Photo Field (Epic 5)**: Implement Task 5.7 to add photo support for personas in the admin dashboard and UI.
+6. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
+7. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
 
 ## Performance Note
 The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.

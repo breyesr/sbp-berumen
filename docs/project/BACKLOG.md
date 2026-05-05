@@ -40,9 +40,27 @@
 - [x] **Task 5.2**: Implement the "Persona Editor" form to modify metadata (Name, Role, Cluster, Pains) directly in the DB. [DONE]
 - [x] **Task 5.3**: Build the "Knowledge Dropzone" for browser-based file uploads (PDF/TXT) tied to specific personas. [DONE]
 - [x] **Task 5.4**: Create the `/api/admin/ingest` pipeline to trigger chunking and embedding from the UI. [DONE]
-- [ ] **Task 5.5**: Add an "Ingestion Status" tracker to show RAG processing progress.
+- [x] **Task 5.5**: Add an "Ingestion Status" tracker to show RAG processing progress. [DONE]
 - [ ] **Task 5.6**: Implement "Identity Synthesis": Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
 - [ ] **Task 5.7**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
+
+
+## Epic 20: Persona Refactor & ID Migration (High Priority)
+**Owner**: Backend & UX/UI
+*Goal: Transition to a robust numerical ID system while simplifying the UI and accelerating the management workflow. This Epic must adhere to the UX Integrity Protocol to ensure zero loss of existing functionality.*
+
+**UX Integrity Protocol Mandates:**
+1. **Drawer Continuity**: Keep existing "Edit" and "Train" drawers functional and identical.
+2. **Visual Consistency**: Use existing design tokens and "Factory Floor" aesthetics for new inline controls.
+3. **Non-Destructive Migration**: Preserving `id_text` (slugs) for RAG and filesystem stability.
+
+**Tasks:**
+- [ ] **Task 20.1**: **Database Migration**: Rename `personas.id` to `id_text` and add a new `SERIAL` (numerical) `id` as the Primary Key.
+- [ ] **Task 20.2**: **Relation Update**: Migrate the `user_personas` join table to reference the new numerical `id`.
+- [ ] **Task 20.3**: **Provider Refactor**: Update `PersonaProvider.ts` to support dual-ID lookups (Numerical for DB, Text for Filesystem/RAG).
+- [ ] **Task 20.4**: **UI Simplification**: Remove `id_text` from all Admin and User-facing lists, showing only the Name and numerical ID.
+- [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
+- [ ] **Task 20.6**: **API Optimization**: Update persona PATCH endpoints to handle granular updates for cluster and status changes from the inline UI.
 
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
