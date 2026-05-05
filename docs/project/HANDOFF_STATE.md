@@ -14,6 +14,10 @@
 - **Admin UI**: Create the management page at `/admin/clusters`.
 - **Integrity**: Ensure renaming/deletion propagates to the `personas` table.
 
+### 3. Persona Enhancements (Epic 20)
+- **Identity Synthesis (Task 20.7)**: Implement auto-update of metadata post-ingestion.
+- **Photo Engine (Task 20.8)**: Design schema and storage pipeline for persona avatars.
+
 ## Active Constraints
 - **Branching**: Ensure work happens on a feature branch (e.g., `feature/alpha/persona-sync-fix`) from `staging`.
 - **Database**: Human approval required for schema changes (Task 21.1).

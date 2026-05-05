@@ -38,6 +38,8 @@
 - [ ] **Task 20.4**: **UI Simplification**: Remove `id_text` from all Admin and User-facing lists, showing only the Name and numerical ID.
 - [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
 - [ ] **Task 20.6**: **API Optimization**: Update persona PATCH endpoints to handle granular updates for cluster and status changes from the inline UI.
+- [ ] **Task 20.7**: **Identity Synthesis**: Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
+- [ ] **Task 20.8**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
 
 
 ## Epic 21: Persona Synchronization & Data Integrity (High Priority)
