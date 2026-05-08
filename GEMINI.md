@@ -40,6 +40,14 @@ To maintain high response speeds and prevent context saturation, all agents must
 4. **Exclude Large Data**: Avoid searching or reading files in `reports/` or `node_modules/` unless explicitly requested.
 5. **Skill Management**: Activate skills only when necessary for the current task. Prefer delegating to a subagent that activates the skill internally to keep the main chat history lean.
 
+## Regression Prevention Protocol (Surgical & Mandatory)
+To prevent "intelligence leaks" and functional regressions without excessive token consumption:
+1. **Triggered Activation**: This protocol is ONLY mandatory when modifying **Zod schemas, Database schemas, or Core AI Prompts**. It should be bypassed for UI styling or minor logic fixes.
+2. **Contract-First Audit**: Before modifying a core pipeline, audit the centralized types in `@/lib/types` (if available) or the "Gold Standard" entity (e.g., `data/personas/alejandro/persona.json`) to ensure the refactor supports 100% of existing data depth.
+3. **Consumer Verification**: When changing backend data shapes, verify the impact on primary UI consumers (e.g., `PersonaDossier.tsx`) to ensure no required props are omitted.
+4. **Schema-Driven Safety**: Prioritize centralizing core types to allow TypeScript to catch regressions automatically.
+5. **Behavioral Integrity**: After architectural changes, perform a "Behavioral Test" with a complex entity to confirm that output quality (e.g., Dossier depth) matches the pre-refactor state.
+
 ## Handoff & Continuity Protocol (CRITICAL)
 1. **Context Limits**: When context limits approach, the current session MUST pause.
 2. **State Snapshot**: Before termination, the `pm` agent must compile all current progress into `/docs/project/HANDOFF_STATE.md` and append to `/docs/project/HANDOFF_LOG.md`.
