@@ -5,12 +5,12 @@ import { Info, Search, ChevronDown, Check, User, Boxes, X, ChevronRight } from "
 import { PersonaDossier } from "./admin/PersonaDossier";
 import { clsx } from "clsx";
 
-export type PersonaOption = { id: string; name: string; cluster?: string; role?: string; metadata?: any };
+export type PersonaOption = { id: string | number; id_text?: string; name: string; cluster?: string; role?: string; metadata?: any };
 
 type Props = {
   options?: PersonaOption[];
-  value: string;
-  onChange: (id: string) => void;
+  value: string | number;
+  onChange: (id: string | number) => void;
   className?: string;
   labelText?: string;
 };
@@ -75,7 +75,7 @@ export default function PersonaSelect({ options, value, onChange, className, lab
     }
   }, [isOpen]);
 
-  const handleOpenDossier = async (e: React.MouseEvent, personaId: string) => {
+  const handleOpenDossier = async (e: React.MouseEvent, personaId: string | number) => {
     e.stopPropagation();
     setLoadingDossier(true);
     try {

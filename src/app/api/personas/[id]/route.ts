@@ -16,8 +16,14 @@ export async function GET(
   const { id } = await params;
 
   try {
+    const isNumeric = !isNaN(Number(id)) && id.indexOf("-") === -1;
+    const whereClause = isNumeric ? 'p.id = $1' : 'p.id_text = $1';
+
     const res = await db.query(
-      `SELECT id, name, role, cluster, metadata, voice, context FROM personas WHERE id = $1`,
+      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, pi.metadata, pi.voice, pi.context 
+       FROM personas p
+       LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id
+       WHERE ${whereClause}`,
       [id]
     );
 

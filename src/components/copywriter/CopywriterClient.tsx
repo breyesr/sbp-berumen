@@ -31,7 +31,7 @@ export function CopywriterClient({
     const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 
     const [personas] = useState<PersonaOption[]>(initialPersonas);
-    const [personaType, setPersonaType] = useState<string>(initialPersonas[0]?.id || "");
+    const [personaType, setPersonaType] = useState<string | number>(initialPersonas[0]?.id || "");
     const [platforms] = useState<Platform[]>(initialPlatforms);
     
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(initialPlatforms[0] ? [initialPlatforms[0].id] : []);
@@ -105,7 +105,7 @@ export function CopywriterClient({
         }
     };
 
-    const handleViewDossier = async (id: string) => {
+    const handleViewDossier = async (id: string | number) => {
         setLoadingDossier(true);
         try {
             const res = await fetch(`/api/personas/${id}`);

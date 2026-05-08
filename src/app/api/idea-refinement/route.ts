@@ -23,7 +23,7 @@ const StressResultSchema = z.object({
 });
 
 const Body = z.object({
-  personaType: z.string(),
+  personaType: z.union([z.string(), z.number()]),
   challengeLevelId: z.string().optional(),
   idea: z.string().min(10).max(1500),
   goal: z.string().min(5).max(300),

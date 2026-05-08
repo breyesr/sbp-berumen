@@ -14,7 +14,8 @@ export type Bench = {
 };
 
 export type Persona = {
-  id: string;
+  id: number;
+  id_text: string;
   name: string;
   role?: string;
   cluster?: string;
@@ -166,8 +167,8 @@ export function formatVoiceProfile(voice?: PersonaVoice | null): string | null {
 /**
  * Maps a database row or JSON object to a Persona object.
  */
-function mapToPersona(id: string, j: any, contextStr?: string): Persona {
-  const name: string = j.name ?? id;
+function mapToPersona(id: number, id_text: string, j: any, contextStr?: string): Persona {
+  const name: string = j.name ?? id_text;
   const role: string | undefined = j.role;
   const bench: Bench | undefined = j.bench
     ? {
@@ -202,6 +203,7 @@ function mapToPersona(id: string, j: any, contextStr?: string): Persona {
 
   return {
     id,
+    id_text,
     name,
     role,
     profile: {
@@ -220,32 +222,42 @@ function mapToPersona(id: string, j: any, contextStr?: string): Persona {
   };
 }
 
-async function readPersonaFile(id: string): Promise<Persona | null> {
-  const personaDir = path.join(DATA_DIR, id);
+async function readPersonaFile(id_text: string): Promise<Persona | null> {
+  const personaDir = path.join(DATA_DIR, id_text);
   const personaFile = path.join(personaDir, 'persona.json');
 
   try {
     const raw = await fs.readFile(personaFile, "utf8");
     const j = JSON.parse(raw);
-    return mapToPersona(id, j);
+    // Use a negative ID to indicate it's not in the DB yet
+    return mapToPersona(-1, id_text, j);
   } catch {
     return null;
   }
 }
 
-export async function getPersona(id: string, userQuery: string): Promise<Persona | null> {
+export async function getPersona(id: string | number, userQuery: string): Promise<Persona | null> {
   let persona: Persona | null = null;
 
-  // 1. Try fetching from Database first
+  // 1. Try fetching from Database first (normalized structure)
   try {
-    const res = await db.query(
-      `SELECT id, name, role, cluster, is_active, metadata, voice, context FROM personas WHERE id = $1`,
-      [id]
-    );
+    const isNumeric = typeof id === "number" || (!isNaN(Number(id)) && id.toString().indexOf("-") === -1);
+    const query = isNumeric 
+        ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context 
+           FROM personas p 
+           LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
+           WHERE p.id = $1`
+        : `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context 
+           FROM personas p 
+           LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
+           WHERE p.id_text = $1`;
+
+    const res = await db.query(query, [id]);
+    
     if (res.rows[0]) {
       const row = res.rows[0];
       persona = {
-        ...mapToPersona(row.id, row.metadata, row.context),
+        ...mapToPersona(row.id, row.id_text, row.metadata, row.context),
         cluster: row.cluster,
         is_active: row.is_active
       };
@@ -256,14 +268,14 @@ export async function getPersona(id: string, userQuery: string): Promise<Persona
 
   // 2. Fallback to filesystem if not in DB
   if (!persona) {
-    persona = await readPersonaFile(id);
+    persona = await readPersonaFile(id.toString());
     if (persona) persona.is_active = true; // Filesystem personas are active by default
   }
 
   if (!persona) return null;
 
-  // 3. Dynamic RAG Context Augmentation
-  const searchResults = await hybridSearch(userQuery, id);
+  // 3. Dynamic RAG Context Augmentation (Always use id_text for RAG)
+  const searchResults = await hybridSearch(userQuery, persona.id_text);
   const ragContext = searchResults.map(r => r.content).join("\n\n");
   const ragHighlights = buildRagHighlights(searchResults);
   
@@ -314,12 +326,12 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
     const { allowedClusters = [], isAdmin = false } = options || {};
 
     // 1. Try listing from Database
     try {
-        let query = `SELECT id, name, role, cluster, is_active FROM personas`;
+        let query = `SELECT id, id_text, name, role, cluster, is_active FROM personas`;
         let conditions: string[] = [];
         let params: any[] = [];
 
@@ -332,8 +344,6 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
                 conditions.push(`(cluster = ANY($${params.length + 1}) OR cluster IS NULL OR LOWER(cluster) = 'general')`);
                 params.push(allowedClusters);
             }
-            // If allowedClusters is empty, we don't add more restrictions, 
-            // allowing them to see all active personas by default.
         }
 
         if (conditions.length > 0) {
@@ -345,6 +355,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
         const res = await db.query(query, params);
         return res.rows.map(r => ({
             id: r.id,
+            id_text: r.id_text,
             name: r.name,
             role: r.role,
             cluster: r.cluster,
@@ -362,8 +373,8 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             .map(e => e.name);
 
         const metas = await Promise.all(
-            personaIds.map(async (id) => {
-                const p = await readPersonaFile(id);
+            personaIds.map(async (id_text) => {
+                const p = await readPersonaFile(id_text);
                 if (!p) return null;
                 
                 // Filesystem filtering logic
@@ -373,19 +384,30 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
                    return null;
                 }
 
-                return { id: p.id, name: p.name, role: p.role, cluster: p.cluster, is_active: true };
+                return { id: p.id, id_text: p.id_text, name: p.name, role: p.role, cluster: p.cluster, is_active: true };
             })
         );
 
-        return metas.filter(Boolean) as { id: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
+        return metas.filter(Boolean) as { id: number; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
     } catch (err) {
         console.error("Failed to list personas from filesystem", err);
         return [];
     }
 }
 
-export async function getPersonaKnowledgeFiles(personaId: string): Promise<string[]> {
-  const knowledgeDir = path.join(DATA_DIR, personaId, 'knowledge');
+export async function getPersonaKnowledgeFiles(personaId: string | number): Promise<string[]> {
+  let id_text = personaId.toString();
+  
+  // Resolve id_text if numerical
+  const isNumeric = typeof personaId === "number" || (!isNaN(Number(personaId)) && personaId.toString().indexOf("-") === -1);
+  if (isNumeric) {
+    const res = await db.query(`SELECT id_text FROM personas WHERE id = $1`, [personaId]);
+    if (res.rows[0]) {
+      id_text = res.rows[0].id_text;
+    }
+  }
+
+  const knowledgeDir = path.join(DATA_DIR, id_text, 'knowledge');
   try {
     const files = await fs.readdir(knowledgeDir);
     return files.map(file => path.basename(file));

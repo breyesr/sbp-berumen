@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { isAdminRole } from "@/lib/rbac";
+import { db } from "@/lib/clients";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { ingestFileContent } from "@/lib/ingestion";
@@ -23,6 +24,16 @@ export async function POST(
   }
 
   try {
+    // Resolve id_text if id is numerical
+    let id_text = id;
+    const isNumeric = !isNaN(Number(id)) && id.indexOf("-") === -1;
+    if (isNumeric) {
+      const res = await db.query(`SELECT id_text FROM personas WHERE id = $1`, [id]);
+      if (res.rows[0]) {
+        id_text = res.rows[0].id_text;
+      }
+    }
+
     const formData = await req.formData();
     const file = formData.get("file") as File;
 
@@ -32,8 +43,8 @@ export async function POST(
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    // 1. Save to local filesystem (Fallback/Backup)
-    const personaDir = path.join(process.cwd(), "data", "personas", id);
+    // 1. Save to local filesystem (Fallback/Backup) - Always use id_text
+    const personaDir = path.join(process.cwd(), "data", "personas", id_text);
     const knowledgeDir = path.join(personaDir, "knowledge");
     
     try {
@@ -43,11 +54,11 @@ export async function POST(
       console.error("FileSystem sync failed, but proceeding with DB embedding", err);
     }
 
-    // 2. Process and Embed into DB (RAG)
+    // 2. Process and Embed into DB (RAG) - Use id_text for metadata mapping
     const ingestResult = await ingestFileContent({
       buffer,
       filename: file.name,
-      personaId: id,
+      personaId: id_text,
     });
 
     return NextResponse.json({ 

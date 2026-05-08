@@ -14,9 +14,10 @@ export async function GET() {
 
   try {
     const res = await db.query(
-      `SELECT id, name, role, cluster, is_active, metadata, context, updated_at 
-       FROM personas 
-       ORDER BY cluster ASC, name ASC`
+      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.context, p.updated_at 
+       FROM personas p
+       LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id
+       ORDER BY p.cluster ASC, p.name ASC`
     );
     return NextResponse.json({ personas: res.rows });
   } catch (err: any) {
@@ -30,25 +31,43 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
+  const client = await db.connect();
   try {
     const body = await req.json();
-    const { name, role, cluster, metadata, is_active } = body;
+    const { name, role, cluster, metadata, voice, context, is_active } = body;
 
     if (!name || !cluster) {
       return NextResponse.json({ error: "Name and Cluster are required" }, { status: 400 });
     }
 
-    const id = name.toLowerCase().replace(/\s+/g, "-") + "-" + randomUUID().slice(0, 4);
+    await client.query('BEGIN');
 
-    await db.query(
-      `INSERT INTO personas (id, name, role, cluster, is_active, metadata, context)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
-       RETURNING *`,
-      [id, name, role || "", cluster, is_active !== false, metadata || {}, ""]
+    // Generate slug for id_text
+    const id_text = name.toLowerCase().replace(/\s+/g, "-") + "-" + randomUUID().slice(0, 4);
+
+    // 1. Insert into Thin Table
+    const resThin = await client.query(
+      `INSERT INTO personas (id_text, name, role, cluster, is_active)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id`,
+      [id_text, name, role || "", cluster, is_active !== false]
     );
 
-    return NextResponse.json({ success: true, id });
+    const personaId = resThin.rows[0].id;
+
+    // 2. Insert into Fat Table
+    await client.query(
+      `INSERT INTO persona_intelligence (persona_id, metadata, voice, context)
+       VALUES ($1, $2, $3, $4)`,
+      [personaId, metadata || {}, voice || {}, context || ""]
+    );
+
+    await client.query('COMMIT');
+    return NextResponse.json({ success: true, id: personaId, id_text });
   } catch (err: any) {
+    await client.query('ROLLBACK');
     return NextResponse.json({ error: err.message }, { status: 500 });
+  } finally {
+    client.release();
   }
 }

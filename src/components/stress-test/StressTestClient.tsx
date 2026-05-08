@@ -34,7 +34,7 @@ export function StressTestClient({
     const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 
     const [personas] = useState<PersonaOption[]>(initialPersonas);
-    const [personaType, setPersonaType] = useState<string>(initialPersonas[0]?.id || "");
+    const [personaType, setPersonaType] = useState<string | number>(initialPersonas[0]?.id || "");
     const [levels] = useState<ChallengeLevelOption[]>(initialLevels);
     const [challengeLevelId, setChallengeLevelId] = useState<string>(initialLevels[0]?.id || "");
     
@@ -127,7 +127,7 @@ export function StressTestClient({
         }
     };
 
-    const handleViewDossier = async (id: string) => {
+    const handleViewDossier = async (id: string | number) => {
         setLoadingDossier(true);
         try {
             const res = await fetch(`/api/personas/${id}`);

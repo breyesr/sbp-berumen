@@ -52,7 +52,7 @@ export type ChallengeLevelOption = {
 };
 
 export type PersonaOption = {
-    id: string;
+    id: string | number;
     name: string;
     cluster?: string;
 };

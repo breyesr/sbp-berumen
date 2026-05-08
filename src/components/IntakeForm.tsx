@@ -59,7 +59,7 @@ const preventWheel = (e: React.WheelEvent<HTMLInputElement>) => (e.currentTarget
 
 export default function IntakeForm({ personas = [] }: Props) {
   // Persona
-  const [personaType, setPersonaType] = useState<string>("");
+  const [personaType, setPersonaType] = useState<string | number>("");
   useEffect(() => {
     if (!personaType && personas[0]?.id) setPersonaType(personas[0].id);
     else if (personaType && !personas.find((p) => p.id === personaType)) {

@@ -11,7 +11,8 @@ import { clsx } from "clsx";
 import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power } from "lucide-react";
 
 type PersonaRecord = {
-  id: string;
+  id: string | number;
+  id_text: string;
   name: string;
   role: string;
   cluster: string;
@@ -156,7 +157,7 @@ export default function AdminPersonasPage() {
     }
   };
 
-  const handleDeletePersona = async (id: string, name: string) => {
+  const handleDeletePersona = async (id: string | number, name: string) => {
     if (!window.confirm(`¿Estás seguro de eliminar a ${name}?`)) return;
     try {
       await fetch(`/api/admin/personas/${id}`, { method: "DELETE" });
@@ -166,7 +167,7 @@ export default function AdminPersonasPage() {
     }
   };
 
-  const handleToggleStatus = async (id: string, currentStatus: boolean) => {
+  const handleToggleStatus = async (id: string | number, currentStatus: boolean) => {
     try {
       const res = await fetch(`/api/admin/personas/${id}`, {
         method: "PATCH",

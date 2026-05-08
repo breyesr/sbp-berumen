@@ -31,14 +31,6 @@ export async function syncPersonasFromFilesystem() {
         const schemaSql = await fs.readFile(schemaPath, "utf8");
         await db.query(schemaSql);
 
-        // Ensure is_active exists (Hotfix for existing environments)
-        try {
-            await db.query(`ALTER TABLE "personas" ADD COLUMN IF NOT EXISTS "is_active" BOOLEAN DEFAULT true;`);
-            await db.query(`UPDATE "personas" SET "is_active" = true WHERE "is_active" IS NULL;`);
-        } catch (err) {
-            console.warn("Could not apply is_active hotfix, might already exist.", err);
-        }
-
         // 2. Find all persona files
         const personaFiles = await findPersonaFiles(DATA_DIR);
 
@@ -62,22 +54,39 @@ export async function syncPersonasFromFilesystem() {
                     // Ignore missing strategic depth
                 }
 
-                await db.query(
-                    `INSERT INTO personas (id, name, role, cluster, metadata, context)
-                     VALUES ($1, $2, $3, $4, $5, $6)
-                     ON CONFLICT (id) DO UPDATE SET
+                // 1. Insert/Update personas (Thin Table)
+                const resThin = await db.query(
+                    `INSERT INTO personas (id_text, name, role, cluster)
+                     VALUES ($1, $2, $3, $4)
+                     ON CONFLICT (id_text) DO UPDATE SET
                         name = EXCLUDED.name,
                         role = EXCLUDED.role,
                         cluster = EXCLUDED.cluster,
-                        metadata = EXCLUDED.metadata,
-                        context = EXCLUDED.context,
-                        updated_at = CURRENT_TIMESTAMP`,
+                        updated_at = CURRENT_TIMESTAMP
+                     RETURNING id`,
                     [
-                        finalId,
+                        finalId, // this is the slug from the filesystem
                         data.name || finalId,
                         data.role || "",
-                        cluster,
+                        cluster
+                    ]
+                );
+                
+                const personaIdInt = resThin.rows[0].id;
+
+                // 2. Insert/Update persona_intelligence (Fat Table)
+                // Note: We include voice if it exists in the data
+                await db.query(
+                    `INSERT INTO persona_intelligence (persona_id, metadata, voice, context)
+                     VALUES ($1, $2, $3, $4)
+                     ON CONFLICT (persona_id) DO UPDATE SET
+                        metadata = EXCLUDED.metadata,
+                        voice = EXCLUDED.voice,
+                        context = EXCLUDED.context`,
+                    [
+                        personaIdInt,
                         JSON.stringify(data),
+                        data.voice ? JSON.stringify(data.voice) : null,
                         strategicDepth.trim()
                     ]
                 );

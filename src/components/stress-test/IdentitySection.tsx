@@ -9,13 +9,13 @@ import { clsx } from "clsx";
 
 interface IdentitySectionProps {
   personas: PersonaOption[];
-  personaType: string;
-  setPersonaType: (val: string) => void;
+  personaType: string | number;
+  setPersonaType: (val: string | number) => void;
   levels: ChallengeLevelOption[];
   challengeLevelId: string;
   setChallengeLevelId: (val: string) => void;
   onContinue: () => void;
-  onViewDossier: (id: string) => void;
+  onViewDossier: (id: string | number) => void;
 }
 
 export function IdentitySection({
@@ -55,7 +55,7 @@ export function IdentitySection({
     return groups;
   }, [personas, selectedCluster]);
 
-  const handleViewDossier = (e: React.MouseEvent, id: string) => {
+  const handleViewDossier = (e: React.MouseEvent, id: string | number) => {
     e.stopPropagation();
     onViewDossier(id);
   };

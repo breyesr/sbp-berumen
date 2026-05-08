@@ -8,8 +8,8 @@ import { PersonaOption } from "../stress-test/types";
 interface PersonaCardProps {
   persona: PersonaOption;
   isSelected: boolean;
-  onSelect: (id: string) => void;
-  onViewDossier: (e: React.MouseEvent, id: string) => void;
+  onSelect: (id: string | number) => void;
+  onViewDossier: (e: React.MouseEvent, id: string | number) => void;
 }
 
 export function PersonaCard({
