@@ -29,7 +29,6 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
                 <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-black tracking-[0.2em] uppercase">
                     {persona.cluster}
                 </span>
-                <span className="text-zinc-600 text-[10px] font-mono tracking-tighter uppercase">{persona.id}</span>
             </div>
             <h2 className="text-4xl font-black text-white tracking-tighter uppercase">{persona.name}</h2>
             <p className="text-zinc-400 text-lg font-medium italic">{persona.role}</p>

@@ -5,7 +5,7 @@ import { Info, Search, ChevronDown, Check, User, Boxes, X, ChevronRight } from "
 import { PersonaDossier } from "./admin/PersonaDossier";
 import { clsx } from "clsx";
 
-export type PersonaOption = { id: string | number; id_text?: string; name: string; cluster?: string; role?: string; metadata?: any };
+export type PersonaOption = { id: string | number; name: string; cluster?: string; role?: string; metadata?: any };
 
 type Props = {
   options?: PersonaOption[];

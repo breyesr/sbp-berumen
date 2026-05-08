@@ -63,7 +63,7 @@ export function PersonaCard({
       {/* Info */}
       <div className="space-y-1.5 flex-1">
         <h4 className={clsx(
-          "text-base font-bold tracking-tight transition-colors leading-tight",
+          "text-base font-bold tracking-tight transition-colors leading-tight truncate",
           isSelected ? "text-white" : "text-zinc-300 group-hover:text-white"
         )}>
           {name}

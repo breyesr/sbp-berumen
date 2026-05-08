@@ -38,7 +38,7 @@
     *   **Refinement**: Ensure FS fallback uses `id_text` instead of `-1`.
     *   **Validation**: Prevent invalid FS lookups for purely numerical IDs when DB fetch fails.
     *   **Typing**: Update `Persona` type to support `number | string` for the `id` field.
-- [ ] **Task 20.4**: **UI Simplification**: Remove `id_text` from all Admin and User-facing lists, showing only the Name and numerical ID.
+- [x] **Task 20.4**: **UI Simplification**: Transition to a "Human-First" display by hiding text slugs (`id_text`) and numerical IDs across all user/admin lists, prioritizing Name, Role, and Cluster for identity. [DONE]
 - [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
 - [ ] **Task 20.6**: **API Optimization**: Update persona PATCH endpoints to handle granular updates for cluster and status changes from the inline UI.
 - [ ] **Task 20.7**: **Identity Synthesis**: Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.

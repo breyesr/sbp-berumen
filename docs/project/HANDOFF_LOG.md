@@ -111,3 +111,5 @@ This file serves as a permanent historical record of all development sessions. E
 - **Protocol Preservation**: Using backup branches to restore process documentation (`GEMINI.md`) ensures that organizational knowledge is not lost during technical rollbacks.
 2026-05-08 15:15:00, Team Alpha, Completed Tasks 20.1 & 20.2: Numerical ID Migration and Database Normalization deployed and verified remote.
 \n[2026-05-08] - Team Alpha - Task 20.3: Completed PersonaProvider refactor for dual-ID support. Extracted shared fetching logic and hardened filesystem fallback.
+\n[2026-05-08] - Team Alpha - Task 20.4: Simplified UI by removing id_text slugs and standardizing on Numerical IDs across all lists and dossiers.
+[2026-05-08] - Team Alpha - Task 20.4: Refined UI to hide numerical IDs, prioritizing a human-first display (Name/Role/Cluster).

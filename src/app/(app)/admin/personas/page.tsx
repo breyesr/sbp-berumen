@@ -11,8 +11,7 @@ import { clsx } from "clsx";
 import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power } from "lucide-react";
 
 type PersonaRecord = {
-  id: string | number;
-  id_text: string;
+  id: number;
   name: string;
   role: string;
   cluster: string;
@@ -332,7 +331,6 @@ export default function AdminPersonasPage() {
                             <td className="px-6 py-4">
                                 <div className="flex flex-col">
                                     <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
-                                    <span className="text-[10px] text-zinc-600 font-mono tracking-tighter uppercase">{p.id}</span>
                                 </div>
                             </td>
                             <td className="px-6 py-4">
