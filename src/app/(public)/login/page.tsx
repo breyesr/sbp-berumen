@@ -31,14 +31,13 @@ function LoginPageContent() {
 
     if (result?.error) {
       const isTwoFactorRequired =
-        (result.error === "CredentialsSignin" && result.code === "2fa_required") ||
-        // Backward-compatible fallback for older generic throws.
-        result.error === "Configuration";
+        result.error === "CredentialsSignin" && result.code === "2fa_required";
 
       if (isTwoFactorRequired) {
         router.push(`/login/2fa?email=${encodeURIComponent(email)}`);
       } else {
         setError(t("auth.login.error_try_again"));
+        console.error("Login error details:", result.error, result.code);
       }
     } else {
       const session = await getSession();
