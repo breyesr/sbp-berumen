@@ -95,4 +95,17 @@ This file serves as a permanent historical record of all development sessions. E
 - Visual jumps in transitions (centered vs. left-aligned) significantly degrade the perception of "security" and "professionalism." Stability is trust.
 - Providing an "Expert Path" reduces frustration for power users without compromising the supportive flow for novices.
 - Positive guidance (e.g., "Use the '+' button") is more effective for novice users than aggressive negative warnings (e.g., "STOP: DO NOT SCAN").
-2026-05-04T00:00:00Z | Lead | Accomplished: Detailed research and technical strategy for Persona Sync data integrity. Updated BACKLOG.md with Epic 21. | Learning: The ON CONFLICT DO UPDATE pattern is too aggressive for hybrid (file + DB) systems without a 'last_synced' marker.
+---
+
+## [2026-05-09] Full System Recovery & Stabilization
+**Team:** System Architect & Backend & DevOps & AppSec
+**Accomplishments:**
+- **Full Rollback**: Successfully hard-reset the feature branch to the stable `staging` baseline and restored the production database schema and data from `main`.
+- **Remote Sync**: Synchronized the staging server's database with the clean local dump, restoring system-wide stability.
+- **Diagnostic Fix**: Resolved a critical auth bug where server configuration errors were misidentified as 2FA prompts, ensuring accurate error reporting.
+- **Data Preservation**: Archived a stable database snapshot (`backup-main-34cc872...`) for future safety.
+- **Verified Stability**: Confirmed full application access and data visibility on local and remote integration environments.
+**Learnings:**
+- **Implicit Error Traps**: Generic "fallback" error handling in security-sensitive flows (like login) can mask infrastructure failures and block administrative recovery.
+- **Recovery over Patching**: In complex schema failures, a clean wipe and restore from a known-good source (Main/Production) is significantly more reliable than attempting surgical "undo" operations.
+- **Protocol Preservation**: Using backup branches to restore process documentation (`GEMINI.md`) ensures that organizational knowledge is not lost during technical rollbacks.
