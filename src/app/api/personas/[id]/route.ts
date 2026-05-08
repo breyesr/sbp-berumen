@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/clients";
+import { getPersonaData } from "@/lib/personaProvider";
 
 export const runtime = "nodejs";
 
@@ -16,22 +16,11 @@ export async function GET(
   const { id } = await params;
 
   try {
-    const isNumeric = !isNaN(Number(id)) && id.indexOf("-") === -1;
-    const whereClause = isNumeric ? 'p.id = $1' : 'p.id_text = $1';
+    const persona = await getPersonaData(id);
 
-    const res = await db.query(
-      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, pi.metadata, pi.voice, pi.context 
-       FROM personas p
-       LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id
-       WHERE ${whereClause}`,
-      [id]
-    );
-
-    if (res.rows.length === 0) {
+    if (!persona) {
       return NextResponse.json({ error: "Persona not found" }, { status: 404 });
     }
-
-    const persona = res.rows[0];
     
     // In the future, we will check if the user has access to this cluster here (Epic 10)
     

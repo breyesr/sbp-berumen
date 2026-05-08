@@ -14,7 +14,7 @@ export type Bench = {
 };
 
 export type Persona = {
-  id: number;
+  id: number | string;
   id_text: string;
   name: string;
   role?: string;
@@ -167,7 +167,7 @@ export function formatVoiceProfile(voice?: PersonaVoice | null): string | null {
 /**
  * Maps a database row or JSON object to a Persona object.
  */
-function mapToPersona(id: number, id_text: string, j: any, contextStr?: string): Persona {
+function mapToPersona(id: number | string, id_text: string, j: any, contextStr?: string): Persona {
   const name: string = j.name ?? id_text;
   const role: string | undefined = j.role;
   const bench: Bench | undefined = j.bench
@@ -229,14 +229,18 @@ async function readPersonaFile(id_text: string): Promise<Persona | null> {
   try {
     const raw = await fs.readFile(personaFile, "utf8");
     const j = JSON.parse(raw);
-    // Use a negative ID to indicate it's not in the DB yet
-    return mapToPersona(-1, id_text, j);
+    // Use id_text as the ID for filesystem personas to ensure uniqueness in fallback mode
+    return mapToPersona(id_text, id_text, j);
   } catch {
     return null;
   }
 }
 
-export async function getPersona(id: string | number, userQuery: string): Promise<Persona | null> {
+/**
+ * Core persona retrieval logic (DB + Filesystem fallback)
+ * Does NOT include dynamic RAG context augmentation.
+ */
+export async function getPersonaData(id: string | number): Promise<Persona | null> {
   let persona: Persona | null = null;
 
   // 1. Try fetching from Database first (normalized structure)
@@ -268,13 +272,26 @@ export async function getPersona(id: string | number, userQuery: string): Promis
 
   // 2. Fallback to filesystem if not in DB
   if (!persona) {
-    persona = await readPersonaFile(id.toString());
-    if (persona) persona.is_active = true; // Filesystem personas are active by default
+    const isNumeric = typeof id === "number" || (!isNaN(Number(id)) && id.toString().indexOf("-") === -1);
+    
+    // Only attempt filesystem fallback if the ID is a text slug. 
+    // Purely numerical IDs cannot be resolved to filesystem paths without the DB.
+    if (!isNumeric) {
+      persona = await readPersonaFile(id.toString());
+      if (persona) persona.is_active = true; // Filesystem personas are active by default
+    }
   }
+
+  return persona;
+}
+
+export async function getPersona(id: string | number, userQuery: string): Promise<Persona | null> {
+  // 1. Get core persona data
+  const persona = await getPersonaData(id);
 
   if (!persona) return null;
 
-  // 3. Dynamic RAG Context Augmentation (Always use id_text for RAG)
+  // 2. Dynamic RAG Context Augmentation (Always use id_text for RAG)
   const searchResults = await hybridSearch(userQuery, persona.id_text);
   const ragContext = searchResults.map(r => r.content).join("\n\n");
   const ragHighlights = buildRagHighlights(searchResults);
@@ -326,7 +343,7 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
     const { allowedClusters = [], isAdmin = false } = options || {};
 
     // 1. Try listing from Database
@@ -388,7 +405,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             })
         );
 
-        return metas.filter(Boolean) as { id: number; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
+        return metas.filter(Boolean) as { id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
     } catch (err) {
         console.error("Failed to list personas from filesystem", err);
         return [];

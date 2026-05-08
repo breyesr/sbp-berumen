@@ -34,7 +34,10 @@
 **Tasks:**
 - [x] **Task 20.1**: **Database Migration & Normalization** [DONE]
 - [x] **Task 20.2**: **App Refactor (Zero UI Impact)** [DONE]
-- [ ] **Task 20.3**: **Provider Refactor**: Update `PersonaProvider.ts` to support dual-ID lookups (Numerical for DB, Text for Filesystem/RAG).
+- [x] **Task 20.3**: **Provider Refactor**: Update `PersonaProvider.ts` to support dual-ID lookups (Numerical for DB, Text for Filesystem/RAG). [DONE]
+    *   **Refinement**: Ensure FS fallback uses `id_text` instead of `-1`.
+    *   **Validation**: Prevent invalid FS lookups for purely numerical IDs when DB fetch fails.
+    *   **Typing**: Update `Persona` type to support `number | string` for the `id` field.
 - [ ] **Task 20.4**: **UI Simplification**: Remove `id_text` from all Admin and User-facing lists, showing only the Name and numerical ID.
 - [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
 - [ ] **Task 20.6**: **API Optimization**: Update persona PATCH endpoints to handle granular updates for cluster and status changes from the inline UI.
