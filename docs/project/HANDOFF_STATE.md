@@ -1,30 +1,28 @@
-# Handoff State: [2026-05-09] - Full System Recovery & Stabilization
+# Handoff State: [2026-05-08] - Epic 20 Task 20.1 & 20.2 Completion
 
-## Current Phase: Recovery Baseline (STABLE)
-**Target Branch**: `feature/alpha/epic-20-persona-refactor` (Reset to Staging state)
-**Last Verified State**: Full system access restored. Code rolled back to `staging` baseline. Database restored to `main` (stable production) schema and data. Verified login and persona list visibility on both local and staging.
+## Current Phase: Epic 20 (Persona Refactor) - STABLE
+**Target Branch**: `staging`
+**Last Verified State**: Numerical ID Migration and Database Normalization successfully deployed to Production (Neon + Vercel).
 
-## Recent Accomplishments
-1.  **Code Rollback**:
-    *   Hard-reset the development branch to the `staging` baseline.
-    *   Restored `GEMINI.md` from the failed session backup to preserve updated team protocols.
-2.  **Database Restoration**:
-    *   **Local**: Wiped the "broken" Epic 20 schema and cloned the production database via `pg_dump`/`psql`.
-    *   **Staging Server**: Synchronized the integration server with the clean local dump.
-    *   **Data Integrity**: Confirmed all users and personas are back to their stable string-based ID format (e.g., `alejandro`).
-3.  **2FA Loop Fix**:
-    *   Identified and removed a critical bug in `src/app/(public)/login/page.tsx` that misidentified server configuration errors as 2FA requirements.
-    *   Successfully verified remote login behavior.
-4.  **Archive**: Created a "Gold Standard" database backup: `backup-main-34cc872-20260507-12-00.sql`.
-
-## Active Blockers / Issues
-- **None**: The system is back to a "Green" state.
+## Accomplishments (Task 20.1 & 20.2)
+1.  **Database Migration**:
+    *   Transitioned `personas.id` from `TEXT` to `SERIAL` (integer).
+    *   Preserved original text slugs as `id_text` for RAG/Filesystem compatibility.
+    *   **Normalization**: Split personas into two tables: `personas` (Thin Identity) and `persona_intelligence` (Fat Intelligence).
+2.  **App Refactor (Zero UI Impact)**:
+    *   Updated `PersonaProvider` to use `LEFT JOIN` for dossier continuity.
+    *   Fixed Zod schema regressions in `/api/copywriter` and `/api/idea-refinement`.
+    *   Updated Auth sessions to handle `number[]` for personas.
+    *   Verified Admin CRUD features (Edit, Train, Sync) are fully functional with dual-ID support.
+3.  **Security/Cleanup**:
+    *   Removed local database backups from repository tracking and updated `.gitignore`.
 
 ## Immediate Next Steps
-1.  **Re-evaluate Epic 20**: Perform a safer, incremental implementation of the Numerical ID migration, starting with data-only schema changes before modifying the PKs.
-2.  **Intelligent Sync (Epic 21)**: Implement `last_synced_at` to protect UI edits from being overwritten by repo JSON files.
+- [ ] **Task 20.3**: Further refine `PersonaProvider.ts` for specialized dual-ID UI scenarios.
+- [ ] **Task 20.4**: UI Simplification: Remove `id_text` from all User/Admin lists to show only Numerical ID + Name.
+- [ ] **Epic 21**: Transition "Sincronizar DB" to the "Intelligent Sync" mechanism using the new normalized structure.
 
-## Critical Learnings
-- **Error Disguise**: Generic catch-all error checks (like checking for "Configuration" errors in auth) can hide underlying infrastructure failures (DB connection) and create false diagnostic loops (2FA prompt).
-- **Hard Rollback Protocol**: When a schema surgery fails on a live environment, a clean "Wipe and Clone from Main" is faster and safer than attempting to "un-pivot" Primary Keys manually.
-- **Environment Parity**: Always verify that the "Configuration" error in Vercel isn't being triggered by missing SSL or mismatched connection strings before assuming the code is at fault.
+## Technical Learnings
+- **Zod Strictness**: API schema changes must allow both `string` and `number` during migration phases to prevent frontend crashes when IDs are transitioned.
+- **Transactional Surgery**: Wrapping major PK changes and table splits in a single `BEGIN/COMMIT` block is mandatory for zero-downtime Neon migrations.
+- **Metadata Mapping**: Always use `id_text` for filesystem and RAG metadata to avoid expensive re-indexing during ID migrations.

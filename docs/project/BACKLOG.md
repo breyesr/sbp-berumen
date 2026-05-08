@@ -32,16 +32,8 @@
 3. **Non-Destructive Migration**: Preserving `id_text` (slugs) for RAG and filesystem stability.
 
 **Tasks:**
-- [ ] **Task 20.1**: **Database Migration & Normalization**:
-    - **Schema Surgery**: Rename `personas.id` to `id_text`, add `SERIAL id` as PK.
-    - **Table Split**: Create `persona_intelligence` for `metadata`, `voice`, and `context`.
-    - **Relation Update**: Migrate `user_personas` to reference numerical `id`.
-    - **Remote Execution**: Prepare and verify SQL migration script for production console.
-- [ ] **Task 20.2**: **App Refactor (Zero UI Impact)**:
-    - **Provider Logic**: Refactor `getPersona` with `LEFT JOIN` for dossier continuity.
-    - **API Optimization**: Refactor `listPersonas` to query only the "thin" table for speed.
-    - **Admin Endpoints**: Update PATCH/DELETE routes with transactions across both tables.
-    - **Sync Logic**: Update `db-sync.ts` for two-step UPSERT.
+- [x] **Task 20.1**: **Database Migration & Normalization** [DONE]
+- [x] **Task 20.2**: **App Refactor (Zero UI Impact)** [DONE]
 - [ ] **Task 20.3**: **Provider Refactor**: Update `PersonaProvider.ts` to support dual-ID lookups (Numerical for DB, Text for Filesystem/RAG).
 - [ ] **Task 20.4**: **UI Simplification**: Remove `id_text` from all Admin and User-facing lists, showing only the Name and numerical ID.
 - [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
