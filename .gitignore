@@ -41,4 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Gemini temporary files
-.gemini-clipboard/
+.gemini-clipboard/stagingbackup_before_epic20.sql
