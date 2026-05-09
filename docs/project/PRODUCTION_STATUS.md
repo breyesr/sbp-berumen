@@ -5,6 +5,11 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Refined Intelligence Factory, Multi-Tenant Admin)**
 
 ## Latest Deployments
+- **Epic 20 & 21: Stabilization Path - Phase 1 (May 9, 2026)**:
+    - **Intelligent Sync**: Implemented "Human-First" precedence to protect manual UI edits from being overwritten by repository files.
+    - **UTC Standardization**: Migrated all persona timestamps to `TIMESTAMPTZ` to ensure cross-environment synchronization reliability.
+    - **Numerical ID Transition**: Finalized migration from text-slugs to SERIAL IDs for robust relational integrity.
+    - **Vercel-Safe Ingestion**: Hardened the deployment bridge to bypass filesystem locks in serverless environments.
 - **Epic 17: 2FA UX Extreme Distinction (May 4, 2026)**:
     - **Expert Path (Fast Track)**: Added an immediate skip option for power users with existing apps.
     - **Extreme Visual Distinction**: Implemented Blue (Camera) and Amber (Authenticator) themes to resolve QR scan confusion.

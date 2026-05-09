@@ -77,23 +77,27 @@ export async function syncPersonasFromFilesystem() {
                 );
 
                 let personaIdInt: number;
+                let wasEditedByHuman = false;
                 
                 if (existingPersona.rows.length > 0) {
                     const p = existingPersona.rows[0];
                     personaIdInt = p.id;
                     
-                    // Logic: If updated_at > last_synced_at (or last_synced_at is null), it was edited by a human
-                    const wasEditedByHuman = p.last_synced_at === null || new Date(p.updated_at) > new Date(p.last_synced_at);
+                    // Standardize comparison to UTC to kill the "Timezone Ghost"
+                    const updatedAt = new Date(p.updated_at).getTime();
+                    const lastSyncedAt = p.last_synced_at ? new Date(p.last_synced_at).getTime() : 0;
+                    
+                    wasEditedByHuman = lastSyncedAt === 0 || updatedAt > lastSyncedAt;
 
                     if (wasEditedByHuman) {
-                        console.log(`[Sync] Skipping metadata for ${finalId} due to human edits.`);
+                        console.log(`[Sync] Human edits detected for ${finalId}. Protecting identity metadata.`);
                         // Only update last_synced_at to "accept" current state as synced
                         await db.query(
                             `UPDATE personas SET last_synced_at = CURRENT_TIMESTAMP WHERE id = $1`,
                             [personaIdInt]
                         );
                     } else {
-                        // Safe to update metadata
+                        // Safe to update identity metadata
                         await db.query(
                             `UPDATE personas SET 
                                 name = $1, role = $2, cluster = $3, 
@@ -115,21 +119,32 @@ export async function syncPersonasFromFilesystem() {
                 }
 
                 // 2. Insert/Update persona_intelligence (Fat Table)
-                // Note: We include voice if it exists in the data
-                await db.query(
-                    `INSERT INTO persona_intelligence (persona_id, metadata, voice, context)
-                     VALUES ($1, $2, $3, $4)
-                     ON CONFLICT (persona_id) DO UPDATE SET
-                        metadata = EXCLUDED.metadata,
-                        voice = EXCLUDED.voice,
-                        context = EXCLUDED.context`,
-                    [
-                        personaIdInt,
-                        JSON.stringify(data),
-                        data.voice ? JSON.stringify(data.voice) : null,
-                        strategicDepth.trim()
-                    ]
-                );
+                if (wasEditedByHuman) {
+                    console.log(`[Sync] Protecting strategic metadata for ${finalId}. Only updating grounding context.`);
+                    // ONLY update context (markdown), preserve metadata/voice JSON
+                    await db.query(
+                        `UPDATE persona_intelligence SET 
+                            context = $1 
+                         WHERE persona_id = $2`,
+                        [strategicDepth.trim(), personaIdInt]
+                    );
+                } else {
+                    // Safe to update strategic metadata + grounding context
+                    await db.query(
+                        `INSERT INTO persona_intelligence (persona_id, metadata, voice, context)
+                         VALUES ($1, $2, $3, $4)
+                         ON CONFLICT (persona_id) DO UPDATE SET
+                            metadata = EXCLUDED.metadata,
+                            voice = EXCLUDED.voice,
+                            context = EXCLUDED.context`,
+                        [
+                            personaIdInt,
+                            JSON.stringify(data),
+                            data.voice ? JSON.stringify(data.voice) : null,
+                            strategicDepth.trim()
+                        ]
+                    );
+                }
                 results.migrated.push(finalId);
             } catch (err) {
                 console.error(`Failed to sync persona at ${filePath}`, err);

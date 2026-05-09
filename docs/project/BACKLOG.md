@@ -82,9 +82,15 @@ Modified workflow for `syncPersonasFromFilesystem`:
 4.  **Final Update:** Update `last_synced_at` to the current time to mark the successful sync.
 
 ### 3. Execution Steps
+#### Phase 1: Identity Protection [STABLE]
 - [x] **Task 21.1**: **Migration**: Create a SQL script to add the `last_synced_at` column. [DONE]
 - [x] **Task 21.2**: **Implementation**: Update `src/lib/db-sync.ts` to implement the comparison logic and the surgical `UPDATE`. [DONE]
 - [x] **Task 21.3**: **Validation**: Edit a persona's name in UI -> Run Sync -> Confirm persistence. [DONE]
+
+#### Phase 2: Strategic Protection & UTC Alignment [STABLE]
+- [x] **Task 21.4**: **UTC Migration**: Convert persona timestamps to `TIMESTAMPTZ` to eliminate timezone discrepancies. [DONE]
+- [x] **Task 21.5**: **Intelligence Protection**: Refactor sync logic to protect the `persona_intelligence` table (Pains, Goals, Metadata) from overwrites. [DONE]
+- [x] **Task 21.6**: **Standardized Comparison**: Ensure date comparisons use UTC `.getTime()` for cross-environment reliability. [DONE]
 
 
 ## Epic 22: Cluster Management Infrastructure (Medium Priority)

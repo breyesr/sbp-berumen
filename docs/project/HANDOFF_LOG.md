@@ -127,4 +127,15 @@ This file serves as a permanent historical record of all development sessions. E
 - **Infrastructure**: Created a portable RAG setup tool and initialized vector tables on the remote production DB.
 **Learnings:**
 - **Serverless Constraints**: Confirmed that Vercel's read-only filesystem and 10s timeouts require a "Git-to-DB" sync workflow for seed data until persistent volumes (Railway) are active.
-- **Normalization Stability**: ASCII-only slugs (stripping accents) are mandatory for cross-OS filesystem consistency.
+---
+
+## [2026-05-09] Epic 21: Full Sync Integrity & UTC Stabilization
+**Team:** System Architect & Backend & AI Engineer
+**Accomplishments:**
+- **Phase 2 Complete**: Implemented full protection for `persona_intelligence` (Pains/Goals). Sync now ignores metadata if human edits are detected.
+- **Timezone Fix**: Migrated local and remote databases to `TIMESTAMPTZ` to eliminate timezone-related "False Positive" edits.
+- **Verification**: Successfully tested the "Split Update" (Markdown syncs, UI metadata is preserved) on local dev.
+- **Stabilization Branch**: Established `feature/alpha/stabilization-path` as the working branch for Step 2 (RAG Alignment).
+**Learnings:**
+- **UTC Precedence**: Relying on database server time is risky for sync logic; forcing UTC comparisons in JavaScript is the only cross-environment solution.
+- **Atomic Ownership**: Once a human edits a JSON-backed field in the UI, the system must permanently hand over ownership of the entire metadata block to avoid data corruption during partial syncs.
