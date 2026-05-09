@@ -69,24 +69,50 @@ export async function syncPersonasFromFilesystem() {
                 }
 
                 // 1. Insert/Update personas (Thin Table)
-                const resThin = await db.query(
-                    `INSERT INTO personas (id_text, name, role, cluster)
-                     VALUES ($1, $2, $3, $4)
-                     ON CONFLICT (id_text) DO UPDATE SET
-                        name = EXCLUDED.name,
-                        role = EXCLUDED.role,
-                        cluster = EXCLUDED.cluster,
-                        updated_at = CURRENT_TIMESTAMP
-                     RETURNING id`,
-                    [
-                        finalId, // this is the slug from the filesystem
-                        data.name || finalId,
-                        data.role || "",
-                        cluster
-                    ]
+                // Intelligent Sync: Check if human edits exist
+                const existingPersona = await db.query(
+                    `SELECT id, name, role, cluster, updated_at, last_synced_at 
+                     FROM personas WHERE id_text = $1`,
+                    [finalId]
                 );
+
+                let personaIdInt: number;
                 
-                const personaIdInt = resThin.rows[0].id;
+                if (existingPersona.rows.length > 0) {
+                    const p = existingPersona.rows[0];
+                    personaIdInt = p.id;
+                    
+                    // Logic: If updated_at > last_synced_at (or last_synced_at is null), it was edited by a human
+                    const wasEditedByHuman = p.last_synced_at === null || new Date(p.updated_at) > new Date(p.last_synced_at);
+
+                    if (wasEditedByHuman) {
+                        console.log(`[Sync] Skipping metadata for ${finalId} due to human edits.`);
+                        // Only update last_synced_at to "accept" current state as synced
+                        await db.query(
+                            `UPDATE personas SET last_synced_at = CURRENT_TIMESTAMP WHERE id = $1`,
+                            [personaIdInt]
+                        );
+                    } else {
+                        // Safe to update metadata
+                        await db.query(
+                            `UPDATE personas SET 
+                                name = $1, role = $2, cluster = $3, 
+                                updated_at = CURRENT_TIMESTAMP, 
+                                last_synced_at = CURRENT_TIMESTAMP 
+                             WHERE id = $4`,
+                            [data.name || finalId, data.role || "", cluster, personaIdInt]
+                        );
+                    }
+                } else {
+                    // New Persona: Full Insert
+                    const resThin = await db.query(
+                        `INSERT INTO personas (id_text, name, role, cluster, last_synced_at)
+                         VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
+                         RETURNING id`,
+                        [finalId, data.name || finalId, data.role || "", cluster]
+                    );
+                    personaIdInt = resThin.rows[0].id;
+                }
 
                 // 2. Insert/Update persona_intelligence (Fat Table)
                 // Note: We include voice if it exists in the data

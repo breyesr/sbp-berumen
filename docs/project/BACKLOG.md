@@ -82,9 +82,9 @@ Modified workflow for `syncPersonasFromFilesystem`:
 4.  **Final Update:** Update `last_synced_at` to the current time to mark the successful sync.
 
 ### 3. Execution Steps
-- [ ] **Task 21.1**: **Migration**: Create a SQL script to add the `last_synced_at` column.
-- [ ] **Task 21.2**: **Implementation**: Update `src/lib/db-sync.ts` to implement the comparison logic and the surgical `UPDATE`.
-- [ ] **Task 21.3**: **Validation**: Edit a persona's name in UI -> Run Sync -> Confirm persistence.
+- [x] **Task 21.1**: **Migration**: Create a SQL script to add the `last_synced_at` column. [DONE]
+- [x] **Task 21.2**: **Implementation**: Update `src/lib/db-sync.ts` to implement the comparison logic and the surgical `UPDATE`. [DONE]
+- [x] **Task 21.3**: **Validation**: Edit a persona's name in UI -> Run Sync -> Confirm persistence. [DONE]
 
 
 ## Epic 22: Cluster Management Infrastructure (Medium Priority)
