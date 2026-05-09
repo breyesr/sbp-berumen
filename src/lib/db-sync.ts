@@ -47,13 +47,25 @@ export async function syncPersonasFromFilesystem() {
                 const cluster = data.cluster || pathCluster;
                 const finalId = pathParts[pathParts.length - 1];
 
-                // Fetch strategic depth if available
+                // Fetch strategic depth if available (Name Agnostic)
                 let strategicDepth = "";
                 try {
-                    const sdPath = path.join(path.dirname(filePath), "persona_strategic_depth.md");
-                    strategicDepth = await fs.readFile(sdPath, "utf8");
-                } catch {
-                    // Ignore missing strategic depth
+                    const dirFiles = await fs.readdir(path.dirname(filePath));
+                    const mdFiles = dirFiles.filter(f => f.toLowerCase().endsWith(".md"));
+                    
+                    if (mdFiles.length > 0) {
+                        // Prioritization: 
+                        // 1. FICHA_TECNICA or PERSONA_STRATEGIC_DEPTH
+                        // 2. Any other markdown file (pick the first/only one)
+                        const primaryFile = mdFiles.find(f => 
+                            f.toUpperCase().includes("FICHA_TECNICA") || 
+                            f.toUpperCase().includes("STRATEGIC_DEPTH")
+                        ) || mdFiles[0];
+
+                        strategicDepth = await fs.readFile(path.join(path.dirname(filePath), primaryFile), "utf8");
+                    }
+                } catch (sdErr) {
+                    console.error(`Failed to read strategic depth for ${personaId}`, sdErr);
                 }
 
                 // 1. Insert/Update personas (Thin Table)
