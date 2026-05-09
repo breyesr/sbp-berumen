@@ -73,28 +73,35 @@ export async function ingestFileContent(args: {
 
         logger.info({ personaId, filename, chunks: chunks.length }, "Starting embedding process for uploaded file");
 
-        // Use Promise.all to parallelize OpenAI calls and DB inserts
-        // Note: For very large files, we might need to batch this to avoid OpenAI rate limits
-        await Promise.all(chunks.map(async (chunk, i) => {
+        // Sequential ingestion is safer for serverless environments with limited connection pools
+        for (let i = 0; i < chunks.length; i++) {
+            const chunk = chunks[i];
             const uniqueChunkIdentifier = `upload::${personaId}::${filename}::chunk${i}`;
             const docId = generateUUID(uniqueChunkIdentifier);
 
-            const embeddingResponse = await openai.embeddings.create({
-                model: EMBEDDING_MODEL,
-                input: chunk,
-            });
-            const embedding = embeddingResponse.data[0].embedding;
+            console.log(`[Ingestion] Processing chunk ${i+1}/${chunks.length} for ${personaId}`);
 
-            const upsertQuery = `
-                INSERT INTO documents (id, content, embedding, metadata)
-                VALUES ($1, $2, $3, $4)
-                ON CONFLICT (id) DO UPDATE SET
-                    content = EXCLUDED.content,
-                    embedding = EXCLUDED.embedding,
-                    metadata = EXCLUDED.metadata;
-            `;
-            await db.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
-        }));
+            try {
+                const embeddingResponse = await openai.embeddings.create({
+                    model: EMBEDDING_MODEL,
+                    input: chunk,
+                });
+                const embedding = embeddingResponse.data[0].embedding;
+
+                const upsertQuery = `
+                    INSERT INTO documents (id, content, embedding, metadata)
+                    VALUES ($1, $2, $3, $4)
+                    ON CONFLICT (id) DO UPDATE SET
+                        content = EXCLUDED.content,
+                        embedding = EXCLUDED.embedding,
+                        metadata = EXCLUDED.metadata;
+                `;
+                await db.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
+            } catch (chunkErr: any) {
+                console.error(`[Ingestion] CRITICAL FAILURE on chunk ${i}:`, chunkErr.message);
+                throw new Error(`Chunk ${i} failed: ${chunkErr.message}`);
+            }
+        }
 
         // 3. AUTO-SYNTHESIS LITE: Update persona record with context/metadata if it's currently empty
         // This ensures the dossier works immediately after upload.

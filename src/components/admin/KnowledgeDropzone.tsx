@@ -53,8 +53,16 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
         // Check if the response is JSON before parsing
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
+            const html = await response.text();
+            // Simple check to see if the HTML contains a Postgres error
+            if (html.includes("relation") && html.includes("does not exist")) {
+                throw new Error("The 'documents' table is still missing in the database. Please verify the setup script ran on the correct URL.");
+            }
+            if (html.includes("OpenAI")) {
+                throw new Error("There was an issue connecting to the AI embedding service.");
+            }
             const statusText = response.statusText || `Status ${response.status}`;
-            throw new Error(`The server returned an invalid response (${statusText}). This often happens during database connection issues or timeouts.`);
+            throw new Error(`Server returned an invalid response (${statusText}). Check Vercel logs for details.`);
         }
 
         const data = await response.json();
