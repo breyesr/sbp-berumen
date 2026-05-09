@@ -1,30 +1,28 @@
-# Handoff State: [2026-05-09] - Epic 20 Tasks 20.3 & 20.4 Stabilized
+# Handoff State: [2026-05-09] - Remote Stabilization & DB Manifest
 
 ## Current Phase: Epic 20 (Persona Refactor) - STABLE
 **Target Branch**: `feature/alpha/admin-velocity`
-**Last Verified State**: Persona Lifecycle & Human-First UI verified and stabilized after deep-dive testing.
+**Last Verified State**: Remote infrastructure synchronized and UI hardened against HTML error leaks.
 
-## Accomplishments (Task 20.3 & 20.4)
-1.  **Dual-ID Infrastructure**:
-    *   `PersonaProvider` now robustly supports both Numerical IDs (primary) and Text Slugs (RAG/FS).
-    *   Unified data fetching into `getPersonaData` helper to ensure consistency between AI and UI layers.
-2.  **Human-First UI**:
-    *   Technical IDs (slugs and numbers) are now hidden from all end-user and admin-facing lists/cards.
-    *   Identity is now driven by **Name**, **Role**, and **Cluster** for better strategic narrative.
-3.  **Persona Lifecycle Hardening**:
-    *   **Normalization**: New personas now have URL-safe, filesystem-stable slugs (stripping accents and special characters, e.g., "Andrés" -> "andres-xxxx").
-    *   **Auto-Population**: Knowledge ingestion now automatically fills the "Detalles Estratégicos" and Dossier metadata if the uploaded files contain the required info (e.g., `FICHA_TECNICA.md` or `persona.json`).
-    *   **Sync Integrity**: Updated `db-sync.ts` to ignore `knowledge/` subfolders, preventing duplicate "phantom" personas in the database.
-    *   **Ghost Folder Cleanup**: Deleting a persona via the Admin API now automatically removes its associated folder from the filesystem.
-4.  **UI Reactivity & Security**:
-    *   Dossier now populates immediately after file upload without page refresh.
-    *   Restored `isAdmin` restriction for technical Strategic Depth context in the dossier.
+## Accomplishments (Remote Stabilization)
+1.  **Remote RAG Setup**: Successfully created the `documents` table and enabled `vector` extension on the remote server using the new portable setup script.
+2.  **UI Hardening**: Updated `KnowledgeDropzone.tsx` to handle non-JSON (HTML) error responses gracefully, providing human-readable feedback during server failures.
+3.  **Portable Setup Script**: Refactored `scripts/safe-rag-setup.ts` into a standalone CLI tool that accepts any database URL, making it safe for remote environment initialization.
+4.  **Audit & Cleanup**: Performed a schema audit of the remote database and cleaned up local audit artifacts.
+
+## 🚀 Database Migration Manifest (for `main`)
+To replicate these changes in the `main` environment, the following must be executed in order:
+
+1.  **Persona Normalization**: Run `scripts/db/epic-20-migration.sql` (already in repo) to split the personas table and migrate existing data to the numerical ID system.
+2.  **RAG Infrastructure**: Run the portable setup tool against the production database:
+    `npx tsx scripts/safe-rag-setup.ts "YOUR_PRODUCTION_POSTGRES_URL"`
+    *   *This will ensure the `documents` table and `vector` extension are ready.*
+3.  **App Refactor**: Merge the `feature/alpha/admin-velocity` code changes.
 
 ## Immediate Next Steps
 - [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with interactive inline dropdowns for Cluster and Status.
 - [ ] **Task 20.6**: **API Optimization**: Finalize full unification of persona fetching logic and implement selective fetching for performance.
 
 ## Technical Learnings
-- **Filesystem Sanitization**: Modern OS handle accents differently; always normalize slugs to ASCII (NFD + accent removal) before using them as directory names to prevent "Ghost Folder" sync bugs.
-- **Race Condition in State**: When uploading large files, ensure the UI polling or callback mechanism is robustly linked to the completion of the *embedding* process, not just the *upload* process.
-- **RBAC in Shared Components**: When using components like `PersonaDossier` across different routes, always re-validate session roles locally to ensure sensitive "Strategic Depth" remains protected.
+- **The "HTML Leak" Trap**: Remote proxies (Vercel/Cloudflare) often replace 500 errors with HTML pages. Client-side fetchers MUST validate `Content-Type` before calling `.json()` to avoid "Unexpected token <" crashes.
+- **Environment Isolation**: Scripts that import `@/lib/clients` are bound to local `.env` validation. Use raw `pg` clients for portable infrastructure tools to avoid boot-up crashes.

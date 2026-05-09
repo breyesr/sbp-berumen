@@ -45,10 +45,17 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
       formData.append("file", file);
 
       try {
-        const response = await fetch(`/api/admin/personas/${personaId}/knowledge`, {
+        const response = await fetch(`/api/admin/personas/${encodeURIComponent(personaId)}/knowledge`, {
           method: "POST",
           body: formData,
         });
+
+        // Check if the response is JSON before parsing
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            const statusText = response.statusText || `Status ${response.status}`;
+            throw new Error(`The server returned an invalid response (${statusText}). This often happens during database connection issues or timeouts.`);
+        }
 
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || `Upload failed for ${file.name}`);
