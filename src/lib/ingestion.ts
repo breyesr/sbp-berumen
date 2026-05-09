@@ -73,8 +73,9 @@ export async function ingestFileContent(args: {
 
         logger.info({ personaId, filename, chunks: chunks.length }, "Starting embedding process for uploaded file");
 
-        for (let i = 0; i < chunks.length; i++) {
-            const chunk = chunks[i];
+        // Use Promise.all to parallelize OpenAI calls and DB inserts
+        // Note: For very large files, we might need to batch this to avoid OpenAI rate limits
+        await Promise.all(chunks.map(async (chunk, i) => {
             const uniqueChunkIdentifier = `upload::${personaId}::${filename}::chunk${i}`;
             const docId = generateUUID(uniqueChunkIdentifier);
 
@@ -93,7 +94,7 @@ export async function ingestFileContent(args: {
                     metadata = EXCLUDED.metadata;
             `;
             await db.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
-        }
+        }));
 
         // 3. AUTO-SYNTHESIS LITE: Update persona record with context/metadata if it's currently empty
         // This ensures the dossier works immediately after upload.

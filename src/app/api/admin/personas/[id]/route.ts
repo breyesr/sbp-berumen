@@ -99,7 +99,7 @@ export async function DELETE(
 
     await db.query(`DELETE FROM personas WHERE ${whereClause}`, [id]);
 
-    if (id_text) {
+    if (id_text && !process.env.VERCEL) {
         const personaDir = path.join(DATA_DIR, id_text);
         try {
             await fs.rm(personaDir, { recursive: true, force: true });

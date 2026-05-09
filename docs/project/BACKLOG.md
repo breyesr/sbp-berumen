@@ -6,6 +6,10 @@
 - [ ] **Task 0.1**: Set up a Railway-hosted Node.js environment with shared access to the production Postgres/Redis.
 - [ ] **Task 0.2**: Migrate `/api/stress-test` and `/api/persona` (and associated RAG logic) to the Railway container.
 - [ ] **Task 0.3**: Configure Vercel as a "Thin Client" that proxies complex AI requests to the Railway backend via a secure private API.
+- [ ] **Task 0.4**: **Restore Persistent Storage**: Transition the "Vercel-Safe" ingestion (Database-only) back to a "Hybrid-Persistent" storage model using Railway's Persistent Volumes for the `/data` folder.
+
+> **Note on Vercel-Safe Bridge**: Currently, ingestion skips the filesystem on remote (Vercel) to prevent 500 errors. Once Railway is active, this must be reverted to ensure files are saved to the persistent volume for RAG and backup integrity.
+
 
 ## Epic 2: Frontend De-Monolithization & UX Refinement (High)
 **Owner**: Frontend & UX/UI

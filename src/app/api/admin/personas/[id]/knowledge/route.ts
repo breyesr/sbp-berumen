@@ -55,14 +55,20 @@ export async function POST(
     const buffer = Buffer.from(arrayBuffer);
 
     // 1. Save to local filesystem (Fallback/Backup) - Always use id_text
-    const personaDir = path.join(process.cwd(), "data", "personas", id_text);
-    const knowledgeDir = path.join(personaDir, "knowledge");
-    
-    try {
-      await fs.mkdir(knowledgeDir, { recursive: true });
-      await fs.writeFile(path.join(knowledgeDir, file.name), buffer);
-    } catch (fsErr: any) {
-      console.error(`FileSystem sync failed for ${id_text}, but proceeding with DB embedding`, fsErr);
+    // BRIDGE: Skip filesystem on Vercel (serverless is read-only)
+    if (!process.env.VERCEL) {
+        const personaDir = path.join(process.cwd(), "data", "personas", id_text);
+        const knowledgeDir = path.join(personaDir, "knowledge");
+        
+        try {
+            await fs.mkdir(knowledgeDir, { recursive: true });
+            await fs.writeFile(path.join(knowledgeDir, file.name), buffer);
+            console.log(`[API] Saved file to filesystem: ${id_text}/${file.name}`);
+        } catch (fsErr: any) {
+            console.error(`FileSystem sync failed for ${id_text}, but proceeding with DB embedding`, fsErr);
+        }
+    } else {
+        console.log(`[API] Running on Vercel: Skipping filesystem write for ${file.name}`);
     }
 
     // 2. Process and Embed into DB (RAG) - Use id_text for metadata mapping
