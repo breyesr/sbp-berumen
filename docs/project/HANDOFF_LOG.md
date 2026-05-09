@@ -114,3 +114,17 @@ This file serves as a permanent historical record of all development sessions. E
 \n[2026-05-08] - Team Alpha - Task 20.4: Simplified UI by removing id_text slugs and standardizing on Numerical IDs across all lists and dossiers.
 [2026-05-08] - Team Alpha - Task 20.4: Refined UI to hide numerical IDs, prioritizing a human-first display (Name/Role/Cluster).
 [2026-05-09] - Team Alpha - Task 20.3 & 20.4: Stabilized Persona Lifecycle. Implemented slug normalization, auto-population from uploads, and fixed sync duplicate bugs. UI is now fully Human-First (Technical IDs hidden).
+
+---
+
+## [2026-05-09] Epic 20: Identity Refactor & Remote Bridge Stabilization
+**Team:** Team Alpha (Lead, Backend, DevOps, UX/UI, PM)
+**Accomplishments:**
+- **Task 20.3 (Done)**: Refactored `PersonaProvider.ts` for Dual-ID support (Numerical for DB, Slugs for FS/RAG).
+- **Task 20.4 (Done)**: Implemented "Human-First" Identity UI, hiding technical IDs across all user surfaces.
+- **Remote Bridge**: Developed "Vercel-Safe" ingestion logic to bypass filesystem locks in serverless environments.
+- **Sync Hardening**: Updated `db-sync.ts` with name-agnostic discovery (`*.md`) and fixed duplicate-creation bugs.
+- **Infrastructure**: Created a portable RAG setup tool and initialized vector tables on the remote production DB.
+**Learnings:**
+- **Serverless Constraints**: Confirmed that Vercel's read-only filesystem and 10s timeouts require a "Git-to-DB" sync workflow for seed data until persistent volumes (Railway) are active.
+- **Normalization Stability**: ASCII-only slugs (stripping accents) are mandatory for cross-OS filesystem consistency.
