@@ -77,13 +77,19 @@ export default function PersonaSelect({ options, value, onChange, className, lab
 
   const handleOpenDossier = async (e: React.MouseEvent, personaId: string | number) => {
     e.stopPropagation();
+    if (loadingDossier) return;
+    
     setLoadingDossier(true);
     try {
-      const res = await fetch(`/api/personas/${personaId}`);
+      const res = await fetch(`/api/personas/${encodeURIComponent(personaId)}`);
+      if (!res.ok) throw new Error("Failed to fetch dossier");
       const data = await res.json();
-      if (res.ok) setViewingDossier(data.persona);
+      if (data.persona) {
+        setViewingDossier(data.persona);
+      }
     } catch (err) {
       console.error("Dossier fetch failed", err);
+      // Optional: alert the user or show a toast
     } finally {
       setLoadingDossier(false);
     }

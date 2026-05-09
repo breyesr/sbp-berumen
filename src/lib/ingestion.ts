@@ -95,6 +95,47 @@ export async function ingestFileContent(args: {
             await db.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
         }
 
+        // 3. AUTO-SYNTHESIS LITE: Update persona record with context/metadata if it's currently empty
+        // This ensures the dossier works immediately after upload.
+        try {
+            const currentPersona = await db.query(
+                `SELECT p.id, pi.context, pi.metadata 
+                 FROM personas p 
+                 JOIN persona_intelligence pi ON p.id = pi.persona_id 
+                 WHERE p.id_text = $1`, 
+                [personaId]
+            );
+
+            if (currentPersona.rows[0]) {
+                const { id, context, metadata: currentMeta } = currentPersona.rows[0];
+                const needsContext = !context || context.trim() === "";
+                const isFicha = filename.toUpperCase().includes("FICHA_TECNICA") || filename.toUpperCase().includes("PERSONA_STRATEGIC_DEPTH");
+                
+                if (needsContext && isFicha) {
+                    await db.query(
+                        `UPDATE persona_intelligence SET context = $1 WHERE persona_id = $2`,
+                        [text, id]
+                    );
+                    console.log(`[Ingestion] Auto-populated context for ${personaId} from ${filename}`);
+                }
+
+                // Simple check for metadata fields
+                const needsMeta = !currentMeta.strategic_synthesis || (currentMeta.goals?.length === 0 && currentMeta.pains?.length === 0);
+                if (needsMeta && filename.endsWith(".json")) {
+                    try {
+                        const jsonMeta = JSON.parse(buffer.toString('utf-8'));
+                        await db.query(
+                            `UPDATE persona_intelligence SET metadata = $1 WHERE persona_id = $2`,
+                            [JSON.stringify(jsonMeta), id]
+                        );
+                        console.log(`[Ingestion] Auto-populated metadata for ${personaId} from JSON upload`);
+                    } catch (e) { /* ignore invalid JSON */ }
+                }
+            }
+        } catch (syncErr) {
+            console.error(`[Ingestion] Failed to auto-populate persona ${personaId}:`, syncErr);
+        }
+
         logger.info({ personaId, filename }, "File successfully ingested and embedded");
         return { success: true, chunks: chunks.length };
 

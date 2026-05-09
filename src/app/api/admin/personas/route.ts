@@ -42,8 +42,20 @@ export async function POST(req: Request) {
 
     await client.query('BEGIN');
 
-    // Generate slug for id_text
-    const id_text = name.toLowerCase().replace(/\s+/g, "-") + "-" + randomUUID().slice(0, 4);
+    // ULTRA-ROBUST slug normalization for id_text
+    // 1. Normalize to NFD to separate accents
+    // 2. Remove accents
+    // 3. Lowercase
+    // 4. Replace anything that isn't a-z or 0-9 with a single dash
+    // 5. Trim dashes from ends
+    const normalizedName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const id_text = normalizedName
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "")
+        + "-" + randomUUID().slice(0, 4);
+
+    console.log(`[API] Creating persona: name="${name}", normalized="${normalizedName}", slug="${id_text}"`);
 
     // 1. Insert into Thin Table
     const resThin = await client.query(

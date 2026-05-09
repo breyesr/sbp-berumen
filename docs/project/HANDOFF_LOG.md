@@ -113,3 +113,4 @@ This file serves as a permanent historical record of all development sessions. E
 \n[2026-05-08] - Team Alpha - Task 20.3: Completed PersonaProvider refactor for dual-ID support. Extracted shared fetching logic and hardened filesystem fallback.
 \n[2026-05-08] - Team Alpha - Task 20.4: Simplified UI by removing id_text slugs and standardizing on Numerical IDs across all lists and dossiers.
 [2026-05-08] - Team Alpha - Task 20.4: Refined UI to hide numerical IDs, prioritizing a human-first display (Name/Role/Cluster).
+[2026-05-09] - Team Alpha - Task 20.3 & 20.4: Stabilized Persona Lifecycle. Implemented slug normalization, auto-population from uploads, and fixed sync duplicate bugs. UI is now fully Human-First (Technical IDs hidden).

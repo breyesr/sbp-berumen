@@ -22,8 +22,6 @@ export async function GET(
       return NextResponse.json({ error: "Persona not found" }, { status: 404 });
     }
     
-    // In the future, we will check if the user has access to this cluster here (Epic 10)
-    
     return NextResponse.json({ persona });
   } catch (err: any) {
     return NextResponse.json(

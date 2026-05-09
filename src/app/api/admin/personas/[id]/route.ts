@@ -3,8 +3,12 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/clients";
 import { auth } from "@/lib/auth";
 import { isAdminRole } from "@/lib/rbac";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 export const runtime = "nodejs";
+
+const DATA_DIR = path.join(process.cwd(), "data", "personas");
 
 /**
  * PATCH /api/admin/personas/[id]
@@ -89,7 +93,22 @@ export async function DELETE(
     const isNumeric = !isNaN(Number(id)) && id.indexOf("-") === -1;
     const whereClause = isNumeric ? 'id = $1' : 'id_text = $1';
     
+    // Get id_text for FS cleanup before deleting from DB
+    const pRes = await db.query(`SELECT id_text FROM personas WHERE ${whereClause}`, [id]);
+    const id_text = pRes.rows[0]?.id_text;
+
     await db.query(`DELETE FROM personas WHERE ${whereClause}`, [id]);
+
+    if (id_text) {
+        const personaDir = path.join(DATA_DIR, id_text);
+        try {
+            await fs.rm(personaDir, { recursive: true, force: true });
+            console.log(`[API] Cleaned up folder: ${id_text}`);
+        } catch (fsErr) {
+            console.error(`[API] Failed to clean up folder ${id_text}:`, fsErr);
+        }
+    }
+
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

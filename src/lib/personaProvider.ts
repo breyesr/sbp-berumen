@@ -20,6 +20,7 @@ export type Persona = {
   role?: string;
   cluster?: string;
   is_active?: boolean;
+  metadata?: any;
   profile?: {
     goals?: string[];
     pains?: string[];
@@ -168,8 +169,9 @@ export function formatVoiceProfile(voice?: PersonaVoice | null): string | null {
  * Maps a database row or JSON object to a Persona object.
  */
 function mapToPersona(id: number | string, id_text: string, j: any, contextStr?: string): Persona {
-  const name: string = j.name ?? id_text;
-  const role: string | undefined = j.role;
+  // Prioritize human name from JSON metadata, fallback to id_text slug
+  const name: string = j.name || id_text;
+  const role: string | undefined = j.role || j.metadata?.role;
   const bench: Bench | undefined = j.bench
     ? {
         cplTargetMXN: [Number(j.bench.cplTargetMXN?.[0] ?? 0), Number(j.bench.cplTargetMXN?.[1] ?? 0)] as [number, number],
@@ -206,6 +208,7 @@ function mapToPersona(id: number | string, id_text: string, j: any, contextStr?:
     id_text,
     name,
     role,
+    metadata: j,
     profile: {
       goals: j.goals ?? [],
       pains: j.pains ?? [],
@@ -246,6 +249,8 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
   // 1. Try fetching from Database first (normalized structure)
   try {
     const isNumeric = typeof id === "number" || (!isNaN(Number(id)) && id.toString().indexOf("-") === -1);
+    const finalId = isNumeric ? parseInt(id.toString(), 10) : id;
+    
     const query = isNumeric 
         ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context 
            FROM personas p 
@@ -256,7 +261,7 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
            LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
            WHERE p.id_text = $1`;
 
-    const res = await db.query(query, [id]);
+    const res = await db.query(query, [finalId]);
     
     if (res.rows[0]) {
       const row = res.rows[0];
@@ -368,7 +373,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
         }
 
         query += ` ORDER BY cluster, name ASC`;
-        
+
         const res = await db.query(query, params);
         return res.rows.map(r => ({
             id: r.id,
@@ -378,9 +383,9 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             cluster: r.cluster,
             is_active: r.is_active
         }));
-    } catch (err) {
+        } catch (err) {
         console.error("Database error listing personas, falling back to filesystem", err);
-    }
+        }
 
     // 2. Fallback to filesystem
     try {

@@ -106,11 +106,15 @@ export function CopywriterClient({
     };
 
     const handleViewDossier = async (id: string | number) => {
+        if (loadingDossier) return;
         setLoadingDossier(true);
         try {
-            const res = await fetch(`/api/personas/${id}`);
+            const res = await fetch(`/api/personas/${encodeURIComponent(id)}`);
+            if (!res.ok) throw new Error("Failed to fetch persona data");
             const data = await res.json();
-            if (res.ok) setViewingDossier(data.persona);
+            if (data.persona) {
+                setViewingDossier(data.persona);
+            }
         } catch (err) {
             console.error("Dossier fetch failed", err);
         } finally {

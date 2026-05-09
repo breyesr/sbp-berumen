@@ -40,7 +40,10 @@
     *   **Typing**: Update `Persona` type to support `number | string` for the `id` field.
 - [x] **Task 20.4**: **UI Simplification**: Transition to a "Human-First" display by hiding text slugs (`id_text`) and numerical IDs across all user/admin lists, prioritizing Name, Role, and Cluster for identity. [DONE]
 - [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
-- [ ] **Task 20.6**: **API Optimization**: Update persona PATCH endpoints to handle granular updates for cluster and status changes from the inline UI.
+- [ ] **Task 20.6**: **API Optimization & Unification**: Consolidate all persona fetching into `personaProvider.ts`. 
+    *   **Unification**: Ensure `/api/admin` and `/api/public` use the same shared logic (`getPersonaData`) to prevent regressions.
+    *   **Selective Fetching**: Implement query parameters to handle "light" vs "full" data shapes to optimize performance.
+    *   **Security**: Maintain strict endpoint separation for RBAC while sharing the data contract.
 - [ ] **Task 20.7**: **Identity Synthesis**: Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
 - [ ] **Task 20.8**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
 - [ ] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database.

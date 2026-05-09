@@ -12,10 +12,11 @@ interface IntelligenceDrawerProps {
   mode: 'train' | 'edit';
   onClose: () => void;
   onSave: (data: any) => Promise<void>;
+  onUploadSuccess?: () => void;
   submitting: boolean;
 }
 
-export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, submitting }: IntelligenceDrawerProps) {
+export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, onUploadSuccess, submitting }: IntelligenceDrawerProps) {
   const [form, setForm] = useState(persona);
 
   if (!persona) return null;
@@ -57,7 +58,7 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, s
                 <p className="text-sm text-zinc-400 leading-relaxed">
                   Sube documentos estratégicos para que la persona aprenda nuevos comportamientos, sesgos y conocimientos técnicos.
                 </p>
-                <KnowledgeDropzone personaId={persona.id} />
+                <KnowledgeDropzone personaId={persona.id} onUploadSuccess={onUploadSuccess} />
               </div>
               
               <div className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
@@ -134,12 +135,16 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, s
               </div>
 
               <div className="space-y-2">
+                <div className="flex justify-between items-center px-1">
+                    <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Profundidad Estratégica</label>
+                    <span className="text-[10px] text-zinc-600 font-bold">{(form.context || '').length} chars</span>
+                </div>
                 <textarea
-                  value={form.context}
+                  value={form.context || ''}
                   onChange={(e) => setForm({ ...form, context: e.target.value })}
-                  rows={8}
+                  rows={10}
                   className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500/50 transition-colors text-sm leading-relaxed resize-none font-mono"
-                  placeholder="Escribe la profundidad estratégica aquí..."
+                  placeholder="Aquí aparecerá el núcleo de la IA una vez sintetizado. También puedes escribirlo manualmente..."
                 />
               </div>
               

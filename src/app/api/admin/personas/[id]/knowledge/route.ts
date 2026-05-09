@@ -26,11 +26,18 @@ export async function POST(
   try {
     // Resolve id_text if id is numerical
     let id_text = id;
-    const isNumeric = !isNaN(Number(id)) && id.indexOf("-") === -1;
+    const isNumeric = !isNaN(Number(id)) && id.toString().indexOf("-") === -1;
+    
     if (isNumeric) {
-      const res = await db.query(`SELECT id_text FROM personas WHERE id = $1`, [id]);
-      if (res.rows[0]) {
-        id_text = res.rows[0].id_text;
+      try {
+        const res = await db.query(`SELECT id_text FROM personas WHERE id = $1`, [parseInt(id, 10)]);
+        if (res.rows[0]) {
+          id_text = res.rows[0].id_text;
+        } else {
+          console.warn(`Persona with numerical ID ${id} not found in DB during knowledge upload fallback.`);
+        }
+      } catch (dbErr: any) {
+        console.error("Database error resolving id_text for knowledge upload:", dbErr);
       }
     }
 
@@ -41,7 +48,11 @@ export async function POST(
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const arrayBuffer = await file.arrayBuffer();
+    if (!arrayBuffer) {
+        throw new Error("Failed to read file buffer");
+    }
+    const buffer = Buffer.from(arrayBuffer);
 
     // 1. Save to local filesystem (Fallback/Backup) - Always use id_text
     const personaDir = path.join(process.cwd(), "data", "personas", id_text);
@@ -50,8 +61,8 @@ export async function POST(
     try {
       await fs.mkdir(knowledgeDir, { recursive: true });
       await fs.writeFile(path.join(knowledgeDir, file.name), buffer);
-    } catch (err) {
-      console.error("FileSystem sync failed, but proceeding with DB embedding", err);
+    } catch (fsErr: any) {
+      console.error(`FileSystem sync failed for ${id_text}, but proceeding with DB embedding`, fsErr);
     }
 
     // 2. Process and Embed into DB (RAG) - Use id_text for metadata mapping
@@ -67,6 +78,7 @@ export async function POST(
       chunks: ingestResult.chunks 
     });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    console.error("Critical error in knowledge upload API:", err);
+    return NextResponse.json({ error: err.message || "An unexpected error occurred during upload" }, { status: 500 });
   }
 }

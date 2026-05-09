@@ -11,6 +11,8 @@ async function findPersonaFiles(dir: string): Promise<string[]> {
     for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
+            // Ignore knowledge subfolders as they might contain backups/metadata that aren't the primary persona.json
+            if (entry.name === 'knowledge') continue;
             files = files.concat(await findPersonaFiles(fullPath));
         } else if (entry.name === 'persona.json') {
             files.push(fullPath);

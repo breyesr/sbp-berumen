@@ -444,6 +444,7 @@ export default function AdminPersonasPage() {
             mode={drawerMode}
             onClose={() => { setActivePersona(null); setDrawerMode(null); }}
             onSave={handleSaveEdit}
+            onUploadSuccess={loadData}
             submitting={submitting}
           />
       )}
