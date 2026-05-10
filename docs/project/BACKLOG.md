@@ -50,9 +50,9 @@
     *   **Security**: Maintain strict endpoint separation for RBAC while sharing the data contract.
 - [ ] **Task 20.7**: **Identity Synthesis**: Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
 - [ ] **Task 20.8**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
-- [ ] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database.
+- [x] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database. [DONE]
 - [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
-- [ ] **Task 20.11**: **Automated CI Embedding**: Update GitHub Actions (`ci.yml`) to automatically run `npm run embed` on pushes to `staging` and `main` to restore the "Push-to-Train" experience.
+- [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]
 
 
 ## Epic 21: Persona Synchronization & Data Integrity (High Priority)
@@ -91,6 +91,7 @@ Modified workflow for `syncPersonasFromFilesystem`:
 - [x] **Task 21.4**: **UTC Migration**: Convert persona timestamps to `TIMESTAMPTZ` to eliminate timezone discrepancies. [DONE]
 - [x] **Task 21.5**: **Intelligence Protection**: Refactor sync logic to protect the `persona_intelligence` table (Pains, Goals, Metadata) from overwrites. [DONE]
 - [x] **Task 21.6**: **Standardized Comparison**: Ensure date comparisons use UTC `.getTime()` for cross-environment reliability. [DONE]
+- [x] **Task 21.7**: **Sync Duplication Resolution**: Implement name/cluster matching to prevent duplicate persona creation during filesystem sync. [DONE]
 
 
 ## Epic 22: Cluster Management Infrastructure (Medium Priority)
