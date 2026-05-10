@@ -138,4 +138,14 @@ This file serves as a permanent historical record of all development sessions. E
 - **Stabilization Branch**: Established `feature/alpha/stabilization-path` as the working branch for Step 2 (RAG Alignment).
 **Learnings:**
 - **UTC Precedence**: Relying on database server time is risky for sync logic; forcing UTC comparisons in JavaScript is the only cross-environment solution.
-- **Atomic Ownership**: Once a human edits a JSON-backed field in the UI, the system must permanently hand over ownership of the entire metadata block to avoid data corruption during partial syncs.
+---
+
+## [2026-05-09] RAG Alignment & Duplication Resolution
+**Team:** AI Engineer & Backend & PM
+**Accomplishments:**
+- **Task 20.9 Complete**: Refactored the entire RAG pipeline to use Numerical IDs. This ensures the AI's "Brain" is perfectly synced with the relational database.
+- **Task 21.7 Complete**: Resolved the persona duplication bug by implementing Name/Cluster heuristic matching in the sync engine.
+- **System Stability**: Cleaned up the embedding process to ignore system files and handle malformed files gracefully.
+**Learnings:**
+- **Relational RAG**: Tagging vectors with integer IDs (instead of strings) reduces lookup overhead and eliminates the risk of "Twin ID" confusion during pitch generation.
+- **Sync Heuristics**: Relying on folder names as primary keys is a brittle strategy; multi-layer matching (Slug -> Name+Cluster) is mandatory for data integrity in hybrid git/db environments.

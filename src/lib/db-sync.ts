@@ -70,11 +70,28 @@ export async function syncPersonasFromFilesystem() {
 
                 // 1. Insert/Update personas (Thin Table)
                 // Intelligent Sync: Check if human edits exist
-                const existingPersona = await db.query(
-                    `SELECT id, name, role, cluster, updated_at, last_synced_at 
+                let existingPersona = await db.query(
+                    `SELECT id, id_text, name, role, cluster, updated_at, last_synced_at 
                      FROM personas WHERE id_text = $1`,
                     [finalId]
                 );
+
+                // DUPLICATION FIX: If slug doesn't match, check for Name + Cluster match
+                if (existingPersona.rows.length === 0) {
+                    console.log(`[Sync] No slug match for ${finalId}. Checking for Name/Cluster match...`);
+                    const nameMatch = await db.query(
+                        `SELECT id, id_text, name, role, cluster, updated_at, last_synced_at 
+                         FROM personas WHERE name = $1 AND cluster = $2`,
+                        [data.name || finalId, cluster]
+                    );
+                    if (nameMatch.rows.length > 0) {
+                        console.log(`[Sync] Match found by Name/Cluster. Merging ${finalId} into existing persona ${nameMatch.rows[0].id_text}`);
+                        existingPersona = nameMatch;
+                        
+                        // Optional: Update the slug in the DB to match the Git folder for future consistency
+                        await db.query(`UPDATE personas SET id_text = $1 WHERE id = $2`, [finalId, nameMatch.rows[0].id]);
+                    }
+                }
 
                 let personaIdInt: number;
                 let wasEditedByHuman = false;

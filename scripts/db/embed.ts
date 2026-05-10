@@ -109,7 +109,7 @@ async function embedAllData() {
 
     const processedDocIds = new Set<string>();
 
-    const embedFile = async (filePath: string, personaIds: string[]) => {
+    const embedFile = async (filePath: string, personaIds: string[], personaNumericalIds: number[] = []) => {
         try {
             const textToEmbed = await getTextFromFile(filePath);
             const chunks = chunkText(textToEmbed);
@@ -117,6 +117,7 @@ async function embedAllData() {
             const metadata = {
                 source_file: path.relative(process.cwd(), filePath),
                 persona_ids: personaIds,
+                persona_numerical_ids: personaNumericalIds,
             };
 
             for (let i = 0; i < chunks.length; i++) {
@@ -148,12 +149,21 @@ async function embedAllData() {
     };
 
     try {
+        // 0. Fetch Persona ID Mapping
+        console.log('\n--- Fetching Persona ID Mapping ---');
+        const personaMapRes = await pgClient.query('SELECT id, id_text FROM personas');
+        const slugToIdMap: Record<string, number> = {};
+        personaMapRes.rows.forEach(row => {
+            slugToIdMap[row.id_text] = row.id;
+        });
+        console.log(`Mapped ${Object.keys(slugToIdMap).length} personas.`);
+
         // 1. Process Global Knowledge
         console.log('\n--- Processing Global Knowledge ---');
         const globalFiles = await findAllFiles(GLOBAL_KNOWLEDGE_DIR);
         console.log(`Found ${globalFiles.length} global knowledge files.`);
         for (const filePath of globalFiles) {
-            await embedFile(filePath, ['*']);
+            await embedFile(filePath, ['*'], [-1]); // -1 for global
         }
 
         // 1b. Process Copywriter Knowledge (shared/global)
@@ -161,7 +171,7 @@ async function embedAllData() {
         const copywriterFiles = await findAllFiles(COPYWRITER_DIR);
         console.log(`Found ${copywriterFiles.length} copywriter files.`);
         for (const filePath of copywriterFiles) {
-            await embedFile(filePath, ['*']);
+            await embedFile(filePath, ['*'], [-1]); // -1 for global
         }
 
         // 2. Process Persona-Specific Knowledge
@@ -170,14 +180,21 @@ async function embedAllData() {
 
         for (const dir of personaDirs) {
             if (dir.isDirectory()) {
-                const personaId = dir.name;
+                const personaId = dir.name; // this is the slug
+                const personaNumericalId = slugToIdMap[personaId];
+                
+                if (!personaNumericalId) {
+                    console.warn(`⚠️ Warning: Persona folder '${personaId}' found but not in DB. Skipping knowledge embedding.`);
+                    continue;
+                }
+
                 const personaDirPath = path.join(PERSONAS_DIR, personaId);
-                console.log(`\nProcessing persona: ${personaId}`);
+                console.log(`\nProcessing persona: ${personaId} (ID: ${personaNumericalId})`);
 
                 // Embed persona.json
                 const personaJsonPath = path.join(personaDirPath, 'persona.json');
                 if (await fs.stat(personaJsonPath).catch(() => false)) {
-                    await embedFile(personaJsonPath, [personaId]);
+                    await embedFile(personaJsonPath, [personaId], [personaNumericalId]);
                 }
 
                 // Embed files in knowledge/ directory
@@ -185,7 +202,7 @@ async function embedAllData() {
                 const knowledgeFiles = await findAllFiles(knowledgePath);
                 console.log(` Found ${knowledgeFiles.length} knowledge files for ${personaId}.`);
                 for (const filePath of knowledgeFiles) {
-                    await embedFile(filePath, [personaId]);
+                    await embedFile(filePath, [personaId], [personaNumericalId]);
                 }
             }
         }

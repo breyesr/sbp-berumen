@@ -296,8 +296,8 @@ export async function getPersona(id: string | number, userQuery: string): Promis
 
   if (!persona) return null;
 
-  // 2. Dynamic RAG Context Augmentation (Always use id_text for RAG)
-  const searchResults = await hybridSearch(userQuery, persona.id_text);
+  // 2. Dynamic RAG Context Augmentation (Pass both id_text and numerical id)
+  const searchResults = await hybridSearch(userQuery, persona.id_text, typeof persona.id === 'number' ? persona.id : undefined);
   const ragContext = searchResults.map(r => r.content).join("\n\n");
   const ragHighlights = buildRagHighlights(searchResults);
   
