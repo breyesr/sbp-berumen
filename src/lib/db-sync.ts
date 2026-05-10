@@ -125,12 +125,12 @@ export async function syncPersonasFromFilesystem() {
                         );
                     }
                 } else {
-                    // New Persona: Full Insert
+                    // New Persona: Full Insert - Default to is_active = false for RAG Readiness
                     const resThin = await db.query(
-                        `INSERT INTO personas (id_text, name, role, cluster, last_synced_at)
-                         VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
+                        `INSERT INTO personas (id_text, name, role, cluster, is_active, last_synced_at)
+                         VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)
                          RETURNING id`,
-                        [finalId, data.name || finalId, data.role || "", cluster]
+                        [finalId, data.name || finalId, data.role || "", cluster, false]
                     );
                     personaIdInt = resThin.rows[0].id;
                 }

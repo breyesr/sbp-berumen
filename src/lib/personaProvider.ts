@@ -20,6 +20,7 @@ export type Persona = {
   role?: string;
   cluster?: string;
   is_active?: boolean;
+  has_rag?: boolean;
   metadata?: any;
   profile?: {
     goals?: string[];
@@ -252,11 +253,13 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
     const finalId = isNumeric ? parseInt(id.toString(), 10) : id;
     
     const query = isNumeric 
-        ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context 
+        ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context,
+                  EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
            FROM personas p 
            LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
            WHERE p.id = $1`
-        : `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context 
+        : `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context,
+                  EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
            FROM personas p 
            LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
            WHERE p.id_text = $1`;
@@ -268,7 +271,8 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
       persona = {
         ...mapToPersona(row.id, row.id_text, row.metadata, row.context),
         cluster: row.cluster,
-        is_active: row.is_active
+        is_active: row.is_active,
+        has_rag: row.has_rag
       };
     }
   } catch (err) {
@@ -283,7 +287,10 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
     // Purely numerical IDs cannot be resolved to filesystem paths without the DB.
     if (!isNumeric) {
       persona = await readPersonaFile(id.toString());
-      if (persona) persona.is_active = true; // Filesystem personas are active by default
+      if (persona) {
+        persona.is_active = true; // Filesystem personas are active by default
+        persona.has_rag = false;  // Filesystem personas don't have DB-based RAG
+      }
     }
   }
 
@@ -348,18 +355,35 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean }[]> {
     const { allowedClusters = [], isAdmin = false } = options || {};
 
     // 1. Try listing from Database
     try {
-        let query = `SELECT id, id_text, name, role, cluster, is_active FROM personas`;
+        let query = `
+          SELECT 
+            p.id, 
+            p.id_text, 
+            p.name, 
+            p.role, 
+            p.cluster, 
+            p.is_active,
+            EXISTS (
+              SELECT 1 FROM documents d 
+              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
+            ) AS has_rag
+          FROM personas p
+        `;
         let conditions: string[] = [];
         let params: any[] = [];
 
         if (!isAdmin) {
-            // Non-admins only see active personas
+            // Non-admins only see active personas that are fully trained (has_rag)
             conditions.push(`is_active = true`);
+            conditions.push(`EXISTS (
+              SELECT 1 FROM documents d 
+              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
+            )`);
             
             // If they have assigned clusters, restrict to those
             if (allowedClusters && allowedClusters.length > 0) {
@@ -381,7 +405,8 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             name: r.name,
             role: r.role,
             cluster: r.cluster,
-            is_active: r.is_active
+            is_active: r.is_active,
+            has_rag: r.has_rag
         }));
         } catch (err) {
         console.error("Database error listing personas, falling back to filesystem", err);
@@ -406,11 +431,11 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
                    return null;
                 }
 
-                return { id: p.id, id_text: p.id_text, name: p.name, role: p.role, cluster: p.cluster, is_active: true };
+                return { id: p.id, id_text: p.id_text, name: p.name, role: p.role, cluster: p.cluster, is_active: true, has_rag: false };
             })
         );
 
-        return metas.filter(Boolean) as { id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
+        return metas.filter(Boolean) as { id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean }[];
     } catch (err) {
         console.error("Failed to list personas from filesystem", err);
         return [];

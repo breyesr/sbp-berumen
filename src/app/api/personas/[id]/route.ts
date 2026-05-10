@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getPersonaData } from "@/lib/personaProvider";
+import { isAdminRole } from "@/lib/rbac";
 
 export const runtime = "nodejs";
 
@@ -14,12 +15,18 @@ export async function GET(
   }
 
   const { id } = await params;
+  const isAdmin = isAdminRole(session.user.roles);
 
   try {
     const persona = await getPersonaData(id);
 
     if (!persona) {
       return NextResponse.json({ error: "Persona not found" }, { status: 404 });
+    }
+
+    // Security Gate: Non-admins can only see active personas with RAG
+    if (!isAdmin && (!persona.is_active || !persona.has_rag)) {
+      return NextResponse.json({ error: "Persona not ready or deactivated" }, { status: 403 });
     }
     
     return NextResponse.json({ persona });

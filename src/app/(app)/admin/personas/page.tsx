@@ -16,6 +16,7 @@ type PersonaRecord = {
   role: string;
   cluster: string;
   is_active: boolean;
+  has_rag: boolean;
   metadata: any;
   context: string;
   updated_at: string;
@@ -307,6 +308,7 @@ export default function AdminPersonasPage() {
                                 <ArrowUpDown className="w-3 h-3" />
                             </div>
                         </th>
+                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Intelligence</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Status</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Cluster</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Core Role</th>
@@ -323,7 +325,7 @@ export default function AdminPersonasPage() {
                     {loading ? (
                         [1,2,3,4,5].map(i => (
                             <tr key={i} className="animate-pulse">
-                                <td colSpan={5} className="px-6 py-8"><div className="h-4 bg-white/5 rounded-full w-full" /></td>
+                                <td colSpan={7} className="px-6 py-8"><div className="h-4 bg-white/5 rounded-full w-full" /></td>
                             </tr>
                         ))
                     ) : filteredPersonas.map((p) => (
@@ -331,6 +333,19 @@ export default function AdminPersonasPage() {
                             <td className="px-6 py-4">
                                 <div className="flex flex-col">
                                     <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4">
+                                <div className={clsx(
+                                    "flex items-center gap-2 px-2.5 py-1 rounded-full border transition-all w-fit",
+                                    p.has_rag 
+                                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
+                                        : "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                                )}>
+                                    <Brain className="w-3 h-3" />
+                                    <span className="text-[9px] font-black tracking-widest uppercase">
+                                        {p.has_rag ? "Ready" : "Training"}
+                                    </span>
                                 </div>
                             </td>
                             <td className="px-6 py-4">

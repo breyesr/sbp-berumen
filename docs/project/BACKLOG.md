@@ -53,7 +53,7 @@
 - [x] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database. [DONE]
 - [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
 - [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]
-- [ ] **Task 20.12**: **RAG Readiness Check**: Implement logic to detect if a persona has no associated RAG data. Flag these as "Not Ready" in the UI and disable them for Stress Test/Copywriter use to prevent low-quality outputs.
+- [x] **Task 20.12 (High)**: **RAG Readiness Check**: Implement logic to detect if a persona has no associated RAG data. Flag these as "Not Ready" in the UI and disable them for Stress Test/Copywriter use to prevent low-quality outputs. [DONE]
 
 ...
 

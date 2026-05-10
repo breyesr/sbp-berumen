@@ -27,6 +27,7 @@ export type PersonaOption = {
   name: string; 
   role?: string; 
   cluster?: string; 
+  has_rag?: boolean;
 };
 
 export type Platform = {

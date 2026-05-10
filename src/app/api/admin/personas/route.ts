@@ -14,7 +14,8 @@ export async function GET() {
 
   try {
     const res = await db.query(
-      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.context, p.updated_at 
+      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.context, p.updated_at,
+              EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
        FROM personas p
        LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id
        ORDER BY p.cluster ASC, p.name ASC`
@@ -62,7 +63,7 @@ export async function POST(req: Request) {
       `INSERT INTO personas (id_text, name, role, cluster, is_active)
        VALUES ($1, $2, $3, $4, $5)
        RETURNING id`,
-      [id_text, name, role || "", cluster, is_active !== false]
+      [id_text, name, role || "", cluster, is_active === true]
     );
 
     const personaId = resThin.rows[0].id;
