@@ -160,3 +160,18 @@ This file serves as a permanent historical record of all development sessions. E
 **Learnings:**
 - **Semantic Noise**: Technical JSON schemas in the RAG can lead to hallucinations where personas "talk like a computer." Segregating structure (JSON) from content (RAG) is a core AI best practice.
 - **Vercel-Safe SOP**: For high-latency AI tasks, a local-to-production CLI workflow is significantly more robust than attempting to automate within serverless constraints.
+
+---
+
+## [2026-05-09] RAG Readiness & Security Deactivation (Task 20.12)
+**Team:** AI Engineer & Backend & UX/UI & AppSec
+**Accomplishments:**
+- **Intelligence Guardrails**: Implemented programmatic detection of embeddings (RAG Readiness) across the platform.
+- **Security Deactivation**: Enforced a "Deactivated by Default" policy for new personas (API/Sync) to ensure mandatory review before public release.
+- **Public Safety**: Hardened the UI and individual fetch APIs (`/api/personas/[id]`) to strictly exclude inactive or untrained personas from non-admin access.
+- **Visual Intelligence**: Updated the Admin Dashboard with an "Intelligence" status column and added visual "Training" guardrails (lockouts, badges, tooltips) in the Factory interfaces.
+- **Verification**: Confirmed that "brainless" personas are completely invisible to end-users while remaining visible and manageable for admins.
+**Learnings:**
+- **Dual-Layer Protection**: Combining manual status (`is_active`) with automated readiness checks (`has_rag`) creates a robust "Fail-Safe" for AI product delivery.
+- **Access Control Consistency**: Hardening the UI is insufficient; the underlying API must mirror these restrictions to prevent direct-ID enumeration attacks.
+- **Visibility as Trust**: Clearly labeling personas as "Training" in the admin view reduces cognitive load for admins when managing large numbers of concurrent syncs.
