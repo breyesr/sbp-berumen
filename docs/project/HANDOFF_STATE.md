@@ -14,6 +14,7 @@
 3.  **Stress Test Audit**: Confirmed the Stress Test correctly pulls from the RAG brain using the new numerical ID mapping.
 
 ## 🚀 Immediate Next Steps
+- [ ] **Task 20.12 (High)**: **RAG Readiness Check**: Implement logic to flag personas with empty RAG tables as "Not Ready" and disable them from tools. This ensures no persona is used without its "Brain."
 - [ ] **Task 20.10**: **Main Environment Sync**: Repeat database migrations in the `main` branch environment before the next release cycle.
 - [ ] **Task 20.5**: **Inline Management UI**: Implement interactive dropdowns in the Admin table to accelerate cluster management.
 - [ ] **Epic 0**: **Railway Bridge**: Begin the platform pivot once the current stabilization is verified by the end-users.
