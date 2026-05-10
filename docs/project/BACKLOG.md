@@ -54,32 +54,7 @@
 - [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
 - [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]
 
-
-## Epic 21: Persona Synchronization & Data Integrity (High Priority)
-**Owner**: Backend
-*Goal: Ensure that synchronization between the filesystem and database is non-destructive and respects manual edits made via the UI.*
-
-### 1. The Problem
-The current "Sincronizar DB" feature uses an `ON CONFLICT (id) DO UPDATE` query that unconditionally overwrites all database fields (`name`, `role`, `cluster`, `metadata`, `context`) with the data found in the repository files (`persona.json` and `persona_strategic_depth.md`). This effectively erases any manual edits made via the Admin UI.
-
-### 2. Proposed Strategy: "Intelligent Sync"
-We will implement a tracking mechanism to distinguish between System Syncs and Human Edits.
-
-#### A. Schema Update
-*   Add a `last_synced_at` (TIMESTAMP) column to the `personas` table.
-*   **Logic:**
-    *   When the **Sync** runs, it updates `last_synced_at`.
-    *   When a **Human** edits via the UI, only `updated_at` (managed by the DB trigger) changes.
-
-#### B. Refined Sync Logic
-Modified workflow for `syncPersonasFromFilesystem`:
-1.  **Check Existence:** For each persona file, check if it already exists in the database.
-2.  **Detect Human Edits:** Compare `db_persona.updated_at` vs `db_persona.last_synced_at`. If `updated_at > last_synced_at`, a human made changes post-sync.
-3.  **Apply Merge Rules:**
-    *   **Metadata (Name, Role, Cluster):** If a human edit is detected, **do not** overwrite these fields from the JSON file.
-    *   **Context (Markdown):** Update the `context` field *only if* the file's content has changed, preserving the human-edited metadata.
-    *   **New Personas:** If the persona doesn't exist, create it as usual.
-4.  **Final Update:** Update `last_synced_at` to the current time to mark the successful sync.
+...
 
 ### 3. Execution Steps
 #### Phase 1: Identity Protection [STABLE]
@@ -92,6 +67,7 @@ Modified workflow for `syncPersonasFromFilesystem`:
 - [x] **Task 21.5**: **Intelligence Protection**: Refactor sync logic to protect the `persona_intelligence` table (Pains, Goals, Metadata) from overwrites. [DONE]
 - [x] **Task 21.6**: **Standardized Comparison**: Ensure date comparisons use UTC `.getTime()` for cross-environment reliability. [DONE]
 - [x] **Task 21.7**: **Sync Duplication Resolution**: Implement name/cluster matching to prevent duplicate persona creation during filesystem sync. [DONE]
+- [x] **Task 21.8**: **RAG Brain Cleanup**: Refactor embedder to remove technical Copywriter noise and purged stale chunks from DB. [DONE]
 
 
 ## Epic 22: Cluster Management Infrastructure (Medium Priority)

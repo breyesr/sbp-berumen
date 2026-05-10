@@ -166,14 +166,6 @@ async function embedAllData() {
             await embedFile(filePath, ['*'], [-1]); // -1 for global
         }
 
-        // 1b. Process Copywriter Knowledge (shared/global)
-        console.log('\n--- Processing Copywriter Knowledge ---');
-        const copywriterFiles = await findAllFiles(COPYWRITER_DIR);
-        console.log(`Found ${copywriterFiles.length} copywriter files.`);
-        for (const filePath of copywriterFiles) {
-            await embedFile(filePath, ['*'], [-1]); // -1 for global
-        }
-
         // 2. Process Persona-Specific Knowledge
         console.log('\n--- Processing Persona-Specific Knowledge ---');
         const personaDirs = await fs.readdir(PERSONAS_DIR, { withFileTypes: true });

@@ -148,4 +148,15 @@ This file serves as a permanent historical record of all development sessions. E
 - **System Stability**: Cleaned up the embedding process to ignore system files and handle malformed files gracefully.
 **Learnings:**
 - **Relational RAG**: Tagging vectors with integer IDs (instead of strings) reduces lookup overhead and eliminates the risk of "Twin ID" confusion during pitch generation.
-- **Sync Heuristics**: Relying on folder names as primary keys is a brittle strategy; multi-layer matching (Slug -> Name+Cluster) is mandatory for data integrity in hybrid git/db environments.
+---
+
+## [2026-05-09] RAG Cleanup & Stabilization Completion
+**Team:** System Architect & AI Engineer & Backend
+**Accomplishments:**
+- **RAG Optimization**: Purged technical Copywriter formats from the vector database, reducing semantic noise and improving persona "focus" during Stress Tests.
+- **Manual Protocol established**: Finalized the SOP for "Local-to-Production" embeddings, prioritizing credential security and avoiding Vercel timeouts.
+- **Final Verification**: Confirmed zero-document count for stale technical files in both Local and Remote databases.
+- **Clean Slate**: Successfully performed a "Purge & Re-sync" test, confirming that only the desired core personas and the new Mariana character exist.
+**Learnings:**
+- **Semantic Noise**: Technical JSON schemas in the RAG can lead to hallucinations where personas "talk like a computer." Segregating structure (JSON) from content (RAG) is a core AI best practice.
+- **Vercel-Safe SOP**: For high-latency AI tasks, a local-to-production CLI workflow is significantly more robust than attempting to automate within serverless constraints.
