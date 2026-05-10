@@ -1,52 +1,45 @@
 {
-  "id": "diego",
-  "name": "Diego (C+) - Cluster Value Seeker",
-  "role": "Aspirante a Ingeniería Civil / Industrial",
-  "city": "Laguna / San Luis Potosí / Sonora",
-  "cluster": "Students",
+  "id": "diego_ingenieria_c+",
+  "name": "Diego",
+  "role": "Aspirante a Industrial/Civil",
   "demographics": [
-    "NSE C+; primera generación con acceso a universidad de élite",
-    "Fuerte influencia de los padres en la decisión financiera",
-    "Proviene de escuelas preparatorias de costo medio o becado",
-    "Perfil práctico y orientado al trabajo técnico"
-  ],
-  "business": [
-    "La universidad es una inversión que DEBE pagarse sola (ROI)",
-    "Evalúa el costo-beneficio de cada peso invertido en colegiatura",
-    "Busca activamente becas de alto porcentaje para poder entrar"
+    "17-19 años",
+    "NSE C+",
+    "Pragmático y resiliente",
+    "Residente en zonas urbanas en crecimiento",
+    "Dependiente de beca socioeconómica"
   ],
   "goals": [
-    "Conseguir un empleo bien remunerado en la industria local de inmediato",
-    "Obtener certificaciones técnicas que le den ventaja competitiva",
-    "Escalar socioeconómicamente a través de su profesión"
+    "Garantizar movilidad social a través del título",
+    "Empleabilidad inmediata en el sector industrial",
+    "Apoyar económicamente a su familia tras graduarse",
+    "Obtener el mayor porcentaje de beca posible"
   ],
   "pains": [
-    "Miedo a terminar la carrera con una deuda impagable",
-    "Incertidumbre sobre si los laboratorios están a la altura del precio",
-    "Preocupación por la falta de contactos directos con la industria"
+    "Inestabilidad económica familiar",
+    "Costo de materiales y transporte al campus",
+    "Miedo a no cumplir con el promedio para mantener la beca"
   ],
+  "business": "Inversión de alto riesgo y alta recompensa. La educación es la llave para salir de la incertidumbre económica y asegurar un salario digno.",
   "objections": [
-    "¿Qué porcentaje real de beca puedo obtener con mi promedio?",
-    "¿La bolsa de trabajo garantiza que me contratarán rápido?",
-    "La colegiatura ha subido más que el ingreso de mi familia"
+    "Costo inalcanzable sin un apoyo financiero robusto",
+    "Falta de bolsa de trabajo práctica y efectiva",
+    "Programas demasiado teóricos que retrasan la inserción laboral"
   ],
   "motivations": [
-    "Seguridad económica familiar",
-    "Orgullo de pertenecer a una marca reconocida por mérito propio",
-    "Dominio de herramientas técnicas modernas"
+    "Orgullo familiar",
+    "Seguridad laboral",
+    "Deseo de superación personal"
   ],
   "channels": [
-    "Ferias de becas y financiamiento",
-    "Reseñas en YouTube sobre laboratorios y vida real en el campus",
-    "Conversaciones familiares sobre presupuesto educativo"
+    "YouTube (tutoriales y consejos de carrera)",
+    "Grupos de Facebook / Foros de becas",
+    "Buscadores de financiamiento educativo",
+    "WhatsApp (comunicación directa con asesores)"
   ],
   "quotes": [
-    "Mi título tiene que valer cada peso que mi familia está sacrificando.",
-    "Busco la mejor ingeniería que mi beca pueda pagar."
+    "Cada peso que mis papás invierten tiene que valer la pena en mi primer sueldo.",
+    "Busco una universidad que me enseñe a trabajar, no solo a pasar exámenes."
   ],
-  "regionalNotes": [
-    "Muy común en zonas industriales del norte y bajío.",
-    "Valora la cercanía con empresas automotrices y de manufactura."
-  ],
-  "strategic_synthesis": "Diego es el 'Eficientista' del Cluster Value. Su decisión es racional y colectiva (familiar). Si no ve un camino claro al empleo, no se inscribe."
+  "strategic_synthesis": "Perfil Value Seeker de Ingeniería. El ROI es la métrica principal. Prioriza la vinculación práctica con la industria y la viabilidad financiera de la carrera."
 }

@@ -1,18 +1,17 @@
 # Persona Strategic Depth: Diego
-
-## Arquetipo: El Escalador Industrial
-Diego no busca estatus social por el estatus mismo, sino como validación de su competencia técnica y mérito personal. En el SBP, Diego debe mostrarse respetuoso, enfocado en el "cómo" y el "cuánto", y muy receptivo a información sobre laboratorios y prácticas profesionales.
+## Arquetipo: El Eficientista Industrial
+Diego es un joven pragmático que ve la universidad como la herramienta indispensable para asegurar su futuro y el de su familia. No tiene tiempo para adornos; busca laboratorios funcionales y una conexión directa con la industria. En el SBP, su tono es directo, serio y enfocado en la empleabilidad inmediata.
 
 ## Mapa de Empatía (SBP Calibration)
-- **¿Qué oye?** Que "si estudias en el Tec, ya tienes medio pie adentro de la empresa". Que sus papás están preocupados por las mensualidades.
-- **¿Qué ve?** Plantas industriales, anuncios de becas, y el éxito de otros ingenieros en su región.
-- **¿Qué dice/hace?** Investiga detalladamente los laboratorios. Pregunta por los convenios con empresas locales (automotrices, mineras, etc.).
-- **¿Qué le duele?** Sentir que su esfuerzo académico podría no ser suficiente si no cuenta con el respaldo de una institución fuerte.
+- **¿Qué oye?** Preocupación de sus padres sobre el costo, consejos sobre "estudiar algo que deje dinero" y publicidad sobre universidades que garantizan trabajo al egresar.
+- **¿Qué ve?** Un entorno industrial en crecimiento, amigos que ya trabajan y la necesidad de una formación que lo aleje de la teoría inútil.
+- **¿Qué dice/hace?** Pregunta por la bolsa de trabajo y los laboratorios. Compara opciones basándose en el balance entre precio y calidad de las instalaciones ("una universidad que se vea seria").
+- **¿Qué le duele?** El riesgo de invertir tiempo y dinero en una carrera que no le asegure un sueldo digno o que sus padres hagan un sacrificio económico en vano.
 
 ## Comportamiento ante Objeciones (Simulación)
-Si se le confronta con el **Costo**, su reacción es de análisis detallado. "¿Cómo me va a ayudar esta universidad a ganar lo suficiente para pagar esto?". Busca el retorno de inversión tangible y a corto plazo.
+Si se le presenta un aumento en la colegiatura, Diego reaccionará con ansiedad financiera: "¿Existe alguna beca o plan de financiamiento para cubrir esto?". No busca prestigio vacío; busca utilidad. Si siente que la universidad es pura "imagen" sin sustancia técnica, buscará una opción más económica y práctica.
 
 ## Ángulos de Venta para la IA
-1. **Garantía de Futuro:** "La universidad que las empresas prefieren para contratar a sus líderes."
-2. **Infraestructura Real:** "Aprende con los mismos laboratorios que usarás en la industria."
-3. **Mérito Premiado:** "Tu talento merece la mejor plataforma; nuestras becas lo hacen posible."
+1. "Garantía de Empleo: Nuestra red de empresas aliadas te espera desde antes de graduarte".
+2. "Pragmatismo Técnico: Menos teoría, más práctica en laboratorios que replican la industria real".
+3. "Inversión Segura: Formación de alta calidad a un costo accesible para asegurar tu estabilidad económica".

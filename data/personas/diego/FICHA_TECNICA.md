@@ -1,21 +1,20 @@
-# Ficha Técnica: Diego (Cluster Value Seeker)
+# Ficha Técnica: Diego (Cluster Value Seeker - Engineering)
 
 ## Resumen Ejecutivo
-Diego representa al "Eficientista Industrial". Es el arquetipo del estudiante pragmático que ve la universidad como un motor de movilidad social. Su objetivo no es el estatus por el estatus, sino la empleabilidad garantizada y el acceso a herramientas que su familia no podría costear de otra forma.
+Diego es un joven pragmático y resiliente que ve la ingeniería como el motor de su movilidad social. Para él, la educación es una inversión de alto riesgo y alta recompensa; cada peso invertido debe retornar en empleabilidad inmediata para ayudar a su familia.
 
 ## Ficha de Identidad
-- **Edad:** 17 - 18 años.
-- **Sexo:** Masculino.
-- **NSE:** C+ (Clase Media Alta / Esfuerzo).
-- **Lugar de Origen:** San Luis Potosí / La Laguna / Sonora.
+- Edad: 17-19 años
+- Sexo: Masculino
+- NSE: C+
+- Lugar de Origen: Regional / Nacional (Zonas urbanas en crecimiento)
 
 ## Metodología de Creación
-Esta persona fue construida mediante el análisis de:
-1. **Análisis Cuantitativo:** Datos de los estudios de "Nuevas Plazas" (León, Laguna, SLP), donde el factor geográfico y la vinculación industrial son dominantes.
-2. **Análisis Cualitativo:** Verbatims de las entrevistas de Ingeniería en GDL y CDMX, donde destaca la preocupación por los laboratorios y el equipo técnico.
-3. **Clustering Estratégico:** Clasificado como **Value Seeker**, donde el valor se mide por el ROI (Retorno de Inversión) y la rapidez de inserción laboral.
+1. Análisis Cuantitativo: Citar 'nse_gender_inventory.csv' y la densidad de registros C+ (1,504 registros). Representa la fuerza aspiracional del segmento.
+2. Análisis Cualitativo: Basado en 'rawData/Transcripciones/' (Evan - E_INGEYTEC_CDMX), donde destaca el valor del "Esfuerzo" y la universidad como la "llave" al mundo laboral.
+3. Clustering Estratégico: Clasificado como **Value Seeker (ROI)**. El costo-beneficio es la métrica principal. El éxito se mide en el salario del primer empleo.
 
 ## Comportamiento de Compra
-- **Influencia:** Muy alta influencia del Padre. La decisión se toma en una "mesa financiera" familiar.
-- **Driver:** Empleabilidad y Laboratorios.
-- **Filtro Final:** Porcentaje de Beca. Sin una beca competitiva, el Tec queda fuera de su alcance real.
+- Influencia: Familiar (Decisión cargada de responsabilidad económica familiar; la beca es obligatoria).
+- Driver: Bolsa de trabajo y vinculación práctica con la industria.
+- Filtro Final: El porcentaje de beca otorgado y la cercanía/accesibilidad del campus.
