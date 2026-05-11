@@ -30,12 +30,9 @@ export default function AdminClustersPage() {
   // Interaction states
   const [isAddingCluster, setIsAddingCluster] = useState(false);
   const [createName, setCreateName] = useState("");
-  const [createId, setCreateId] = useState("");
-  const [createDescription, setCreateDescription] = useState("");
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
-  const [editDesc, setEditDesc] = useState("");
 
   const loadData = async () => {
     try {
@@ -65,15 +62,12 @@ export default function AdminClustersPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: createId || createName.toLowerCase().replace(/\s+/g, '-'),
-          name: createName,
-          description: createDescription
+          id: createName.toLowerCase().trim().replace(/\s+/g, '-'),
+          name: createName.trim(),
         }),
       });
       if (!response.ok) throw new Error("Failed to create");
       setCreateName("");
-      setCreateId("");
-      setCreateDescription("");
       setIsAddingCluster(false);
       await loadData();
     } catch (err: any) {
@@ -89,7 +83,7 @@ export default function AdminClustersPage() {
       const res = await fetch(`/api/admin/clusters/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: editValue, description: editDesc }),
+        body: JSON.stringify({ name: editValue }),
       });
       if (!res.ok) throw new Error("Failed to update");
       setEditingId(null);
@@ -179,7 +173,6 @@ export default function AdminClustersPage() {
                     <tr className="bg-white/[0.03] border-b border-white/10">
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">ID (System)</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Display Name</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Description</th>
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest text-right">Actions</th>
                     </tr>
                 </thead>
@@ -187,7 +180,7 @@ export default function AdminClustersPage() {
                     {loading ? (
                         [1,2,3].map(i => (
                             <tr key={i} className="animate-pulse">
-                                <td colSpan={4} className="px-6 py-8"><div className="h-4 bg-white/5 rounded-full w-full" /></td>
+                                <td colSpan={3} className="px-6 py-8"><div className="h-4 bg-white/5 rounded-full w-full" /></td>
                             </tr>
                         ))
                     ) : clusters.map((c) => (
@@ -201,21 +194,11 @@ export default function AdminClustersPage() {
                                         autoFocus
                                         value={editValue}
                                         onChange={(e) => setEditValue(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleUpdateCluster(c.id)}
                                         className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-bold text-white outline-none w-full py-0.5"
                                     />
                                 ) : (
                                     <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{c.name}</span>
-                                )}
-                            </td>
-                            <td className="px-6 py-4">
-                                {editingId === c.id ? (
-                                    <input 
-                                        value={editDesc}
-                                        onChange={(e) => setEditDesc(e.target.value)}
-                                        className="bg-white/5 border-b border-white/20 text-xs text-zinc-400 outline-none w-full py-0.5"
-                                    />
-                                ) : (
-                                    <span className="text-xs text-zinc-500">{c.description || "No description provided."}</span>
                                 )}
                             </td>
                             <td className="px-6 py-4">
@@ -231,7 +214,7 @@ export default function AdminClustersPage() {
                                         </>
                                     ) : (
                                         <>
-                                            <button onClick={() => { setEditingId(c.id); setEditValue(c.name); setEditDesc(c.description || ""); }} title="Edit" className="p-2 text-zinc-500 hover:text-white hover:bg-white/10 rounded-xl transition-all">
+                                            <button onClick={() => { setEditingId(c.id); setEditValue(c.name); }} title="Edit" className="p-2 text-zinc-500 hover:text-white hover:bg-white/10 rounded-xl transition-all">
                                                 <Pencil className="w-4 h-4" />
                                             </button>
                                             <button 
@@ -264,37 +247,20 @@ export default function AdminClustersPage() {
                 </div>
                 <form onSubmit={handleCreateCluster} className="space-y-5">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Display Name</label>
+                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Nombre del Cluster</label>
                         <input 
                             type="text" 
                             required
+                            autoFocus
                             value={createName} 
                             onChange={(e) => setCreateName(e.target.value)} 
+                            placeholder="Ej: Retail, Educación, Salud..."
                             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors" 
                         />
                     </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">System ID (Optional)</label>
-                        <input 
-                            type="text" 
-                            value={createId} 
-                            onChange={(e) => setCreateId(e.target.value.toLowerCase().replace(/\s+/g, '-'))} 
-                            placeholder="e.g. real-estate"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-zinc-400 font-mono outline-none focus:border-indigo-500/50 transition-colors" 
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Description</label>
-                        <textarea 
-                            value={createDescription} 
-                            onChange={(e) => setCreateDescription(e.target.value)} 
-                            rows={3}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors resize-none" 
-                        />
-                    </div>
                     <div className="flex gap-3 pt-4">
-                        <Button type="button" onClick={() => setIsAddingCluster(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
-                        <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-indigo-500/20 shadow-lg">Create Cluster</Button>
+                        <Button type="button" onClick={() => setIsAddingCluster(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancelar</Button>
+                        <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-indigo-500/20 shadow-lg">Crear Cluster</Button>
                     </div>
                 </form>
             </div>
