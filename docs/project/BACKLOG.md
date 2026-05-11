@@ -69,6 +69,7 @@
 - [x] **Task 21.6**: **Standardized Comparison**: Ensure date comparisons use UTC `.getTime()` for cross-environment reliability. [DONE]
 - [x] **Task 21.7**: **Sync Duplication Resolution**: Implement name/cluster matching to prevent duplicate persona creation during filesystem sync. [DONE]
 - [x] **Task 21.8**: **RAG Brain Cleanup**: Refactor embedder to remove technical Copywriter noise and purged stale chunks from DB. [DONE]
+- [ ] **Task 21.9**: **Resolve RAG Orphanage on Persona Re-Sync**: Fix the issue where re-created personas (deleted and then re-synced from Git) appear "Untrained" because incremental logic skips files with identical hashes, failing to link them to the new Numerical ID.
 
 
 ## Epic 22: Cluster Management Infrastructure (Medium Priority)

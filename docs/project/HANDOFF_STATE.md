@@ -21,11 +21,13 @@
 4.  **Cleanup Logic**: Stale documents are automatically purged if their source files are deleted or if chunk counts are reduced.
 
 ## 🚀 Immediate Next Steps
+- [ ] **Task 21.9**: **Fix RAG Orphanage**: Address the issue where re-created personas skip re-embedding and remain "Untrained" due to hash-matching against old persona IDs.
 - [ ] **Task 20.10**: **Main Environment Sync**: Repeat database migrations in the `main` branch environment before the next release cycle.
 - [ ] **Task 20.5**: **Inline Management UI**: Implement interactive dropdowns in the Admin table to accelerate cluster management.
 - [ ] **Epic 0**: **Railway Bridge**: Begin the platform pivot once the current stabilization is verified by the end-users.
 
-## Technical Learnings
+## ⚠️ Known Issues
+- **Intelligence Orphanage**: If a persona is deleted and then re-synced from Git, the incremental embedder skips re-embedding because the file content hasn't changed. This leaves the new persona without a linked "Brain" because the existing vectors still point to the old, deleted Numerical ID.
 - **Hash-based State**: In production RAG systems, filesystem location should define "Identity," while content hashes define "State." This decouples organizational logic from operational efficiency.
 - **Binary Filtering**: Always filter system files (like `.DS_Store`) early in the ingestion pipeline to prevent database driver encoding failures.
 - **Processed ID Tracking**: When skipping files in an incremental script, you must still populate the "Processed IDs" set to protect existing records from "Stale Cleanup" logic.

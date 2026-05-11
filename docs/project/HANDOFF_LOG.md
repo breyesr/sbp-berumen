@@ -185,3 +185,4 @@ This file serves as a permanent historical record of all development sessions. E
 **Learnings:**
 - Content hashing is the most robust way to manage state in Git-to-DB sync workflows.
 - Always implement 'Processed ID' sets when using incremental logic to prevent unintended deletions in synchronized environments.
+- [2026-05-10] Bug Discovery: Intelligence Orphanage. Identified issue where re-created personas skip re-embedding due to hash matching, leaving them untrained. Documented as Task 21.9.
