@@ -17,6 +17,7 @@
 - [x] **Task 2.2**: Migrate static data fetching to Server Components. [DONE]
 - [x] **Task 2.3**: Implement `Suspense` and streaming states. [DONE]
 - [ ] **Task 2.4**: Introduce robust Error Boundaries for isolated component failures.
+- [ ] **Task 2.5**: **Build Performance Optimization**: Refactor heavy Admin components (Drawers, Dossiers) to use `next/dynamic` to reduce the initial bundle size and accelerate Vercel build times.
 
 ## Epic 3: AI Pipeline Optimization & LLMOps Guardrails (High)
 **Owner**: AI Engineer & LLMOps
