@@ -8,7 +8,8 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
 import { IntelligenceDrawer } from "@/components/admin/IntelligenceDrawer";
 import { clsx } from "clsx";
-import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power } from "lucide-react";
+import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power, LayoutGrid } from "lucide-react";
+import Link from "next/link";
 
 type PersonaRecord = {
   id: number;
@@ -47,6 +48,31 @@ export default function AdminPersonasPage() {
   const [activePersona, setActivePersona] = useState<PersonaRecord | null>(null);
   const [drawerMode, setDrawerMode] = useState<'train' | 'edit' | null>(null);
   const [viewingDossier, setViewingDossier] = useState<PersonaRecord | null>(null);
+  const [editingCell, setEditingCell] = useState<{ id: number, field: 'name' | 'role' } | null>(null);
+  const [editValue, setEditValue] = useState("");
+
+  const handleStartEdit = (p: PersonaRecord, field: 'name' | 'role') => {
+    setEditingCell({ id: p.id, field });
+    setEditValue(p[field] || "");
+  };
+
+  const handleBlur = async () => {
+    if (editingCell) {
+      const persona = personas.find(p => p.id === editingCell.id);
+      if (persona && editValue !== persona[editingCell.field]) {
+        await handleInlineUpdate(editingCell.id, { [editingCell.field]: editValue });
+      }
+      setEditingCell(null);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleBlur();
+    } else if (e.key === 'Escape') {
+      setEditingCell(null);
+    }
+  };
   
   // Filter/Sort states
   const [searchQuery, setSearchBar] = useState("");
@@ -168,16 +194,31 @@ export default function AdminPersonasPage() {
   };
 
   const handleToggleStatus = async (id: string | number, currentStatus: boolean) => {
+    await handleInlineUpdate(id, { is_active: !currentStatus });
+  };
+
+  const handleInlineUpdate = async (id: string | number, updates: any) => {
+    // Optimistic update for immediate feedback
+    const originalPersonas = [...personas];
+    setPersonas(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
+    
     try {
       const res = await fetch(`/api/admin/personas/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ is_active: !currentStatus }),
+        body: JSON.stringify(updates),
       });
-      if (!res.ok) throw new Error("Failed to update status");
-      await loadData();
-    } catch (err) {
-      setError("No se pudo cambiar el estado.");
+      
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to update");
+      }
+      
+      console.log(`[Admin] Persona ${id} updated successfully:`, updates);
+    } catch (err: any) {
+      setError(`Error al actualizar: ${err.message}`);
+      // Revert on failure
+      setPersonas(originalPersonas);
     }
   };
 
@@ -285,6 +326,16 @@ export default function AdminPersonasPage() {
                 <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none" />
             </div>
 
+            <Link href="/admin/clusters">
+                <Button 
+                    variant="outline"
+                    className="rounded-xl h-10 border-white/10 bg-transparent hover:bg-white/5 text-zinc-400 hover:text-white transition-all shadow-none border"
+                >
+                    <LayoutGrid className="w-4 h-4 mr-2" />
+                    <span className="hidden md:inline">Clusters</span>
+                </Button>
+            </Link>
+
             <Button 
                 onClick={() => setIsAddingPersona(true)}
                 className="rounded-xl h-10 px-6 font-bold shadow-lg shadow-indigo-500/20"
@@ -331,9 +382,24 @@ export default function AdminPersonasPage() {
                     ) : filteredPersonas.map((p) => (
                         <tr key={p.id} className="hover:bg-white/[0.02] transition-colors group">
                             <td className="px-6 py-4">
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
-                                </div>
+                                {editingCell?.id === p.id && editingCell?.field === 'name' ? (
+                                    <input
+                                        autoFocus
+                                        type="text"
+                                        value={editValue}
+                                        onChange={(e) => setEditValue(e.target.value)}
+                                        onBlur={handleBlur}
+                                        onKeyDown={handleKeyDown}
+                                        className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-bold text-white outline-none w-full py-0.5"
+                                    />
+                                ) : (
+                                    <div 
+                                        onClick={() => handleStartEdit(p, 'name')}
+                                        className="flex flex-col cursor-pointer hover:bg-white/5 rounded px-1 -ml-1 transition-colors"
+                                    >
+                                        <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
+                                    </div>
+                                )}
                             </td>
                             <td className="px-6 py-4">
                                 <div className={clsx(
@@ -363,12 +429,40 @@ export default function AdminPersonasPage() {
                                 </button>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[9px] font-black tracking-widest uppercase">
-                                    {p.cluster}
-                                </span>
+                                <div className="relative group/select">
+                                    <select
+                                        value={p.cluster}
+                                        onChange={(e) => handleInlineUpdate(p.id, { cluster: e.target.value })}
+                                        className="appearance-none bg-indigo-500/5 hover:bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/40 px-2.5 py-1 pr-7 rounded-full text-[9px] font-black tracking-widest uppercase cursor-pointer transition-all outline-none"
+                                    >
+                                        {availableClusters.map(c => (
+                                            <option key={c} value={c} className="bg-[#09090b] text-white lowercase tracking-normal font-sans">
+                                                {c}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-indigo-400/50 pointer-events-none group-hover/select:text-indigo-400" />
+                                </div>
                             </td>
                             <td className="px-6 py-4">
-                                <span className="text-sm text-zinc-400 font-medium italic">{p.role || "—"}</span>
+                                {editingCell?.id === p.id && editingCell?.field === 'role' ? (
+                                    <input
+                                        autoFocus
+                                        type="text"
+                                        value={editValue}
+                                        onChange={(e) => setEditValue(e.target.value)}
+                                        onBlur={handleBlur}
+                                        onKeyDown={handleKeyDown}
+                                        className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-medium italic text-zinc-300 outline-none w-full py-0.5"
+                                    />
+                                ) : (
+                                    <div 
+                                        onClick={() => handleStartEdit(p, 'role')}
+                                        className="cursor-pointer hover:bg-white/5 rounded px-1 -ml-1 transition-colors"
+                                    >
+                                        <span className="text-sm text-zinc-400 font-medium italic">{p.role || "—"}</span>
+                                    </div>
+                                )}
                             </td>
                             <td className="px-6 py-4">
                                 <span className="text-[11px] text-zinc-500 font-medium">{formatDate(p.updated_at)}</span>

@@ -43,7 +43,9 @@
     *   **Validation**: Prevent invalid FS lookups for purely numerical IDs when DB fetch fails.
     *   **Typing**: Update `Persona` type to support `number | string` for the `id` field.
 - [x] **Task 20.4**: **UI Simplification**: Transition to a "Human-First" display by hiding text slugs (`id_text`) and numerical IDs across all user/admin lists, prioritizing Name, Role, and Cluster for identity. [DONE]
-- [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
+- [x] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed. [DONE]
+- [x] **Task 20.13**: **Inline Name & Role Editing**: Implement click-to-edit or hover-focus editing for Name and Core Role directly in the admin table. [DONE]
+- [x] **Task 20.14**: **Cluster Management Dashboard**: Build a dedicated CRUD interface for creating, renaming, and deleting persona clusters (Epic 22 sub-task). [DONE]
 - [ ] **Task 20.6**: **API Optimization & Unification**: Consolidate all persona fetching into `personaProvider.ts`. 
     *   **Unification**: Ensure `/api/admin` and `/api/public` use the same shared logic (`getPersonaData`) to prevent regressions.
     *   **Selective Fetching**: Implement query parameters to handle "light" vs "full" data shapes to optimize performance.

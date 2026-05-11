@@ -54,17 +54,18 @@ export async function PATCH(
 
     const personaId = resThin.rows[0].id;
 
-    // 2. Update Fat Table
-    // We use COALESCE with the existing values if the new values are null/undefined
-    await client.query(
-      `INSERT INTO persona_intelligence (persona_id, metadata, voice, context)
-       VALUES ($1, $2, $3, $4)
-       ON CONFLICT (persona_id) DO UPDATE SET
-         metadata = COALESCE(EXCLUDED.metadata, persona_intelligence.metadata),
-         voice = COALESCE(EXCLUDED.voice, persona_intelligence.voice),
-         context = COALESCE(EXCLUDED.context, persona_intelligence.context)`,
-      [personaId, metadata, voice, context]
-    );
+    // 2. Update Fat Table (only if heavy data is provided)
+    if (metadata !== undefined || voice !== undefined || context !== undefined) {
+      await client.query(
+        `INSERT INTO persona_intelligence (persona_id, metadata, voice, context)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (persona_id) DO UPDATE SET
+           metadata = COALESCE(EXCLUDED.metadata, persona_intelligence.metadata),
+           voice = COALESCE(EXCLUDED.voice, persona_intelligence.voice),
+           context = COALESCE(EXCLUDED.context, persona_intelligence.context)`,
+        [personaId, metadata, voice, context]
+      );
+    }
 
     await client.query('COMMIT');
     return NextResponse.json({ success: true });

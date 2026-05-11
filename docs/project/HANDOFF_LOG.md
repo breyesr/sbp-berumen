@@ -95,6 +95,7 @@ This file serves as a permanent historical record of all development sessions. E
 - Visual jumps in transitions (centered vs. left-aligned) significantly degrade the perception of "security" and "professionalism." Stability is trust.
 - Providing an "Expert Path" reduces frustration for power users without compromising the supportive flow for novices.
 - Positive guidance (e.g., "Use the '+' button") is more effective for novice users than aggressive negative warnings (e.g., "STOP: DO NOT SCAN").
+
 ---
 
 ## [2026-05-09] Full System Recovery & Stabilization
@@ -109,11 +110,6 @@ This file serves as a permanent historical record of all development sessions. E
 - **Implicit Error Traps**: Generic "fallback" error handling in security-sensitive flows (like login) can mask infrastructure failures and block administrative recovery.
 - **Recovery over Patching**: In complex schema failures, a clean wipe and restore from a known-good source (Main/Production) is significantly more reliable than attempting surgical "undo" operations.
 - **Protocol Preservation**: Using backup branches to restore process documentation (`GEMINI.md`) ensures that organizational knowledge is not lost during technical rollbacks.
-2026-05-08 15:15:00, Team Alpha, Completed Tasks 20.1 & 20.2: Numerical ID Migration and Database Normalization deployed and verified remote.
-\n[2026-05-08] - Team Alpha - Task 20.3: Completed PersonaProvider refactor for dual-ID support. Extracted shared fetching logic and hardened filesystem fallback.
-\n[2026-05-08] - Team Alpha - Task 20.4: Simplified UI by removing id_text slugs and standardizing on Numerical IDs across all lists and dossiers.
-[2026-05-08] - Team Alpha - Task 20.4: Refined UI to hide numerical IDs, prioritizing a human-first display (Name/Role/Cluster).
-[2026-05-09] - Team Alpha - Task 20.3 & 20.4: Stabilized Persona Lifecycle. Implemented slug normalization, auto-population from uploads, and fixed sync duplicate bugs. UI is now fully Human-First (Technical IDs hidden).
 
 ---
 
@@ -127,6 +123,7 @@ This file serves as a permanent historical record of all development sessions. E
 - **Infrastructure**: Created a portable RAG setup tool and initialized vector tables on the remote production DB.
 **Learnings:**
 - **Serverless Constraints**: Confirmed that Vercel's read-only filesystem and 10s timeouts require a "Git-to-DB" sync workflow for seed data until persistent volumes (Railway) are active.
+
 ---
 
 ## [2026-05-09] Epic 21: Full Sync Integrity & UTC Stabilization
@@ -138,6 +135,7 @@ This file serves as a permanent historical record of all development sessions. E
 - **Stabilization Branch**: Established `feature/alpha/stabilization-path` as the working branch for Step 2 (RAG Alignment).
 **Learnings:**
 - **UTC Precedence**: Relying on database server time is risky for sync logic; forcing UTC comparisons in JavaScript is the only cross-environment solution.
+
 ---
 
 ## [2026-05-09] RAG Alignment & Duplication Resolution
@@ -148,6 +146,7 @@ This file serves as a permanent historical record of all development sessions. E
 - **System Stability**: Cleaned up the embedding process to ignore system files and handle malformed files gracefully.
 **Learnings:**
 - **Relational RAG**: Tagging vectors with integer IDs (instead of strings) reduces lookup overhead and eliminates the risk of "Twin ID" confusion during pitch generation.
+
 ---
 
 ## [2026-05-09] RAG Cleanup & Stabilization Completion
@@ -175,6 +174,9 @@ This file serves as a permanent historical record of all development sessions. E
 - **Dual-Layer Protection**: Combining manual status (`is_active`) with automated readiness checks (`has_rag`) creates a robust "Fail-Safe" for AI product delivery.
 - **Access Control Consistency**: Hardening the UI is insufficient; the underlying API must mirror these restrictions to prevent direct-ID enumeration attacks.
 - **Visibility as Trust**: Clearly labeling personas as "Training" in the admin view reduces cognitive load for admins when managing large numbers of concurrent syncs.
+
+---
+
 ## [2026-05-10] Incremental RAG Implementation & System Hardening
 **Team:** System Architect & AI Engineer & Backend
 **Accomplishments:**
@@ -185,4 +187,43 @@ This file serves as a permanent historical record of all development sessions. E
 **Learnings:**
 - Content hashing is the most robust way to manage state in Git-to-DB sync workflows.
 - Always implement 'Processed ID' sets when using incremental logic to prevent unintended deletions in synchronized environments.
-- [2026-05-10] Bug Discovery: Intelligence Orphanage. Identified issue where re-created personas skip re-embedding due to hash matching, leaving them untrained. Documented as Task 21.9.
+- **Bug Discovery**: Intelligence Orphanage (Task 21.9). Identified issue where re-created personas skip re-embedding due to hash matching, leaving them untrained.
+
+---
+
+## [2026-05-11] Production Release: Epic 20 & 21 Identity Refactor
+**Team**: PM, Lead, DevOps, Backend Dev
+**Accomplishments**:
+- **Merge staging -> main**: Full production deployment of Epic 20 and 21 features.
+- **Data Migration**: Successfully executed UTC standardization and Numerical ID refactor in production.
+- **RAG Deployment**: Created and populated the `documents` table with 534 embeddings for 7 core personas.
+- **Cleanup**: Synchronized local, remote, and production database states, removing 5 decommissioned personas.
+**Learnings**:
+- **Backup Verification**: Critical to verify `pg_dump` output size and row counts; permission issues can lead to empty data exports.
+
+---
+
+## [2026-05-11] Task 20.5: Inline Management UI & UX Refinement
+**Team:** PM & Frontend & UX/UI
+**Accomplishments:**
+- **Task 20.5 (Done)**: Implemented **Inline Management UI** in the `/admin/personas` dashboard.
+- **Optimistic Updates**: Introduced a `handleInlineUpdate` utility that provides immediate UI feedback while processing background `PATCH` requests.
+- **Interactive Cluster Management**: Replaced static badges with live `<select>` dropdowns for rapid cluster assignment.
+- **Snappy Status Toggling**: Enhanced the "Active/Disabled" toggle with optimistic state management.
+- **Visual Parity**: Styled the new interactive elements to adhere to the "Factory Floor" aesthetic (high-density, transparent backgrounds, indigo accents).
+**Learnings:**
+
+---
+
+## [2026-05-11] Admin Suite Enhancement: Inline Editing & Cluster CRUD
+**Team:** PM & Frontend & Backend & UX/UI
+**Accomplishments:**
+- **Task 20.13 (Done)**: Implemented **Inline Name & Role Editing**. Personas can now be renamed directly in the table with click-to-edit interactions and auto-save on blur.
+- **Task 20.14 (Done)**: Developed the **Cluster Management Dashboard** (`/admin/clusters`). Admins can now Create, Read, Update (Rename), and Delete persona clusters globally.
+- **Relational Integrity**: Deleting a cluster now automatically resets its personas to 'General', and renaming a cluster triggers a bulk update across all associated personas.
+- **API Fix**: Resolved a critical bug in the `PATCH` endpoint where partial updates (like status changes) were failing due to NOT NULL constraints in the `persona_intelligence` table.
+- **Database Cleanup**: Surgically removed 26 orphaned intelligence records from the local environment and prepared a SQL script for remote cleanup.
+- **UX Integration**: Added a "Clusters" navigation button to the main Admin interface and maintained "Factory Floor" aesthetic across all new controls.
+**Learnings:**
+- **Partial Update Pitfalls**: When using split "Thin/Fat" table architectures, API handlers must be explicitly conditional to avoid unintentional overwrites or constraint violations on unrelated columns.
+- **Relational Cascade vs. Manual Cleanup**: For sensitive semantic data like clusters, manual reset logic is safer than database `CASCADE`, as it allows for a default state (e.g., 'General') rather than unintended data loss.
