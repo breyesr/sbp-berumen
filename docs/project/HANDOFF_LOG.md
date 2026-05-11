@@ -175,3 +175,13 @@ This file serves as a permanent historical record of all development sessions. E
 - **Dual-Layer Protection**: Combining manual status (`is_active`) with automated readiness checks (`has_rag`) creates a robust "Fail-Safe" for AI product delivery.
 - **Access Control Consistency**: Hardening the UI is insufficient; the underlying API must mirror these restrictions to prevent direct-ID enumeration attacks.
 - **Visibility as Trust**: Clearly labeling personas as "Training" in the admin view reduces cognitive load for admins when managing large numbers of concurrent syncs.
+## [2026-05-10] Incremental RAG Implementation & System Hardening
+**Team:** System Architect & AI Engineer & Backend
+**Accomplishments:**
+- **Optimization**: Implemented SHA-256 hashing in `embed.ts` for incremental RAG updates.
+- **Efficiency**: Verified 100% skip-rate for unchanged files, reducing OpenAI API costs to zero for static content.
+- **Hardening**: Filtered hidden/system files (e.g., `.DS_Store`) from the ingestion pipeline to prevent DB encoding errors.
+- **Persistence**: Ensured skipped documents are protected from stale-cleanup logic.
+**Learnings:**
+- Content hashing is the most robust way to manage state in Git-to-DB sync workflows.
+- Always implement 'Processed ID' sets when using incremental logic to prevent unintended deletions in synchronized environments.

@@ -1,22 +1,24 @@
-# Handoff State: [2026-05-09] - Stabilization Path COMPLETE: RAG Clean & Human-First UI
+# Handoff State: [2026-05-10] - Incremental RAG & Intelligence Optimization
 
-## Current Phase: Stabilization Path - VERIFIED
-**Target Branch**: `feature/alpha/ci-automation`
+## Current Phase: Stabilization Path - FULLY OPTIMIZED
+**Target Branch**: `feature/alpha/stabilization-path`
 **Last Verified State**: 
-- **Database**: Both Local and Production migrated to `TIMESTAMPTZ`. All dates are UTC standardized.
-- **RAG Brain**: Cleaned of technical Copywriter noise. Total chunks reduced and perfectly aligned with Numerical IDs.
-- **Sync Logic**: Non-destructive. Manual edits for Identity AND Intelligence (Pains/Goals) are permanently protected.
-- **Duplication**: Fixed. Sync engine now merges Git folders into existing personas by **Name + Cluster**.
+- **Database**: UTC standardized via `TIMESTAMPTZ`.
+- **RAG Engine**: Incremental via SHA-256 Hashing. Zero redundant API calls for unchanged files.
+- **Sync Logic**: Protected manual edits. Duplication-free via Name/Cluster heuristics.
+- **Hardening**: System files (`.DS_Store`, etc.) are explicitly ignored during ingestion.
 
-## 🏆 Accomplishments (Final Milestone)
-1.  **RAG Readiness Check (Task 20.12)**: Implemented programmatic detection of embeddings per persona.
-    *   **Backend**: `personaProvider.ts` and `listPersonas` now check for existing chunks in the vector DB.
-    *   **Deactivated by Default**: New personas (API or Sync) default to `is_active: false`.
-    *   **Public Safety**: Non-admin users are strictly forbidden from seeing or fetching personas that are inactive OR missing RAG data.
-    *   **UI Guardrails**: `PersonaCard` and `PersonaSelect` now disable "Not Ready" personas with a visual "Training" state and informative tooltips.
-    *   **Admin Visibility**: Added an "Intelligence" status column in the admin dashboard.
-2.  **RAG Cleanup**: Refactored `embed.ts` to skip technical social media formats. Successfully purged ~300 stale chunks from production.
-3.  **Manual Protocol**: Verified the "Local-to-Production" training workflow. Security risks minimized.
+## 🏆 Accomplishments
+1.  **Incremental Embedding (Epic 21 Extension)**:
+    *   Implemented SHA-256 hashing for all persona files.
+    *   Added database-lookup logic in `embed.ts` to skip unchanged content.
+    *   Preserved deterministic UUID mapping (uuidv5) for conflict resolution.
+    *   Verified "Skip" logic: 100% of unchanged files are bypassed in seconds.
+2.  **Ingestion Hardening**:
+    *   Updated `findAllFiles` to skip hidden/system files (starting with `.`).
+    *   Resolved "invalid byte sequence" errors caused by binary macOS metadata files.
+3.  **RAG Readiness (Task 20.12)**: Programmatic detection of embeddings per persona is live.
+4.  **Cleanup Logic**: Stale documents are automatically purged if their source files are deleted or if chunk counts are reduced.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Task 20.10**: **Main Environment Sync**: Repeat database migrations in the `main` branch environment before the next release cycle.
@@ -24,5 +26,6 @@
 - [ ] **Epic 0**: **Railway Bridge**: Begin the platform pivot once the current stabilization is verified by the end-users.
 
 ## Technical Learnings
-- **RAG Segregation**: Technical format rules belong in the UI layer (JSON), while human strategic intelligence belongs in the Vector layer (RAG). Mixing them creates "Semantic Noise".
-- **Zero-Ghost Sync**: The "Purge & Paste" test confirmed that Git tracking is the primary source of phantom personas. Always use `git rm` for permanent deletions.
+- **Hash-based State**: In production RAG systems, filesystem location should define "Identity," while content hashes define "State." This decouples organizational logic from operational efficiency.
+- **Binary Filtering**: Always filter system files (like `.DS_Store`) early in the ingestion pipeline to prevent database driver encoding failures.
+- **Processed ID Tracking**: When skipping files in an incremental script, you must still populate the "Processed IDs" set to protect existing records from "Stale Cleanup" logic.

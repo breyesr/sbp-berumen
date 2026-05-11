@@ -3,6 +3,7 @@ import { Client } from 'pg';
 import OpenAI from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
+import crypto from 'crypto';
 import { v5 as uuidv5 } from 'uuid';
 import * as pdf from 'pdf-parse';
 import mammoth from 'mammoth';
@@ -35,11 +36,16 @@ function generateUUID(value: string): string {
   return uuidv5(value, UUID_NAMESPACE);
 }
 
+function calculateHash(text: string): string {
+    return crypto.createHash('sha256').update(text).digest('hex');
+}
+
 async function findAllFiles(startPath: string): Promise<string[]> {
     try {
         const entries = await fs.readdir(startPath, { withFileTypes: true });
         const files = await Promise.all(
             entries.map((entry) => {
+                if (entry.name.startsWith('.')) return []; // Skip hidden files/dirs
                 const fullPath = path.join(startPath, entry.name);
                 if (entry.isDirectory()) {
                     return findAllFiles(fullPath);
@@ -110,12 +116,34 @@ async function embedAllData() {
     const processedDocIds = new Set<string>();
 
     const embedFile = async (filePath: string, personaIds: string[], personaNumericalIds: number[] = []) => {
+        const relativePath = path.relative(process.cwd(), filePath);
         try {
             const textToEmbed = await getTextFromFile(filePath);
+            const fileHash = calculateHash(textToEmbed);
+
+            // --- INCREMENTAL CHECK ---
+            // Check if any chunk for this file already has this hash.
+            // If it does, we assume the file hasn't changed and the chunking is the same.
+            const checkQuery = `
+                SELECT id FROM documents 
+                WHERE metadata->>'source_file' = $1 
+                AND metadata->>'file_hash' = $2
+            `;
+            const checkRes = await pgClient.query(checkQuery, [relativePath, fileHash]);
+
+            if (checkRes.rows.length > 0) {
+                console.log(` ⏭️ Skipping ${relativePath} (unchanged, ${checkRes.rows.length} chunks found)`);
+                // Mark these IDs as processed so they aren't deleted as stale
+                checkRes.rows.forEach(row => processedDocIds.add(row.id));
+                return;
+            }
+
+            console.log(` 🧠 Embedding ${relativePath}...`);
             const chunks = chunkText(textToEmbed);
 
             const metadata = {
-                source_file: path.relative(process.cwd(), filePath),
+                source_file: relativePath,
+                file_hash: fileHash,
                 persona_ids: personaIds,
                 persona_numerical_ids: personaNumericalIds,
             };
@@ -141,7 +169,7 @@ async function embedAllData() {
                         metadata = EXCLUDED.metadata;
                 `;
                 await pgClient.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
-                console.log(` Upserted chunk ${i + 1}/${chunks.length} from ${metadata.source_file}`);
+                // console.log(` Upserted chunk ${i + 1}/${chunks.length} from ${metadata.source_file}`);
             }
         } catch (error) {
             console.error(`Error processing file ${filePath}:`, error);
