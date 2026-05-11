@@ -5,6 +5,11 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Production Release Epic 20/21)**
 
 ## Latest Deployments
+- **Admin Suite Enhancement: Inline Editing & Cluster CRUD (May 11, 2026)**:
+    - **Inline Management UI**: Implemented optimistic updates for persona Name, Role, Cluster, and Status directly in the Admin table.
+    - **Cluster Management Hub**: Launched `/admin/clusters` for global group administration and relational safety.
+    - **API Hardening**: Fixed critical partial-update bugs in the `PATCH` and `POST` endpoints.
+    - **Database Stabilization**: Surgically cleaned orphaned records from `persona_intelligence`.
 - **Epic 20 & 21: Production Release & Identity Refactor (May 11, 2026)**:
     - **Numerical ID Migration**: Successfully migrated personas from text-slugs to SERIAL IDs.
     - **Database Normalization**: Split `personas` into thin/fat tables (`personas` and `persona_intelligence`).
