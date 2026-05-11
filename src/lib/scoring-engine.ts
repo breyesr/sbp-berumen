@@ -21,7 +21,7 @@ const MicroAgentResultSchema = z.object({
 export type MicroAgentResult = z.infer<typeof MicroAgentResultSchema>;
 
 export async function runScoringEngine(args: {
-  personaId: string;
+  personaId: string | number;
   personaName: string;
   personaContext: string;
   idea: string;
@@ -30,7 +30,7 @@ export async function runScoringEngine(args: {
   model?: string;
 }) {
   const cacheKey = generateScoringKey({
-    personaId: args.personaId,
+    personaId: args.personaId.toString(),
     idea: args.idea,
     goal: args.goal,
     evaluationLens: args.evaluationLens,

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/clients";
+import { getPersonaData } from "@/lib/personaProvider";
+import { isAdminRole } from "@/lib/rbac";
 
 export const runtime = "nodejs";
 
@@ -14,20 +15,19 @@ export async function GET(
   }
 
   const { id } = await params;
+  const isAdmin = isAdminRole(session.user.roles);
 
   try {
-    const res = await db.query(
-      `SELECT id, name, role, cluster, metadata, voice, context FROM personas WHERE id = $1`,
-      [id]
-    );
+    const persona = await getPersonaData(id);
 
-    if (res.rows.length === 0) {
+    if (!persona) {
       return NextResponse.json({ error: "Persona not found" }, { status: 404 });
     }
 
-    const persona = res.rows[0];
-    
-    // In the future, we will check if the user has access to this cluster here (Epic 10)
+    // Security Gate: Non-admins can only see active personas with RAG
+    if (!isAdmin && (!persona.is_active || !persona.has_rag)) {
+      return NextResponse.json({ error: "Persona not ready or deactivated" }, { status: 403 });
+    }
     
     return NextResponse.json({ persona });
   } catch (err: any) {

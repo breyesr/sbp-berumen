@@ -15,7 +15,9 @@ This report details the cross-functional scalability audit for the Synthetic Buy
 
 ### 3. AI & LLMOps Reliability
 - **Current State**: Implementations rely heavily on Hybrid RAG (Keyword + Vector) rather than true GraphRAG. Crucially, there is no token management during context injection, leading to potential context-window exhaustion. There are no rate-limiting or exponential backoff mechanisms to protect against OpenAI 429 errors or unbounded looping.
-- **Target State**: Transition to a **GraphRAG** representation for complex persona knowledge. Implement a Relationship Extraction pipeline to identify entities and connections during data ingestion. Transition from stateless API calls to a **Stateful Dialogue** model using a dedicated `conversations` table in Postgres. Implement token counting, chunk truncation, and resilient retries with exponential backoff.
+- **Optimization (May 2026)**: Implemented **Incremental RAG Embedding** using SHA-256 hashing. This reduces LLM API calls by 100% for unchanged knowledge files and significantly accelerates the "Intelligence Sync" pipeline.
+- **Target State**: Transition to a **GraphRAG** representation for complex persona knowledge. 
+ Implement a Relationship Extraction pipeline to identify entities and connections during data ingestion. Transition from stateless API calls to a **Stateful Dialogue** model using a dedicated `conversations` table in Postgres. Implement token counting, chunk truncation, and resilient retries with exponential backoff.
 
 ### 4. DevOps & Production Guardrails
 - **Current State**: Deployments rely entirely on Vercel's basic continuous deployment without an intermediate CI pipeline. There is no automated testing, observability (e.g., Sentry, Datadog), or structured logging. Database schema migrations rely on manual script execution.

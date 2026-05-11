@@ -58,7 +58,7 @@ const PATHS = {
 };
 
 const RequestSchema = z.object({
-  personaType: z.string(),
+  personaType: z.union([z.string(), z.number()]),
   context: z.string().optional().default(""),
   message: z.string().min(5),
   goal: z.string().min(5),

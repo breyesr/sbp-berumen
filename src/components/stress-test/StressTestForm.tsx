@@ -9,8 +9,8 @@ import PersonaSelect from "@/components/PersonaSelect";
 
 interface StressTestFormProps {
     personas: PersonaOption[];
-    personaType: string;
-    setPersonaType: (val: string) => void;
+    personaType: string | number;
+    setPersonaType: (val: string | number) => void;
     levels: ChallengeLevelOption[];
     challengeLevelId: string;
     setChallengeLevelId: (val: string) => void;

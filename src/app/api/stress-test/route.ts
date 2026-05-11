@@ -11,7 +11,7 @@ import { runScoringEngine, streamSynthesis } from "@/lib/scoring-engine";
 export const runtime = "nodejs";
 
 const Body = z.object({
-  personaType: z.string(),
+  personaType: z.union([z.string(), z.number()]),
   challengeLevelId: z.string(),
   idea: z.string().min(10).max(1500),
   goal: z.string().min(5).max(300),
@@ -20,7 +20,8 @@ const Body = z.object({
 
 export async function POST(req: Request) {
   try {
-    const body = Body.parse(await req.json());
+    const rawBody = await req.json();
+    const body = Body.parse(rawBody);
     const persona = await getPersona(body.personaType, body.idea);
     if (!persona) {
       return new Response(JSON.stringify({ error: "Persona not found" }), { status: 404 });

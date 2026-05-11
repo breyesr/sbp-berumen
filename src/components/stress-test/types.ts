@@ -52,9 +52,11 @@ export type ChallengeLevelOption = {
 };
 
 export type PersonaOption = {
-    id: string;
+    id: string | number;
     name: string;
     cluster?: string;
+    has_rag?: boolean;
+    is_active?: boolean;
 };
 
 export const FIELD_LIMITS = {

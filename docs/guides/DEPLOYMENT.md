@@ -68,6 +68,22 @@ OPENAI_API_KEY='YOUR_OPENAI_KEY' \
 npm run embed
 ```
 
+### 3.4 One-Command Staging/New Environment Setup (Recommended)
+
+For a fresh environment (like Staging), use the bootstrap script to initialize all schemas and create the initial Admin user in one go.
+
+```bash
+POSTGRES_URL='YOUR_DB_URL' \
+ADMIN_EMAIL='your@email.com' \
+ADMIN_PASSWORD='yourpassword' \
+npx tsx scripts/db/bootstrap-staging.ts
+```
+
+This script:
+- Cleans the DB (drops existing tables).
+- Creates all schemas (Auth, Personas, Clusters, Access).
+- Creates the Admin user and assigns the `admin` role + all clusters.
+
 ## 4. Branch and environment behavior
 
 - `main` deploys to Production

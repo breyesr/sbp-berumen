@@ -14,11 +14,14 @@ export type Bench = {
 };
 
 export type Persona = {
-  id: string;
+  id: number | string;
+  id_text: string;
   name: string;
   role?: string;
   cluster?: string;
   is_active?: boolean;
+  has_rag?: boolean;
+  metadata?: any;
   profile?: {
     goals?: string[];
     pains?: string[];
@@ -166,9 +169,10 @@ export function formatVoiceProfile(voice?: PersonaVoice | null): string | null {
 /**
  * Maps a database row or JSON object to a Persona object.
  */
-function mapToPersona(id: string, j: any, contextStr?: string): Persona {
-  const name: string = j.name ?? id;
-  const role: string | undefined = j.role;
+function mapToPersona(id: number | string, id_text: string, j: any, contextStr?: string): Persona {
+  // Prioritize human name from JSON metadata, fallback to id_text slug
+  const name: string = j.name || id_text;
+  const role: string | undefined = j.role || j.metadata?.role;
   const bench: Bench | undefined = j.bench
     ? {
         cplTargetMXN: [Number(j.bench.cplTargetMXN?.[0] ?? 0), Number(j.bench.cplTargetMXN?.[1] ?? 0)] as [number, number],
@@ -202,8 +206,10 @@ function mapToPersona(id: string, j: any, contextStr?: string): Persona {
 
   return {
     id,
+    id_text,
     name,
     role,
+    metadata: j,
     profile: {
       goals: j.goals ?? [],
       pains: j.pains ?? [],
@@ -220,34 +226,53 @@ function mapToPersona(id: string, j: any, contextStr?: string): Persona {
   };
 }
 
-async function readPersonaFile(id: string): Promise<Persona | null> {
-  const personaDir = path.join(DATA_DIR, id);
+async function readPersonaFile(id_text: string): Promise<Persona | null> {
+  const personaDir = path.join(DATA_DIR, id_text);
   const personaFile = path.join(personaDir, 'persona.json');
 
   try {
     const raw = await fs.readFile(personaFile, "utf8");
     const j = JSON.parse(raw);
-    return mapToPersona(id, j);
+    // Use id_text as the ID for filesystem personas to ensure uniqueness in fallback mode
+    return mapToPersona(id_text, id_text, j);
   } catch {
     return null;
   }
 }
 
-export async function getPersona(id: string, userQuery: string): Promise<Persona | null> {
+/**
+ * Core persona retrieval logic (DB + Filesystem fallback)
+ * Does NOT include dynamic RAG context augmentation.
+ */
+export async function getPersonaData(id: string | number): Promise<Persona | null> {
   let persona: Persona | null = null;
 
-  // 1. Try fetching from Database first
+  // 1. Try fetching from Database first (normalized structure)
   try {
-    const res = await db.query(
-      `SELECT id, name, role, cluster, is_active, metadata, voice, context FROM personas WHERE id = $1`,
-      [id]
-    );
+    const isNumeric = typeof id === "number" || (!isNaN(Number(id)) && id.toString().indexOf("-") === -1);
+    const finalId = isNumeric ? parseInt(id.toString(), 10) : id;
+    
+    const query = isNumeric 
+        ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context,
+                  EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
+           FROM personas p 
+           LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
+           WHERE p.id = $1`
+        : `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context,
+                  EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
+           FROM personas p 
+           LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
+           WHERE p.id_text = $1`;
+
+    const res = await db.query(query, [finalId]);
+    
     if (res.rows[0]) {
       const row = res.rows[0];
       persona = {
-        ...mapToPersona(row.id, row.metadata, row.context),
+        ...mapToPersona(row.id, row.id_text, row.metadata, row.context),
         cluster: row.cluster,
-        is_active: row.is_active
+        is_active: row.is_active,
+        has_rag: row.has_rag
       };
     }
   } catch (err) {
@@ -256,14 +281,30 @@ export async function getPersona(id: string, userQuery: string): Promise<Persona
 
   // 2. Fallback to filesystem if not in DB
   if (!persona) {
-    persona = await readPersonaFile(id);
-    if (persona) persona.is_active = true; // Filesystem personas are active by default
+    const isNumeric = typeof id === "number" || (!isNaN(Number(id)) && id.toString().indexOf("-") === -1);
+    
+    // Only attempt filesystem fallback if the ID is a text slug. 
+    // Purely numerical IDs cannot be resolved to filesystem paths without the DB.
+    if (!isNumeric) {
+      persona = await readPersonaFile(id.toString());
+      if (persona) {
+        persona.is_active = true; // Filesystem personas are active by default
+        persona.has_rag = false;  // Filesystem personas don't have DB-based RAG
+      }
+    }
   }
+
+  return persona;
+}
+
+export async function getPersona(id: string | number, userQuery: string): Promise<Persona | null> {
+  // 1. Get core persona data
+  const persona = await getPersonaData(id);
 
   if (!persona) return null;
 
-  // 3. Dynamic RAG Context Augmentation
-  const searchResults = await hybridSearch(userQuery, id);
+  // 2. Dynamic RAG Context Augmentation (Pass both id_text and numerical id)
+  const searchResults = await hybridSearch(userQuery, persona.id_text, typeof persona.id === 'number' ? persona.id : undefined);
   const ragContext = searchResults.map(r => r.content).join("\n\n");
   const ragHighlights = buildRagHighlights(searchResults);
   
@@ -314,26 +355,41 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: string; name: string; role?: string; cluster?: string; is_active?: boolean }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean }[]> {
     const { allowedClusters = [], isAdmin = false } = options || {};
 
     // 1. Try listing from Database
     try {
-        let query = `SELECT id, name, role, cluster, is_active FROM personas`;
+        let query = `
+          SELECT 
+            p.id, 
+            p.id_text, 
+            p.name, 
+            p.role, 
+            p.cluster, 
+            p.is_active,
+            EXISTS (
+              SELECT 1 FROM documents d 
+              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
+            ) AS has_rag
+          FROM personas p
+        `;
         let conditions: string[] = [];
         let params: any[] = [];
 
         if (!isAdmin) {
-            // Non-admins only see active personas
+            // Non-admins only see active personas that are fully trained (has_rag)
             conditions.push(`is_active = true`);
+            conditions.push(`EXISTS (
+              SELECT 1 FROM documents d 
+              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
+            )`);
             
             // If they have assigned clusters, restrict to those
             if (allowedClusters && allowedClusters.length > 0) {
                 conditions.push(`(cluster = ANY($${params.length + 1}) OR cluster IS NULL OR LOWER(cluster) = 'general')`);
                 params.push(allowedClusters);
             }
-            // If allowedClusters is empty, we don't add more restrictions, 
-            // allowing them to see all active personas by default.
         }
 
         if (conditions.length > 0) {
@@ -341,18 +397,20 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
         }
 
         query += ` ORDER BY cluster, name ASC`;
-        
+
         const res = await db.query(query, params);
         return res.rows.map(r => ({
             id: r.id,
+            id_text: r.id_text,
             name: r.name,
             role: r.role,
             cluster: r.cluster,
-            is_active: r.is_active
+            is_active: r.is_active,
+            has_rag: r.has_rag
         }));
-    } catch (err) {
+        } catch (err) {
         console.error("Database error listing personas, falling back to filesystem", err);
-    }
+        }
 
     // 2. Fallback to filesystem
     try {
@@ -362,8 +420,8 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             .map(e => e.name);
 
         const metas = await Promise.all(
-            personaIds.map(async (id) => {
-                const p = await readPersonaFile(id);
+            personaIds.map(async (id_text) => {
+                const p = await readPersonaFile(id_text);
                 if (!p) return null;
                 
                 // Filesystem filtering logic
@@ -373,19 +431,30 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
                    return null;
                 }
 
-                return { id: p.id, name: p.name, role: p.role, cluster: p.cluster, is_active: true };
+                return { id: p.id, id_text: p.id_text, name: p.name, role: p.role, cluster: p.cluster, is_active: true, has_rag: false };
             })
         );
 
-        return metas.filter(Boolean) as { id: string; name: string; role?: string; cluster?: string; is_active?: boolean }[];
+        return metas.filter(Boolean) as { id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean }[];
     } catch (err) {
         console.error("Failed to list personas from filesystem", err);
         return [];
     }
 }
 
-export async function getPersonaKnowledgeFiles(personaId: string): Promise<string[]> {
-  const knowledgeDir = path.join(DATA_DIR, personaId, 'knowledge');
+export async function getPersonaKnowledgeFiles(personaId: string | number): Promise<string[]> {
+  let id_text = personaId.toString();
+  
+  // Resolve id_text if numerical
+  const isNumeric = typeof personaId === "number" || (!isNaN(Number(personaId)) && personaId.toString().indexOf("-") === -1);
+  if (isNumeric) {
+    const res = await db.query(`SELECT id_text FROM personas WHERE id = $1`, [personaId]);
+    if (res.rows[0]) {
+      id_text = res.rows[0].id_text;
+    }
+  }
+
+  const knowledgeDir = path.join(DATA_DIR, id_text, 'knowledge');
   try {
     const files = await fs.readdir(knowledgeDir);
     return files.map(file => path.basename(file));

@@ -20,6 +20,7 @@ export interface SearchResult {
 export async function hybridSearch(
     query: string,
     personaId: string,
+    numericalId?: number,
     topK = 5
 ): Promise<SearchResult[]> {
     const client = await db.connect(); // Check out a client from the pool
@@ -33,25 +34,48 @@ export async function hybridSearch(
         const queryEmbedding = embeddingResponse.data[0].embedding;
 
         // 2. Perform keyword search (FTS)
+        // We look for:
+        // - Global knowledge (tagged with "*" in persona_ids or -1 in persona_numerical_ids)
+        // - Specific persona knowledge (matching slug OR numerical ID)
         const keywordQuery = `
             SELECT id, content, metadata, ts_rank(content_tsvector, websearch_to_tsquery('english', $1)) AS score
             FROM documents
-            WHERE (metadata->'persona_ids' @> '["*"]' OR metadata->'persona_ids' @> to_jsonb($2::text))
+            WHERE (
+                metadata->'persona_ids' @> '["*"]' 
+                OR metadata->'persona_numerical_ids' @> '[-1]'
+                OR metadata->'persona_ids' @> to_jsonb($2::text)
+                ${numericalId ? "OR metadata->'persona_numerical_ids' @> to_jsonb($4::int)" : ""}
+            )
             AND content_tsvector @@ websearch_to_tsquery('english', $1)
             ORDER BY score DESC
             LIMIT $3;
         `;
-        const keywordResults = await client.query(keywordQuery, [query, personaId, topK]);
+        
+        const keywordParams = numericalId 
+            ? [query, personaId, topK, numericalId] 
+            : [query, personaId, topK];
+
+        const keywordResults = await client.query(keywordQuery, keywordParams);
 
         // 3. Perform vector search (HNSW)
         const vectorQuery = `
             SELECT id, content, metadata, 1 - (embedding <=> $1) AS score
             FROM documents
-            WHERE (metadata->'persona_ids' @> '["*"]' OR metadata->'persona_ids' @> to_jsonb($2::text))
+            WHERE (
+                metadata->'persona_ids' @> '["*"]' 
+                OR metadata->'persona_numerical_ids' @> '[-1]'
+                OR metadata->'persona_ids' @> to_jsonb($2::text)
+                ${numericalId ? "OR metadata->'persona_numerical_ids' @> to_jsonb($4::int)" : ""}
+            )
             ORDER BY score DESC
             LIMIT $3;
         `;
-        const vectorResults = await client.query(vectorQuery, [`[${queryEmbedding.join(',')}]`, personaId, topK]);
+        
+        const vectorParams = numericalId 
+            ? [`[${queryEmbedding.join(',')}]`, personaId, topK, numericalId] 
+            : [`[${queryEmbedding.join(',')}]`, personaId, topK];
+
+        const vectorResults = await client.query(vectorQuery, vectorParams);
 
         // 4. Combine and re-rank results (Reciprocal Rank Fusion)
         const rankedResults: Record<string, { score: number; result: SearchResult }> = {};

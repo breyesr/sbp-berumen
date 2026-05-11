@@ -27,12 +27,11 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
           <div className="space-y-2">
             <div className="flex items-center gap-3">
                 <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-black tracking-[0.2em] uppercase">
-                    {persona.cluster}
+                    {persona.cluster || "General"}
                 </span>
-                <span className="text-zinc-600 text-[10px] font-mono tracking-tighter uppercase">{persona.id}</span>
             </div>
-            <h2 className="text-4xl font-black text-white tracking-tighter uppercase">{persona.name}</h2>
-            <p className="text-zinc-400 text-lg font-medium italic">{persona.role}</p>
+            <h2 className="text-4xl font-black text-white tracking-tighter uppercase">{persona.name || "Unknown Persona"}</h2>
+            <p className="text-zinc-400 text-lg font-medium italic">{persona.role || "Consultor Estratégico"}</p>
           </div>
           <button onClick={onClose} className="p-3 hover:bg-white/5 rounded-full transition-colors group">
             <X className="w-8 h-8 text-zinc-500 group-hover:text-white transition-colors" />
@@ -50,7 +49,7 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
                     <h3 className="text-xs font-black uppercase tracking-[0.3em]">Síntesis Ejecutiva</h3>
                 </div>
                 <p className="text-xl text-zinc-300 leading-relaxed font-medium">
-                    {metadata.strategic_synthesis || "Analizando el núcleo estratégico de esta persona..."}
+                    {metadata.strategic_synthesis || metadata.synthesis || "Analizando el núcleo estratégico de esta persona..."}
                 </p>
                 
                 <div className="pt-4 grid sm:grid-cols-2 gap-4">
@@ -70,11 +69,13 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
                     <h3 className="text-xs font-black uppercase tracking-[0.2em]">Demografía</h3>
                 </div>
                 <ul className="space-y-3">
-                    {(metadata.demographics || []).map((d: string, i: number) => (
+                    {Array.isArray(metadata.demographics) ? metadata.demographics.map((d: string, i: number) => (
                     <li key={i} className="text-xs text-zinc-400 leading-tight flex gap-2">
                         <span className="text-indigo-500 font-black">•</span> {d}
                     </li>
-                    ))}
+                    )) : (
+                        <li className="text-xs text-zinc-600 italic">No hay datos demográficos disponibles</li>
+                    )}
                 </ul>
             </div>
           </div>
@@ -144,7 +145,7 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
           {/* Advanced Section: Full Strategic Depth (Admin Only) */}
           {isAdmin && (
             <section className="pt-10 border-t border-white/5 space-y-6">
-                <details className="group">
+                <details className="group" open={!!persona.context}>
                     <summary className="flex items-center justify-between cursor-pointer list-none">
                         <div className="flex items-center gap-2 text-zinc-500 group-hover:text-zinc-300 transition-colors">
                             <Brain className="w-5 h-5" />

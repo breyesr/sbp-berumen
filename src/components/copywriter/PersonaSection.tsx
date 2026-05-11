@@ -9,10 +9,10 @@ import { clsx } from "clsx";
 
 interface PersonaSectionProps {
   personas: PersonaOption[];
-  personaType: string;
-  setPersonaType: (val: string) => void;
+  personaType: string | number;
+  setPersonaType: (val: string | number) => void;
   onContinue: () => void;
-  onViewDossier: (id: string) => void;
+  onViewDossier: (id: string | number) => void;
 }
 
 export function PersonaSection({
@@ -47,7 +47,7 @@ export function PersonaSection({
     return groups;
   }, [personas, selectedCluster]);
 
-  const handleViewDossier = (e: React.MouseEvent, id: string) => {
+  const handleViewDossier = (e: React.MouseEvent, id: string | number) => {
     e.stopPropagation();
     onViewDossier(id);
   };

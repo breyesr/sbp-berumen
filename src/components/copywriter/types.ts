@@ -23,10 +23,11 @@ export const OutputSchema = z.object({
 });
 
 export type PersonaOption = { 
-  id: string; 
+  id: string | number; 
   name: string; 
   role?: string; 
   cluster?: string; 
+  has_rag?: boolean;
 };
 
 export type Platform = {

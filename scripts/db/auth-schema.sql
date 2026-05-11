@@ -84,7 +84,7 @@ CREATE TABLE "role_applications" (
 
 CREATE TABLE "user_personas" (
     "userId" TEXT NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
-    "personaId" TEXT NOT NULL,
+    "personaId" INTEGER NOT NULL,
     CONSTRAINT "user_personas_pkey" PRIMARY KEY ("userId","personaId")
 );
 

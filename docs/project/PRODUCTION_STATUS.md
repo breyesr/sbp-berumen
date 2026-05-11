@@ -5,6 +5,20 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Refined Intelligence Factory, Multi-Tenant Admin)**
 
 ## Latest Deployments
+- **Epic 21: Incremental RAG & Intelligence Optimization (May 10, 2026)**:
+    - **Hash-Based Sync**: Implemented SHA-256 content hashing in `embed.ts` to skip unchanged files, reducing OpenAI API costs to zero for static content.
+    - **System Hardening**: Integrated filters to ignore hidden/binary files (e.g., `.DS_Store`) during ingestion, resolving database encoding failures.
+    - **Deterministic Cleanup**: Verified automated purging of stale document vectors when source files are deleted or modified.
+- **Epic 20 & 21: Stabilization Path - Phase 1 (May 9, 2026)**:
+    - **Intelligent Sync**: Implemented "Human-First" precedence to protect manual UI edits from being overwritten by repository files.
+    - **UTC Standardization**: Migrated all persona timestamps to `TIMESTAMPTZ` to ensure cross-environment synchronization reliability.
+    - **Numerical ID Transition**: Finalized migration from text-slugs to SERIAL IDs for robust relational integrity.
+    - **Vercel-Safe Ingestion**: Hardened the deployment bridge to bypass filesystem locks in serverless environments.
+- **Epic 17: 2FA UX Extreme Distinction (May 4, 2026)**:
+    - **Expert Path (Fast Track)**: Added an immediate skip option for power users with existing apps.
+    - **Extreme Visual Distinction**: Implemented Blue (Camera) and Amber (Authenticator) themes to resolve QR scan confusion.
+    - **Stabilized Transitions**: Integrated `min-height` containers and `scrollIntoView` logic to eliminate UI "jumps" during enrollment.
+    - **Authenticator Focus**: Defaulted exclusively to Google Authenticator to simplify onboarding choice.
 - **Epic 15: The Intelligence Matrix (April 30, 2026)**:
     - **Linear Production Pipeline**: Refactored Copywriter into a logical 3-phase vertical flow (Briefing -> Propagation -> Matrix).
     - **Contextual Tab System**: Isolated configuration per network via a horizontal platform switcher.
@@ -33,7 +47,7 @@
     - Streaming Copywriter and initial tabbed selector.
 
 ## Known Active Issues
-- **None.** Platform is fully optimized for current roadmap features.
+- **Intelligence Orphanage**: If a persona is deleted and re-synced from Git, the incremental embedder skips re-embedding due to hash matching against the *old* (now deleted) persona ID. This leaves the new persona record "Untrained." Workaround: Manually edit the file or clear the `documents` table for that file to force a re-hash. (Target Fix: Task 21.9).
 
 ## Observability
 - **Monitoring**: Structured JSON Logs (Pino).

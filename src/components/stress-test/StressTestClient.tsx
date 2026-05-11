@@ -34,7 +34,7 @@ export function StressTestClient({
     const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 
     const [personas] = useState<PersonaOption[]>(initialPersonas);
-    const [personaType, setPersonaType] = useState<string>(initialPersonas[0]?.id || "");
+    const [personaType, setPersonaType] = useState<string | number>(initialPersonas[0]?.id || "");
     const [levels] = useState<ChallengeLevelOption[]>(initialLevels);
     const [challengeLevelId, setChallengeLevelId] = useState<string>(initialLevels[0]?.id || "");
     
@@ -127,12 +127,16 @@ export function StressTestClient({
         }
     };
 
-    const handleViewDossier = async (id: string) => {
+    const handleViewDossier = async (id: string | number) => {
+        if (loadingDossier) return;
         setLoadingDossier(true);
         try {
-            const res = await fetch(`/api/personas/${id}`);
+            const res = await fetch(`/api/personas/${encodeURIComponent(id)}`);
+            if (!res.ok) throw new Error("Failed to fetch persona data");
             const data = await res.json();
-            if (res.ok) setViewingDossier(data.persona);
+            if (data.persona) {
+                setViewingDossier(data.persona);
+            }
         } catch (err) {
             console.error("Dossier fetch failed", err);
         } finally {

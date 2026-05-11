@@ -8,7 +8,7 @@ declare module "next-auth" {
       id: string;
       roles?: string[];
       apps?: string[];
-      personas?: string[];
+      personas?: number[];
       clusters?: string[];
       two_factor_enabled?: boolean;
       locale?: AppLocale;

@@ -28,10 +28,10 @@ export default async function CopywriterPage() {
         cluster: p.cluster,
     }));
 
-    const personaLookup: Record<string, string> = personaList.reduce((acc, p) => {
+    const personaLookup: Record<string | number, string> = personaList.reduce((acc, p) => {
         acc[p.id] = p.name;
         return acc;
-    }, {} as Record<string, string>);
+    }, {} as Record<string | number, string>);
 
     const initialPlatforms: Platform[] = (platformsData || []) as Platform[];
 

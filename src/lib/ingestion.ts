@@ -73,26 +73,75 @@ export async function ingestFileContent(args: {
 
         logger.info({ personaId, filename, chunks: chunks.length }, "Starting embedding process for uploaded file");
 
+        // Sequential ingestion is safer for serverless environments with limited connection pools
         for (let i = 0; i < chunks.length; i++) {
             const chunk = chunks[i];
             const uniqueChunkIdentifier = `upload::${personaId}::${filename}::chunk${i}`;
             const docId = generateUUID(uniqueChunkIdentifier);
 
-            const embeddingResponse = await openai.embeddings.create({
-                model: EMBEDDING_MODEL,
-                input: chunk,
-            });
-            const embedding = embeddingResponse.data[0].embedding;
+            console.log(`[Ingestion] Processing chunk ${i+1}/${chunks.length} for ${personaId}`);
 
-            const upsertQuery = `
-                INSERT INTO documents (id, content, embedding, metadata)
-                VALUES ($1, $2, $3, $4)
-                ON CONFLICT (id) DO UPDATE SET
-                    content = EXCLUDED.content,
-                    embedding = EXCLUDED.embedding,
-                    metadata = EXCLUDED.metadata;
-            `;
-            await db.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
+            try {
+                const embeddingResponse = await openai.embeddings.create({
+                    model: EMBEDDING_MODEL,
+                    input: chunk,
+                });
+                const embedding = embeddingResponse.data[0].embedding;
+
+                const upsertQuery = `
+                    INSERT INTO documents (id, content, embedding, metadata)
+                    VALUES ($1, $2, $3, $4)
+                    ON CONFLICT (id) DO UPDATE SET
+                        content = EXCLUDED.content,
+                        embedding = EXCLUDED.embedding,
+                        metadata = EXCLUDED.metadata;
+                `;
+                await db.query(upsertQuery, [docId, chunk, `[${embedding.join(',')}]`, metadata]);
+            } catch (chunkErr: any) {
+                console.error(`[Ingestion] CRITICAL FAILURE on chunk ${i}:`, chunkErr.message);
+                throw new Error(`Chunk ${i} failed: ${chunkErr.message}`);
+            }
+        }
+
+        // 3. AUTO-SYNTHESIS LITE: Update persona record with context/metadata if it's currently empty
+        // This ensures the dossier works immediately after upload.
+        try {
+            const currentPersona = await db.query(
+                `SELECT p.id, pi.context, pi.metadata 
+                 FROM personas p 
+                 JOIN persona_intelligence pi ON p.id = pi.persona_id 
+                 WHERE p.id_text = $1`, 
+                [personaId]
+            );
+
+            if (currentPersona.rows[0]) {
+                const { id, context, metadata: currentMeta } = currentPersona.rows[0];
+                const needsContext = !context || context.trim() === "";
+                const isFicha = filename.toUpperCase().includes("FICHA_TECNICA") || filename.toUpperCase().includes("PERSONA_STRATEGIC_DEPTH");
+                
+                if (needsContext && isFicha) {
+                    await db.query(
+                        `UPDATE persona_intelligence SET context = $1 WHERE persona_id = $2`,
+                        [text, id]
+                    );
+                    console.log(`[Ingestion] Auto-populated context for ${personaId} from ${filename}`);
+                }
+
+                // Simple check for metadata fields
+                const needsMeta = !currentMeta.strategic_synthesis || (currentMeta.goals?.length === 0 && currentMeta.pains?.length === 0);
+                if (needsMeta && filename.endsWith(".json")) {
+                    try {
+                        const jsonMeta = JSON.parse(buffer.toString('utf-8'));
+                        await db.query(
+                            `UPDATE persona_intelligence SET metadata = $1 WHERE persona_id = $2`,
+                            [JSON.stringify(jsonMeta), id]
+                        );
+                        console.log(`[Ingestion] Auto-populated metadata for ${personaId} from JSON upload`);
+                    } catch (e) { /* ignore invalid JSON */ }
+                }
+            }
+        } catch (syncErr) {
+            console.error(`[Ingestion] Failed to auto-populate persona ${personaId}:`, syncErr);
         }
 
         logger.info({ personaId, filename }, "File successfully ingested and embedded");

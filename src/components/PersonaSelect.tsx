@@ -5,12 +5,12 @@ import { Info, Search, ChevronDown, Check, User, Boxes, X, ChevronRight } from "
 import { PersonaDossier } from "./admin/PersonaDossier";
 import { clsx } from "clsx";
 
-export type PersonaOption = { id: string; name: string; cluster?: string; role?: string; metadata?: any };
+export type PersonaOption = { id: string | number; name: string; cluster?: string; role?: string; metadata?: any; has_rag?: boolean };
 
 type Props = {
   options?: PersonaOption[];
-  value: string;
-  onChange: (id: string) => void;
+  value: string | number;
+  onChange: (id: string | number) => void;
   className?: string;
   labelText?: string;
 };
@@ -75,15 +75,21 @@ export default function PersonaSelect({ options, value, onChange, className, lab
     }
   }, [isOpen]);
 
-  const handleOpenDossier = async (e: React.MouseEvent, personaId: string) => {
+  const handleOpenDossier = async (e: React.MouseEvent, personaId: string | number) => {
     e.stopPropagation();
+    if (loadingDossier) return;
+    
     setLoadingDossier(true);
     try {
-      const res = await fetch(`/api/personas/${personaId}`);
+      const res = await fetch(`/api/personas/${encodeURIComponent(personaId)}`);
+      if (!res.ok) throw new Error("Failed to fetch dossier");
       const data = await res.json();
-      if (res.ok) setViewingDossier(data.persona);
+      if (data.persona) {
+        setViewingDossier(data.persona);
+      }
     } catch (err) {
       console.error("Dossier fetch failed", err);
+      // Optional: alert the user or show a toast
     } finally {
       setLoadingDossier(false);
     }
@@ -196,41 +202,55 @@ export default function PersonaSelect({ options, value, onChange, className, lab
                                     <div className="h-[1px] flex-1 bg-white/5"></div>
                                 </div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    {personas.map((opt) => (
-                                        <div
-                                            key={opt.id}
-                                            onClick={() => {
-                                                onChange(opt.id);
-                                                setIsOpen(false);
-                                            }}
-                                            className={clsx(
-                                                "group relative p-3 rounded-2xl cursor-pointer transition-all border",
-                                                value === opt.id 
-                                                    ? "bg-indigo-500/10 border-indigo-500/30 shadow-[0_0_20px_rgba(79,70,229,0.1)]" 
-                                                    : "bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-white/10"
-                                            )}
-                                        >
-                                            <div className="flex items-center justify-between gap-3">
-                                                <div className="flex flex-col min-w-0">
-                                                    <span className={clsx("text-sm font-bold truncate tracking-tight", value === opt.id ? "text-indigo-400" : "text-zinc-200")}>
-                                                        {opt.name}
-                                                    </span>
-                                                    <span className="text-[10px] text-zinc-500 font-medium italic truncate">
-                                                        {opt.role}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center gap-2 flex-shrink-0">
-                                                    {value === opt.id ? (
-                                                        <div className="w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/50 animate-scale-in">
-                                                            <Check className="w-3 h-3 text-white" />
+                                    {personas.map((opt) => {
+                                        const isReady = opt.has_rag !== false;
+                                        return (
+                                            <div
+                                                key={opt.id}
+                                                onClick={() => {
+                                                    if (!isReady) return;
+                                                    onChange(opt.id);
+                                                    setIsOpen(false);
+                                                }}
+                                                className={clsx(
+                                                    "group relative p-3 rounded-2xl transition-all border",
+                                                    !isReady ? "bg-zinc-900/50 border-white/5 cursor-not-allowed opacity-60" : "cursor-pointer",
+                                                    isReady && (value === opt.id 
+                                                        ? "bg-indigo-500/10 border-indigo-500/30 shadow-[0_0_20px_rgba(79,70,229,0.1)]" 
+                                                        : "bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-white/10")
+                                                )}
+                                            >
+                                                <div className="flex items-center justify-between gap-3">
+                                                    <div className="flex flex-col min-w-0">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className={clsx("text-sm font-bold truncate tracking-tight", isReady && value === opt.id ? "text-indigo-400" : "text-zinc-200")}>
+                                                                {opt.name}
+                                                            </span>
+                                                            {!isReady && (
+                                                                <span className="px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[8px] font-black text-amber-500 uppercase tracking-widest">
+                                                                    Training
+                                                                </span>
+                                                            )}
                                                         </div>
-                                                    ) : (
-                                                        <ChevronRight className="w-3.5 h-3.5 text-zinc-700 transition-transform group-hover:translate-x-1 group-hover:text-zinc-400" />
-                                                    )}
+                                                        <span className="text-[10px] text-zinc-500 font-medium italic truncate">
+                                                            {isReady ? opt.role : "Intelligence syncing..."}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 flex-shrink-0">
+                                                        {isReady && value === opt.id ? (
+                                                            <div className="w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/50 animate-scale-in">
+                                                                <Check className="w-3 h-3 text-white" />
+                                                            </div>
+                                                        ) : isReady ? (
+                                                            <ChevronRight className="w-3.5 h-3.5 text-zinc-700 transition-transform group-hover:translate-x-1 group-hover:text-zinc-400" />
+                                                        ) : (
+                                                            <Info className="w-3.5 h-3.5 text-zinc-800" />
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         ))

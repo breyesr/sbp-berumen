@@ -9,8 +9,8 @@ import { ScoringBreakdown } from "./ScoringBreakdown";
 
 interface AnalysisResultsProps {
     result: StressResult;
-    personaNames: Record<string, string>;
-    personaType: string;
+    personaNames: Record<string | number, string>;
+    personaType: string | number;
     selectedPersonaName: string;
     showDebug: boolean;
     loading?: boolean;

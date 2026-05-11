@@ -1,49 +1,33 @@
-# Handoff State (Continuous Execution Protocol)
+# Handoff State: [2026-05-10] - Incremental RAG & Intelligence Optimization
 
-## Current Session Timestamp
-**Date**: April 30, 2026 (Morning)
+## Current Phase: Stabilization Path - FULLY OPTIMIZED
+**Target Branch**: `feature/alpha/stabilization-path`
+**Last Verified State**: 
+- **Database**: UTC standardized via `TIMESTAMPTZ`.
+- **RAG Engine**: Incremental via SHA-256 Hashing. Zero redundant API calls for unchanged files.
+- **Sync Logic**: Protected manual edits. Duplication-free via Name/Cluster heuristics.
+- **Hardening**: System files (`.DS_Store`, etc.) are explicitly ignored during ingestion.
 
-## Objective
-Deployment of the Intelligence Wizard (Epic 16) and infrastructure scaling (Epic 0) to support high-concurrency multi-persona refinement.
+## 🏆 Accomplishments
+1.  **Incremental Embedding (Epic 21 Extension)**:
+    *   Implemented SHA-256 hashing for all persona files.
+    *   Added database-lookup logic in `embed.ts` to skip unchanged content.
+    *   Preserved deterministic UUID mapping (uuidv5) for conflict resolution.
+    *   Verified "Skip" logic: 100% of unchanged files are bypassed in seconds.
+2.  **Ingestion Hardening**:
+    *   Updated `findAllFiles` to skip hidden/system files (starting with `.`).
+    *   Resolved "invalid byte sequence" errors caused by binary macOS metadata files.
+3.  **RAG Readiness (Task 20.12)**: Programmatic detection of embeddings per persona is live.
+4.  **Cleanup Logic**: Stale documents are automatically purged if their source files are deleted or if chunk counts are reduced.
 
-## Accomplished
-- **[COMPLETED] The Intelligence Matrix (Epic 15).**
-    - Refactored Copywriter into a 3-phase vertical production pipeline: Briefing -> Propagation -> Matrix.
-    - Implemented a high-density, context-aware tabbed matrix for format selection.
-    - Added "Auto-Select Primary" logic, "Select All" bulk controls, and coverage badges.
-    - Locked the vertical footprint while increasing input space for complex briefs.
-    - Integrated a sticky "Factory Ledger" for real-time production status.
-- **[MERGED TO MAIN] Epic 14: Collapsible Intelligence Factory UI.**
-    - Unified Strategic Thread layout and group Persona Tiles.
-    - Optimized navigation and i18n support.
-- **[MERGED TO MAIN] Epic 10: Multi-Tenant Cluster Permissions.**
-    - Server-side isolation and Admin management UI.
-    - API resilience and fallback logic.
-- **[COMPLETED] Copywriter Collapsible Refactor (Epic 11).**
-    - Transitioned to the **Intelligence Factory** 3-step workflow on `feat/persona-status-management`.
-    - Integrated `PersonaCard` grid for unified persona selection.
-    - Combined Brief Inputs & Platform selection into a single "Factory Floor" block.
-    - Implemented platform-grouped results with compact, high-density cards.
-    - Synchronized all tooltips with the **Intelligence Assistant** design.
-- **[COMPLETED] Persona Status Management (Epic 5 Refinement).**
-    - Added `is_active` toggle to the `personas` table with auto-migration in `db-sync.ts`.
-    - Enhanced `/admin/personas` with visibility toggles and status filtering.
-    - Hotfixed persona visibility for non-admins and resolved missing i18n keys.
-- **Stability**:
-    - Verified `npm run build` success on both `main` and `feat/persona-status-management`.
-    - **Note:** `main` was rolled back to `14eccbb` for final UI validation. `feat/persona-status-management` remains the source of truth for current development.
+## 🚀 Immediate Next Steps
+- [ ] **Task 21.9**: **Fix RAG Orphanage**: Address the issue where re-created personas skip re-embedding and remain "Untrained" due to hash-matching against old persona IDs.
+- [ ] **Task 20.10**: **Main Environment Sync**: Repeat database migrations in the `main` branch environment before the next release cycle.
+- [ ] **Task 20.5**: **Inline Management UI**: Implement interactive dropdowns in the Admin table to accelerate cluster management.
+- [ ] **Epic 0**: **Railway Bridge**: Begin the platform pivot once the current stabilization is verified by the end-users.
 
-## Active Blockers
-- **None.** The platform is stable and production-ready on `main`.
-
-## Priority Roadmap for Incoming Team
-1. **2FA UX Extreme Distinction (Epic 17)**: Implement the "Visual Distinction + Test Scan Check" strategy in the user profile to resolve TOTP enrollment confusion. This is the **immediate high-priority task** to prevent user onboarding friction.
-2. **Memory & Persistence (Epic 19)**: Implement the `user_history` JSONB state-snapshot system to allow users to revisit and resume Stress Test and Copywriter sessions.
-3. **Account & Profile Management (Epic 18)**: Begin schema updates and UI design to capture first name, last name, phone, and company details.
-4. **Persona Photo Field (Epic 5)**: Implement Task 5.7 to add photo support for personas in the admin dashboard and UI.
-5. **Intelligence Wizard Stage 01 (Epic 16)**: Build the 'Lazy to Smart' streaming distillation tool in Phase 2.
-6. **SMS 2FA Integration (Epic 17)**: Begin Phase 2 planning for Twilio integration and database schema updates.
-7. **Platform Pivot (Epic 0)**: Establish the Railway-hosted Node.js container to handle heavy Stage 2 synthesis and prevent Vercel timeouts.
-
-## Performance Note
-The session context is becoming saturated, leading to increased response times. A session restart is recommended to clear the buffer.
+## ⚠️ Known Issues
+- **Intelligence Orphanage**: If a persona is deleted and then re-synced from Git, the incremental embedder skips re-embedding because the file content hasn't changed. This leaves the new persona without a linked "Brain" because the existing vectors still point to the old, deleted Numerical ID.
+- **Hash-based State**: In production RAG systems, filesystem location should define "Identity," while content hashes define "State." This decouples organizational logic from operational efficiency.
+- **Binary Filtering**: Always filter system files (like `.DS_Store`) early in the ingestion pipeline to prevent database driver encoding failures.
+- **Processed ID Tracking**: When skipping files in an incremental script, you must still populate the "Processed IDs" set to protect existing records from "Stale Cleanup" logic.

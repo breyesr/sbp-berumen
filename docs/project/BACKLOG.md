@@ -1,4 +1,4 @@
-# Product Backlog & Epics
+# Product Backlog & Epics (Active)
 
 ## Epic 0: Platform Pivot & Railway Bridge (Priority: Immediate)
 **Owner**: DevOps & Backend
@@ -6,13 +6,10 @@
 - [ ] **Task 0.1**: Set up a Railway-hosted Node.js environment with shared access to the production Postgres/Redis.
 - [ ] **Task 0.2**: Migrate `/api/stress-test` and `/api/persona` (and associated RAG logic) to the Railway container.
 - [ ] **Task 0.3**: Configure Vercel as a "Thin Client" that proxies complex AI requests to the Railway backend via a secure private API.
+- [ ] **Task 0.4**: **Restore Persistent Storage**: Transition the "Vercel-Safe" ingestion (Database-only) back to a "Hybrid-Persistent" storage model using Railway's Persistent Volumes for the `/data` folder.
 
-## Epic 1: Infrastructure Resilience & Database Scaling (Critical) [DONE]
-**Owner**: DevOps & Backend
-- [x] **Task 1.1**: Update `src/lib/clients.ts` to increase the Postgres connection pool size. [DONE]
-- [x] **Task 1.2**: Implement rate limiting for all API routes using Upstash/Redis. [DONE]
-- [x] **Task 1.3**: Set up GitHub Actions CI pipeline. [DONE]
-- [x] **Task 1.4**: Implement structured logging (Pino). [DONE]
+> **Note on Vercel-Safe Bridge**: Currently, ingestion skips the filesystem on remote (Vercel) to prevent 500 errors. Once Railway is active, this must be reverted to ensure files are saved to the persistent volume for RAG and backup integrity.
+
 
 ## Epic 2: Frontend De-Monolithization & UX Refinement (High)
 **Owner**: Frontend & UX/UI
@@ -28,22 +25,63 @@
 - [ ] **Task 3.3**: Refactor hybrid search into a unified SQL query.
 - [ ] **Task 3.4**: Optimize ingestion script for concurrency.
 
-## Epic 4: Data Layer Caching & Storage (Medium) [DONE]
-**Owner**: Backend
-- [x] **Task 4.1**: Migrate persona data to the database. [DONE]
-- [x] **Task 4.2**: Implement caching for AI queries (using Redis). [DONE]
 
-## Epic 5: The Admin Intelligence Dashboard (The Intelligence Factory) [DONE]
-**Owner**: AI Engineer & Backend & UX/UI
-*Goal: Provide a web-based UI for managing personas and uploading knowledge, eliminating the need for manual scripts.*
-- [x] **Task 5.1**: Build the Admin Persona Management UI (`/admin/personas`) to list, search, and filter personas. [DONE]
-- [x] **Task 5.2**: Implement the "Persona Editor" form to modify metadata (Name, Role, Cluster, Pains) directly in the DB. [DONE]
-- [x] **Task 5.3**: Build the "Knowledge Dropzone" for browser-based file uploads (PDF/TXT) tied to specific personas. [DONE]
-- [x] **Task 5.4**: Create the `/api/admin/ingest` pipeline to trigger chunking and embedding from the UI. [DONE]
-- [ ] **Task 5.5**: Add an "Ingestion Status" tracker to show RAG processing progress.
-- [ ] **Task 5.6**: Implement "Identity Synthesis": Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
-- [ ] **Task 5.7**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
+## Epic 20: Persona Refactor & ID Migration (High Priority)
+**Owner**: Backend & UX/UI
+*Goal: Transition to a robust numerical ID system while simplifying the UI and accelerating the management workflow. This Epic must adhere to the UX Integrity Protocol to ensure zero loss of existing functionality.*
 
+**UX Integrity Protocol Mandates:**
+1. **Drawer Continuity**: Keep existing "Edit" and "Train" drawers functional and identical.
+2. **Visual Consistency**: Use existing design tokens and "Factory Floor" aesthetics for new inline controls.
+3. **Non-Destructive Migration**: Preserving `id_text` (slugs) for RAG and filesystem stability.
+
+**Tasks:**
+- [x] **Task 20.1**: **Database Migration & Normalization** [DONE]
+- [x] **Task 20.2**: **App Refactor (Zero UI Impact)** [DONE]
+- [x] **Task 20.3**: **Provider Refactor**: Update `PersonaProvider.ts` to support dual-ID lookups (Numerical for DB, Text for Filesystem/RAG). [DONE]
+    *   **Refinement**: Ensure FS fallback uses `id_text` instead of `-1`.
+    *   **Validation**: Prevent invalid FS lookups for purely numerical IDs when DB fetch fails.
+    *   **Typing**: Update `Persona` type to support `number | string` for the `id` field.
+- [x] **Task 20.4**: **UI Simplification**: Transition to a "Human-First" display by hiding text slugs (`id_text`) and numerical IDs across all user/admin lists, prioritizing Name, Role, and Cluster for identity. [DONE]
+- [ ] **Task 20.5**: **Inline Management UI**: Replace static badges in `/admin/personas` with inline dropdowns for Cluster and Status for "bulk-style" editing speed.
+- [ ] **Task 20.6**: **API Optimization & Unification**: Consolidate all persona fetching into `personaProvider.ts`. 
+    *   **Unification**: Ensure `/api/admin` and `/api/public` use the same shared logic (`getPersonaData`) to prevent regressions.
+    *   **Selective Fetching**: Implement query parameters to handle "light" vs "full" data shapes to optimize performance.
+    *   **Security**: Maintain strict endpoint separation for RBAC while sharing the data contract.
+- [ ] **Task 20.7**: **Identity Synthesis**: Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
+- [ ] **Task 20.8**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
+- [x] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database. [DONE]
+- [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
+- [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]
+- [x] **Task 20.12 (High)**: **RAG Readiness Check**: Implement logic to detect if a persona has no associated RAG data. Flag these as "Not Ready" in the UI and disable them for Stress Test/Copywriter use to prevent low-quality outputs. [DONE]
+
+...
+
+### 3. Execution Steps
+#### Phase 1: Identity Protection [STABLE]
+- [x] **Task 21.1**: **Migration**: Create a SQL script to add the `last_synced_at` column. [DONE]
+- [x] **Task 21.2**: **Implementation**: Update `src/lib/db-sync.ts` to implement the comparison logic and the surgical `UPDATE`. [DONE]
+- [x] **Task 21.3**: **Validation**: Edit a persona's name in UI -> Run Sync -> Confirm persistence. [DONE]
+
+#### Phase 2: Strategic Protection & UTC Alignment [STABLE]
+- [x] **Task 21.4**: **UTC Migration**: Convert persona timestamps to `TIMESTAMPTZ` to eliminate timezone discrepancies. [DONE]
+- [x] **Task 21.5**: **Intelligence Protection**: Refactor sync logic to protect the `persona_intelligence` table (Pains, Goals, Metadata) from overwrites. [DONE]
+- [x] **Task 21.6**: **Standardized Comparison**: Ensure date comparisons use UTC `.getTime()` for cross-environment reliability. [DONE]
+- [x] **Task 21.7**: **Sync Duplication Resolution**: Implement name/cluster matching to prevent duplicate persona creation during filesystem sync. [DONE]
+- [x] **Task 21.8**: **RAG Brain Cleanup**: Refactor embedder to remove technical Copywriter noise and purged stale chunks from DB. [DONE]
+- [ ] **Task 21.9**: **Resolve RAG Orphanage on Persona Re-Sync**: Fix the issue where re-created personas (deleted and then re-synced from Git) appear "Untrained" because incremental logic skips files with identical hashes, failing to link them to the new Numerical ID.
+
+
+## Epic 22: Cluster Management Infrastructure (Medium Priority)
+**Owner**: Backend & UX/UI
+*Goal: Provide a dedicated interface for administrators to manage, rename, and delete persona clusters while maintaining data integrity.*
+
+**Tasks:**
+- [ ] **Task 22.1**: **API Expansion**: Implement `POST`, `PATCH`, and `DELETE` methods in `src/app/api/admin/clusters/route.ts`.
+- [ ] **Task 22.2**: **Rename Logic**: Ensure that renaming a cluster ID (e.g., `students` -> `estudiantes`) triggers a bulk update in the `personas` table for all associated records.
+- [ ] **Task 22.3**: **Delete Logic**: When a cluster is deleted, reset all associated personas to 'General' and remove the cluster record.
+- [ ] **Task 22.4**: **Admin UI**: Create `/admin/clusters/page.tsx` with a high-density management table (Name, Description, Count of Personas).
+- [ ] **Task 22.5**: **Navigation**: Add a "Manage Clusters" action button in the `Intelligence Factory` header.
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
@@ -145,12 +183,12 @@
 **Owner**: UX/UI & AppSec & Backend
 *Goal: Harden account security while eliminating user confusion during the 2FA enrollment process.*
 
-### Phase 1: TOTP UX Extreme Distinction
-- [ ] **Task 17.1**: Refactor `src/app/(app)/profile/page.tsx` to include an "Extreme Visual Distinction" strategy.
-- [ ] **Task 17.2**: Implement "Camera Mode" UI for App Download QR code (using Lucide `Camera` and explicit scan instructions).
-- [ ] **Task 17.3**: Implement "Authenticator Mode" UI for Setup QR code (using Lucide `ShieldCheck` and a **STOP: DO NOT USE REGULAR CAMERA** warning).
-- [ ] **Task 17.4**: Add the "Test Scan Check" gating button ("I have opened my app and am ready to scan") before revealing the Setup QR.
-- [ ] **Task 17.5**: Update `src/lib/i18n/messages.ts` with emphatic security warnings and instructional copy in EN/ES.
+### Phase 1: TOTP UX Extreme Distinction [DONE]
+- [x] **Task 17.1**: Refactor `src/app/(app)/profile/page.tsx` to include an "Extreme Visual Distinction" strategy. [DONE]
+- [x] **Task 17.2**: Implement "Camera Mode" UI for App Download QR code (using Lucide `Camera` and explicit scan instructions). [DONE]
+- [x] **Task 17.3**: Implement "Authenticator Mode" UI for Setup QR code (using Lucide `ShieldCheck` and supportive guidance). [DONE]
+- [x] **Task 17.4**: Add the "Test Scan Check" gating button ("I have opened my app and am ready to scan") before revealing the Setup QR. [DONE]
+- [x] **Task 17.5**: Update `src/lib/i18n/messages.ts` with emphatic security warnings and instructional copy in EN/ES. [DONE]
 
 ### Phase 2: SMS 2FA with Twilio
 - [ ] **Task 17.6**: Integrate Twilio SDK and set up environment-specific API configuration.
