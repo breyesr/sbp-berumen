@@ -31,3 +31,25 @@ export async function GET() {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function POST(req: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id || !isAdminRole(session.user.roles)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const { id, name, description } = await req.json();
+    if (!name) return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+    const result = await db.query(
+      `INSERT INTO clusters (id, name, description) VALUES ($1, $2, $3) RETURNING *`,
+      [id, name, description]
+    );
+
+    return NextResponse.json({ cluster: result.rows[0] });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
