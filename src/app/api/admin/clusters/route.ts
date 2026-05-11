@@ -39,12 +39,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const { name, description } = await req.json();
+    const { id, name, description } = await req.json();
     if (!name) return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
     const result = await db.query(
-      `INSERT INTO clusters (name, description) VALUES ($1, $2) RETURNING *`,
-      [name, description]
+      `INSERT INTO clusters (id, name, description) VALUES ($1, $2, $3) RETURNING *`,
+      [id, name, description]
     );
 
     return NextResponse.json({ cluster: result.rows[0] });
