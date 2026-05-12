@@ -37,11 +37,17 @@ export function PersonaCard({
       <div className="flex items-start justify-between mb-4">
         {/* Avatar (Compact) */}
         <div className={clsx(
-          "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
+          "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all overflow-hidden",
           isSelected ? "bg-indigo-500/20 text-indigo-400" : "bg-white/5 text-white/20 group-hover:bg-white/40",
           !isReady && "bg-zinc-800 text-zinc-600"
         )}>
-          {isReady ? <User className="w-6 h-6" /> : <BrainCircuit className="w-6 h-6" />}
+          {persona.photo_url ? (
+            <img src={persona.photo_url} alt={name} className="w-full h-full object-cover" />
+          ) : isReady ? (
+            <User className="w-6 h-6" />
+          ) : (
+            <BrainCircuit className="w-6 h-6" />
+          )}
         </div>
 
         {/* Action Area */}

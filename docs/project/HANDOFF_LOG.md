@@ -243,3 +243,23 @@ This file serves as a permanent historical record of all development sessions. E
 - **Screen Real Estate**: Modern AI interactions (multi-step simulations, side-by-side editing) are severely bottlenecked by standard 1280px containers; the "Intelligence Factory" must be fluid and expansive to reduce cognitive load.
 - **SVG as Documentation**: Using high-fidelity SVGs as wireframes provides a lightweight, version-controllable way to align on complex UI changes before writing a single line of React.
 
+---
+
+## [2026-05-11] Epic 20: Persona Photo Engine Implementation
+**Team:** PM & Backend & UX/UI
+**Accomplishments:**
+- **Task 20.8 (Done)**: Implemented the **Persona Photo Engine**, enabling custom avatar uploads for all personas.
+- **Database Schema**: Migrated the `personas` table to include a `photo_url` column.
+- **Secure Pipeline**: Developed a multi-stage upload API (`POST /api/admin/personas/[id]/photo`) that saves images to the persistent `/data` folder and updates the relational record.
+- **File Serving**: Implemented a public serving API (`GET /api/public/personas/[id]/photo`) with caching and proper MIME-type detection, bypassing serverless filesystem restrictions.
+- **UI Integration**:
+    - Built the `PersonaPhotoUpload` component with live previews and state management.
+    - Integrated photo management into the `IntelligenceDrawer` (Admin).
+    - Updated `PersonaDossier`, `PersonaCard`, `PersonaSelect`, and the Admin Table to display high-fidelity avatars.
+- **Verification**: Confirmed type safety and build stability across all modified components.
+**Learnings:**
+- **Public vs. Protected Data**: Serving local files via an API route (`/api/public/...`) is the most robust way to handle dynamic assets in Vercel/Railway hybrid environments without external S3 dependencies.
+- **Cache Invalidation**: Using versioned URLs (e.g., `?v=timestamp`) is essential for immediate UI updates when a user replaces an existing photo.
+- **Type Safety in Next.js**: `NextResponse` can be strict with `Buffer` objects; converting to `Uint8Array` ensures compatibility across different TypeScript configurations.
+- **API Field Synchronization**: Fixed a bug where `photo_url` was missing from the Admin `GET`, `POST`, and `PATCH` endpoints, causing data loss during UI updates. Proper field alignment across all CRUD operations is critical for state persistence.
+

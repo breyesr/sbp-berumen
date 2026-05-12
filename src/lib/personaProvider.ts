@@ -21,6 +21,7 @@ export type Persona = {
   cluster?: string;
   is_active?: boolean;
   has_rag?: boolean;
+  photo_url?: string;
   metadata?: any;
   profile?: {
     goals?: string[];
@@ -169,7 +170,7 @@ export function formatVoiceProfile(voice?: PersonaVoice | null): string | null {
 /**
  * Maps a database row or JSON object to a Persona object.
  */
-function mapToPersona(id: number | string, id_text: string, j: any, contextStr?: string): Persona {
+function mapToPersona(id: number | string, id_text: string, j: any, contextStr?: string, photo_url?: string): Persona {
   // Prioritize human name from JSON metadata, fallback to id_text slug
   const name: string = j.name || id_text;
   const role: string | undefined = j.role || j.metadata?.role;
@@ -209,6 +210,7 @@ function mapToPersona(id: number | string, id_text: string, j: any, contextStr?:
     id_text,
     name,
     role,
+    photo_url: photo_url || j.photo_url,
     metadata: j,
     profile: {
       goals: j.goals ?? [],
@@ -253,12 +255,12 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
     const finalId = isNumeric ? parseInt(id.toString(), 10) : id;
     
     const query = isNumeric 
-        ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context,
+        ? `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, p.photo_url, pi.metadata, pi.voice, pi.context,
                   EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
            FROM personas p 
            LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
            WHERE p.id = $1`
-        : `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.voice, pi.context,
+        : `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, p.photo_url, pi.metadata, pi.voice, pi.context,
                   EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
            FROM personas p 
            LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id 
@@ -269,7 +271,7 @@ export async function getPersonaData(id: string | number): Promise<Persona | nul
     if (res.rows[0]) {
       const row = res.rows[0];
       persona = {
-        ...mapToPersona(row.id, row.id_text, row.metadata, row.context),
+        ...mapToPersona(row.id, row.id_text, row.metadata, row.context, row.photo_url),
         cluster: row.cluster,
         is_active: row.is_active,
         has_rag: row.has_rag
@@ -355,7 +357,7 @@ function extractFirstSentence(input: string): string | null {
   return clipped.trim() || null;
 }
 
-export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean }[]> {
+export async function listPersonas(options?: { allowedClusters?: string[]; isAdmin?: boolean }): Promise<{ id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean; photo_url?: string }[]> {
     const { allowedClusters = [], isAdmin = false } = options || {};
 
     // 1. Try listing from Database
@@ -368,6 +370,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             p.role, 
             p.cluster, 
             p.is_active,
+            p.photo_url,
             EXISTS (
               SELECT 1 FROM documents d 
               WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
@@ -406,6 +409,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             role: r.role,
             cluster: r.cluster,
             is_active: r.is_active,
+            photo_url: r.photo_url,
             has_rag: r.has_rag
         }));
         } catch (err) {
@@ -431,11 +435,11 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
                    return null;
                 }
 
-                return { id: p.id, id_text: p.id_text, name: p.name, role: p.role, cluster: p.cluster, is_active: true, has_rag: false };
+                return { id: p.id, id_text: p.id_text, name: p.name, role: p.role, cluster: p.cluster, is_active: true, photo_url: p.photo_url, has_rag: false };
             })
         );
 
-        return metas.filter(Boolean) as { id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; has_rag?: boolean }[];
+        return metas.filter(Boolean) as { id: number | string; id_text: string; name: string; role?: string; cluster?: string; is_active?: boolean; photo_url?: string; has_rag?: boolean }[];
     } catch (err) {
         console.error("Failed to list personas from filesystem", err);
         return [];

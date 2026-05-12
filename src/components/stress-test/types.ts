@@ -57,6 +57,7 @@ export type PersonaOption = {
     cluster?: string;
     has_rag?: boolean;
     is_active?: boolean;
+    photo_url?: string;
 };
 
 export const FIELD_LIMITS = {

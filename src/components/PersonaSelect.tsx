@@ -5,7 +5,7 @@ import { Info, Search, ChevronDown, Check, User, Boxes, X, ChevronRight } from "
 import { PersonaDossier } from "./admin/PersonaDossier";
 import { clsx } from "clsx";
 
-export type PersonaOption = { id: string | number; name: string; cluster?: string; role?: string; metadata?: any; has_rag?: boolean };
+export type PersonaOption = { id: string | number; name: string; cluster?: string; role?: string; metadata?: any; has_rag?: boolean; photo_url?: string };
 
 type Props = {
   options?: PersonaOption[];
@@ -114,8 +114,12 @@ export default function PersonaSelect({ options, value, onChange, className, lab
             )}
         >
             <div className="flex items-center gap-3 truncate">
-                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 group-hover:bg-indigo-500/20 transition-colors">
-                    <User className="w-4 h-4 text-indigo-400" />
+                <div className="w-8 h-8 rounded-lg overflow-hidden bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 group-hover:bg-indigo-500/20 transition-colors">
+                    {selectedPersona?.photo_url ? (
+                        <img src={selectedPersona.photo_url} alt={selectedPersona.name} className="w-full h-full object-cover" />
+                    ) : (
+                        <User className="w-4 h-4 text-indigo-400" />
+                    )}
                 </div>
                 <div className="flex flex-col items-start truncate">
                     <span className="font-bold truncate tracking-tight max-w-[180px] md:max-w-[240px]">
@@ -221,20 +225,29 @@ export default function PersonaSelect({ options, value, onChange, className, lab
                                                 )}
                                             >
                                                 <div className="flex items-center justify-between gap-3">
-                                                    <div className="flex flex-col min-w-0">
-                                                        <div className="flex items-center gap-2">
-                                                            <span className={clsx("text-sm font-bold truncate tracking-tight", isReady && value === opt.id ? "text-indigo-400" : "text-zinc-200")}>
-                                                                {opt.name}
-                                                            </span>
-                                                            {!isReady && (
-                                                                <span className="px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[8px] font-black text-amber-500 uppercase tracking-widest">
-                                                                    Training
-                                                                </span>
+                                                    <div className="flex items-center gap-3 min-w-0">
+                                                        <div className="w-10 h-10 rounded-xl overflow-hidden bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 flex-shrink-0">
+                                                            {opt.photo_url ? (
+                                                                <img src={opt.photo_url} alt={opt.name} className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                <User className="w-5 h-5 text-indigo-400" />
                                                             )}
                                                         </div>
-                                                        <span className="text-[10px] text-zinc-500 font-medium italic truncate">
-                                                            {isReady ? opt.role : "Intelligence syncing..."}
-                                                        </span>
+                                                        <div className="flex flex-col min-w-0">
+                                                            <div className="flex items-center gap-2">
+                                                                <span className={clsx("text-sm font-bold truncate tracking-tight", isReady && value === opt.id ? "text-indigo-400" : "text-zinc-200")}>
+                                                                    {opt.name}
+                                                                </span>
+                                                                {!isReady && (
+                                                                    <span className="px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[8px] font-black text-amber-500 uppercase tracking-widest">
+                                                                        Training
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            <span className="text-[10px] text-zinc-500 font-medium italic truncate">
+                                                                {isReady ? opt.role : "Intelligence syncing..."}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <div className="flex items-center gap-2 flex-shrink-0">
                                                         {isReady && value === opt.id ? (

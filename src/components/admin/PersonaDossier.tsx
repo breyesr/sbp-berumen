@@ -24,14 +24,25 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
         
         {/* Header - Executive Style */}
         <div className="p-8 border-b border-white/5 flex items-start justify-between bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent">
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-black tracking-[0.2em] uppercase">
-                    {persona.cluster || "General"}
-                </span>
+          <div className="flex gap-8 items-start">
+            {persona.photo_url ? (
+              <div className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-indigo-500/30 shadow-2xl shadow-indigo-500/20 flex-shrink-0">
+                <img src={persona.photo_url} alt={persona.name} className="w-full h-full object-cover" />
+              </div>
+            ) : (
+              <div className="w-32 h-32 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
+                <User className="w-16 h-16 text-indigo-400/50" />
+              </div>
+            )}
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                  <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-black tracking-[0.2em] uppercase">
+                      {persona.cluster || "General"}
+                  </span>
+              </div>
+              <h2 className="text-4xl font-black text-white tracking-tighter uppercase">{persona.name || "Unknown Persona"}</h2>
+              <p className="text-zinc-400 text-lg font-medium italic">{persona.role || "Consultor Estratégico"}</p>
             </div>
-            <h2 className="text-4xl font-black text-white tracking-tighter uppercase">{persona.name || "Unknown Persona"}</h2>
-            <p className="text-zinc-400 text-lg font-medium italic">{persona.role || "Consultor Estratégico"}</p>
           </div>
           <button onClick={onClose} className="p-3 hover:bg-white/5 rounded-full transition-colors group">
             <X className="w-8 h-8 text-zinc-500 group-hover:text-white transition-colors" />

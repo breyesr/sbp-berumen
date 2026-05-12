@@ -14,7 +14,7 @@ export async function GET() {
 
   try {
     const res = await db.query(
-      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, pi.metadata, pi.context, p.updated_at,
+      `SELECT p.id, p.id_text, p.name, p.role, p.cluster, p.is_active, p.photo_url, pi.metadata, pi.context, p.updated_at,
               EXISTS (SELECT 1 FROM documents d WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)) as has_rag
        FROM personas p
        LEFT JOIN persona_intelligence pi ON p.id = pi.persona_id
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   const client = await db.connect();
   try {
     const body = await req.json();
-    const { name, role, cluster, metadata, voice, context, is_active } = body;
+    const { name, role, cluster, metadata, voice, context, is_active, photo_url } = body;
 
     if (!name || !cluster) {
       return NextResponse.json({ error: "Name and Cluster are required" }, { status: 400 });
@@ -60,10 +60,10 @@ export async function POST(req: Request) {
 
     // 1. Insert into Thin Table
     const resThin = await client.query(
-      `INSERT INTO personas (id_text, name, role, cluster, is_active)
-       VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO personas (id_text, name, role, cluster, is_active, photo_url)
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING id`,
-      [id_text, name, role || "", cluster, is_active === true]
+      [id_text, name, role || "", cluster, is_active === true, photo_url]
     );
 
     const personaId = resThin.rows[0].id;

@@ -52,7 +52,7 @@
     *   **Selective Fetching**: Implement query parameters to handle "light" vs "full" data shapes to optimize performance.
     *   **Security**: Maintain strict endpoint separation for RBAC while sharing the data contract.
 - [ ] **Task 20.7**: **Identity Synthesis**: Automatically update persona metadata (synthesis, pains, goals) after a knowledge file is uploaded.
-- [ ] **Task 20.8**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI.
+- [x] **Task 20.8**: **Persona Photo Engine**: Add a photo field to the persona schema and implement a secure upload/storage pipeline to display persona avatars in the UI. [DONE]
 - [x] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database. [DONE]
 - [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
 - [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]

@@ -26,6 +26,7 @@ export default async function CopywriterPage() {
         id: p.id,
         name: p.role?.trim() && p.role !== p.name ? `${p.name} — ${p.role}` : p.name,
         cluster: p.cluster,
+        photo_url: p.photo_url,
     }));
 
     const personaLookup: Record<string | number, string> = personaList.reduce((acc, p) => {

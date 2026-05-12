@@ -27,12 +27,12 @@ export async function PATCH(
   const client = await db.connect();
   try {
     const body = await req.json();
-    const { name, role, cluster, metadata, voice, context, is_active } = body;
+    const { name, role, cluster, metadata, voice, context, is_active, photo_url } = body;
 
     await client.query('BEGIN');
 
     const isNumeric = !isNaN(Number(id)) && id.indexOf("-") === -1;
-    const whereClause = isNumeric ? 'id = $5' : 'id_text = $5';
+    const whereClause = isNumeric ? 'id = $6' : 'id_text = $6';
 
     // 1. Update Thin Table
     const resThin = await client.query(
@@ -41,10 +41,11 @@ export async function PATCH(
            role = COALESCE($2, role), 
            cluster = COALESCE($3, cluster),
            is_active = COALESCE($4, is_active),
+           photo_url = COALESCE($5, photo_url),
            updated_at = CURRENT_TIMESTAMP
        WHERE ${whereClause}
        RETURNING id`,
-      [name, role, cluster, is_active, id]
+      [name, role, cluster, is_active, photo_url, id]
     );
 
     if (resThin.rowCount === 0) {

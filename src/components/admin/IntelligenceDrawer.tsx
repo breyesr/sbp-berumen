@@ -3,6 +3,7 @@
 import { X, Brain, Pencil, Save, Loader2, Sparkles, ChevronDown, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { KnowledgeDropzone } from "./KnowledgeDropzone";
+import { PersonaPhotoUpload } from "./PersonaPhotoUpload";
 import React, { useState } from "react";
 import { clsx } from "clsx";
 
@@ -76,6 +77,12 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, o
             </div>
           ) : (
             <div className="space-y-8">
+              <PersonaPhotoUpload 
+                personaId={persona.id} 
+                currentPhotoUrl={form.photo_url} 
+                onUploadSuccess={(url) => setForm({ ...form, photo_url: url })}
+              />
+
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                     <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Nombre de la Persona</label>

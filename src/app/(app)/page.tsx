@@ -26,6 +26,7 @@ export default async function HomePage() {
         id: item.id,
         name: item.role?.trim() ? `${item.name} — ${item.role}` : item.name,
         cluster: item.cluster,
+        photo_url: item.photo_url,
     }));
 
     const personaLookup: Record<string, string> = personaList.reduce((acc, p) => {

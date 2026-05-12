@@ -8,7 +8,7 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
 import { IntelligenceDrawer } from "@/components/admin/IntelligenceDrawer";
 import { clsx } from "clsx";
-import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power, LayoutGrid } from "lucide-react";
+import { Search, Plus, ArrowUpDown, Brain, Pencil, Trash2, FileText, Loader2, Filter, ChevronDown, RefreshCcw, Eye, EyeOff, Power, LayoutGrid, User } from "lucide-react";
 import Link from "next/link";
 
 type PersonaRecord = {
@@ -18,6 +18,7 @@ type PersonaRecord = {
   cluster: string;
   is_active: boolean;
   has_rag: boolean;
+  photo_url?: string;
   metadata: any;
   context: string;
   updated_at: string;
@@ -354,7 +355,7 @@ export default function AdminPersonasPage() {
                     <tr className="bg-white/[0.03] border-b border-white/10">
                         <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-white transition-colors" onClick={() => { setSortBy("name"); setSortOrder(sortOrder === "asc" ? "desc" : "asc"); }}>
                             <div className="flex items-center gap-2">
-                                Agent Name
+                                Agent
                                 <ArrowUpDown className="w-3 h-3" />
                             </div>
                         </th>
@@ -381,24 +382,35 @@ export default function AdminPersonasPage() {
                     ) : filteredPersonas.map((p) => (
                         <tr key={p.id} className="hover:bg-white/[0.02] transition-colors group">
                             <td className="px-6 py-4">
-                                {editingCell?.id === p.id && editingCell?.field === 'name' ? (
-                                    <input
-                                        autoFocus
-                                        type="text"
-                                        value={editValue}
-                                        onChange={(e) => setEditValue(e.target.value)}
-                                        onBlur={handleBlur}
-                                        onKeyDown={handleKeyDown}
-                                        className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-bold text-white outline-none w-full py-0.5"
-                                    />
-                                ) : (
-                                    <div 
-                                        onClick={() => handleStartEdit(p, 'name')}
-                                        className="flex flex-col cursor-pointer hover:bg-white/5 rounded px-1 -ml-1 transition-colors"
-                                    >
-                                        <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-indigo-500/10 border border-white/10 flex-shrink-0 flex items-center justify-center">
+                                        {(p as any).photo_url ? (
+                                            <img src={(p as any).photo_url} alt={p.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <User className="w-5 h-5 text-indigo-400/50" />
+                                        )}
                                     </div>
-                                )}
+                                    <div className="flex flex-col min-w-0">
+                                        {editingCell?.id === p.id && editingCell?.field === 'name' ? (
+                                            <input
+                                                autoFocus
+                                                type="text"
+                                                value={editValue}
+                                                onChange={(e) => setEditValue(e.target.value)}
+                                                onBlur={handleBlur}
+                                                onKeyDown={handleKeyDown}
+                                                className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-bold text-white outline-none w-full py-0.5"
+                                            />
+                                        ) : (
+                                            <div 
+                                                onClick={() => handleStartEdit(p, 'name')}
+                                                className="cursor-pointer hover:bg-white/5 rounded px-1 -ml-1 transition-colors"
+                                            >
+                                                <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                             </td>
                             <td className="px-6 py-4">
                                 <div className={clsx(
