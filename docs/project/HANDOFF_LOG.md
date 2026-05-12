@@ -264,3 +264,4 @@ This file serves as a permanent historical record of all development sessions. E
 - **API Field Synchronization**: Fixed a bug where `photo_url` was missing from the Admin `GET`, `POST`, and `PATCH` endpoints, causing data loss during UI updates. Proper field alignment across all CRUD operations is critical for state persistence.
 - **RBAC Silencing**: Hardened the `PersonaDossier` to silently hide sensitive sections ('Barreras de Decisión', 'Voz del Cliente') for non-admin users. This prevents accidental exposure of strategic depth without alerting the user to the existence of hidden data.
 
+\n- **2026-05-11 | Persona Team | New Persona Ingestion**: Switched to 'staging' branch, committed 13 new personas to 'data/personas/', and pushed to GitHub. System is ready for database synchronization.
