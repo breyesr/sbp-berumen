@@ -174,6 +174,16 @@ function mapToPersona(id: number | string, id_text: string, j: any, contextStr?:
   // Prioritize human name from JSON metadata, fallback to id_text slug
   const name: string = j.name || id_text;
   const role: string | undefined = j.role || j.metadata?.role;
+  
+  // Static fallback: check if a .png, .jpg or .webp exists in public/avatars/
+  // This helps filesystem personas have photos without DB records.
+  let finalPhotoUrl = photo_url || j.photo_url;
+  
+  // NOTE: In production (Vercel), we can't easily check for file existence at runtime
+  // so we just assume that if a photo was committed to public/avatars/slug.png, it exists.
+  if (!finalPhotoUrl && typeof id_text === 'string') {
+      finalPhotoUrl = `/avatars/${id_text}.png`;
+  }
   const bench: Bench | undefined = j.bench
     ? {
         cplTargetMXN: [Number(j.bench.cplTargetMXN?.[0] ?? 0), Number(j.bench.cplTargetMXN?.[1] ?? 0)] as [number, number],
@@ -210,7 +220,7 @@ function mapToPersona(id: number | string, id_text: string, j: any, contextStr?:
     id_text,
     name,
     role,
-    photo_url: photo_url || j.photo_url,
+    photo_url: finalPhotoUrl,
     metadata: j,
     profile: {
       goals: j.goals ?? [],

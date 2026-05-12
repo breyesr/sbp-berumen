@@ -55,30 +55,27 @@ export async function POST(
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Get file extension
-    const ext = path.extname(file.name) || ".jpg";
-    const filename = `photo${ext}`;
-
-    // 1. Save to local filesystem
-    // We save it to the persona's data directory. 
-    // In production (Railway), this folder should be a persistent volume.
-    const personaDir = path.join(process.cwd(), "data", "personas", id_text);
-    await fs.mkdir(personaDir, { recursive: true });
+    // 1. Save to public filesystem for static serving (Vercel compatible)
+    const avatarsDir = path.join(process.cwd(), "public", "avatars");
+    await fs.mkdir(avatarsDir, { recursive: true });
     
-    // Remove old photos if they have different extensions
-    const files = await fs.readdir(personaDir);
-    for (const f of files) {
-        if (f.startsWith("photo.") && f !== filename) {
-            await fs.unlink(path.join(personaDir, f)).catch(() => {});
+    // Use id_text (slug) for the filename to ensure it's predictable and public
+    const ext = path.extname(file.name) || ".jpg";
+    const filename = `${id_text}${ext}`;
+    
+    // Remove old photos for this persona if they have different extensions
+    const existingFiles = await fs.readdir(avatarsDir);
+    for (const f of existingFiles) {
+        if (f.startsWith(`${id_text}.`) && f !== filename) {
+            await fs.unlink(path.join(avatarsDir, f)).catch(() => {});
         }
     }
 
-    await fs.writeFile(path.join(personaDir, filename), buffer);
-    console.log(`[API] Saved persona photo to: ${id_text}/${filename}`);
+    await fs.writeFile(path.join(avatarsDir, filename), buffer);
+    console.log(`[API] Saved persona photo to: public/avatars/${filename}`);
 
-    // 2. Update DB with the public URL
-    // The URL points to a public API that serves the file from the filesystem.
-    const photoUrl = `/api/public/personas/${numerical_id}/photo?v=${Date.now()}`;
+    // 2. Update DB with the public static URL
+    const photoUrl = `/avatars/${filename}?v=${Date.now()}`;
     await db.query(`UPDATE personas SET photo_url = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2`, [photoUrl, numerical_id]);
 
     return NextResponse.json({ 
