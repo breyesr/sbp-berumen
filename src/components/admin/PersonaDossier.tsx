@@ -124,35 +124,48 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
 
           {/* Bottom Section: Objections & Regional Context */}
           <div className="grid md:grid-cols-2 gap-10 pt-6 border-t border-white/5">
-             <section className="space-y-6">
-                <div className="flex items-center gap-2 text-red-400">
-                    <ShieldAlert className="w-5 h-5" />
-                    <h3 className="text-xs font-black uppercase tracking-[0.3em]">Barreras de Decisión</h3>
-                </div>
-                <ul className="space-y-2">
-                    {(metadata.objections || []).map((o: string, i: number) => (
-                    <li key={i} className="text-sm text-zinc-400 flex gap-3">
-                        <span className="text-red-500 font-black">!</span> {o}
-                    </li>
+            {isAdmin ? (
+              <>
+                <section className="space-y-6">
+                    <div className="flex items-center gap-2 text-red-400">
+                        <ShieldAlert className="w-5 h-5" />
+                        <h3 className="text-xs font-black uppercase tracking-[0.3em]">Barreras de Decisión</h3>
+                    </div>
+                    <ul className="space-y-2">
+                        {(metadata.objections || []).map((o: string, i: number) => (
+                        <li key={i} className="text-sm text-zinc-400 flex gap-3">
+                            <span className="text-red-500 font-black">!</span> {o}
+                        </li>
+                        ))}
+                    </ul>
+                </section>
+
+                <section className="space-y-6">
+                    <div className="flex items-center gap-2 text-blue-400">
+                        <MessageSquare className="w-5 h-5" />
+                        <h3 className="text-xs font-black uppercase tracking-[0.3em]">Voz del Cliente</h3>
+                    </div>
+                    <div className="grid gap-3">
+                    {(metadata.quotes || []).map((q: string, i: number) => (
+                        <p key={i} className="text-sm italic text-zinc-400 bg-white/[0.03] p-4 rounded-2xl border-l-4 border-indigo-500">
+                        "{q}"
+                        </p>
                     ))}
-                </ul>
-            </section>
-
-            <section className="space-y-6">
-                <div className="flex items-center gap-2 text-blue-400">
-                    <MessageSquare className="w-5 h-5" />
-                    <h3 className="text-xs font-black uppercase tracking-[0.3em]">Voz del Cliente</h3>
+                    </div>
+                </section>
+              </>
+            ) : (
+              <div className="col-span-full py-10 flex flex-col items-center justify-center space-y-4 bg-white/[0.01] border border-dashed border-white/5 rounded-[2rem]">
+                <div className="p-4 rounded-full bg-indigo-500/10 text-indigo-400">
+                    <Lock className="w-6 h-6" />
                 </div>
-                <div className="grid gap-3">
-                {(metadata.quotes || []).map((q: string, i: number) => (
-                    <p key={i} className="text-sm italic text-zinc-400 bg-white/[0.03] p-4 rounded-2xl border-l-4 border-indigo-500">
-                    "{q}"
-                    </p>
-                ))}
+                <div className="text-center space-y-1">
+                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Acceso Restringido</p>
+                    <p className="text-xs text-zinc-600 font-medium">Contacte a un administrador para acceder al perfil psicográfico avanzado.</p>
                 </div>
-            </section>
+              </div>
+            )}
           </div>
-
           {/* Advanced Section: Full Strategic Depth (Admin Only) */}
           {isAdmin && (
             <section className="pt-10 border-t border-white/5 space-y-6">
