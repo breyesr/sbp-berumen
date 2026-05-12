@@ -265,3 +265,4 @@ This file serves as a permanent historical record of all development sessions. E
 - **RBAC Silencing**: Hardened the `PersonaDossier` to silently hide sensitive sections ('Barreras de Decisión', 'Voz del Cliente') for non-admin users. This prevents accidental exposure of strategic depth without alerting the user to the existence of hidden data.
 
 \n- **2026-05-11 | Persona Team | New Persona Ingestion**: Switched to 'staging' branch, committed 13 new personas to 'data/personas/', and pushed to GitHub. System is ready for database synchronization.
+- **2026-05-11 | Persona Team | Persona Photos Ingested**: Committed 13 new avatar images to 'public/avatars/' and pushed to 'staging'. New personas now have visual identities linked for the next sync.
