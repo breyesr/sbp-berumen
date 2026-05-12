@@ -86,6 +86,19 @@
 - [ ] **Task 22.4**: **Admin UI**: Create `/admin/clusters/page.tsx` with a high-density management table (Name, Description, Count of Personas).
 - [ ] **Task 22.5**: **Navigation**: Add a "Manage Clusters" action button in the `Intelligence Factory` header.
 
+## Epic 23: UI/UX Refactor - "The Intelligence Factory 3.0" (High Priority)
+**Owner**: UX/UI & Frontend
+*Goal: Implement a full-screen, brand-aligned experience maximizing screen real estate and strategic focus.*
+
+**Tasks:**
+- [ ] **Task 23.1**: **Design System Update**: Sync Tailwind config with Brand Kit 3.0 (Colors, Typography, `rounded-2xl`).
+- [ ] **Task 23.2**: **Full-Screen Layout**: Refactor `AppLayout` and `AppHeader` to remove `max-w-7xl` and support fluid width.
+- [ ] **Task 23.3**: **Collapsible Command Sidebar**: Implement a slim, collapsible sidebar with icon-only and expanded modes.
+- [ ] **Task 23.4**: **Intelligence Bar**: Build a global context bar showing active persona and market metadata.
+- [ ] **Task 23.5**: **Centered-to-Matrix Flow**: Refactor Stress Test UI to start with a centered Gemini-style input and expand into a full-screen results matrix.
+- [ ] **Task 23.6**: **Side-by-Side Copywriter**: Redesign Copywriter UI for a dual-pane editor/preview workspace.
+- [ ] **Task 23.7**: **Theme Engine**: Implement high-fidelity "Warm Alabaster" and "IntelAgent Black" theme switching.
+
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
 - [ ] **Task 6.1**: Implement Graph Traversal logic.

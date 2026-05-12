@@ -1,25 +1,24 @@
-# Handoff State: [2026-05-11] - Production Release: Epic 20 & 21
+# Handoff State: [2026-05-11] - UI Refactor Initiation (System 3.0)
 
-## Current Phase: Post-Release Stabilization
-**Target Branch**: `main`
+## Current Phase: UX/UI Overhaul - "Intelligence Factory 3.0"
+**Target Branch**: `feature/ux-refactor-3.0`
 **Last Verified State**: 
-- **Production Branch**: `main` is now merged with `staging`.
-- **Database**: Production refactored to Numerical IDs (SERIAL) and Normalized tables (`persona_intelligence`).
-- **UTC Status**: 100% standardized in production.
-- **RAG Engine**: Initialized in production with 534 embeddings for 7 core personas.
+- **Backlog**: Epic 23 added with 7 high-priority tasks.
+- **Visuals**: Light/Dark mode SVG wireframes created for Stress Test (`docs/architecture/stress_test_*.svg`).
+- **Plan**: 4-Phase Implementation Plan documented in `docs/project/UI_REFACTOR_PLAN.md`.
+- **Assets**: Temporary brand kit removed after full information extraction.
 
 ## 🏆 Accomplishments
-1.  **Task 20.5 (Done)**: Implemented **Inline Management UI** for Cluster and Status with optimistic updates.
-2.  **Task 20.13 (Done)**: Implemented **Inline Name & Role Editing** using click-to-edit interactions.
-3.  **Task 20.14 (Done)**: Developed a dedicated **Cluster Management Dashboard** (`/admin/clusters`) with full CRUD support.
-4.  **Database Stabilization**: Performed a surgical cleanup of 26 orphaned records in `persona_intelligence` and fixed the `PATCH` API for partial updates.
-5.  **Remote Readiness**: Created `scripts/db/cleanup-orphaned-intelligence.sql` for replication in staging/production.
+1.  **Vision Established**: Designed the "Intelligence Factory 3.0" architecture, transitioning from a constrained box-layout to a full-screen, dual-pane matrix view.
+2.  **Brand Alignment**: Extracted all color, typography, and strategy specs from Brand Kit 3.0.
+3.  **Visual Prototyping**: Created high-fidelity SVG wireframes for both Light (Warm Alabaster) and Dark (IntelAgent Black) modes.
+4.  **Backlog Refinement**: Formally added Epic 23 to the backlog to track Design System, Layout, and Workspace refactors.
 
 ## 🚀 Immediate Next Steps
-- [ ] **Remote Cleanup**: Run the orphaned intelligence cleanup in Staging and Production.
-- [ ] **Task 21.9**: **Fix RAG Orphanage**: Address the logic in `embed.ts` where re-created personas skip re-embedding.
-- [ ] **Task 20.7**: **Identity Synthesis**: Implement automatic metadata updates after knowledge upload.
+- [ ] **Task 23.1**: **Design System Update**: Sync `tailwind.config.ts` with the new color palette (Bison Gold, Warm Alabaster, etc.) and `rounded-2xl` defaults.
+- [ ] **Task 23.2**: **Full-Screen Layout**: Refactor `AppLayout` to remove `max-w-7xl` and implement the base flex-row structure for the new sidebar.
+- [ ] **Task 23.3**: **Collapsible Sidebar**: Implement the slim navigation component.
 
 ## ⚠️ Known Issues
-- **Intelligence Orphanage**: If a persona is deleted and then re-synced from Git, the incremental embedder skips re-embedding because the file content hasn't changed. This leaves the new persona without a linked "Brain" because the existing vectors still point to the old, deleted Numerical ID.
-- **Binary Filtering**: Always filter system files (like `.DS_Store`) early in the ingestion pipeline to prevent database driver encoding failures.
+- **Theme Conflict**: Legacy components might have hardcoded background/text colors that will need surgical replacement during the "Theme Engine" implementation.
+- **RAG Orphanage (Unresolved)**: Task 21.9 still pending (RAG linking issue after persona re-sync).

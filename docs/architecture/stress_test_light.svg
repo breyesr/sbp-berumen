@@ -1,0 +1,63 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#FAFAF8"/>
+  
+  <!-- Collapsed Sidebar -->
+  <rect width="64" height="800" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <circle cx="32" cy="40" r="12" fill="#b8975a"/> <!-- Logo -->
+  <rect x="20" y="100" width="24" height="24" rx="4" fill="#F3F4F6"/>
+  <rect x="20" y="140" width="24" height="24" rx="4" fill="#F3F4F6"/>
+  
+  <!-- Intelligence Bar -->
+  <rect x="64" y="0" width="1136" height="56" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="84" y="34" fill="#6B7280" font-family="Geist, sans-serif" font-size="12" font-weight="500">STRESS TEST / <tspan fill="#111827">NEW SIMULATION</tspan></text>
+  
+  <!-- Active Persona Indicator -->
+  <rect x="850" y="12" width="220" height="32" rx="16" fill="#FAFAF8" stroke="#b8975a"/>
+  <text x="870" y="32" fill="#111827" font-family="Geist" font-size="11">Active: Alejandro (Marketing)</text>
+  
+  <!-- Workspace: Full Screen Matrix -->
+  
+  <!-- Left Column: Input -->
+  <rect x="84" y="80" width="360" height="680" rx="24" fill="#FFFFFF" stroke="#E5E7EB" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.02))"/>
+  <text x="110" y="115" fill="#b8975a" font-family="Geist" font-size="10" font-weight="800" letter-spacing="0.05em">STRATEGIC SCENARIO</text>
+  
+  <text x="110" y="150" fill="#111827" font-family="Geist" font-size="18" font-weight="600">What are we testing?</text>
+  <rect x="110" y="170" width="308" height="120" rx="12" fill="#FAFAF8" stroke="#E5E7EB"/>
+  <text x="125" y="195" fill="#4B5563" font-family="Geist" font-size="13">"Lanzar maestría en Innovación Educativa, $85,000 MXN semestral, enfoque en directivos de escuelas privadas..."</text>
+  
+  <!-- Persona Selection Snapshot -->
+  <text x="110" y="330" fill="#6B7280" font-family="Geist" font-size="12">Target Persona</text>
+  <rect x="110" y="350" width="308" height="60" rx="12" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <circle cx="140" cy="380" r="16" fill="#E5E7EB"/>
+  <text x="165" y="375" fill="#111827" font-family="Geist" font-size="13" font-weight="600">Alejandro</text>
+  <text x="165" y="390" fill="#6B7280" font-family="Geist" font-size="11">Director de Marketing ABC+</text>
+  
+  <rect x="110" y="690" width="308" height="48" rx="12" fill="#b8975a"/>
+  <text x="210" y="720" fill="#FFFFFF" font-family="Geist" font-size="14" font-weight="700">RUN SIMULATION</text>
+  
+  <!-- Right Column: Results Matrix -->
+  <rect x="464" y="80" width="712" height="680" rx="24" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="490" y="115" fill="#b8975a" font-family="Geist" font-size="10" font-weight="800" letter-spacing="0.05em">INTELLIGENCE MATRIX</text>
+  
+  <!-- KPI Row -->
+  <rect x="490" y="140" width="330" height="120" rx="20" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <text x="510" y="170" fill="#6B7280" font-family="Geist" font-size="12">Strategic Fit</text>
+  <text x="510" y="210" fill="#111827" font-family="Geist" font-size="32" font-weight="700">8.4<tspan fill="#9CA3AF" font-size="16"> / 10</tspan></text>
+  
+  <rect x="830" y="140" width="320" height="120" rx="20" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <text x="850" y="170" fill="#6B7280" font-family="Geist" font-size="12">Conversion Prob.</text>
+  <text x="850" y="210" fill="#6B8E7B" font-family="Geist" font-size="32" font-weight="700">72%</text>
+  
+  <!-- Narrative Block -->
+  <rect x="490" y="280" width="660" height="450" rx="20" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <text x="515" y="320" fill="#111827" font-family="Geist" font-size="16" font-weight="600">Persona Analysis</text>
+  <rect x="515" y="340" width="610" height="1" fill="#E5E7EB"/>
+  
+  <text x="515" y="375" fill="#111827" font-family="Geist" font-size="14" font-weight="500">Insights generated:</text>
+  <text x="515" y="405" fill="#4B5563" font-family="Geist" font-size="13" line-height="1.6">
+    <tspan x="515" dy="1.2em">• El precio de $85k es percibido como "Premium-Justificado".</tspan>
+    <tspan x="515" dy="1.5em">• Barrera detectada: Tiempo de traslado a campus Santa Fe.</tspan>
+    <tspan x="515" dy="1.5em">• Motivador clave: Networking con otros dueños de colegios.</tspan>
+  </text>
+</svg>
