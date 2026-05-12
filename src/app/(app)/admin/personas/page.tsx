@@ -328,7 +328,6 @@ export default function AdminPersonasPage() {
 
             <Link href="/admin/clusters">
                 <Button 
-                    variant="outline"
                     className="rounded-xl h-10 border-white/10 bg-transparent hover:bg-white/5 text-zinc-400 hover:text-white transition-all shadow-none border"
                 >
                     <LayoutGrid className="w-4 h-4 mr-2" />
