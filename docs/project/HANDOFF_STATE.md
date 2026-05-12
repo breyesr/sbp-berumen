@@ -6,16 +6,15 @@
 - **Database**: `photo_url` column added to `personas` (Local & Remote).
 - **Storage**: Refactored to use `public/avatars/` for Vercel-compatible static serving.
 - **API**: Photo upload logic updated to target the public directory. Obsolete serving API removed.
-- **UI**: Avatar integration completed and verified across Dossier, Cards, Selectors, and Admin Table.
+- **UI**: Avatar integration completed and verified. Correctly falls back to the original icon placeholder when no photo is present.
 - **Stability**: `npm run type-check` passing (ignoring `.next` cache).
 
 ## 🏆 Accomplishments
 1.  **Persona Photo Engine (Task 20.8)**: Completed full lifecycle implementation (Schema -> API -> UI) for persona avatars.
-2.  **Vercel-Safe Static Serving**: Refactored the system to store photos in the `public/` folder, ensuring they are bundled as static assets and served reliably by Vercel without runtime filesystem access.
+2.  **Vercel-Safe Static Serving**: Refactored the system to store photos in the `public/` folder, ensuring they are bundled as static assets and served reliably by Vercel.
 3.  **End-to-End Persistence Fix**: Resolved bugs in Admin CRUD APIs that were stripping `photo_url` during state updates.
-4.  **UI Consistency**: Modernized the persona identity across the platform, including the "Choose your character" cards in Stress Test and Copywriter.
-5.  **Backward Compatibility**: Maintained a fallback logic in `personaProvider.ts` to automatically detect photos for filesystem-only personas based on their slug.
-6.  **Refactor Completion**: Marked Task 20.8 as DONE in the backlog.
+4.  **Placeholder Integrity**: Fixed an issue where non-existent images were being forced, ensuring personas without photos correctly display the default SVG icon.
+5.  **Refactor Completion**: Marked Task 20.8 as DONE in the backlog.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Remote Data Sync**: Run the `UPDATE` command on the production DB to link existing personas to their new `/avatars/[slug].png` paths.
