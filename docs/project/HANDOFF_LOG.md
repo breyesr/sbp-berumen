@@ -262,4 +262,5 @@ This file serves as a permanent historical record of all development sessions. E
 - **Cache Invalidation**: Using versioned URLs (e.g., `?v=timestamp`) is essential for immediate UI updates when a user replaces an existing photo.
 - **Type Safety in Next.js**: `NextResponse` can be strict with `Buffer` objects; converting to `Uint8Array` ensures compatibility across different TypeScript configurations.
 - **API Field Synchronization**: Fixed a bug where `photo_url` was missing from the Admin `GET`, `POST`, and `PATCH` endpoints, causing data loss during UI updates. Proper field alignment across all CRUD operations is critical for state persistence.
+- **RBAC Silencing**: Hardened the `PersonaDossier` to silently hide sensitive sections ('Barreras de Decisión', 'Voz del Cliente') for non-admin users. This prevents accidental exposure of strategic depth without alerting the user to the existence of hidden data.
 

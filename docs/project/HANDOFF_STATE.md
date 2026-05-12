@@ -15,6 +15,7 @@
 3.  **End-to-End Persistence Fix**: Resolved bugs in Admin CRUD APIs that were stripping `photo_url` during state updates.
 4.  **Placeholder Integrity**: Fixed an issue where non-existent images were being forced, ensuring personas without photos correctly display the default SVG icon.
 5.  **Refactor Completion**: Marked Task 20.8 as DONE in the backlog.
+6.  **Dossier RBAC Hardening (Task 20.15)**: Implemented silent hiding of sensitive sections (Objections & Quotes) for non-admin users to protect strategic information.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Remote Data Sync**: Run the `UPDATE` command on the production DB to link existing personas to their new `/avatars/[slug].png` paths.

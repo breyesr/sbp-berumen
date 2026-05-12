@@ -60,6 +60,7 @@
 - [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
 - [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]
 - [x] **Task 20.12 (High)**: **RAG Readiness Check**: Implement logic to detect if a persona has no associated RAG data. Flag these as "Not Ready" in the UI and disable them for Stress Test/Copywriter use to prevent low-quality outputs. [DONE]
+- [x] **Task 20.15**: **Dossier RBAC Hardening**: Silently hide sensitive psychographic sections (Barreras de Decisión, Voz del Cliente) for non-admin users to prevent information leakage of high-level strategic data. [DONE]
 
 ...
 
