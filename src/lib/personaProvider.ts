@@ -183,12 +183,7 @@ function mapToPersona(id: number | string, id_text: string, j: any, contextStr?:
   if (finalPhotoUrl?.startsWith('/api/public/personas/')) {
       finalPhotoUrl = `/avatars/${id_text}.png`;
   }
-  
-  // NOTE: In production (Vercel), we can't easily check for file existence at runtime
-  // so we just assume that if a photo was committed to public/avatars/slug.png, it exists.
-  if (!finalPhotoUrl && typeof id_text === 'string') {
-      finalPhotoUrl = `/avatars/${id_text}.png`;
-  }
+
   const bench: Bench | undefined = j.bench
     ? {
         cplTargetMXN: [Number(j.bench.cplTargetMXN?.[0] ?? 0), Number(j.bench.cplTargetMXN?.[1] ?? 0)] as [number, number],
