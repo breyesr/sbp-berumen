@@ -4,6 +4,7 @@ import { X, User, Brain, Target, Zap, MessageSquare, Globe, ShieldAlert, Sparkle
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { isAdminRole } from "@/lib/rbac";
+import { useEffect } from "react";
 
 interface PersonaDossierProps {
   persona: any;
@@ -14,12 +15,25 @@ export function PersonaDossier({ persona, onClose }: PersonaDossierProps) {
   const { data: session } = useSession();
   const isAdmin = isAdminRole(session?.user?.roles);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   if (!persona) return null;
 
   const metadata = persona.metadata || {};
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="bg-[#09090b] border border-white/10 rounded-[2.5rem] w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col shadow-[0_0_50px_rgba(79,70,229,0.15)] animate-scale-in">
         
         {/* Header - Executive Style */}

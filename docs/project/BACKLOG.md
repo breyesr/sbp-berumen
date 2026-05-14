@@ -96,10 +96,10 @@
 
 **Tasks:**
 - [ ] **Task 23.1**: **Design System Update**: Sync Tailwind config with Brand Kit 3.0 (Colors, Typography, `rounded-2xl`).
-- [ ] **Task 23.2**: **Full-Screen Layout**: Refactor `AppLayout` and `AppHeader` to remove `max-w-7xl` and support fluid width.
-- [ ] **Task 23.3**: **Collapsible Command Sidebar**: Implement a slim, collapsible sidebar with icon-only and expanded modes.
+- [x] **Task 23.2**: **Full-Screen Layout**: Refactor `AppLayout` and `AppHeader` to remove `max-w-7xl` and support fluid width. [DONE]
+- [x] **Task 23.3**: **Collapsible Command Sidebar**: Implement a slim, collapsible sidebar with icon-only and expanded modes. [DONE]
 - [ ] **Task 23.4**: **Intelligence Bar**: Build a global context bar showing active persona and market metadata.
-- [ ] **Task 23.5**: **Centered-to-Matrix Flow**: Refactor Stress Test UI to start with a centered Gemini-style input and expand into a full-screen results matrix.
+- [x] **Task 23.5**: **Linear Paginated Flow**: Refactor Stress Test UI to a horizontal 5-step paginated wizard (1-5), replacing the collapsible and matrix flows for better cognitive pacing. [DONE]
 - [ ] **Task 23.6**: **Side-by-Side Copywriter**: Redesign Copywriter UI for a dual-pane editor/preview workspace.
 - [ ] **Task 23.7**: **Theme Engine**: Implement high-fidelity "Warm Alabaster" and "IntelAgent Black" theme switching.
 

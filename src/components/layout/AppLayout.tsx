@@ -12,8 +12,8 @@ export default function AppLayout({
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#ededed]">
       <AppHeader />
-      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-6 px-4 py-6 lg:px-6">
-        <aside className="hidden w-56 shrink-0 lg:block">
+      <div className="mx-auto flex w-full flex-1 gap-6 px-4 py-6 lg:px-6">
+        <aside className="hidden shrink-0 lg:block transition-all duration-300">
           <AppNavigation />
         </aside>
 

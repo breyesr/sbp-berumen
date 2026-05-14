@@ -9,6 +9,7 @@ import { PersonaSection } from "./PersonaSection";
 import { InputSection } from "./InputSection";
 import { ResultSection } from "./ResultSection";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
+import { IntelligenceBar } from "@/components/ui/IntelligenceBar";
 import { PersonaOption, Platform, OutputSchema, CopyOutput } from "./types";
 
 interface CopywriterClientProps {
@@ -97,8 +98,9 @@ export function CopywriterClient({
         }
     }, [aiError]);
 
-    const handleContinueToInput = () => {
-        if (personaType) {
+    const handleContinueToInput = (newPersonaId?: string | number) => {
+        const currentId = newPersonaId || personaType;
+        if (currentId) {
             setCompletedSteps(prev => Array.from(new Set([...prev, 'identity'])));
             setCurrentStep('input');
             scrollToStep('input');
@@ -225,15 +227,20 @@ export function CopywriterClient({
 
     return (
         <div className="bg-[#0a0a0a] text-[#ededed] px-6 py-8 md:py-12 min-h-screen selection:bg-indigo-500/30">
-            <div className="max-w-6xl mx-auto space-y-12">
-                <header className="mb-12">
-                    <h1 className="text-4xl font-semibold tracking-tight mb-3">
-                        {t("copywriter.title")}
-                    </h1>
-                    <p className="text-sm text-[#a1a1aa] max-w-3xl">
-                        {t("copywriter.subtitle")}
-                    </p>
-                </header>
+            <div className="max-w-6xl mx-auto relative">
+                
+                <IntelligenceBar
+                    isVisible={currentStep !== 'identity' && completedSteps.includes('identity')}
+                    personaName={personas.find(p => p.id === personaType)?.name.split(' — ')[0]}
+                    personaRole={personas.find(p => p.id === personaType)?.name.split(' — ')[1] || "Decisor"}
+                    personaCluster={personas.find(p => p.id === personaType)?.cluster}
+                    personaPhotoUrl={personas.find(p => p.id === personaType)?.photo_url}
+                    onViewDossier={() => handleViewDossier(personaType)}
+                    onChangePersona={() => {
+                        setCurrentStep('identity');
+                        scrollToStep('identity');
+                    }}
+                />
 
                 <div className="space-y-0">
                     {/* Section 1: Identity */}

@@ -5,6 +5,10 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Production Release Epic 20/21)**
 
 ## Latest Deployments
+- **Epic 23: Linear Intelligence Factory UI (May 13, 2026)**:
+    - **Linear UI Architecture**: Created the `LinearStressTestClient` A/B test branch to replace the legacy collapsible accordion.
+    - **Dual-State Refinement Panel**: Engineered `LinearRefinementPanel` to seamlessly handle both "Refinar Pitch" input state and "Refinado" output state without router transitions.
+    - **Premium Component Polish**: Revamped IdeaSection, AnalysisResults, and IdentitySection to leverage full screen real estate, glassmorphism, and sophisticated visual hierarchies.
 - **Admin Suite Enhancement: Inline Editing & Cluster CRUD (May 11, 2026)**:
     - **Inline Management UI**: Implemented optimistic updates for persona Name, Role, Cluster, and Status directly in the Admin table.
     - **Cluster Management Hub**: Launched `/admin/clusters` for global group administration and relational safety.

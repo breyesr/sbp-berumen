@@ -1,24 +1,23 @@
-# Handoff State: [2026-05-11] - New Persona Ingestion & Production Sync
+# Handoff State: [2026-05-13] - Linear Intelligence Factory UI Refactor
 
-## Current Phase: Epic 21 (Sync Integrity) & Epic 20 (Identity)
-**Target Branch**: `main` (Merged) / `staging` (Active)
+## Current Phase: Epic 23.5 (Linear Paginated Flow)
+**Target Branch**: `feature/frontend/linear-factory` -> `staging`
 **Last Verified State**: 
-- **Repository**: 13 new synthetic buyer personas and their avatars merged into `main` and pushed to GitHub.
-- **Database (Main/Production)**: Photos have been manually updated for the new personas in clusters "Estudiantes ab" and "Estudiantes c".
-- **Database (Filesystem Sync)**: New personas are committed to the filesystem; final sync script execution on production is pending to ingest core definitions if not already done.
-- **Stability**: `main` and `staging` are currently aligned.
+- **Repository**: Created and integrated all Linear UI components (`LinearIdeaSection`, `LinearAnalysisResults`, `LinearRefinementPanel`) for the Intelligence Factory.
+- **A/B Testing Route**: The new flow is isolated and accessible via `http://localhost:3001/stresstest`. The original accordion flow remains untouched to preserve A/B test capability.
+- **Stability**: Components are fully functional and connected to the existing streaming backend.
 
 ## 🏆 Accomplishments
-1.  **Persona Expansion**: Ingested 13 new personas (Santiago, Leonardo, Isabella, Sofia, Rodrigo, Mateo, Andres, Mariana, Elena, Gabriel, Diego, Valeria, and Camila).
-2.  **Visual Identity Linkage**: Added and pushed 13 new avatar PNGs to `public/avatars/`.
-3.  **Production Readiness**: Manually executed SQL updates in the production environment to link `photo_url` for the new clusters.
-4.  **Protocol Adherence**: Successfully followed the Staging -> Main merge flow for production delivery.
+1.  **Linear UI Construction**: Fully refactored the Stress Test into a paginated wizard experience, eliminating the vertical accordion scroll fatigue.
+2.  **Dual-State Refinement**: Built a highly dynamic `LinearRefinementPanel` that automatically toggles between the "Refinar Pitch" input form and the "Refinado" output view.
+3.  **Visual Polish**: Implemented "Factory Floor" aesthetics with balanced typography, premium glassmorphism, and dynamic layout reflows (collapsible Original Pitch).
+4.  **Identity UX**: Enhanced the Persona Selection step with a confirmation modal showcasing the Persona's photo and role before beginning the analysis.
 
 ## 🚀 Immediate Next Steps
-- [ ] **RAG Training (Production)**: Execute the embedding script for the new personas in the production environment to ensure they are available for Stress Test/Copywriter.
-- [ ] **Task 21.9 (Backend)**: **Resolve RAG Orphanage on Persona Re-Sync**: Fix the issue where re-created personas skip re-embedding.
-- [ ] **Task 23.1 (UX/UI)**: **Design System Update**: Sync `tailwind.config.ts` with the new color palette.
+- [ ] **Code Review & Integration**: Review the new `Linear*` components and prepare for merging into `staging` once the UX/UI team gives final approval.
+- [ ] **Task 23.4 (UX/UI)**: **Intelligence Bar**: Build a global context bar showing active persona and market metadata across the application.
+- [ ] **Task 23.6 (UX/UI)**: **Side-by-Side Copywriter**: Redesign the Copywriter UI using the same dual-pane visual language established in this session.
 
 ## ⚠️ Known Issues
+- **A/B Test Routing**: Currently `LinearStressTestClient` overrides the main `/stresstest` route. Ensure the feature flag or routing logic is properly handled before production deployment so users can experience the new UI reliably.
 - **RAG Orphanage (Unresolved)**: Task 21.9 still pending (RAG linking issue after persona re-sync).
-- **Manual Sync**: While photos are linked, ensure the filesystem sync script is run on production to populate the `persona_intelligence` table for the new entities.
