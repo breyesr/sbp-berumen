@@ -15,9 +15,10 @@ interface ScoringBreakdownProps {
     feasibility: string;
     lens: string;
   };
+  hideScore?: boolean;
 }
 
-export function ScoringBreakdown({ confidenceScore, breakdown, rationale }: ScoringBreakdownProps) {
+export function ScoringBreakdown({ confidenceScore, breakdown, rationale, hideScore }: ScoringBreakdownProps) {
   const getScoreColor = (score: number) => {
     if (score >= 70) return 'text-green-400';
     if (score >= 40) return 'text-yellow-400';
@@ -66,9 +67,11 @@ export function ScoringBreakdown({ confidenceScore, breakdown, rationale }: Scor
             Desglose de Confianza (DSE)
           </h3>
         </div>
-        <div className={clsx("text-lg font-black", getScoreColor(confidenceScore))}>
-          {confidenceScore}%
-        </div>
+        {!hideScore && (
+            <div className={clsx("text-lg font-black", getScoreColor(confidenceScore))}>
+            {confidenceScore}%
+            </div>
+        )}
       </div>
       
       <div className="p-6 space-y-6">

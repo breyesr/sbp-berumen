@@ -36,10 +36,18 @@ export function PersonaCard({
     >
       <div className="flex items-start justify-between mb-4">
         {/* Avatar (Compact) */}
-        <div className={clsx(
-          "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all overflow-hidden",
-          isSelected ? "bg-indigo-500/20 text-indigo-400" : "bg-white/5 text-white/20 group-hover:bg-white/40",
-          !isReady && "bg-zinc-800 text-zinc-600"
+        <div 
+          onClick={(e) => { 
+            if (isReady) {
+                e.stopPropagation(); 
+                onViewDossier(e, persona.id); 
+            }
+          }}
+          className={clsx(
+            "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all overflow-hidden",
+            isSelected ? "bg-indigo-500/20 text-indigo-400" : "bg-white/5 text-white/20 group-hover:bg-white/40",
+            !isReady && "bg-zinc-800 text-zinc-600 cursor-default",
+            isReady && "cursor-pointer hover:ring-2 hover:ring-indigo-500/50"
         )}>
           {persona.photo_url ? (
             <img src={persona.photo_url} alt={name} className="w-full h-full object-cover" />

@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Filter } from 'lucide-react';
+import { useMemo, useState, useEffect, useRef } from "react";
+import { Filter, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaOption } from "./types";
 import { PersonaCard } from "@/components/ui/PersonaCard";
@@ -11,8 +11,58 @@ interface PersonaSectionProps {
   personas: PersonaOption[];
   personaType: string | number;
   setPersonaType: (val: string | number) => void;
-  onContinue: () => void;
+  onContinue: (id?: string | number) => void;
   onViewDossier: (id: string | number) => void;
+}
+
+function CarouselRow({ personas, personaType, onSelect, onViewDossier }: {
+  personas: PersonaOption[];
+  personaType: string | number;
+  onSelect: (id: string | number) => void;
+  onViewDossier: (e: React.MouseEvent, id: string | number) => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 300;
+      scrollRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="relative group">
+      <div 
+        ref={scrollRef}
+        className="flex overflow-x-auto snap-x gap-6 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-6 px-6"
+      >
+        {personas.map((p) => (
+          <div key={p.id} className="min-w-[280px] w-[280px] snap-start shrink-0">
+            <PersonaCard
+              persona={p}
+              isSelected={personaType === p.id}
+              onSelect={onSelect}
+              onViewDossier={onViewDossier}
+            />
+          </div>
+        ))}
+      </div>
+      
+      {/* Floating Buttons */}
+      <button 
+        onClick={() => scroll('left')}
+        className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 w-10 h-10 rounded-full bg-[#18181b] border border-white/10 text-white/70 hover:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:bg-[#27272a] hover:scale-105"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button 
+        onClick={() => scroll('right')}
+        className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 w-10 h-10 rounded-full bg-[#18181b] border border-white/10 text-white/70 hover:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:bg-[#27272a] hover:scale-105"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+    </div>
+  );
 }
 
 export function PersonaSection({
@@ -24,6 +74,7 @@ export function PersonaSection({
 }: PersonaSectionProps) {
   const { t } = useI18n();
   const [selectedCluster, setSelectedCluster] = useState<string>("all");
+  const [confirmPersonaId, setConfirmPersonaId] = useState<string | number | null>(null);
 
   const clusters = useMemo(() => {
     const clusterSet = new Set<string>();
@@ -52,78 +103,107 @@ export function PersonaSection({
     onViewDossier(id);
   };
 
+  const handleSelectPersona = (id: string | number) => {
+    setConfirmPersonaId(id);
+  };
+
+  const handleConfirm = () => {
+    if (confirmPersonaId !== null) {
+        setPersonaType(confirmPersonaId);
+        onContinue(confirmPersonaId);
+        setConfirmPersonaId(null);
+    }
+  };
+
+  const handleCancel = () => {
+    setConfirmPersonaId(null);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && confirmPersonaId !== null) {
+        setConfirmPersonaId(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [confirmPersonaId]);
+
   return (
     <div className="space-y-16 animate-fade-in">
-      <div className="space-y-6">
-        <div className="flex items-center gap-3 px-1">
-          <Filter className="w-3.5 h-3.5 text-indigo-400/50" />
-          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-white/20">
-            Scope Selection
-          </label>
-        </div>
+      <div className="flex items-center justify-end gap-4">
         
-        <div className="flex flex-wrap gap-2.5">
-          <button
-            onClick={() => setSelectedCluster("all")}
-            className={clsx(
-              "px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
-              selectedCluster === "all"
-                ? "bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                : "bg-white/5 border-white/5 text-white/30 hover:bg-white/10 hover:text-white/50"
-            )}
+        <div className="relative group min-w-[200px]">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400/50 group-focus-within:text-indigo-400 transition-colors">
+            <Filter className="w-4 h-4" />
+          </div>
+          <select
+            value={selectedCluster}
+            onChange={(e) => setSelectedCluster(e.target.value)}
+            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer hover:border-white/20 text-white shadow-xl"
           >
-            {t("stress.identity.all_clusters")}
-          </button>
-          {clusters.map(cluster => (
-            <button
-              key={cluster}
-              onClick={() => setSelectedCluster(cluster)}
-              className={clsx(
-                "px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
-                selectedCluster === cluster
-                  ? "bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                  : "bg-white/5 border-white/5 text-white/30 hover:bg-white/10 hover:text-white/50"
-              )}
-            >
-              {cluster.replace("-", " & ")}
-            </button>
-          ))}
+            <option value="all" className="bg-[#0a0a0a] text-white py-2">{t("stress.identity.all_clusters")}</option>
+            {clusters.map(cluster => (
+              <option key={cluster} value={cluster} className="bg-[#0a0a0a] text-white py-2">
+                {cluster.replace("-", " & ")}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within:text-indigo-400 transition-colors">
+            <ChevronDown className="w-4 h-4 stroke-[3px]" />
+          </div>
         </div>
       </div>
 
       <div className="space-y-12">
         {Object.entries(groupedPersonas).map(([cluster, clusterPersonas]) => (
           <div key={cluster} className="space-y-6">
-            <div className="flex items-center gap-4 px-1">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-400/40 whitespace-nowrap">
+            <div className="flex items-center gap-4 px-1 group">
+              <h3 className="text-xl font-semibold tracking-tight text-white whitespace-nowrap capitalize">
                 {cluster.replace("-", " & ")}
-              </span>
+              </h3>
               <div className="h-px w-full bg-white/5" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {clusterPersonas.map((p) => (
-                <PersonaCard
-                  key={p.id}
-                  persona={p}
-                  isSelected={personaType === p.id}
-                  onSelect={setPersonaType}
-                  onViewDossier={handleViewDossier}
-                />
-              ))}
-            </div>
+            <CarouselRow 
+              personas={clusterPersonas}
+              personaType={personaType}
+              onSelect={handleSelectPersona}
+              onViewDossier={handleViewDossier}
+            />
           </div>
         ))}
       </div>
 
-      <div className="flex justify-end pt-12 border-t border-white/5 bg-gradient-to-t from-white/[0.01] to-transparent -mx-6 px-6 pb-6">
-        <button
-          onClick={onContinue}
-          disabled={!personaType}
-          className="md:w-auto w-full px-12 py-5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-white/5 disabled:text-white/10 text-white font-black text-xs tracking-[0.3em] uppercase transition-all shadow-[0_20px_40px_rgba(79,70,229,0.2)] active:scale-95 disabled:shadow-none"
+      {/* Confirmation Modal */}
+      {confirmPersonaId !== null && (
+        <div 
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm animate-fade-in"
+          onClick={handleCancel}
         >
-          {t("stress.identity.continue")}
-        </button>
-      </div>
+          <div 
+            className="bg-[#09090b] border border-white/10 rounded-3xl w-full max-w-sm p-8 shadow-2xl animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-semibold tracking-tight text-white mb-6 text-center">
+              {t("copywriter.persona.confirm_title")}
+            </h3>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleConfirm}
+                className="w-full px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all"
+              >
+                {t("stress.persona.confirm_ok")}
+              </button>
+              <button
+                onClick={handleCancel}
+                className="w-full px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 font-medium text-sm transition-all"
+              >
+                {t("stress.persona.confirm_cancel")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
