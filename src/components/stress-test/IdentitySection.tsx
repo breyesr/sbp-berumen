@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, useRef } from "react";
-import { Filter, ChevronDown, ChevronLeft, ChevronRight, User } from 'lucide-react';
+import { Filter, ChevronDown, ChevronLeft, ChevronRight, User, Sparkles } from 'lucide-react';
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { PersonaOption, ChallengeLevelOption } from "./types";
 import { PersonaCard } from "@/components/ui/PersonaCard";
@@ -13,6 +13,10 @@ interface IdentitySectionProps {
   setPersonaType: (val: string | number) => void;
   onContinue: (id?: string | number) => void;
   onViewDossier: (id: string | number) => void;
+  // Legacy props for accordion flow
+  levels?: ChallengeLevelOption[];
+  challengeLevelId?: string;
+  setChallengeLevelId?: (id: string) => void;
 }
 
 function CarouselRow({ personas, personaType, onSelect, onViewDossier }: {
@@ -71,6 +75,9 @@ export function IdentitySection({
   setPersonaType,
   onContinue,
   onViewDossier,
+  levels,
+  challengeLevelId,
+  setChallengeLevelId,
 }: IdentitySectionProps) {
   const { t } = useI18n();
   const [selectedCluster, setSelectedCluster] = useState<string>("all");
@@ -146,24 +153,48 @@ export function IdentitySection({
             </p>
         </div>
         
-        <div className="relative group min-w-[200px]">
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400/50 group-focus-within:text-indigo-400 transition-colors">
-            <Filter className="w-4 h-4" />
-          </div>
-          <select
-            value={selectedCluster}
-            onChange={(e) => setSelectedCluster(e.target.value)}
-            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer hover:border-white/20 text-white shadow-xl"
-          >
-            <option value="all" className="bg-[#0a0a0a] text-white py-2">{t("stress.identity.all_clusters")}</option>
-            {clusters.map(cluster => (
-              <option key={cluster} value={cluster} className="bg-[#0a0a0a] text-white py-2">
-                {cluster.replace("-", " & ")}
-              </option>
-            ))}
-          </select>
-          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within:text-indigo-400 transition-colors">
-            <ChevronDown className="w-4 h-4 stroke-[3px]" />
+        <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+          {levels && challengeLevelId && setChallengeLevelId && (
+            <div className="relative group min-w-[200px]">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400/50 group-focus-within:text-indigo-400 transition-colors">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <select
+                value={challengeLevelId}
+                onChange={(e) => setChallengeLevelId(e.target.value)}
+                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer hover:border-white/20 text-white shadow-xl"
+              >
+                {levels.map(level => (
+                  <option key={level.id} value={level.id} className="bg-[#0a0a0a] text-white py-2">
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within:text-indigo-400 transition-colors">
+                <ChevronDown className="w-4 h-4 stroke-[3px]" />
+              </div>
+            </div>
+          )}
+
+          <div className="relative group min-w-[200px]">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400/50 group-focus-within:text-indigo-400 transition-colors">
+              <Filter className="w-4 h-4" />
+            </div>
+            <select
+              value={selectedCluster}
+              onChange={(e) => setSelectedCluster(e.target.value)}
+              className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer hover:border-white/20 text-white shadow-xl"
+            >
+              <option value="all" className="bg-[#0a0a0a] text-white py-2">{t("stress.identity.all_clusters")}</option>
+              {clusters.map(cluster => (
+                <option key={cluster} value={cluster} className="bg-[#0a0a0a] text-white py-2">
+                  {cluster.replace("-", " & ")}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within:text-indigo-400 transition-colors">
+              <ChevronDown className="w-4 h-4 stroke-[3px]" />
+            </div>
           </div>
         </div>
       </div>
