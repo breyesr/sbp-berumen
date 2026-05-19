@@ -13,7 +13,8 @@ export const OutputSchema = z.object({
       platformName: z.string(),
       formatId: z.string(),
       formatName: z.string(),
-      primaryCopy: z.string(),
+      fields: z.record(z.string(), z.string()).optional(),
+      primaryCopy: z.string().optional(),
       alternateCopy: z.string().optional(),
       hashtags: z.array(z.string()).optional(),
       cta: z.string().optional(),
@@ -49,6 +50,7 @@ export type Format = {
   primary_goal_vibe?: string;
   tone_preference?: string;
   copy_guidelines?: Record<string, any>;
+  requiredElements?: string[];
 };
 
 export type CopyOutput = {
@@ -56,7 +58,8 @@ export type CopyOutput = {
   platformName: string;
   formatId: string;
   formatName: string;
-  primaryCopy: string;
+  fields?: Record<string, string>;
+  primaryCopy?: string;
   alternateCopy?: string;
   hashtags?: string[];
   cta?: string;

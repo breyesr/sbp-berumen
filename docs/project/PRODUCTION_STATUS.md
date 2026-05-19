@@ -5,6 +5,16 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Production Release Epic 20/21)**
 
 ## Latest Deployments
+- **Copywriter 2.0 Rollout (May 19, 2026)**:
+    - **Intelligence Engine**: Full migration to a dynamic, directive-based architecture.
+    - **Platform Fidelity**: AI now generates specialized fields (SEO Descriptions, Video Hooks, Visual Directions) across 33 formats.
+    - **Strategic Alignment**: Guaranteed usage of Persona Anchors and Decision Triggers via prompt-level enforcement.
+    - **UI Workspace**: Results view updated with platform branding, atomic copy actions, and long-text expansion logic.
+- **Epic 23.5 & Identity Stabilization (May 18, 2026)**:
+    - **Linear UI Rollout**: Successfully merged the horizontal 5-step wizard for the Intelligence Factory into Production.
+    - **Branch Stabilization**: Synchronized `staging` and `main` branches and created safety tag `production-2026-05-18-epic23`.
+    - **Knowledge Integrity**: Verified Production DB contains ~18,000 knowledge chunks across 20 personas.
+    - **Photo Engine Production Ready**: Custom avatars and photo serving API fully active in production.
 - **Epic 23: Linear Intelligence Factory UI (May 13, 2026)**:
     - **Linear UI Architecture**: Created the `LinearStressTestClient` A/B test branch to replace the legacy collapsible accordion.
     - **Dual-State Refinement Panel**: Engineered `LinearRefinementPanel` to seamlessly handle both "Refinar Pitch" input state and "Refinado" output state without router transitions.

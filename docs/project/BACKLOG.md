@@ -57,7 +57,7 @@
     *   **Infrastructure Debt**: When migrating to Railway (Epic 0), revert the storage path to the persistent volume (e.g., `/data/personas/`) and restore the `/api/public/personas/[id]/photo` serving logic to allow runtime uploads without Git commits.
 
 - [x] **Task 20.9**: **RAG Metadata Alignment**: Update `scripts/db/embed.ts` to include numerical `persona_id` in the document metadata alongside `id_text` (slugs) to ensure full relational integrity in the vector database. [DONE]
-- [ ] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment.
+- [x] **Task 20.10**: **Infrastructure Parity (Main)**: Replicate all Epic 20 database migrations and RAG infrastructure setup in the `main` branch environment. [DONE]
 - [x] **Task 20.11**: **Manual Production Training**: Establish a secure "Local-to-Production" embedding protocol to avoid Vercel timeouts and credential leakage. [DONE via SOP]
 - [x] **Task 20.12 (High)**: **RAG Readiness Check**: Implement logic to detect if a persona has no associated RAG data. Flag these as "Not Ready" in the UI and disable them for Stress Test/Copywriter use to prevent low-quality outputs. [DONE]
 - [x] **Task 20.15**: **Dossier RBAC Hardening**: Silently hide sensitive psychographic sections (Barreras de Decisión, Voz del Cliente) for non-admin users to prevent information leakage of high-level strategic data. [DONE]
@@ -102,6 +102,16 @@
 - [x] **Task 23.5**: **Linear Paginated Flow**: Refactor Stress Test UI to a horizontal 5-step paginated wizard (1-5), replacing the collapsible and matrix flows for better cognitive pacing. [DONE]
 - [ ] **Task 23.6**: **Side-by-Side Copywriter**: Redesign Copywriter UI for a dual-pane editor/preview workspace.
 - [ ] **Task 23.7**: **Theme Engine**: Implement high-fidelity "Warm Alabaster" and "IntelAgent Black" theme switching.
+
+## Epic 24: Copywriter 2.0 - Platform-Native Intelligence (High Priority) [DONE]
+**Owner**: AI Engineer & Backend & UX/UI
+*Goal: Evolve the Copywriter from a generic text generator to a specialized platform-native engine using the new Directive-based architecture.*
+
+**Tasks:**
+- [x] **Task 24.1**: **Dynamic Output Schema**: Refactor `src/app/api/copywriter/route.ts` to replace hardcoded `primaryCopy` with a flexible `fields: Record<string, string>` map. [DONE]
+- [x] **Task 24.2**: **Directives Migration**: Convert all 33 format JSONs to the new \"System Directives & Hard Constraints\" structure established in `temp-longform-video.json`. [DONE]
+- [x] **Task 24.3**: **Adaptive UI Components**: Redesign the Copywriter results view to render platform-specific fields (e.g., a 'Title' box, a 'Script' box) based on the format's `required_generation_elements`. [DONE]
+- [x] **Task 24.4**: **Strategic Persona Infusion**: Explicitly inject persona \"Anchors,\" \"Pains,\" and \"Triggers\" into the Copywriter prompt to ensure the output is strategically grounded. [DONE]
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend

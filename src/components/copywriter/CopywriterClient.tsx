@@ -201,8 +201,15 @@ export function CopywriterClient({
         object.outputs.forEach((o) => {
             if (!o) return;
           lines.push(`--- ${o.platformName || "Platform"} / ${o.formatName || "Format"} ---`);
-          lines.push(`${t("copywriter.output.primary")}: ${o.primaryCopy || ""}`);
-          if (o.alternateCopy) lines.push(`${t("copywriter.output.alternate")}: ${o.alternateCopy}`);
+          
+          if (o.fields) {
+            Object.entries(o.fields).forEach(([label, value]) => {
+                lines.push(`${label.replace(/_/g, ' ').toUpperCase()}:`);
+                lines.push(value || "");
+                lines.push(``);
+            });
+          }
+
           if (o.cta) lines.push(`${t("copywriter.output.cta")}: ${o.cta}`);
           if (o.hashtags?.length) lines.push(`${t("copywriter.output.hashtags")}: ${o.hashtags.join(" ")}`);
           if (o.notes?.length) {
@@ -223,6 +230,12 @@ export function CopywriterClient({
 
     const selectedPersonaName = personaLookup[personaType] || t("stress.default_persona");
 
+    const selectedPersona = personas.find(p => p.id === personaType || p.id.toString() === personaType.toString());
+    const personaDisplayName = selectedPersona?.name || "";
+    const nameParts = personaDisplayName.split(' — ');
+    const personaNameOnly = nameParts[0] || "";
+    const personaRoleOnly = nameParts[1] || "Decisor";
+
     const outputs = (object?.outputs || []) as CopyOutput[];
 
     return (
@@ -231,10 +244,10 @@ export function CopywriterClient({
                 
                 <IntelligenceBar
                     isVisible={currentStep !== 'identity' && completedSteps.includes('identity')}
-                    personaName={personas.find(p => p.id === personaType)?.name.split(' — ')[0]}
-                    personaRole={personas.find(p => p.id === personaType)?.name.split(' — ')[1] || "Decisor"}
-                    personaCluster={personas.find(p => p.id === personaType)?.cluster}
-                    personaPhotoUrl={personas.find(p => p.id === personaType)?.photo_url}
+                    personaName={personaNameOnly}
+                    personaRole={personaRoleOnly}
+                    personaCluster={selectedPersona?.cluster}
+                    personaPhotoUrl={selectedPersona?.photo_url}
                     onViewDossier={() => handleViewDossier(personaType)}
                     onChangePersona={() => {
                         setCurrentStep('identity');

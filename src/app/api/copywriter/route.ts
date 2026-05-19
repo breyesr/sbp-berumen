@@ -38,6 +38,13 @@ type FormatFile = {
   output_fields?: string[];
   disallowed_practices?: string[];
   sub_format_emphasis_rules?: Record<string, any>;
+  // New fields for Copywriter 2.0
+  system_directives?: {
+    tone: string[];
+    copywriting_rules: string[];
+  };
+  required_generation_elements?: string[];
+  hard_constraints?: string[];
 };
 
 type PlatformWithFormats = PlatformFile & { formats: FormatFile[] };
@@ -73,7 +80,9 @@ const OutputSchema = z.object({
       platformName: z.string(),
       formatId: z.string(),
       formatName: z.string(),
-      primaryCopy: z.string(),
+      fields: z.record(z.string(), z.string()).optional(),
+      // Fallback fields for legacy compatibility
+      primaryCopy: z.string().optional(),
       alternateCopy: z.string().optional(),
       hashtags: z.array(z.string()).optional(),
       cta: z.string().optional(),
@@ -192,6 +201,8 @@ export async function loadPlatforms(): Promise<PlatformWithFormats[]> {
 function buildPrompt(options: {
   personaName: string;
   personaContext?: string;
+  anchors?: string[];
+  triggers?: { label: string; description: string }[];
   messageContext?: string;
   message: string;
   goal: string;
@@ -229,8 +240,8 @@ Platform: ${p.name} (${p.id})
       (f) => `
 Format: ${f.name} (${f.id}) on ${f.platform_id}
 - Goal/vibe: ${f.primary_goal_vibe ?? "n/a"}
-- Tone preference: ${f.tone_preference ?? "n/a"}
-- Copy guidelines: ${JSON.stringify(f.copy_guidelines ?? {}, null, 2)}
+- Tone preference: ${f.tone_preference ?? (f.system_directives?.tone?.join(" | ")) ?? "n/a"}
+- Copy guidelines: ${JSON.stringify(f.copy_guidelines ?? f.system_directives?.copywriting_rules ?? {}, null, 2)}
 - On-screen text: ${JSON.stringify(
         f.on_screen_text_guidelines ?? {},
         null,
@@ -238,12 +249,20 @@ Format: ${f.name} (${f.id}) on ${f.platform_id}
       )}
 - Hashtags/mentions: ${JSON.stringify(f.hashtags_mentions ?? {}, null, 2)}
 - Technical: ${JSON.stringify(f.technical_constraints ?? {}, null, 2)}
-- Required elements: ${(f.required_elements ?? []).join("; ")}
-- Output fields: ${(f.output_fields ?? []).join("; ")}
-- Disallowed: ${(f.disallowed_practices ?? []).join("; ")}
+- Required elements: ${(f.required_elements ?? f.required_generation_elements ?? []).join("; ")}
+- Output fields: ${(f.output_fields ?? f.required_generation_elements ?? ["primaryCopy", "alternateCopy"]).join("; ")}
+- Disallowed: ${(f.disallowed_practices ?? f.hard_constraints ?? []).join("; ")}
 `.trim()
     )
     .join("\n\n");
+
+  const anchorsText = options.anchors?.length 
+    ? `### PERSONA ANCHORS (USE AT LEAST TWO)\n- ${options.anchors.join("\n- ")}`
+    : "";
+
+  const triggersText = options.triggers?.length
+    ? `### DECISION TRIGGERS (ADDRESS AT LEAST ONE)\n${options.triggers.map(t => `- **${t.label}:** ${t.description}`).join("\n")}`
+    : "";
 
   return `
 You are a senior marketing copywriter. Write platform-native copy that strictly follows the platform and format guidelines, plus company rules.
@@ -251,6 +270,11 @@ You are a senior marketing copywriter. Write platform-native copy that strictly 
 Audience persona:
 ${options.personaName}
 Context: ${options.personaContext ?? "(no extra context)"}
+
+STRATEGIC PSYCHOLOGICAL PROFILE:
+${anchorsText}
+
+${triggersText}
 
 Company guidelines (brand voice, banned phrases, CTA norms):
 ${JSON.stringify(options.companyGuidelines, null, 2)}
@@ -272,8 +296,12 @@ ${selectedPairs}
 
 Instructions:
 - Obey platform and format constraints (tone, length, hashtag policy, technical notes).
+- STRATEGIC REQUIREMENT: You MUST weave at least TWO 'Anchors' and ONE 'Trigger' from the psychological profile into the copy naturally.
 - Honor company banned phrases; do not include them.
 - Make copy specific; avoid generic hype.
+- For each format, populate the "fields" object with keys that match the "Output fields" listed for that format above. 
+- Do NOT use generic keys like "primaryCopy" UNLESS they are explicitly listed in the "Output fields" for that format.
+- Use specific keys like "Video_Title", "SEO_Description", "Hook", etc. exactly as requested.
 - Return exactly ${options.selectedFormats.length} outputs, one per selected format id above, in the same order. Do not skip any.
 - If information feels sparse, still produce best-effort compliant copy rather than omitting the output.
 - Provide outputs only for the selected platform-format pairs.
@@ -357,13 +385,15 @@ export async function POST(req: Request) {
     const prompt = buildPrompt({
       personaName: persona.name,
       personaContext: persona.context,
+      anchors: persona.anchors,
+      triggers: persona.triggers,
       message,
       messageContext: context,
       goal,
       companyGuidelines,
       platforms,
       selectedPlatformIds: platformIds,
-      selectedFormats,
+      selectedFormats: selectedFormats,
     });
 
     const result = await streamObject({
