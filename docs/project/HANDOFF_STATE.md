@@ -12,6 +12,8 @@
 1.  **Epic 24 (Copywriter 2.0)**: Successfully refactored the Copywriter into a specialized production assistant.
     - **Dynamic Schema**: Supported specialized fields (e.g., Video Titles, Script) via a flexible `fields` map.
     - **Directives Migration**: Automated migration of 33 formats to an imperative 'MUST/NEVER' architecture.
+    - **Resonance Framework**: Implemented "Writer -> Audience" hierarchy and "What? So What? Now What?" persuasion logic.
+    - **Language Parity**: Ensured strategic "Notes" and all output fields match the user's input language (Spanish).
     - **Strategic Infusion**: Guaranteed usage of Persona Anchors and Triggers in AI outputs.
 2.  **Infrastructure Cleanup**: Removed 3 legacy SQL backup files to maintain repository hygiene.
 3.  **Stability Pass**: Resolved a TypeScript regression in the Stress Test and a silent crash in the Intelligence Bar.

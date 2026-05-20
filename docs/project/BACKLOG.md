@@ -112,7 +112,7 @@
 - [x] **Task 24.2**: **Directives Migration**: Convert all 33 format JSONs to the new \"System Directives & Hard Constraints\" structure established in `temp-longform-video.json`. [DONE]
 - [x] **Task 24.3**: **Adaptive UI Components**: Redesign the Copywriter results view to render platform-specific fields (e.g., a 'Title' box, a 'Script' box) based on the format's `required_generation_elements`. [DONE]
 - [x] **Task 24.4**: **Strategic Persona Infusion**: Explicitly inject persona \"Anchors,\" \"Pains,\" and \"Triggers\" into the Copywriter prompt to ensure the output is strategically grounded. [DONE]
-- [ ] **Task 24.5**: **Resonance Framework Refactor**: Refactor the system prompt to use the "Writer -> Audience Resonance" hierarchy, prioritizing strategic translation over literal quoting.
+- [x] **Task 24.5**: **Resonance Framework Refactor**: Refactor the system prompt to use the "Writer -> Audience Resonance" hierarchy, prioritizing strategic translation over literal quoting. [DONE]
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
