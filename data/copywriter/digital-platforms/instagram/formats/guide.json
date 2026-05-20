@@ -16,15 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Guide_Title",
-    "Guide_Intro",
-    "Entry_Descriptions",
-    "Hashtags_Optional",
-    "Tagged_Accounts",
-    "Clear guide title with a defined outcome",
-    "Introductory description setting expectations",
-    "Logical sequence of posts",
-    "At least one clear CTA to save or follow"
+    "TITLE",
+    "GUIDE_INTRO",
+    "ENTRY_DESCRIPTIONS",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CTA",
+    "LOGICAL_SEQUENCE_OF_POSTS"
   ],
   "hard_constraints": [
     "Vague or generic guide titles",

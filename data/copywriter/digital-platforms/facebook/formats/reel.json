@@ -21,14 +21,13 @@
     ]
   },
   "required_generation_elements": [
-    "Onscreen_Hook_Text",
-    "Caption",
-    "Hashtags_Optional",
-    "Tagged_Accounts",
-    "Strong visual hook in the first seconds",
-    "Clear value or promise on screen",
-    "Subtitles for sound-off viewing",
-    "At least one CTA"
+    "HOOK",
+    "CAPTION",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_VALUE_OR_PROMISE_ON_SCREEN",
+    "TITLE",
+    "CTA"
   ],
   "hard_constraints": [
     "Slow intros with no immediate value",

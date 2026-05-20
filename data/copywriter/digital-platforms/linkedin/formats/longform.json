@@ -16,16 +16,16 @@
     ]
   },
   "required_generation_elements": [
-    "Article_Title",
-    "Article_Intro",
-    "Article_Outline",
-    "Article_Body",
-    "Hashtags_Optional",
-    "Tagged_Accounts_Optional",
-    "Clear, benefit-oriented headline",
-    "Intro that explains why this matters now",
-    "Logical structure with subheadings",
-    "Actionable or reflective conclusion"
+    "TITLE",
+    "ARTICLE_INTRO",
+    "ARTICLE_OUTLINE",
+    "ARTICLE_BODY",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_BENEFIT_ORIENTED_HEADLINE",
+    "INTRO_THAT_EXPLAINS_WHY_THIS_MATTERS_NOW",
+    "LOGICAL_STRUCTURE_WITH_SUBHEADINGS",
+    "ACTIONABLE_OR_REFLECTIVE_CONCLUSION"
   ],
   "hard_constraints": [
     "Clickbait titles that do not match content",

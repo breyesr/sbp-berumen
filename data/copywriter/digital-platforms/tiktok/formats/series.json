@@ -16,16 +16,16 @@
     ]
   },
   "required_generation_elements": [
-    "Series_Name",
-    "Episode_Number_Label",
-    "Caption",
-    "Series_Hashtag",
-    "Hashtags",
-    "Tagged_Accounts_Optional",
-    "Series name or tag",
-    "Part indicator (for example Part 1, Part 2)",
-    "Single focused topic per episode",
-    "CTA pointing to other episodes or future parts"
+    "SERIES_NAME",
+    "EPISODE_NUMBER_LABEL",
+    "CAPTION",
+    "SERIES_HASHTAG",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "SERIES_NAME_OR_TAG",
+    "PART_INDICATOR_FOR_EXAMPLE_PART_1_PART_2_",
+    "SINGLE_FOCUSED_TOPIC_PER_EPISODE",
+    "CTA"
   ],
   "hard_constraints": [
     "Random, unconnected videos labeled as a series",

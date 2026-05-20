@@ -36,6 +36,7 @@ export type Persona = {
   voiceProfile?: string;
   anchors?: string[];
   triggers?: PersonaTrigger[];
+  knowledge?: string[];
   ragHighlights?: string | null;
 };
 

@@ -1,27 +1,28 @@
-# Handoff State: [2026-05-19] - Copywriter 2.0 Completion & Production Stabilization
+# Handoff State: [2026-05-19] - Copywriter 2.0 & Linear UI Finalization
 
-## Current Phase: Epic 23.6 (Side-by-Side UI Refactor)
+## Current Phase: Epic 21.9 (RAG Pipeline Stabilization)
 **Target Branch**: `feature/ux/epic-23-linear-factory` -> `staging`
 **Last Verified State**: 
-- **Repository**: Merged `staging` to `main` (Tag: `production-2026-05-18-epic23`).
-- **Copywriter 2.0**: Fully operational with dynamic schema, strategic persona infusion, and high-precision platform directives.
-- **Data Architecture**: Verified JSON is the optimal format for platform guidelines (Subagent Audit: AI, LLMOps, DevOps).
-- **Stability**: Fixed runtime crashes in the streaming results view and persona lookup.
+- **Linear UI**: High-fidelity 4-step wizard at `/copywriter/linear` matching the Stress Test aesthetic.
+- **Copywriter 2.0**: Fully operational with dynamic schema, strategic persona infusion, and "What? So What? Now What?" persuasion logic.
+- **Stability**: Zero-jump masonry grid implemented; page scroll anchoring fixed.
+- **Data Parity**: Staging and Production schemas share the same structure; environment-specific IDs maintained.
 
 ## 🏆 Accomplishments
-1.  **Epic 24 (Copywriter 2.0)**: Successfully refactored the Copywriter into a specialized production assistant.
-    - **Dynamic Schema**: Supported specialized fields (e.g., Video Titles, Script) via a flexible `fields` map.
-    - **Directives Migration**: Automated migration of 33 formats to an imperative 'MUST/NEVER' architecture.
-    - **Resonance Framework**: Implemented "Writer -> Audience" hierarchy and "What? So What? Now What?" persuasion logic.
-    - **Language Parity**: Ensured strategic "Notes" and all output fields match the user's input language (Spanish).
-    - **Strategic Infusion**: Guaranteed usage of Persona Anchors and Triggers in AI outputs.
-2.  **Infrastructure Cleanup**: Removed 3 legacy SQL backup files to maintain repository hygiene.
-3.  **Stability Pass**: Resolved a TypeScript regression in the Stress Test and a silent crash in the Intelligence Bar.
-4.  **Audit**: Subagent consultation confirmed the reliability of the current JSON-based data-as-code strategy.
+1.  **Linear UI (Task 23.6)**: Refactored the Copywriter into a paginated workspace.
+    - **Layout**: 3-column strategy view with persistent persona dossier.
+    - **UX**: Masonry results board with brand-colored containers and expansion logic.
+    - **Stability**: Fixed layout shifting using pre-allocated skeleton slots.
+2.  **Epic 24 (Copywriter 2.0)**: Upgraded the AI engine for strategic resonance.
+    - **Prompt**: Implemented "Resonance Framework" and literal-quoting guardrails.
+    - **Strategy**: Integrated RAG snippets as "Audience Intelligence" facts.
+    - **Localization**: Localized field labels and strategic notes into Spanish.
+3.  **Stability Pass**: Fixed multiple runtime crashes related to streaming types and reference errors (Sparkles, trim).
+4.  **Audit**: Standardized 33 platform JSONs using technical keys for reliable UI translation.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Task 21.9 (Backend)**: **Resolve RAG Orphanage**: Refactor the incremental embedder to prevent knowledge loss when personas are re-created with new IDs.
-- [ ] **Task 23.6 (UX/UI)**: **Side-by-Side UI Refactor**: Redesign the main Copywriter page to match the side-by-side aesthetic of the new Stress Test.
+- [ ] **UI Swap**: Upon final approval, replace the legacy `/copywriter` route with the new `LinearCopywriterClient`.
 - [ ] **Task 23.4 (UX/UI)**: **Intelligence Bar**: Build a global context bar showing active persona and market metadata.
 
 ## ⚠️ Known Issues

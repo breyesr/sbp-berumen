@@ -16,13 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Post_Text",
-    "Media_Optional",
-    "Poll_Options_Optional",
-    "Hashtags_Optional",
-    "Single clear idea or update",
-    "Simple and direct language",
-    "At least one question or CTA for engagement"
+    "POST_TEXT",
+    "MEDIA_OPTIONAL",
+    "POLL_OPTIONS_OPTIONAL",
+    "HASHTAGS_OPTIONAL",
+    "SINGLE_CLEAR_IDEA_OR_UPDATE",
+    "SIMPLE_AND_DIRECT_LANGUAGE",
+    "CTA"
   ],
   "hard_constraints": [
     "Long, dense text blocks",

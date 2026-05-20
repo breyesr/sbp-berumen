@@ -21,15 +21,14 @@
     ]
   },
   "required_generation_elements": [
-    "Short_Title",
-    "Description_Optional",
-    "Hashtags",
-    "Tagged_Accounts_Optional",
-    "Onscreen_Hook_Text",
-    "Immediate visual or verbal hook",
-    "Single focused idea",
-    "On-screen text or subtitles",
-    "At least one CTA"
+    "TITLE",
+    "DESCRIPTION",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "HOOK",
+    "BODY",
+    "ONSCREEN_TEXT",
+    "CTA"
   ],
   "hard_constraints": [
     "Slow intros with logos before the hook",

@@ -20,17 +20,16 @@
     ]
   },
   "required_generation_elements": [
-    "Live_Title",
-    "Live_Description",
-    "Agenda_Bullets_Optional",
-    "Pinned_Message_Text",
-    "Hashtags",
-    "Tagged_Accounts_Optional",
-    "Clear benefit-driven title",
-    "Description with agenda or session flow",
-    "Primary CTA repeated during the live",
-    "Active interaction with chat",
-    "Post-live replay optimization"
+    "TITLE",
+    "LIVE_DESCRIPTION",
+    "AGENDA_BULLETS_OPTIONAL",
+    "PINNED_MESSAGE_TEXT",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "DESCRIPTION_WITH_AGENDA_OR_SESSION_FLOW",
+    "CTA",
+    "ACTIVE_INTERACTION_WITH_CHAT",
+    "POST_LIVE_REPLAY_OPTIMIZATION"
   ],
   "hard_constraints": [
     "Starting without explaining the session purpose",

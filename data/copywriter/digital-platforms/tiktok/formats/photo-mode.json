@@ -21,14 +21,14 @@
     ]
   },
   "required_generation_elements": [
-    "Caption",
-    "Frame_Headlines_Optional",
-    "Hashtags",
-    "Tagged_Accounts",
-    "Clear theme or topic for the sequence",
-    "Readable text on each image if used",
-    "Logical progression from first to last frame",
-    "CTA encouraging saves or shares"
+    "CAPTION",
+    "FRAME_HEADLINES_OPTIONAL",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_THEME_OR_TOPIC_FOR_THE_SEQUENCE",
+    "READABLE_TEXT_ON_EACH_IMAGE_IF_USED",
+    "LOGICAL_PROGRESSION_FROM_FIRST_TO_LAST_FRAME",
+    "CTA"
   ],
   "hard_constraints": [
     "Random, unconnected images with no clear story",

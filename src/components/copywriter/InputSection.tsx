@@ -1,6 +1,6 @@
 "use client";
 
-import { Info, Loader2, Send, CheckSquare, AlignLeft, Target, AlignJustify } from 'lucide-react';
+import { Info, Loader2, Send, CheckSquare, AlignLeft, Target, AlignJustify, Sparkles } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { Platform, Format, FIELD_LIMITS } from "./types";
@@ -25,6 +25,7 @@ interface InputSectionProps {
   loading: boolean;
   onSubmit: () => void;
   selectedPersonaName: string;
+  hideStrategicInputs?: boolean;
 }
 
 interface FieldTooltipProps {
@@ -80,6 +81,7 @@ export function InputSection({
   loading,
   onSubmit,
   selectedPersonaName,
+  hideStrategicInputs = false,
 }: InputSectionProps) {
   const { t } = useI18n();
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -127,142 +129,144 @@ export function InputSection({
   return (
     <div className="space-y-16 animate-fade-in">
       {/* 1. Brief Inputs (Full Width Vertical Stack) */}
-      <div className="space-y-10">
-        <div className="flex items-center gap-3 px-1">
-          <Target className="w-4 h-4 text-indigo-400/50" />
-          <label className="block text-xs font-black uppercase tracking-[0.4em] text-white/20">
-            Phase 1: Strategic Briefing
-          </label>
-        </div>
-
+      {!hideStrategicInputs && (
         <div className="space-y-10">
-          {/* Context Field */}
-          <div className="relative">
-            <div className="flex justify-between items-center mb-3">
-              <div className="flex items-center gap-2">
-                <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
-                  {t("copywriter.field.context")}
-                </label>
-                <button 
-                  onClick={() => setActiveTooltip(activeTooltip === 'context' ? null : 'context')}
-                  className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
-                >
-                  <Info className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              <AnimatePresence>
-                {activeTooltip === 'context' && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                    className="absolute z-50 right-0 bottom-full mb-2"
-                  >
-                    <FieldTooltip {...tooltips.context} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <textarea
-              value={context}
-              onChange={(e) => setContext(e.target.value)}
-              placeholder={t("copywriter.placeholder.context")}
-              rows={3}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
-            />
-            <span className={clsx(
-              "block text-[10px] font-bold text-right mt-2 tracking-widest",
-              context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-red-400" : "text-white/20"
-            )}>
-              {context.length}/{FIELD_LIMITS.context.max}
-            </span>
+          <div className="flex items-center gap-3 px-1">
+            <Target className="w-4 h-4 text-indigo-400/50" />
+            <label className="block text-xs font-black uppercase tracking-[0.4em] text-white/20">
+              Phase 1: Strategic Briefing
+            </label>
           </div>
 
-          {/* Message Field */}
-          <div className="relative">
-            <div className="flex justify-between items-center mb-3">
-              <div className="flex items-center gap-2">
-                <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
-                  {t("copywriter.field.message")}
-                </label>
-                <button 
-                  onClick={() => setActiveTooltip(activeTooltip === 'message' ? null : 'message')}
-                  className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
-                >
-                  <Info className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              <AnimatePresence>
-                {activeTooltip === 'message' && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                    className="absolute z-50 right-0 bottom-full mb-2"
+          <div className="space-y-10">
+            {/* Context Field */}
+            <div className="relative">
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2">
+                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                    {t("copywriter.field.context")}
+                  </label>
+                  <button 
+                    onClick={() => setActiveTooltip(activeTooltip === 'context' ? null : 'context')}
+                    className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
                   >
-                    <FieldTooltip {...tooltips.message} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <Info className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <AnimatePresence>
+                  {activeTooltip === 'context' && (
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                      className="absolute z-50 right-0 bottom-full mb-2"
+                    >
+                      <FieldTooltip {...tooltips.context} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <textarea
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                placeholder={t("copywriter.placeholder.context")}
+                rows={3}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+              />
+              <span className={clsx(
+                "block text-[10px] font-bold text-right mt-2 tracking-widest",
+                context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-red-400" : "text-white/20"
+              )}>
+                {context.length}/{FIELD_LIMITS.context.max}
+              </span>
             </div>
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder={t("copywriter.placeholder.message")}
-              rows={4}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
-            />
-            <span className={clsx(
-              "block text-[10px] font-bold text-right mt-2 tracking-widest",
-              message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-red-400" : "text-white/20"
-            )}>
-              {message.length}/{FIELD_LIMITS.message.max}
-            </span>
-          </div>
 
-          {/* Goal Field */}
-          <div className="relative">
-            <div className="flex justify-between items-center mb-3">
-              <div className="flex items-center gap-2">
-                <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
-                  {t("copywriter.field.goal")}
-                </label>
-                <button 
-                  onClick={() => setActiveTooltip(activeTooltip === 'goal' ? null : 'goal')}
-                  className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
-                >
-                  <Info className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              <AnimatePresence>
-                {activeTooltip === 'goal' && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                    className="absolute z-50 right-0 bottom-full mb-2"
+            {/* Message Field */}
+            <div className="relative">
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2">
+                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                    {t("copywriter.field.message")}
+                  </label>
+                  <button 
+                    onClick={() => setActiveTooltip(activeTooltip === 'message' ? null : 'message')}
+                    className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
                   >
-                    <FieldTooltip {...tooltips.goal} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <Info className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <AnimatePresence>
+                  {activeTooltip === 'message' && (
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                      className="absolute z-50 right-0 bottom-full mb-2"
+                    >
+                      <FieldTooltip {...tooltips.message} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder={t("copywriter.placeholder.message")}
+                rows={4}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+              />
+              <span className={clsx(
+                "block text-[10px] font-bold text-right mt-2 tracking-widest",
+                message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-red-400" : "text-white/20"
+              )}>
+                {message.length}/{FIELD_LIMITS.message.max}
+              </span>
             </div>
-            <textarea
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              placeholder={t("copywriter.placeholder.goal")}
-              rows={3}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
-            />
-            <span className={clsx(
-              "block text-[10px] font-bold text-right mt-2 tracking-widest",
-              goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-red-400" : "text-white/20"
-            )}>
-              {goal.length}/{FIELD_LIMITS.goal.max}
-            </span>
+
+            {/* Goal Field */}
+            <div className="relative">
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2">
+                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                    {t("copywriter.field.goal")}
+                  </label>
+                  <button 
+                    onClick={() => setActiveTooltip(activeTooltip === 'goal' ? null : 'goal')}
+                    className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
+                  >
+                    <Info className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <AnimatePresence>
+                  {activeTooltip === 'goal' && (
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                      className="absolute z-50 right-0 bottom-full mb-2"
+                    >
+                      <FieldTooltip {...tooltips.goal} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <textarea
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+                placeholder={t("copywriter.placeholder.goal")}
+                rows={3}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+              />
+              <span className={clsx(
+                "block text-[10px] font-bold text-right mt-2 tracking-widest",
+                goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-red-400" : "text-white/20"
+              )}>
+                {goal.length}/{FIELD_LIMITS.goal.max}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* 2. Platform Selection (Full Width Grid) */}
       <div className="space-y-10">
@@ -436,10 +440,10 @@ export function InputSection({
         )}
       </div>
 
-      {/* Task 15.6: Factory Ledger Footer */}
+      {/* Task 15.6: Factory Ledger Footer & Action Button */}
       {selectedPlatforms.length > 0 && (
         <div className="mt-12 pt-10 border-t border-white/5">
-          <div className="flex items-center justify-between px-6 py-5 rounded-3xl bg-white/[0.02] border border-white/5 shadow-2xl">
+          <div className="flex items-center justify-between px-6 py-4 rounded-3xl bg-white/[0.02] border border-white/5 shadow-2xl pl-10 pr-4">
              <div className="flex items-center gap-8">
                 <div className="flex items-center gap-3">
                   <CheckSquare className="w-5 h-5 text-indigo-400/60" />
@@ -455,39 +459,61 @@ export function InputSection({
                   </span>
                 </div>
              </div>
-             <div className="flex items-center gap-4">
-               <span className="text-[11px] font-black uppercase tracking-[0.3em] text-indigo-400/80 animate-pulse">
-                 Ready for Production
-               </span>
-             </div>
+
+             {hideStrategicInputs && (
+               <button
+                 onClick={onSubmit}
+                 disabled={selectedFormats.length === 0 || loading}
+                 className={clsx(
+                   "py-3.5 px-10 rounded-2xl font-black text-[10px] tracking-[0.3em] uppercase transition-all shadow-xl active:scale-95",
+                   selectedFormats.length > 0 && !loading
+                     ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20"
+                     : "bg-white/5 text-white/20 cursor-not-allowed border border-white/5"
+                 )}
+               >
+                 {loading ? (
+                   <span className="flex items-center gap-3">
+                     <Loader2 className="w-4 h-4 animate-spin" />
+                     Generando...
+                   </span>
+                 ) : (
+                   <span className="flex items-center gap-3">
+                     <Sparkles className="w-4 h-4" />
+                     Escribir Copy
+                   </span>
+                 )}
+               </button>
+             )}
           </div>
         </div>
       )}
 
-      <div className="pt-12 border-t border-white/5">
-        <button
-          onClick={onSubmit}
-          disabled={!isFormValid || loading}
-          className={clsx(
-            "w-full py-6 px-10 rounded-3xl font-black text-sm tracking-[0.3em] uppercase transition-all shadow-2xl",
-            isFormValid && !loading
-              ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.99] hover:shadow-indigo-500/40"
-              : "bg-white/5 text-white/20 cursor-not-allowed"
-          )}
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-4">
-              <Loader2 className="w-6 h-6 animate-spin" />
-              {t("copywriter.action.button_loading")}
-            </span>
-          ) : (
-            <span className="flex items-center justify-center gap-4">
-              <Send className="w-5 h-5" />
-              {t("copywriter.action.button")}
-            </span>
-          )}
-        </button>
-      </div>
+      {!hideStrategicInputs && (
+        <div className="pt-12 border-t border-white/5">
+          <button
+            onClick={onSubmit}
+            disabled={!isFormValid || loading}
+            className={clsx(
+              "w-full py-6 px-10 rounded-3xl font-black text-sm tracking-[0.3em] uppercase transition-all shadow-2xl",
+              isFormValid && !loading
+                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.99] hover:shadow-indigo-500/40"
+                : "bg-white/5 text-white/20 cursor-not-allowed"
+            )}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-4">
+                <Loader2 className="w-6 h-6 animate-spin" />
+                {t("copywriter.action.button_loading")}
+              </span>
+            ) : (
+              <span className="flex items-center justify-center gap-4">
+                <Send className="w-5 h-5" />
+                {t("copywriter.action.button")}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

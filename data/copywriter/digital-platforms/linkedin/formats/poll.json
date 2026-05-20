@@ -16,15 +16,15 @@
     ]
   },
   "required_generation_elements": [
-    "Poll_Question",
-    "Poll_Options",
-    "Caption",
-    "Hashtags_Optional",
-    "Tagged_Accounts_Optional",
-    "Single clear question",
-    "Answer options that are mutually exclusive",
-    "Context for why the question matters",
-    "CTA inviting votes and comments"
+    "POLL_QUESTION",
+    "POLL_OPTIONS",
+    "CAPTION",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "BODY",
+    "ANSWER_OPTIONS_THAT_ARE_MUTUALLY_EXCLUSIVE",
+    "CONTEXT_FOR_WHY_THE_QUESTION_MATTERS",
+    "CTA"
   ],
   "hard_constraints": [
     "Overly vague or broad questions",

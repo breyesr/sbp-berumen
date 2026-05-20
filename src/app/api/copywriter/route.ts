@@ -80,13 +80,12 @@ const OutputSchema = z.object({
       platformName: z.string(),
       formatId: z.string(),
       formatName: z.string(),
-      fields: z.record(z.string(), z.string()).optional(),
-      // Fallback fields for legacy compatibility
-      primaryCopy: z.string().optional(),
-      alternateCopy: z.string().optional(),
-      hashtags: z.array(z.string()).optional(),
-      cta: z.string().optional(),
-      notes: z.array(z.string()).optional(),
+      fields: z.record(z.string(), z.string()),
+      strategicAlignment: z.object({
+        anchorsUsed: z.array(z.string()).optional(),
+        triggersAddressed: z.array(z.string()).optional(),
+        reasoning: z.string().optional(),
+      }).optional(),
     })
   ),
 });
@@ -319,15 +318,19 @@ ${selectedPairs}
 
 3. **Respect all constraints.** Obey platform tone, length, hashtag policy, and technical specifications exactly. Honor all company banned phrases. Make copy specific and concrete—no generic hype.
 
-4. **Match output fields precisely.** For each format, populate the "fields" object with keys that match the "Output fields" listed for that format above. Use specific keys like "Video_Title", "SEO_Description", "Hook", etc. exactly as requested. Do not use generic keys like "primaryCopy" UNLESS they are explicitly listed in the "Output fields" for that format.
+4. **Match output fields precisely.** For each format, populate the "fields" object with keys that match the "Output fields" listed for that format above. Use specific keys like "Video_Title", "SEO_Description", "Hook", etc. exactly as requested. **EVERY piece of content—including the main copy, hashtags, CTAs, and notes—MUST be placed inside this "fields" object.** Do not invent root-level properties.
 
-5. **Produce all requested outputs.** Generate exactly ${options.selectedFormats.length} outputs, one per selected format id above, in the order specified. Do not skip any. If context feels sparse, still produce best-effort compliant copy rather than omitting an output.
+5. **Standardized Keys for Support Elements.** If a format requires hashtags, a CTA, or notes, use the keys "HASHTAGS", "CTA", and "NOTES" respectively within the "fields" object.
 
-6. **Front-load hooks and structure for platform best practices.** Lead with attention, benefit, or insight appropriate to each platform. Place CTAs where platform norms expect them.
+6. **Produce all requested outputs.** Generate exactly ${options.selectedFormats.length} outputs, one per selected format id above, in the order specified. Do not skip any. If context feels sparse, still produce best-effort compliant copy rather than omitting an output.
 
-7. **Include hashtags only when platform guidance permits.** Skip them if the platform rules indicate they don't fit the format.
+7. **Strategic Mapping.** For each output, populate the "strategicAlignment" object. List which specific "Anchors" and "Triggers" from the profile above you used to write that variant. Add a brief "reasoning" (1 sentence) explaining why this copy resonates with the persona.
 
-8. **Match the language of the user's message.** All generated text—including captions, scripts, titles, and especially the "notes" field—must be in the same language as the user's core message. Do not mix languages.`;
+8. **Front-load hooks and structure for platform best practices.** Lead with attention, benefit, or insight appropriate to each platform. Place CTAs where platform norms expect them.
+
+9. **Include hashtags only when platform guidance permits.** Skip them if the platform rules indicate they don't fit the format.
+
+10. **Match the language of the user's message.** All generated text—including captions, scripts, titles, "notes", and "strategicAlignment.reasoning"—must be in the same language as the user's core message. Do not mix languages.`;
 }
 
 export async function GET() {

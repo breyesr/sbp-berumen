@@ -21,14 +21,13 @@
     ]
   },
   "required_generation_elements": [
-    "Video_Title_Optional",
-    "Caption",
-    "Hashtags",
-    "Tagged_Accounts",
-    "Clear verbal hook in the first seconds",
-    "Subtitles for accessibility and retention",
-    "Explicit business takeaway",
-    "At least one CTA"
+    "TITLE",
+    "CAPTION",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "HOOK",
+    "EXPLICIT_BUSINESS_TAKEAWAY",
+    "CTA"
   ],
   "hard_constraints": [
     "Starting with long personal intros",

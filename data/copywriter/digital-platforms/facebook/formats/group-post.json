@@ -16,13 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Caption",
-    "Poll_Options_Optional",
-    "Media_Optional",
-    "Tagged_Accounts_Optional",
-    "Clear question, prompt, or scenario",
-    "Community-relevant context",
-    "Explicit invitation to comment or participate"
+    "CAPTION",
+    "POLL_OPTIONS_OPTIONAL",
+    "MEDIA_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_QUESTION_PROMPT_OR_SCENARIO",
+    "COMMUNITY_RELEVANT_CONTEXT",
+    "EXPLICIT_INVITATION_TO_COMMENT_OR_PARTICIPATE"
   ],
   "hard_constraints": [
     "Brand-style announcements with no invitation to engage",

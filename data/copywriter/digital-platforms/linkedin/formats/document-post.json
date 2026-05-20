@@ -16,14 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Document_Title",
-    "Caption",
-    "Hashtags",
-    "Tagged_Accounts",
-    "Clear document promise on first slide",
-    "Logical internal structure",
-    "Caption that explains who this is for",
-    "Save/share-oriented CTA"
+    "TITLE",
+    "CAPTION",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_DOCUMENT_PROMISE_ON_FIRST_SLIDE",
+    "LOGICAL_INTERNAL_STRUCTURE",
+    "CTA"
   ],
   "hard_constraints": [
     "Overloaded slides with dense text",
