@@ -279,6 +279,7 @@ export function LinearCopywriterClient({
                                 setPersonaType={setPersonaType}
                                 onContinue={handleContinueToStrategy}
                                 onViewDossier={handleViewDossier}
+                                confirmTitleKey="copywriter.persona.confirm_title"
                             />
                         </motion.div>
                     )}
