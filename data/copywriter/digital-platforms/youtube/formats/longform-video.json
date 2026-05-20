@@ -19,12 +19,12 @@
     ]
   },
   "required_generation_elements": [
-    "Video_Title",
-    "Spoken_Hook_Script",
-    "SEO_Description",
-    "Timestamps",
-    "Pinned_Comment_CTA",
-    "Thumbnail_Concept_Text"
+    "TITLE",
+    "HOOK",
+    "SEO_DESCRIPTION",
+    "TIMESTAMPS",
+    "CTA",
+    "THUMBNAIL_CONCEPT_TEXT"
   ],
   "hard_constraints": [
     "NEVER generate vague or curiosity-only titles lacking a clear outcome.",

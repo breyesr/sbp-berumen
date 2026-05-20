@@ -100,7 +100,7 @@
 - [x] **Task 23.3**: **Collapsible Command Sidebar**: Implement a slim, collapsible sidebar with icon-only and expanded modes. [DONE]
 - [ ] **Task 23.4**: **Intelligence Bar**: Build a global context bar showing active persona and market metadata.
 - [x] **Task 23.5**: **Linear Paginated Flow**: Refactor Stress Test UI to a horizontal 5-step paginated wizard (1-5), replacing the collapsible and matrix flows for better cognitive pacing. [DONE]
-- [ ] **Task 23.6**: **Side-by-Side Copywriter**: Redesign Copywriter UI for a dual-pane editor/preview workspace.
+- [x] **Task 23.6**: **Side-by-Side Copywriter**: Redesign Copywriter UI for a dual-pane editor/preview workspace. [DONE]
 - [ ] **Task 23.7**: **Theme Engine**: Implement high-fidelity "Warm Alabaster" and "IntelAgent Black" theme switching.
 
 ## Epic 24: Copywriter 2.0 - Platform-Native Intelligence (High Priority) [DONE]

@@ -16,14 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Playlist_Title",
-    "Playlist_Description",
-    "Recommended_Ordering_Notes_Optional",
-    "Hashtags_Optional",
-    "Playlist title with clear topic or outcome",
-    "Description that explains what the playlist is for",
-    "Logical order of included videos",
-    "CTA to save or bookmark the playlist"
+    "TITLE",
+    "PLAYLIST_DESCRIPTION",
+    "RECOMMENDED_ORDERING_NOTES_OPTIONAL",
+    "HASHTAGS_OPTIONAL",
+    "DESCRIPTION_THAT_EXPLAINS_WHAT_THE_PLAYLIST_IS_FOR",
+    "LOGICAL_ORDER_OF_INCLUDED_VIDEOS",
+    "CTA"
   ],
   "hard_constraints": [
     "Vague playlist titles like Misc or Other",

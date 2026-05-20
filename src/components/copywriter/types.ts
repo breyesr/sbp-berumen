@@ -13,12 +13,12 @@ export const OutputSchema = z.object({
       platformName: z.string(),
       formatId: z.string(),
       formatName: z.string(),
-      fields: z.record(z.string(), z.string()).optional(),
-      primaryCopy: z.string().optional(),
-      alternateCopy: z.string().optional(),
-      hashtags: z.array(z.string()).optional(),
-      cta: z.string().optional(),
-      notes: z.array(z.string()).optional(),
+      fields: z.record(z.string(), z.string()),
+      strategicAlignment: z.object({
+        anchorsUsed: z.array(z.string()).optional(),
+        triggersAddressed: z.array(z.string()).optional(),
+        reasoning: z.string().optional(),
+      }).optional(),
     })
   ),
 });
@@ -58,10 +58,10 @@ export type CopyOutput = {
   platformName: string;
   formatId: string;
   formatName: string;
-  fields?: Record<string, string>;
-  primaryCopy?: string;
-  alternateCopy?: string;
-  hashtags?: string[];
-  cta?: string;
-  notes?: string[];
+  fields: Record<string, string>;
+  strategicAlignment?: {
+    anchorsUsed?: string[];
+    triggersAddressed?: string[];
+    reasoning?: string;
+  };
 };

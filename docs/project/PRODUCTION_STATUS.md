@@ -5,6 +5,12 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Production Release Epic 20/21)**
 
 ## Latest Deployments
+- **Copywriter 2.0 & Linear UI (May 19, 2026)**:
+    - **Linear UI Prototype**: Deployed high-fidelity, 4-step wizard at `/copywriter/linear` matching the Stress Test aesthetic.
+    - **Intelligence Engine 2.0**: Full migration to dynamic, directive-based architecture with "What? So What? Now What?" persuasion logic.
+    - **Stability Architecture**: Implemented "Zero-Jump" masonry grid with pre-allocated slots to eliminate layout shifting during streaming.
+    - **Strategic Grounding**: Enforced usage of Persona Anchors, Triggers, and RAG factual snippets in all outputs.
+    - **Localization**: Full i18n support for strategic notes and specialized field labels (Spanish/English).
 - **Copywriter 2.0 Rollout (May 19, 2026)**:
     - **Intelligence Engine**: Full migration to a dynamic, directive-based architecture.
     - **Platform Fidelity**: AI now generates specialized fields (SEO Descriptions, Video Hooks, Visual Directions) across 33 formats.

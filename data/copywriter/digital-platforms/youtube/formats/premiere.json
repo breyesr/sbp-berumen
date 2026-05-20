@@ -20,16 +20,15 @@
     ]
   },
   "required_generation_elements": [
-    "Video_Title",
-    "Description",
-    "Premiere_DateTime",
-    "Hashtags",
-    "Tagged_Accounts_Optional",
-    "Thumbnail_Text",
-    "Benefit-driven title and thumbnail",
-    "Clear premiere date and time in description",
-    "Main CTA to set a reminder and attend live",
-    "Description that clarifies what is special about the premiere"
+    "TITLE",
+    "DESCRIPTION",
+    "PREMIERE_DATETIME",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "THUMBNAIL_TEXT",
+    "CLEAR_PREMIERE_DATE_AND_TIME_IN_DESCRIPTION",
+    "CTA",
+    "DESCRIPTION_THAT_CLARIFIES_WHAT_IS_SPECIAL_ABOUT_THE_PREMIERE"
   ],
   "hard_constraints": [
     "Scheduling premieres with vague or generic titles",

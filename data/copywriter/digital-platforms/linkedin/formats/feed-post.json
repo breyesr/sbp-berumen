@@ -16,13 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Caption",
-    "Hashtags",
-    "Tagged_Accounts",
-    "Link_Optional",
-    "Clear insight or question in the first two lines",
-    "Business relevance or takeaway",
-    "At least one direct CTA"
+    "CAPTION",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "LINK_OPTIONAL",
+    "HOOK",
+    "BODY",
+    "CTA"
   ],
   "hard_constraints": [
     "Vague inspirational quotes with no business context",

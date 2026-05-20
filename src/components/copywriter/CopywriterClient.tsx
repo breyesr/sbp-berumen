@@ -209,13 +209,6 @@ export function CopywriterClient({
                 lines.push(``);
             });
           }
-
-          if (o.cta) lines.push(`${t("copywriter.output.cta")}: ${o.cta}`);
-          if (o.hashtags?.length) lines.push(`${t("copywriter.output.hashtags")}: ${o.hashtags.join(" ")}`);
-          if (o.notes?.length) {
-            lines.push(`${t("copywriter.output.notes")}:`);
-            o.notes.forEach((n) => lines.push(`- ${n}`));
-          }
           lines.push(``);
         });
         const blob = new Blob([lines.join("\n")], { type: "text/plain" });
@@ -283,7 +276,7 @@ export function CopywriterClient({
                     <div ref={inputRef} className="relative z-30">
                         <CollapsibleStep
                             stepNumber={2}
-                            title={t("copywriter.step.input")}
+                            title={t("copywriter.step.channels")}
                             isExpanded={currentStep === 'input'}
                             isCompleted={completedSteps.includes('input')}
                             summary={completedSteps.includes('input') ? `${selectedPlatforms.length} platforms | ${selectedFormats.length} formats` : undefined}
@@ -342,6 +335,8 @@ export function CopywriterClient({
                                     <ResultSection
                                         outputs={outputs}
                                         loading={loading}
+                                        selectedFormats={selectedFormats}
+                                        platforms={platforms}
                                     />
                                     
                                     {!loading && (

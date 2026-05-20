@@ -20,15 +20,14 @@
     ]
   },
   "required_generation_elements": [
-    "Live_Title",
-    "Live_Description",
-    "Pinned_Comment_Text",
-    "Hashtags_For_Announcement",
-    "Tagged_Accounts",
-    "Clear Live title and topic",
-    "Single primary CTA repeated during the session",
-    "Active interaction with chat",
-    "Opening hook that explains what viewers gain by staying"
+    "TITLE",
+    "LIVE_DESCRIPTION",
+    "PINNED_COMMENT_TEXT",
+    "HASHTAGS_FOR_ANNOUNCEMENT",
+    "TAGGED_ACCOUNTS",
+    "CTA",
+    "ACTIVE_INTERACTION_WITH_CHAT",
+    "HOOK"
   ],
   "hard_constraints": [
     "Starting without explaining the topic",

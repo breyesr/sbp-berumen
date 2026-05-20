@@ -15,13 +15,13 @@
     ]
   },
   "required_generation_elements": [
-    "Message_Text",
-    "Attached_Media_Optional",
-    "Poll_Options_Optional",
-    "Tagged_Accounts_Optional",
-    "Clear update or announcement",
-    "Single, focused CTA when applicable",
-    "High relevance to the follower base"
+    "MESSAGE_TEXT",
+    "ATTACHED_MEDIA_OPTIONAL",
+    "POLL_OPTIONS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_UPDATE_OR_ANNOUNCEMENT",
+    "CTA",
+    "HIGH_RELEVANCE_TO_THE_FOLLOWER_BASE"
   ],
   "hard_constraints": [
     "Posting full-length captions from feed posts without adaptation",

@@ -21,13 +21,11 @@
     ]
   },
   "required_generation_elements": [
-    "Onscreen_Text",
-    "Sticker_Type",
-    "Link_Optional",
-    "Tagged_Accounts",
-    "At least one clear visual focus",
-    "One micro-action prompt (sticker or tap behavior)",
-    "Readable on-screen text if used"
+    "ONSCREEN_TEXT",
+    "STICKER_TYPE",
+    "LINK_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "VISUAL"
   ],
   "hard_constraints": [
     "Long paragraph text on screen",

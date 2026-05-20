@@ -16,16 +16,16 @@
     ]
   },
   "required_generation_elements": [
-    "Event_Name",
-    "Event_Description",
-    "Location_Or_Link",
-    "Date_Time_Block",
-    "Hashtags_Optional",
-    "Tagged_Accounts",
-    "Clear event name",
-    "Date, time, and format (online/in-person/hybrid)",
-    "Description of what will happen and value for attendees",
-    "Primary CTA (Interested/Going/Register)"
+    "EVENT_NAME",
+    "EVENT_DESCRIPTION",
+    "LOCATION_OR_LINK",
+    "DATE_TIME_BLOCK",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_EVENT_NAME",
+    "DATE_TIME_AND_FORMAT_ONLINE_IN_PERSON_HYBRID_",
+    "DESCRIPTION_OF_WHAT_WILL_HAPPEN_AND_VALUE_FOR_ATTENDEES",
+    "CTA"
   ],
   "hard_constraints": [
     "Vague or generic event titles",

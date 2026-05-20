@@ -16,13 +16,13 @@
     ]
   },
   "required_generation_elements": [
-    "Caption",
-    "Hashtags_Optional",
-    "Tagged_Accounts",
-    "Link_Optional",
-    "Hook before the 'see more' cut",
-    "At least one participation-driven CTA",
-    "Clear narrative or conversational angle"
+    "CAPTION",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "LINK_OPTIONAL",
+    "HOOK",
+    "CTA",
+    "CLEAR_NARRATIVE_OR_CONVERSATIONAL_ANGLE"
   ],
   "hard_constraints": [
     "Overly promotional or ad-like language",

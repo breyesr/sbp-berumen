@@ -16,16 +16,15 @@
     ]
   },
   "required_generation_elements": [
-    "Event_Title",
-    "Event_Description",
-    "Agenda_Bullets",
-    "Speakers_List",
-    "Hashtags_Optional",
-    "Tagged_Accounts",
-    "Benefit-driven event title",
-    "Clear explanation of topic and audience",
-    "Time, date, and format details",
-    "Primary CTA (Attend/Notify/Register)"
+    "TITLE",
+    "EVENT_DESCRIPTION",
+    "AGENDA_BULLETS",
+    "SPEAKERS_LIST",
+    "HASHTAGS_OPTIONAL",
+    "TAGGED_ACCOUNTS",
+    "CLEAR_EXPLANATION_OF_TOPIC_AND_AUDIENCE",
+    "TIME_DATE_AND_FORMAT_DETAILS",
+    "CTA"
   ],
   "hard_constraints": [
     "Vague event titles with no clear topic",

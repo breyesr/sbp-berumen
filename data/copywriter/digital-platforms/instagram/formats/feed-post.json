@@ -16,12 +16,12 @@
     ]
   },
   "required_generation_elements": [
-    "Caption",
-    "Hashtags",
-    "Tagged_Accounts",
-    "Hook in the first line of the caption",
-    "At least one clear CTA",
-    "Visual that clearly communicates the main idea"
+    "CAPTION",
+    "HASHTAGS",
+    "TAGGED_ACCOUNTS",
+    "HOOK",
+    "CTA",
+    "VISUAL"
   ],
   "hard_constraints": [
     "Keyword-stuffed hashtags",
