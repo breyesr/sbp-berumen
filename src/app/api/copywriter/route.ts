@@ -203,6 +203,7 @@ function buildPrompt(options: {
   personaContext?: string;
   anchors?: string[];
   triggers?: { label: string; description: string }[];
+  knowledge?: string[];
   messageContext?: string;
   message: string;
   goal: string;
@@ -257,56 +258,76 @@ Format: ${f.name} (${f.id}) on ${f.platform_id}
     .join("\n\n");
 
   const anchorsText = options.anchors?.length 
-    ? `### PERSONA ANCHORS (USE AT LEAST TWO)\n- ${options.anchors.join("\n- ")}`
+    ? `### TARGET AUDIENCE ANCHORS (USE AT LEAST TWO)\n- ${options.anchors.join("\n- ")}`
     : "";
 
   const triggersText = options.triggers?.length
-    ? `### DECISION TRIGGERS (ADDRESS AT LEAST ONE)\n${options.triggers.map(t => `- **${t.label}:** ${t.description}`).join("\n")}`
+    ? `### TARGET AUDIENCE TRIGGERS (ADDRESS AT LEAST ONE)\n${options.triggers.map(t => `- **${t.label}:** ${t.description}`).join("\n")}`
+    : "";
+
+  const knowledgeText = options.knowledge?.length
+    ? `### AUDIENCE INTELLIGENCE (FACTS & INSIGHTS)\n${options.knowledge.map(k => `- ${k}`).join("\n")}`
     : "";
 
   return `
-You are a senior marketing copywriter. Write platform-native copy that strictly follows the platform and format guidelines, plus company rules.
+You are a senior marketing copywriter crafting platform-native copy that converts. Your task is to write copy for the target audience specified, following all platform guidelines, format requirements, and company rules without exception.
 
-Audience persona:
+**Your Target Audience:**
 ${options.personaName}
-Context: ${options.personaContext ?? "(no extra context)"}
+${options.personaContext ?? "(no extra demographics context)"}
 
-STRATEGIC PSYCHOLOGICAL PROFILE:
-${anchorsText}
+**Strategic Audience Profile — Use this to build resonance:**
 
-${triggersText}
+Audience Anchors (underlying values and philosophy):
+${anchorsText || "n/a"}
 
-Company guidelines (brand voice, banned phrases, CTA norms):
+Audience Triggers (pain points, objections, friction):
+${triggersText || "n/a"}
+
+Audience Intelligence (facts, preferences, technical knowledge):
+${knowledgeText || "n/a"}
+
+**Company Rules:**
+Brand voice, tone, banned phrases, and CTA standards:
 ${JSON.stringify(options.companyGuidelines, null, 2)}
 
-Additional context:
-${options.messageContext || "(none provided)"}
-
-User request (what to say): ${options.message}
-Goal/objective: ${options.goal}
-
-Platform guidelines:
+**Platform & Format Rules:**
 ${platformDetails}
 
-Format guidelines:
 ${formatDetails}
 
-Selected platform-format targets (produce one output for each, in order):
+**Message & Context:**
+Core message to communicate:
+${options.message}
+
+Conversion or awareness goal:
+${options.goal}
+
+Additional background context:
+${options.messageContext || "(none provided)"}
+
+**Platforms & Formats to Create (produce one output for each, in this order):**
 ${selectedPairs}
 
-Instructions:
-- Obey platform and format constraints (tone, length, hashtag policy, technical notes).
-- STRATEGIC REQUIREMENT: You MUST weave at least TWO 'Anchors' and ONE 'Trigger' from the psychological profile into the copy naturally.
-- Honor company banned phrases; do not include them.
-- Make copy specific; avoid generic hype.
-- For each format, populate the "fields" object with keys that match the "Output fields" listed for that format above. 
-- Do NOT use generic keys like "primaryCopy" UNLESS they are explicitly listed in the "Output fields" for that format.
-- Use specific keys like "Video_Title", "SEO_Description", "Hook", etc. exactly as requested.
-- Return exactly ${options.selectedFormats.length} outputs, one per selected format id above, in the same order. Do not skip any.
-- If information feels sparse, still produce best-effort compliant copy rather than omitting the output.
-- Provide outputs only for the selected platform-format pairs.
-- Include hashtags only if they fit the platform guidance.
-- Be concise; front-load hooks per platform best practices.`;
+---
+
+**Your Instructions:**
+
+1. **Lead with the promise.** Start every piece with "what's in it for this audience"—the big benefit or insight they need to hear first. Use **What? So What? Now What?** structure: establish the opportunity (What?), explain why it matters to this specific persona (So What?), then guide toward action (Now What?).
+
+2. **Tailor for resonant logic.** Make the copy feel built by someone who truly understands their world. Translate the Audience Anchors into language and logic that feels personally relevant to this reader—don't quote them verbatim. Use the Audience Triggers (pain points) to address their real friction and objections. Ground arguments in the Audience Intelligence facts to build credibility.
+
+3. **Respect all constraints.** Obey platform tone, length, hashtag policy, and technical specifications exactly. Honor all company banned phrases. Make copy specific and concrete—no generic hype.
+
+4. **Match output fields precisely.** For each format, populate the "fields" object with keys that match the "Output fields" listed for that format above. Use specific keys like "Video_Title", "SEO_Description", "Hook", etc. exactly as requested. Do not use generic keys like "primaryCopy" UNLESS they are explicitly listed in the "Output fields" for that format.
+
+5. **Produce all requested outputs.** Generate exactly ${options.selectedFormats.length} outputs, one per selected format id above, in the order specified. Do not skip any. If context feels sparse, still produce best-effort compliant copy rather than omitting an output.
+
+6. **Front-load hooks and structure for platform best practices.** Lead with attention, benefit, or insight appropriate to each platform. Place CTAs where platform norms expect them.
+
+7. **Include hashtags only when platform guidance permits.** Skip them if the platform rules indicate they don't fit the format.
+
+8. **Match the language of the user's message.** All generated text—including captions, scripts, titles, and especially the "notes" field—must be in the same language as the user's core message. Do not mix languages.`;
 }
 
 export async function GET() {
@@ -387,6 +408,7 @@ export async function POST(req: Request) {
       personaContext: persona.context,
       anchors: persona.anchors,
       triggers: persona.triggers,
+      knowledge: persona.knowledge,
       message,
       messageContext: context,
       goal,
