@@ -1,7 +1,7 @@
 {
   "id": "youtube_longform_video",
   "platform_id": "youtube",
-  "name": "YouTube Longform Video",
+  "name": "Longform Video",
   "content_type_group": "longform_video",
   "strategic_objective": "Evergreen discovery, education, and authority building via search intent.",
   "system_directives": {

@@ -1,7 +1,7 @@
 {
   "id": "linkedin_feed_post",
   "platform_id": "linkedin",
-  "name": "LinkedIn Feed Post",
+  "name": "Feed Post",
   "content_type_group": "feed",
   "strategic_objective": "Thought leadership, industry credibility, conversation, and professional visibility.",
   "system_directives": {

@@ -1,7 +1,7 @@
 {
   "id": "facebook_group_post",
   "platform_id": "facebook",
-  "name": "Facebook Group Post",
+  "name": "Group Post",
   "content_type_group": "community_feed",
   "strategic_objective": "Peer-to-peer interaction, community support, and topic-focused discussion inside a group.",
   "system_directives": {

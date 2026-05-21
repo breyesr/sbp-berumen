@@ -1,7 +1,7 @@
 {
   "id": "linkedin_document_post",
   "platform_id": "linkedin",
-  "name": "LinkedIn Document Post",
+  "name": "Document Post",
   "content_type_group": "document_carousel",
   "strategic_objective": "Deep education, frameworks, playbooks, and structured professional knowledge sharing.",
   "system_directives": {

@@ -1,7 +1,7 @@
 {
   "id": "youtube_short",
   "platform_id": "youtube",
-  "name": "YouTube Short",
+  "name": "Short",
   "content_type_group": "short_video",
   "strategic_objective": "Fast discovery, reach expansion, and top-of-funnel growth through short-form vertical video.",
   "system_directives": {

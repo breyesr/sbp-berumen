@@ -1,7 +1,7 @@
 {
   "id": "linkedin_longform",
   "platform_id": "linkedin",
-  "name": "LinkedIn Longform (Articles & Newsletters)",
+  "name": "Longform (Articles & Newsletters)",
   "content_type_group": "longform",
   "strategic_objective": "Deep expertise, thought leadership, and long-form storytelling that goes beyond a single feed post.",
   "system_directives": {

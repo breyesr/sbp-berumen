@@ -229,21 +229,19 @@ export function ResultSection({ outputs, loading, selectedFormats, platforms }: 
   const { t } = useI18n();
 
   // STABILIZATION: Create a fixed map of all variants the user EXPECTS to see
+  // This map follows the natural order of platforms and formats defined in the data
   const intentMap = useMemo(() => {
-    const allPossibleFormats = platforms.flatMap(p => p.formats.map(f => ({ ...f, platformName: p.name })));
-    return selectedFormats.map(fid => {
-        const details = allPossibleFormats.find(f => f.id === fid);
-        return {
-            id: fid,
-            name: details?.name || fid,
-            platformId: details?.platform_id || "",
-            platformName: details?.platformName || ""
-        };
-    }).sort((a, b) => {
-        const pComp = (a.platformName || "").localeCompare(b.platformName || "");
-        if (pComp !== 0) return pComp;
-        return (a.name || "").localeCompare(b.name || "");
-    });
+    const allFormatsInDataOrder = platforms.flatMap(p => 
+      p.formats.map(f => ({
+        id: f.id,
+        name: f.name,
+        platformId: p.id,
+        platformName: p.name
+      }))
+    );
+
+    // Only include formats that the user actually selected, preserving their data-defined order
+    return allFormatsInDataOrder.filter(f => selectedFormats.includes(f.id));
   }, [selectedFormats, platforms]);
 
   // COLUMN ALLOCATION: Assign each INTENDED slot to a fixed column

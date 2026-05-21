@@ -1,7 +1,7 @@
 {
   "id": "facebook_story",
   "platform_id": "facebook",
-  "name": "Facebook Story",
+  "name": "Story",
   "content_type_group": "story",
   "strategic_objective": "Daily presence, quick touchpoints, behind-the-scenes access, and low-friction interaction.",
   "system_directives": {
