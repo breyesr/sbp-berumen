@@ -1,5 +1,8 @@
 // src/components/stress-test/types.ts
 import { z } from "zod";
+import { PersonaOption } from "@/lib/types/shared";
+
+export { type PersonaOption };
 
 export const SimulationResultSchema = z.object({
   personaReaction: z.string(),
@@ -49,15 +52,6 @@ export type ChallengeLevelOption = {
     name: string;
     detail: string;
     intensity: number;
-};
-
-export type PersonaOption = {
-    id: string | number;
-    name: string;
-    cluster?: string;
-    has_rag?: boolean;
-    is_active?: boolean;
-    photo_url?: string;
 };
 
 export const FIELD_LIMITS = {

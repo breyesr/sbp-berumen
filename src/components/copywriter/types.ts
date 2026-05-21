@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { PersonaOption } from "@/lib/types/shared";
+
+export { type PersonaOption };
 
 export const FIELD_LIMITS = {
   context: { min: 10, max: 600 },
@@ -22,15 +25,6 @@ export const OutputSchema = z.object({
     })
   ),
 });
-
-export type PersonaOption = { 
-  id: string | number; 
-  name: string; 
-  role?: string; 
-  cluster?: string; 
-  has_rag?: boolean;
-  photo_url?: string;
-};
 
 export type Platform = {
   id: string;

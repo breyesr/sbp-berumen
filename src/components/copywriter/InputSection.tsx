@@ -6,6 +6,7 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 import { Platform, Format, FIELD_LIMITS } from "./types";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { FieldTooltip } from "@/components/ui/FieldTooltip";
 
 interface InputSectionProps {
   context: string;
@@ -26,41 +27,6 @@ interface InputSectionProps {
   onSubmit: () => void;
   selectedPersonaName: string;
   hideStrategicInputs?: boolean;
-}
-
-interface FieldTooltipProps {
-  title: string;
-  expectation: string;
-  mechanism: string;
-  example: string;
-}
-
-function FieldTooltip({ title, expectation, mechanism, example }: FieldTooltipProps) {
-  const { t } = useI18n();
-  return (
-    <div className="p-5 rounded-2xl glass border border-white/10 space-y-4 max-w-xs shadow-2xl">
-      <div className="flex items-center gap-2 text-indigo-400">
-        <Info className="w-4 h-4" />
-        <h5 className="text-xs font-bold uppercase tracking-wider">{title}</h5>
-      </div>
-      <div className="space-y-3">
-        <div>
-          <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">{t("stress.tooltip.expectation")}</p>
-          <p className="text-xs text-white/80 leading-relaxed">{expectation}</p>
-        </div>
-        <div>
-          <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">{t("stress.tooltip.mechanism")}</p>
-          <p className="text-xs text-white/80 leading-relaxed">{mechanism}</p>
-        </div>
-        <div>
-          <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">{t("stress.tooltip.example")}</p>
-          <ul className="list-disc pl-4 text-xs text-indigo-300/90 space-y-1">
-            {example.split('|').map((item, i) => <li key={i}>{item.trim()}</li>)}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export function InputSection({

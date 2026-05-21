@@ -1,11 +1,14 @@
 "use client";
 
-import { Sparkles, Info, Loader2 } from 'lucide-react';
+import { Sparkles, Loader2, User, Target, Zap, Info } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { FIELD_LIMITS } from "./types";
+import { usePersonaDossier } from "@/lib/hooks/usePersonaDossier";
+import { FIELD_LIMITS, PersonaOption } from "./types";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { FieldTooltip } from "@/components/ui/FieldTooltip";
+import { PersonaSidebar } from "@/components/ui/PersonaSidebar";
 
 interface IdeaSectionProps {
   idea: string;
@@ -16,42 +19,9 @@ interface IdeaSectionProps {
   setEvaluationFocus: (val: string) => void;
   loading: boolean;
   onSubmit: () => void;
-  selectedPersonaName: string;
-}
-
-interface FieldTooltipProps {
-  title: string;
-  expectation: string;
-  mechanism: string;
-  example: string;
-}
-
-function FieldTooltip({ title, expectation, mechanism, example }: FieldTooltipProps) {
-  const { t } = useI18n();
-  return (
-    <div className="p-5 rounded-2xl glass border border-white/10 space-y-4 max-w-xs shadow-2xl">
-      <div className="flex items-center gap-2 text-indigo-400">
-        <Info className="w-4 h-4" />
-        <h5 className="text-xs font-bold uppercase tracking-wider">{title}</h5>
-      </div>
-      <div className="space-y-3">
-        <div>
-          <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">{t("stress.tooltip.expectation")}</p>
-          <p className="text-xs text-white/80 leading-relaxed">{expectation}</p>
-        </div>
-        <div>
-          <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">{t("stress.tooltip.mechanism")}</p>
-          <p className="text-xs text-white/80 leading-relaxed">{mechanism}</p>
-        </div>
-        <div>
-          <p className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">{t("stress.tooltip.example")}</p>
-          <ul className="list-disc pl-4 text-xs text-indigo-300/90 space-y-1">
-            {example.split('|').map((item, i) => <li key={i}>{item.trim()}</li>)}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
+  personaId: string;
+  personas: PersonaOption[];
+  isMainColumnOnly?: boolean;
 }
 
 export function IdeaSection({
@@ -63,9 +33,12 @@ export function IdeaSection({
   setEvaluationFocus,
   loading,
   onSubmit,
-  selectedPersonaName,
+  personaId,
+  personas,
+  isMainColumnOnly = false,
 }: IdeaSectionProps) {
   const { t } = useI18n();
+  const { dossier, isLoading: dossierLoading } = usePersonaDossier(personaId);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   const isFormValid = idea.trim().length >= FIELD_LIMITS.idea.min &&
@@ -74,6 +47,11 @@ export function IdeaSection({
                       goal.trim().length <= FIELD_LIMITS.goal.max &&
                       evaluationFocus.trim().length >= FIELD_LIMITS.evaluationFocus.min &&
                       evaluationFocus.trim().length <= FIELD_LIMITS.evaluationFocus.max;
+
+  const basicPersona = personas?.find(p => p.id === personaId || p.id.toString() === personaId.toString());
+  const nameParts = basicPersona?.name?.split(' — ') || ["Unknown Persona", "Role"];
+  const personaName = nameParts[0];
+  const personaRole = nameParts[1] || "Decisor";
 
   const tooltips = {
     idea: {
@@ -96,34 +74,34 @@ export function IdeaSection({
     }
   };
 
-  return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="space-y-6">
+  const metadata = dossier?.metadata || {};
+
+  const FormContent = (
+    <div className="space-y-6">
         {/* Pitch Field */}
         <div className="relative">
-          <div className="flex justify-between items-center mb-3">
-            <div className="flex items-center gap-2">
-              <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
-                {t("stress.field.idea")}
-              </label>
-              <button 
-                onClick={() => setActiveTooltip(activeTooltip === 'idea' ? null : 'idea')}
-                className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
-              >
-                <Info className="w-3.5 h-3.5" />
-              </button>
+          <div className="flex items-center gap-2 mb-3 relative group">
+            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+              {t("stress.field.idea")}
+            </label>
+            <div 
+                className="cursor-help"
+                onMouseEnter={() => setActiveTooltip('idea')}
+                onMouseLeave={() => setActiveTooltip(null)}
+            >
+                <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
             </div>
             <AnimatePresence>
-              {activeTooltip === 'idea' && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                  className="absolute z-50 right-0 bottom-full mb-2"
-                >
-                  <FieldTooltip {...tooltips.idea} />
-                </motion.div>
-              )}
+                {activeTooltip === 'idea' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute left-[150px] top-0 z-50 pointer-events-none"
+                    >
+                        <FieldTooltip {...tooltips.idea} />
+                    </motion.div>
+                )}
             </AnimatePresence>
           </div>
           <textarea
@@ -131,7 +109,7 @@ export function IdeaSection({
             onChange={(e) => setIdea(e.target.value)}
             placeholder={t("stress.placeholder.idea")}
             rows={8}
-            className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+            className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
           />
           <span className={clsx(
             "block text-[10px] font-bold text-right mt-2 tracking-widest",
@@ -143,29 +121,28 @@ export function IdeaSection({
 
         {/* Goal Field */}
         <div className="relative">
-          <div className="flex justify-between items-center mb-3">
-            <div className="flex items-center gap-2">
-              <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
-                {t("stress.field.goal")}
-              </label>
-              <button 
-                onClick={() => setActiveTooltip(activeTooltip === 'goal' ? null : 'goal')}
-                className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
-              >
-                <Info className="w-3.5 h-3.5" />
-              </button>
+          <div className="flex items-center gap-2 mb-3 relative group">
+            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+              {t("stress.field.goal")}
+            </label>
+            <div 
+                className="cursor-help"
+                onMouseEnter={() => setActiveTooltip('goal')}
+                onMouseLeave={() => setActiveTooltip(null)}
+            >
+                <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
             </div>
             <AnimatePresence>
-              {activeTooltip === 'goal' && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                  className="absolute z-50 right-0 bottom-full mb-2"
-                >
-                  <FieldTooltip {...tooltips.goal} />
-                </motion.div>
-              )}
+                {activeTooltip === 'goal' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute left-[180px] top-0 z-50 pointer-events-none"
+                    >
+                        <FieldTooltip {...tooltips.goal} />
+                    </motion.div>
+                )}
             </AnimatePresence>
           </div>
           <textarea
@@ -173,7 +150,7 @@ export function IdeaSection({
             onChange={(e) => setGoal(e.target.value)}
             placeholder={t("stress.placeholder.goal")}
             rows={3}
-            className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+            className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
           />
           <span className={clsx(
             "block text-[10px] font-bold text-right mt-2 tracking-widest",
@@ -185,29 +162,28 @@ export function IdeaSection({
 
         {/* Focus Field */}
         <div className="relative">
-          <div className="flex justify-between items-center mb-3">
-            <div className="flex items-center gap-2">
-              <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
-                {t("stress.field.focus")}
-              </label>
-              <button 
-                onClick={() => setActiveTooltip(activeTooltip === 'focus' ? null : 'focus')}
-                className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
-              >
-                <Info className="w-3.5 h-3.5" />
-              </button>
+          <div className="flex items-center gap-2 mb-3 relative group">
+            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+              {t("stress.field.focus")}
+            </label>
+            <div 
+                className="cursor-help"
+                onMouseEnter={() => setActiveTooltip('focus')}
+                onMouseLeave={() => setActiveTooltip(null)}
+            >
+                <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
             </div>
             <AnimatePresence>
-              {activeTooltip === 'focus' && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                  className="absolute z-50 right-0 bottom-full mb-2"
-                >
-                  <FieldTooltip {...tooltips.focus} />
-                </motion.div>
-              )}
+                {activeTooltip === 'focus' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute left-[180px] bottom-full mb-2 z-50 pointer-events-none"
+                    >
+                        <FieldTooltip {...tooltips.focus} />
+                    </motion.div>
+                )}
             </AnimatePresence>
           </div>
           <div className="relative">
@@ -216,11 +192,11 @@ export function IdeaSection({
               onChange={(e) => setEvaluationFocus(e.target.value)}
               placeholder={t("stress.placeholder.focus")}
               rows={2}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+              className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 pr-14 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
             />
             <button
               type="button"
-              className="absolute right-4 top-4 p-2 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 transition-all group"
+              className="absolute right-4 top-4 p-2.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 transition-all group"
             >
               <Sparkles className="w-4 h-4 text-indigo-400 group-hover:text-indigo-300" />
             </button>
@@ -232,28 +208,47 @@ export function IdeaSection({
             {evaluationFocus.length}/{FIELD_LIMITS.evaluationFocus.max}
           </span>
         </div>
-      </div>
 
-      <div className="pt-6 border-t border-white/5">
-        <button
-          onClick={onSubmit}
-          disabled={!isFormValid || loading}
-          className={clsx(
-            "w-full py-5 px-8 rounded-2xl font-bold text-sm tracking-[0.2em] uppercase transition-all shadow-xl",
-            isFormValid && !loading
-              ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.98]"
-              : "bg-white/5 text-white/20 cursor-not-allowed"
-          )}
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-3">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              {t("stress.strategy.loading")}
-            </span>
-          ) : (
-            t("stress.strategy.execute_with", { name: selectedPersonaName.split(' — ')[0] })
-          )}
-        </button>
+        <div className="pt-4 flex justify-end">
+          <button
+            onClick={onSubmit}
+            disabled={!isFormValid || loading}
+            className={clsx(
+              "py-4 px-10 rounded-2xl font-black text-xs tracking-[0.2em] uppercase transition-all shadow-xl",
+              isFormValid && !loading
+                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.98]"
+                : "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
+            )}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-3">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                {t("stress.strategy.loading")}
+              </span>
+            ) : (
+              t("stress.strategy.analyze_now")
+            )}
+          </button>
+        </div>
+    </div>
+  );
+
+  if (isMainColumnOnly) return FormContent;
+
+  return (
+    <div className="animate-fade-in grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="lg:col-span-2">
+        {FormContent}
+      </div>
+      
+      {/* Right Column: Persistent Context Card */}
+      <div className="lg:col-span-1">
+        <PersonaSidebar
+          persona={basicPersona || null}
+          dossier={dossier}
+          isLoading={dossierLoading}
+          className="sticky top-8"
+        />
       </div>
     </div>
   );

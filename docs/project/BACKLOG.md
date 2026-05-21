@@ -115,23 +115,24 @@
 - [x] **Task 24.5**: **Resonance Framework Refactor**: Refactor the system prompt to use the "Writer -> Audience Resonance" hierarchy, prioritizing strategic translation over literal quoting. [DONE]
 
 
-## Epic 25: Architectural Refactoring & Component Centralization (High Priority)
+## Epic 25: Architectural Refactoring & Component Centralization (High Priority) [DONE]
 **Owner**: Frontend & Lead
 *Goal: Streamline the codebase by abstracting duplicated UI logic, hooks, and types into a centralized design system, ensuring a robust foundation for the "Linear" evolution.*
 
 **Architectural Mandates & Safety Notes (READ BEFORE STARTING):**
-- 🛑 **No Logic "Magic"**: When centralizing `usePersonaDossier` or `useWorkflow`, do NOT add new features. The first pass must be a 1:1 behavioral replica to ensure zero regressions.
-- 🛑 **Avoid "Prop-Drilling" Hell**: If merging `LinearIdeaSection` and `IdeaSection` results in a component with 20+ props, STOP. Use the "Compound Component" pattern or a shared context instead.
-- 🛑 **Protect the "Premium" Feel**: Both features use unique Framer Motion timings. Ensure the centralized `StepWizardLayout` preserves the specific "weighted" feel of the transitions.
-- 🛑 **Intelligence Drift Prevention**: This is the primary goal. Any change to a shared schema (e.g., `PersonaOption`) must be validated against both Stress Test and Copywriter build targets.
+- 🛑 **No Logic "Magic"**: When centralizing `usePersonaDossier` or `useWorkflow`, do NOT add new features. The first pass must be a 1:1 behavioral replica to ensure zero regressions. [DONE]
+- 🛑 **Avoid "Prop-Drilling" Hell**: If merging `LinearIdeaSection` and `IdeaSection` results in a component with 20+ props, STOP. Use the "Compound Component" pattern or a shared context instead. [DONE]
+- 🛑 **Protect the "Premium" Feel**: Both features use unique Framer Motion timings. Ensure the centralized `StepWizardLayout` preserves the specific "weighted" feel of the transitions. [DONE]
+- 🛑 **Intelligence Drift Prevention**: This is the primary goal. Any change to a shared schema (e.g., `PersonaOption`) must be validated against both Stress Test and Copywriter build targets. [DONE]
 
 **Tasks:**
-- [ ] **Task 25.1**: **UI Primitive Centralization**: Move shared components like `FieldTooltip` to `src/components/ui/` and standardize their implementation.
-- [ ] **Task 25.2**: **Logic Abstraction (Hooks)**: Create `usePersonaDossier` and `useWorkflowState` hooks to centralize persona data fetching and wizard navigation logic.
-- [ ] **Task 25.3**: **Layout Standardization**: Develop a `StepWizardLayout` wrapper to unify the 2-column grid and sticky sidebar patterns used in linear flows.
-- [ ] **Task 25.4**: **Type & Schema Unification**: Centralize `PersonaOption`, `FIELD_LIMITS`, and shared Zod schemas into a unified directory (e.g., `src/lib/types.ts` or `src/lib/schemas/`).
-- [ ] **Task 25.5**: **"Mode-based" Component Refactor**: Merge `IdeaSection`/`LinearIdeaSection` and `AnalysisResults`/`LinearAnalysisResults` into single components with a `variant` prop (e.g., `collapsible` | `linear`).
-- [ ] **Task 25.6**: **Utility Centralization**: Move report formatting and export logic to a shared utility helper (e.g., `src/lib/utils/export.ts`).
+- [x] **Task 25.1**: **UI Primitive Centralization**: Move shared components like `FieldTooltip` to `src/components/ui/` and standardize their implementation. [DONE]
+- [x] **Task 25.2**: **Logic Abstraction (Hooks)**: Create `usePersonaDossier` and `useWorkflowState` hooks to centralize persona data fetching and wizard navigation logic. [DONE]
+- [x] **Task 25.3**: **Layout Standardization**: Develop a `StepWizardLayout` wrapper to unify the 2-column grid and sticky sidebar patterns used in linear flows. [DONE]
+- [x] **Task 25.4**: **Type & Schema Unification**: Centralize `PersonaOption`, `FIELD_LIMITS`, and shared Zod schemas into a unified directory (e.g., `src/lib/types.ts` or `src/lib/schemas/`). [DONE]
+- [x] **Task 25.5**: **"Mode-based" Component Refactor**: Merge `IdeaSection`/`LinearIdeaSection` and `AnalysisResults`/`LinearAnalysisResults` into single components with a `variant` prop (e.g., `collapsible` | `linear`). [DONE]
+- [x] **Task 25.6**: **Utility Centralization**: Move report formatting and export logic to a shared utility helper (e.g., `src/lib/utils/export.ts`). [DONE]
+- [x] **Task 25.7**: **Legacy Deprecation**: Remove accordion components and unify routes. [DONE]
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
