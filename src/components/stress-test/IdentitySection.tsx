@@ -17,6 +17,7 @@ interface IdentitySectionProps {
   levels?: ChallengeLevelOption[];
   challengeLevelId?: string;
   setChallengeLevelId?: (id: string) => void;
+  confirmTitleKey?: string;
 }
 
 function CarouselRow({ personas, personaType, onSelect, onViewDossier }: {
@@ -78,6 +79,7 @@ export function IdentitySection({
   levels,
   challengeLevelId,
   setChallengeLevelId,
+  confirmTitleKey = "stress.persona.confirm_title",
 }: IdentitySectionProps) {
   const { t } = useI18n();
   const [selectedCluster, setSelectedCluster] = useState<string>("all");
@@ -242,9 +244,18 @@ export function IdentitySection({
                         </div>
                     )}
                     <div className="text-center space-y-1">
-                        <h3 className="text-xl font-bold tracking-tight text-white leading-snug">
-                            ¿Probar tu idea con<br/>
-                            <span className="text-indigo-400">{confirmPersona.name.split(' — ')[0]}</span>?
+                        <h3 className="text-xl font-bold tracking-tight text-white leading-snug whitespace-pre-line">
+                            {(() => {
+                                const template = t(confirmTitleKey as any);
+                                const parts = template.split('{{name}}');
+                                return (
+                                    <>
+                                        {parts[0]}
+                                        <span className="text-indigo-400">{confirmPersona.name.split(' — ')[0]}</span>
+                                        {parts[1]}
+                                    </>
+                                );
+                            })()}
                         </h3>
                         <p className="text-xs text-zinc-400 mt-2 italic">
                             {confirmPersona.name.split(' — ')[1] || "Decisor"}

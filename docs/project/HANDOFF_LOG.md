@@ -282,3 +282,59 @@ This file serves as a permanent historical record of all development sessions. E
 - **Component Reusability vs. Duplication**: While DRY principles suggest reusing components, when fundamentally shifting UI architectures (Accordion vs. Linear Grid), duplicating components (`Linear*`) is far safer and provides absolute design freedom for A/B testing.
 - **Dual-State UI**: Combining input and output states within a single component (`LinearRefinementPanel`) using boolean toggles provides a significantly smoother user experience than hard router redirects, especially for high-latency AI tasks.
 
+
+---
+
+## [2026-05-18] Production Release: Linear UI & Epic 20/21 Stabilization
+**Team:** System Architect & PM & Backend
+**Accomplishments:**
+- **Merge staging -> main**: Full production deployment of the Linear Intelligence Factory UI (Epic 23.5) and Identity Refactor (Epic 20/21).
+- **Safety Tagging**: Created tag 'production-2026-05-18-epic23' to facilitate instant rollback if needed.
+- **Database Audit**: Verified production database integrity (Neon 'divine-rice') with 18,000+ knowledge chunks across 20 personas.
+- **Schema Parity**: Confirmed architectural alignment between Staging and Production environments.
+- **Documentation**: Updated Backlog, Production Status, and Handoff State to reflect the current baseline.
+**Learnings:**
+- **Environment Drift**: Production data can evolve faster than staging backups; always perform a CSV/SQL audit before assuming environment parity.
+- **Knowledge Persistence**: pg_dump requires explicit flags or verified environments to ensure heavy tables (like 'documents') are fully captured.
+
+---
+
+## [2026-05-19] Copywriter 2.0 Completion & Production Stabilization
+**Team:** System Architect & PM & AI Engineer
+**Accomplishments:**
+- **Epic 24 (Copywriter 2.0)**: Successfully refactored the engine into a platform-native intelligence assistant.
+  - **Dynamic Schema**: Supported specialized fields (Video Titles, SEO, Hooks) via flexible 'fields' map.
+  - **Directives Migration**: Bulk migrated 33 format JSONs to sharp, imperative architecture.
+  - **Strategic Infusion**: Guaranteed persona Anchors/Triggers usage via prompt-level enforcement.
+  - **UX Polish**: Added branding, expansion logic, and atomic copy actions to the results dashboard.
+- **Merge & Tag**: Merged staging to main and created safety tag 'production-2026-05-18-epic23'.
+- **Stability Pass**: Fixed multiple runtime crashes related to streaming data and persona lookup.
+- **Cleanup**: Removed legacy SQL backup files to maintain repository hygiene.
+**Learnings:**
+- **Directives Power**: Transitioning from 'Best Practices' to 'MUST/NEVER' directives significantly increased LLM instruction adherence and output fidelity.
+- **Safety Patterns**: Incremental streaming requires robust fallback patterns (e.g., 'fields || {}') to prevent React hydration or conversion errors.
+
+---
+
+## [2026-05-19] Copywriter 2.0 & Linear UI Finalization
+**Team:** System Architect & UX/UI & AI Engineer
+**Accomplishments:**
+- **Linear UI (Task 23.6)**: Built a paginated production board at '/copywriter/linear' matching the Stress Test 3.0 aesthetic.
+- **Copywriter 2.0**: Implemented "Resonance Framework" and "What? So What? Now What?" logic to shift AI from mimicry to persuasion.
+- **Dynamic Grid**: Engineered a zero-jump masonry layout using pre-allocated slots and manual column allocation for perfectly stable streaming.
+- **Strategic Grounding**: Connected RAG factual snippets to the Copywriter prompt for high-fidelity audience intelligence.
+- **Stability & QoL**: Resolved multiple runtime crashes and fixed auto-scrolling issues during generation.
+**Learnings:**
+- **Zero-Jump Strategy**: Pre-calculating expected slots (intentMap) and rendering skeletons is the only reliable way to prevent layout shifting in masonry-style streaming interfaces.
+- **Translation Strategy**: UI-level translation dictionaries for technical keys are more reliable and performant than asking the LLM to translate labels dynamically.
+
+---
+
+## [2026-05-19] Final UI Polishing & Assets Synchronization
+**Team:** System Architect & UX/UI
+**Accomplishments:**
+- **Contextual UX**: Fixed the persona selection modal in Copywriter to use correct localized titles ("Escribir copy para...").
+- **Asset Sync**: Synchronized updated persona avatar images across feature, staging, and main branches.
+- **Documentation**: Finalized Backlog and Handoff state to reflect 100% completion of Epic 24 and Task 23.6.
+**Learnings:**
+- **Surgical Sync**: Using 'git checkout [branch] -- [path]' is the safest way to sync assets (like images) across production branches without triggering full code merges.

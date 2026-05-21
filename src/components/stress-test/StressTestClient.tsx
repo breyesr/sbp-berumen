@@ -1,18 +1,23 @@
-// src/components/stress-test/StressTestClient.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { Sparkles, Loader2 } from 'lucide-react';
+import { Sparkles, Loader2, ArrowLeft, Download, Info, CheckCircle2 } from 'lucide-react';
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { CollapsibleStep } from "@/components/ui/CollapsibleStep";
+import { usePersonaDossier } from "@/lib/hooks/usePersonaDossier";
+import { useWorkflowState } from "@/lib/hooks/useWorkflowState";
 import { IdentitySection } from "./IdentitySection";
 import { IdeaSection } from "./IdeaSection";
 import { AnalysisResults } from "./AnalysisResults";
 import { RefinementPanel } from "./RefinementPanel";
 import { DebugPanel } from "./DebugPanel";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
+import { StepWizardLayout, StepWizardContainer } from "@/components/layout/StepWizardLayout";
+import { PersonaSidebar } from "@/components/ui/PersonaSidebar";
+import { ScoringBreakdown } from "./ScoringBreakdown";
 import { StressResult, PersonaOption, ChallengeLevelOption, SimulationResultSchema } from "./types";
+import { AnimatePresence, motion } from "framer-motion";
+import { clsx } from "clsx";
 
 interface StressTestClientProps {
     initialPersonas: PersonaOption[];
@@ -30,13 +35,21 @@ export function StressTestClient({
     const { t, formatDate } = useI18n();
     
     // Workflow State
-    const [currentStep, setCurrentStep] = useState<Step>('identity');
-    const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
+    const { 
+        currentStep, 
+        setCurrentStep, 
+        completedSteps, 
+        setCompletedSteps, 
+        goToStep, 
+        completeStep 
+    } = useWorkflowState<Step>('identity');
 
     const [personas] = useState<PersonaOption[]>(initialPersonas);
-    const [personaType, setPersonaType] = useState<string | number>(initialPersonas[0]?.id || "");
+    const [personaType, setPersonaType] = useState<string | number>("");
     const [levels] = useState<ChallengeLevelOption[]>(initialLevels);
-    const [challengeLevelId, setChallengeLevelId] = useState<string>(initialLevels[0]?.id || "");
+    
+    // Hardcode level to Intensity 3 per design decision
+    const challengeLevelId = levels.find(l => l.intensity === 3)?.id || levels[0]?.id || "";
     
     const [idea, setIdea] = useState("");
     const [goal, setGoal] = useState("");
@@ -45,12 +58,6 @@ export function StressTestClient({
     const [error, setError] = useState<string | null>(null);
     const [viewingDossier, setViewingDossier] = useState<any | null>(null);
     const [loadingDossier, setLoadingDossier] = useState(false);
-    
-    // AI SDK Hook for streaming objects
-    const { object, submit, isLoading: loading, error: aiError } = useObject({
-        api: "/api/stress-test",
-        schema: SimulationResultSchema,
-    });
 
     const [refineLoading, setRefineLoading] = useState(false);
     const [refineError, setRefineError] = useState<string | null>(null);
@@ -61,6 +68,9 @@ export function StressTestClient({
     
     const [showDebug, setShowDebug] = useState(false);
     const isFirstChunkRef = useRef(true);
+
+    // Dossier logic centralized in hook
+    const { dossier, isLoading: dossierLoading, fetchDossier } = usePersonaDossier(personaType);
 
     // Refs for scrolling
     const identityRef = useRef<HTMLDivElement>(null);
@@ -75,24 +85,6 @@ export function StressTestClient({
         refinement: refinementRef
     };
 
-    const scrollToStep = (step: Step) => {
-        // Use a longer delay (500ms) to ensure previous step collapse 
-        // and current step expansion animations are nearly complete.
-        setTimeout(() => {
-            const target = stepRefs[step].current;
-            if (target) {
-                // Calculate position relative to the scroll container
-                const yOffset = -20; // Fine-tune this offset for perfect "header at top"
-                const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-                window.scrollTo({
-                    top: y,
-                    behavior: "smooth"
-                });
-            }
-        }, 500);
-    };
-
     useEffect(() => {
         const envEnabled = process.env.NEXT_PUBLIC_STRESS_DEBUG === "1";
         const queryEnabled = typeof window !== "undefined"
@@ -101,17 +93,20 @@ export function StressTestClient({
         setShowDebug(envEnabled && queryEnabled);
     }, []);
 
+    // AI SDK Hook for streaming objects
+    const { object, submit, isLoading: loading, error: aiError } = useObject({
+        api: "/api/stress-test",
+        schema: SimulationResultSchema,
+    });
+
     // Auto-expand results when streaming starts
     useEffect(() => {
         if (object && isFirstChunkRef.current) {
-            setCurrentStep('results');
-            if (!completedSteps.includes('strategy')) {
-                setCompletedSteps(prev => [...prev, 'strategy']);
-            }
+            completeStep('strategy');
+            goToStep('results', true, resultsRef);
             isFirstChunkRef.current = false;
-            scrollToStep('results');
         }
-    }, [object, completedSteps]);
+    }, [object, completeStep, goToStep]);
 
     useEffect(() => {
         if (aiError) {
@@ -119,11 +114,12 @@ export function StressTestClient({
         }
     }, [aiError]);
 
-    const handleContinueToInput = () => {
-        if (personaType && challengeLevelId) {
-            setCompletedSteps(prev => Array.from(new Set([...prev, 'identity'])));
-            setCurrentStep('strategy');
-            scrollToStep('strategy');
+    const handleContinueToInput = (newPersonaId?: string | number) => {
+        const currentId = newPersonaId || personaType;
+        if (currentId && challengeLevelId) {
+            setPersonaType(currentId);
+            completeStep('identity');
+            goToStep('strategy', true, strategyRef);
         }
     };
 
@@ -131,14 +127,8 @@ export function StressTestClient({
         if (loadingDossier) return;
         setLoadingDossier(true);
         try {
-            const res = await fetch(`/api/personas/${encodeURIComponent(id)}`);
-            if (!res.ok) throw new Error("Failed to fetch persona data");
-            const data = await res.json();
-            if (data.persona) {
-                setViewingDossier(data.persona);
-            }
-        } catch (err) {
-            console.error("Dossier fetch failed", err);
+            const persona = await fetchDossier(id);
+            if (persona) setViewingDossier(persona);
         } finally {
             setLoadingDossier(false);
         }
@@ -160,8 +150,6 @@ export function StressTestClient({
             goal: goal.trim(),
             evaluationFocus: evaluationFocus.trim(),
         });
-        
-        // Collapse strategy and expand results will be handled by the useEffect on 'object'
     };
 
     const handleRefine = async (answers?: string[]) => {
@@ -211,18 +199,14 @@ export function StressTestClient({
                 setRefineAnswers(new Array(questions.length).fill(""));
                 setRefinedPitch(null);
                 setRefineChanges([]);
-                setCurrentStep('refinement');
-                scrollToStep('refinement');
+                goToStep('refinement', true, refinementRef);
             } else {
                 setRefineQuestions([]);
                 setRefineAnswers([]);
                 setRefinedPitch(json.refinedPitch ?? "");
                 setRefineChanges(Array.isArray(json.changesSummary) ? json.changesSummary : []);
-                setCurrentStep('refinement');
-                scrollToStep('refinement');
-                if (!completedSteps.includes('refinement')) {
-                    setCompletedSteps(prev => [...prev, 'refinement']);
-                }
+                completeStep('refinement');
+                goToStep('refinement', true, refinementRef);
             }
         } catch (err) {
             const message = err instanceof Error ? err.message : t("stress.error.refine");
@@ -232,44 +216,25 @@ export function StressTestClient({
         }
     };
 
-    const selectedPersonaName = personaLookup[personaType] || t("stress.default_persona");
-    const selectedLevelName = levels.find(l => l.id === challengeLevelId)?.name || "";
-
-    const result: StressResult | null = object ? {
-        ...object as any,
-        persona: selectedPersonaName,
-    } : null;
-
     const handleExport = () => {
         if (!result) return;
-        const date = formatDate(new Date(), { dateStyle: "medium" });
-        const report = `${t("stress.report.analysis_header")} ${result.persona || selectedPersonaName}
-${t("stress.report.generated")}: ${date}
-[ ${t("stress.report.idea_label")} ] ${idea}
+        let content = `ANÁLISIS DE STRESS TEST ESTRATÉGICOn`;
+        content += `Fecha: ${formatDate(new Date())}\n`;
+        content += `Persona: ${result.persona}\n`;
+        content += `Idea Original: ${idea}\n`;
+        content += `Nivel de Reto: ${selectedLevelName}\n\n`;
+        content += `VEREDICTO: ${result.verdict}\n`;
+        content += `CONFIANZA: ${result.confidenceScore}%\n\n`;
+        content += `REACCIÓN DE LA PERSONA:\n${result.personaReaction}\n\n`;
+        content += `FORTALEZAS:\n- ${result.strengths.join('\n- ')}\n\n`;
+        content += `BRECHAS Y RIESGOS:\n- ${result.gaps.join('\n- ')}\n\n`;
+        content += `PLAN DE ACCIÓN:\n- ${result.actionPlan.join('\n- ')}\n`;
 
-========================================
-
-[ ${t("stress.report.verdict_label")} ] ${t("stress.report.confidence_score")}: ${result.confidenceScore}/100 ${t("stress.report.summary")}: ${result.verdict}
-
-[ ${t("stress.report.strengths_label")} ] ${(result.strengths || []).map((s: string) => `+ ${s}`).join('\n')}
-
-[ ${t("stress.report.gaps_label")} ] ${(result.gaps || []).map((g: string) => `- ${g}`).join('\n')}
-
-[ ${t("stress.report.action_plan_label")} ] ${(result.actionPlan || []).map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')}
-
-[ ${t("stress.report.presentation_label")} ] ${result.presentation}
-
-[ ${t("stress.report.followup_label")} ] ${(result.followUpQuestions || []).map((q: string) => `? ${q}`).join('\n')} `;
-
-        const blob = new Blob([report], { type: 'text/plain' });
+        const blob = new Blob([content], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        const safePersona = (selectedPersonaName || "persona")
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/(^-|-$)/g, "");
-        link.download = `stress-test-${safePersona}-${new Date().toISOString().slice(0, 10)}.txt`;
+        link.download = `stress-test-${personaType}-${new Date().getTime()}.txt`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -301,176 +266,289 @@ ${refinedPitch}
         document.body.removeChild(link);
     };
 
-    return (
-        <div className="bg-[#0a0a0a] text-[#ededed] px-6 py-8 md:py-12 min-h-screen selection:bg-indigo-500/30">
-            <div className="max-w-6xl mx-auto space-y-12">
-                <header className="mb-12">
-                    <h1 className="text-4xl font-semibold tracking-tight mb-3">
-                        {t("stress.title")}
-                    </h1>
-                    <p className="text-sm text-[#a1a1aa] max-w-3xl">
-                        {t("stress.subtitle")}
-                    </p>
-                </header>
+    const selectedPersonaName = personaLookup[personaType] || t("stress.default_persona");
+    const selectedLevelName = levels.find(l => l.id === challengeLevelId)?.name || "";
+    const selectedPersona = personas.find(p => p.id === personaType || p.id.toString() === personaType.toString());
 
-                <div className="space-y-0">
-                    {/* Section 1: Identity */}
-                    <div ref={identityRef} className="relative z-40">
-                        <CollapsibleStep
-                            stepNumber={1}
-                            title={t("stress.step.identity")}
-                            isExpanded={currentStep === 'identity'}
-                            isCompleted={completedSteps.includes('identity')}
-                            summary={completedSteps.includes('identity') ? `${t("stress.identity.summary_target")}: ${selectedPersonaName.split(' — ')[0]} | ${selectedLevelName}` : undefined}
-                            onToggle={() => {
-                                setCurrentStep('identity');
-                                scrollToStep('identity');
-                            }}
-                        >
+    const getConfidenceBadgeColor = (score: number) => {
+        if (score === 0) return 'text-gray-400';
+        if (score >= 70) return 'text-green-400';
+        if (score >= 40) return 'text-yellow-400';
+        return 'text-red-400';
+    };
+
+    const result: StressResult | null = object ? {
+        ...object as any,
+        persona: selectedPersonaName,
+    } : null;
+
+    return (
+        <StepWizardContainer>
+            <AnimatePresence mode="wait">
+                {/* Section 1: Identity */}
+                {currentStep === 'identity' && (
+                    <StepWizardLayout stepKey="identity">
+                        <div ref={identityRef}>
                             <IdentitySection
                                 personas={personas}
                                 personaType={personaType}
                                 setPersonaType={setPersonaType}
-                                levels={levels}
-                                challengeLevelId={challengeLevelId}
-                                setChallengeLevelId={setChallengeLevelId}
                                 onContinue={handleContinueToInput}
                                 onViewDossier={handleViewDossier}
                             />
-                        </CollapsibleStep>
-                    </div>
+                        </div>
+                    </StepWizardLayout>
+                )}
 
                     {/* Section 2: Strategy Input */}
-                    <div ref={strategyRef} className="relative z-30">
-                        <CollapsibleStep
-                            stepNumber={2}
-                            title={t("stress.step.strategy")}
-                            isExpanded={currentStep === 'strategy'}
-                            isCompleted={completedSteps.includes('strategy')}
-                            summary={idea ? `Pitch: ${idea.slice(0, 60)}...` : undefined}
-                            disabled={!completedSteps.includes('identity')}
-                            onToggle={() => {
-                                setCurrentStep('strategy');
-                                scrollToStep('strategy');
+                    {currentStep === 'strategy' && (
+                        <StepWizardLayout 
+                            stepKey="strategy"
+                            header={{
+                                title: t("stress.step.strategy"),
+                                onBack: () => goToStep('identity'),
+                                backLabel: t("stress.step.change_persona")
                             }}
+                            sidebar={(
+                                <PersonaSidebar
+                                    persona={selectedPersona || null}
+                                    dossier={dossier}
+                                    isLoading={dossierLoading}
+                                />
+                            )}
                         >
-                            <IdeaSection
-                                idea={idea}
-                                setIdea={setIdea}
-                                goal={goal}
-                                setGoal={setGoal}
-                                evaluationFocus={evaluationFocus}
-                                setEvaluationFocus={setEvaluationFocus}
-                                loading={loading}
-                                onSubmit={handleSubmit}
-                                selectedPersonaName={selectedPersonaName}
-                            />
-                        </CollapsibleStep>
-                    </div>
+                            <div ref={strategyRef}>
+                                <IdeaSection
+                                    idea={idea}
+                                    setIdea={setIdea}
+                                    goal={goal}
+                                    setGoal={setGoal}
+                                    evaluationFocus={evaluationFocus}
+                                    setEvaluationFocus={setEvaluationFocus}
+                                    loading={loading}
+                                    onSubmit={handleSubmit}
+                                    personaId={personaType as string}
+                                    personas={personas}
+                                    isMainColumnOnly={true}
+                                />
+                            </div>
+                        </StepWizardLayout>
+                    )}
 
                     {/* Section 3: Intelligence Output */}
-                    <div ref={resultsRef} className="relative z-20">
-                        <CollapsibleStep
-                            stepNumber={3}
-                            title={t("stress.step.analysis")}
-                            isExpanded={currentStep === 'results'}
-                            isCompleted={!!result && !loading}
-                            summary={result?.confidenceScore ? `${t("stress.report.confidence_score")}: ${result.confidenceScore}/100` : undefined}
-                            disabled={!result && !loading}
-                            onToggle={() => {
-                                setCurrentStep('results');
-                                scrollToStep('results');
+                    {currentStep === 'results' && (
+                        <StepWizardLayout 
+                            stepKey="results"
+                            header={{
+                                title: t("stress.step.analysis"),
+                                onBack: () => goToStep('strategy'),
+                                backLabel: t("stress.step.strategy")
                             }}
-                        >
-                            {loading && !result ? (
-                                <div className="space-y-6 animate-pulse">
-                                    <div className="h-32 bg-white/5 rounded-2xl border border-white/10" />
-                                    <div className="h-48 bg-white/5 rounded-2xl border border-white/10" />
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
-                                        <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
-                                    </div>
-                                </div>
-                            ) : result ? (
-                                <div className="space-y-12">
-                                    <AnalysisResults
-                                        result={result}
-                                        personaNames={personaLookup}
-                                        personaType={personaType}
-                                        selectedPersonaName={selectedPersonaName}
-                                        showDebug={showDebug}
-                                        loading={loading}
+                            sidebar={(
+                                <div className="space-y-6">
+                                    <PersonaSidebar
+                                        persona={selectedPersona || null}
+                                        isLoading={dossierLoading}
+                                        variant="compact"
+                                        footer={result && (
+                                            <div>
+                                                <div className={clsx(
+                                                    "text-5xl font-black tracking-tighter",
+                                                    getConfidenceBadgeColor(result.confidenceScore || 0)
+                                                )}>
+                                                    {result.confidenceScore && result.confidenceScore > 0 
+                                                        ? `${result.confidenceScore}%`
+                                                        : "..."}
+                                                </div>
+                                                <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-500 mt-2 block">
+                                                    De Confianza
+                                                </span>
+                                            </div>
+                                        )}
                                     />
-                                    <DebugPanel result={result} showDebug={showDebug} />
-                                    
-                                    {!loading && (
-                                        <div className="flex flex-wrap items-center justify-between gap-6 pt-10 border-t border-white/5">
-                                            <button
-                                                onClick={handleExport}
-                                                className="inline-flex items-center gap-3 px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-white/40 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:text-white transition-all shadow-sm"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                                {t("stress.download.analysis")}
-                                            </button>
 
-                                            <button
-                                                onClick={() => void handleRefine()}
-                                                disabled={refineLoading}
-                                                className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-black text-xs tracking-[0.3em] uppercase transition-all shadow-[0_10px_30px_rgba(34,211,238,0.1)] hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:shadow-[0_15px_40px_rgba(34,211,238,0.2)] active:scale-95 disabled:opacity-50"
-                                            >
-                                                {refineLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 animate-pulse" />}
-                                                {t("stress.refine.button_for_persona", { persona: selectedPersonaName.split(' — ')[0] })}
-                                            </button>
+                                    {/* Desglose de Confianza (DSE) - Moved outside the Persona card */}
+                                    {result?.confidenceBreakdown && (
+                                        <div className="animate-slide-in-up delay-100">
+                                            <ScoringBreakdown 
+                                                confidenceScore={result.confidenceScore || 0}
+                                                breakdown={result.confidenceBreakdown as any}
+                                                rationale={result.scoringRationale as any}
+                                                hideScore={true}
+                                            />
                                         </div>
                                     )}
                                 </div>
-                            ) : null}
-                        </CollapsibleStep>
-                    </div>
-
-                    {/* Section 4: Strategic Refinement */}
-                    <div ref={refinementRef} className="relative z-10">
-                        <CollapsibleStep
-                            stepNumber={4}
-                            title={t("stress.step.refinement")}
-                            isExpanded={currentStep === 'refinement'}
-                            isCompleted={completedSteps.includes('refinement')}
-                            summary={refinedPitch ? t("stress.refine.refined_pitch") : undefined}
-                            disabled={!result || loading}
-                            onToggle={() => {
-                                setCurrentStep('refinement');
-                                scrollToStep('refinement');
-                            }}
-                        >
-                            {result && !loading && (
-                                <div className="px-0">
-                                    <RefinementPanel
-                                        result={result}
-                                        refineLoading={refineLoading}
-                                        refineError={refineError}
-                                        refineQuestions={refineQuestions}
-                                        refineAnswers={refineAnswers}
-                                        setRefineAnswers={setRefineAnswers}
-                                        refinedPitch={refinedPitch}
-                                        refineChanges={refineChanges}
-                                        onRefine={handleRefine}
-                                        selectedPersonaName={selectedPersonaName}
-                                        originalIdea={idea}
-                                        onExportRefined={handleExportRefined}
-                                        hideTrigger={true}
-                                    />
-                                </div>
                             )}
-                        </CollapsibleStep>
-                    </div>
-                </div>
+                        >
+                            <div ref={resultsRef}>
+                                {loading && !result ? (
+                                    <div className="space-y-6 animate-pulse">
+                                        <div className="h-32 bg-white/5 rounded-2xl border border-white/10" />
+                                        <div className="h-48 bg-white/5 rounded-2xl border border-white/10" />
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
+                                            <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
+                                        </div>
+                                    </div>
+                                ) : result ? (
+                                    <div className="space-y-12">
+                                        <AnalysisResults
+                                            result={result}
+                                            personaNames={personaLookup}
+                                            personaType={personaType}
+                                            selectedPersonaName={selectedPersonaName}
+                                            personas={personas}
+                                            showDebug={showDebug}
+                                            loading={loading}
+                                            isMainColumnOnly={true}
+                                        />
+                                        <DebugPanel result={result} showDebug={showDebug} />
+                                        
+                                        {!loading && (
+                                            <div className="flex flex-wrap items-center justify-between gap-6 pt-10 border-t border-white/5">
+                                                <button
+                                                    onClick={handleExport}
+                                                    className="inline-flex items-center gap-3 px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-white/40 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:text-white transition-all shadow-sm"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                                    {t("stress.download.analysis")}
+                                                </button>
 
-                {error && (
+                                                <button
+                                                    onClick={() => void handleRefine()}
+                                                    disabled={refineLoading}
+                                                    className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-black text-xs tracking-[0.3em] uppercase transition-all shadow-[0_10px_30px_rgba(34,211,238,0.1)] hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:shadow-[0_15px_40px_rgba(34,211,238,0.2)] active:scale-95 disabled:opacity-50"
+                                                >
+                                                    {refineLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 animate-pulse" />}
+                                                    {t("stress.refine.button_simple")}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : null}
+                            </div>
+                        </StepWizardLayout>
+                    )}
+
+                {/* Section 4: Strategic Refinement */}
+                {currentStep === 'refinement' && result && !loading && (
+                    <StepWizardLayout 
+                        stepKey="refinement"
+                        header={{
+                            title: t("stress.step.refinement"),
+                            onBack: () => goToStep('results'),
+                            backLabel: t("stress.step.analysis")
+                        }}
+                        sidebar={(
+                            <PersonaSidebar
+                                persona={selectedPersona || null}
+                                isLoading={dossierLoading}
+                                variant="compact"
+                                footer={(
+                                    <div className="space-y-6">
+                                        <div className="pt-6 border-t border-white/5">
+                                            <div className={clsx(
+                                                "text-5xl font-black tracking-tighter",
+                                                getConfidenceBadgeColor(result.confidenceScore || 0)
+                                            )}>
+                                                {result.confidenceScore && result.confidenceScore > 0 
+                                                    ? `${result.confidenceScore}%`
+                                                    : "..."}
+                                            </div>
+                                            <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-500 mt-2 block">
+                                                De Confianza
+                                            </span>
+                                        </div>
+
+                                        {/* Dynamic Context Box (Restored to Sidebar Footer to match staging) */}
+                                        {!refinedPitch ? (
+                                            <div className="bg-white/[0.02] border border-white/5 rounded-[2rem] p-8 shadow-xl animate-fade-in space-y-6">
+                                                <div className="flex items-center gap-3 border-b border-white/5 pb-4">
+                                                    <Info className="w-5 h-5 text-indigo-400" />
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-indigo-400">
+                                                        Contexto del Análisis
+                                                    </h3>
+                                                </div>
+                                                
+                                                {result.personaReaction && (
+                                                    <div className="space-y-2">
+                                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 block">Reacción</span>
+                                                        <p className="text-xs text-zinc-300 leading-relaxed italic border-l-2 border-indigo-500/30 pl-3">"{result.personaReaction}"</p>
+                                                    </div>
+                                                )}
+
+                                                {result.gaps && result.gaps.length > 0 && (
+                                                    <div className="space-y-2">
+                                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 block">Puntos a Mejorar</span>
+                                                        <ul className="space-y-2">
+                                                            {result.gaps.map((gap, idx) => (
+                                                                <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
+                                                                    <span className="text-amber-500/50 flex-shrink-0 mt-0.5">•</span>
+                                                                    <span className="leading-relaxed">{gap}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="bg-gradient-to-br from-green-500/5 to-transparent border-2 border-green-500/10 rounded-[2rem] p-8 shadow-xl animate-fade-in">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <CheckCircle2 className="w-5 h-5 text-green-400" />
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-green-400">
+                                                        Cambios Clave
+                                                    </h3>
+                                                </div>
+                                                <ul className="space-y-4">
+                                                    {refineChanges.map((change, idx) => (
+                                                        <li key={idx} className="flex items-start gap-3 text-sm text-zinc-300">
+                                                            <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                                <CheckCircle2 className="w-3 h-3 text-green-400" />
+                                                            </div>
+                                                            <span className="leading-relaxed">{change}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            />
+                        )}
+                    >
+                        <div ref={refinementRef}>
+                            <div className="px-0">
+                                <RefinementPanel
+                                    result={result}
+                                    refineLoading={refineLoading}
+                                    refineError={refineError}
+                                    refineQuestions={refineQuestions}
+                                    refineAnswers={refineAnswers}
+                                    setRefineAnswers={setRefineAnswers}
+                                    refinedPitch={refinedPitch}
+                                    refineChanges={refineChanges}
+                                    onRefine={handleRefine}
+                                    selectedPersonaName={selectedPersonaName}
+                                    originalIdea={idea}
+                                    onExportRefined={handleExportRefined}
+                                    personas={personas}
+                                    personaId={personaType as string}
+                                    isMainColumnOnly={true}
+                                />
+                            </div>
+                        </div>
+                    </StepWizardLayout>
+                )}
+            </AnimatePresence>
+
+            {error && (
+                <div className="max-w-6xl mx-auto mt-6">
                     <div className="glass border border-red-500/30 bg-red-500/5 p-4 rounded-2xl text-red-400 text-sm text-center animate-shake">
                         {error}
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             {viewingDossier && (
                 <PersonaDossier
@@ -478,6 +556,6 @@ ${refinedPitch}
                     onClose={() => setViewingDossier(null)}
                 />
             )}
-        </div>
+        </StepWizardContainer>
     );
 }

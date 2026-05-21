@@ -11,7 +11,6 @@ import { Brain, PenTool, User, Users, FileText, PanelLeftClose, PanelLeftOpen } 
 
 const links = [
   { href: "/", labelKey: "nav.stress_test" as const, icon: Brain },
-  { href: "/stresstest", labelKey: "nav.stress_test_linear" as const, icon: Brain },
   { href: "/copywriter", labelKey: "nav.copywriter" as const, icon: PenTool },
   { href: "/profile", labelKey: "nav.profile" as const, icon: User },
 ];

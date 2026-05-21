@@ -2,15 +2,20 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { Download, Loader2 } from 'lucide-react';
+import { Download, Loader2, ArrowLeft, ArrowRight, Sparkles, Send, Target, Info, User, Zap } from 'lucide-react';
 import { useI18n } from "@/components/i18n/I18nProvider";
-import { CollapsibleStep } from "@/components/ui/CollapsibleStep";
-import { PersonaSection } from "./PersonaSection";
+import { usePersonaDossier } from "@/lib/hooks/usePersonaDossier";
+import { useWorkflowState } from "@/lib/hooks/useWorkflowState";
+import { IdentitySection } from "@/components/stress-test/IdentitySection";
 import { InputSection } from "./InputSection";
 import { ResultSection } from "./ResultSection";
+import { FieldTooltip } from "@/components/ui/FieldTooltip";
+import { PersonaSidebar } from "@/components/ui/PersonaSidebar";
 import { PersonaDossier } from "@/components/admin/PersonaDossier";
-import { IntelligenceBar } from "@/components/ui/IntelligenceBar";
-import { PersonaOption, Platform, OutputSchema, CopyOutput } from "./types";
+import { StepWizardLayout, StepWizardContainer } from "@/components/layout/StepWizardLayout";
+import { PersonaOption, Platform, OutputSchema, CopyOutput, FIELD_LIMITS } from "./types";
+import { motion, AnimatePresence } from "framer-motion";
+import { clsx } from "clsx";
 
 interface CopywriterClientProps {
     initialPersonas: PersonaOption[];
@@ -18,7 +23,7 @@ interface CopywriterClientProps {
     personaLookup: Record<string, string>;
 }
 
-type Step = 'identity' | 'input' | 'results';
+type Step = 'identity' | 'strategy' | 'channels' | 'results';
 
 export function CopywriterClient({
     initialPersonas,
@@ -28,11 +33,19 @@ export function CopywriterClient({
     const { t, formatDate } = useI18n();
     
     // Workflow State
-    const [currentStep, setCurrentStep] = useState<Step>('identity');
-    const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
+    const { 
+        currentStep, 
+        setCurrentStep, 
+        completedSteps, 
+        setCompletedSteps, 
+        goToStep, 
+        completeStep 
+    } = useWorkflowState<Step>('identity');
+
+    const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
     const [personas] = useState<PersonaOption[]>(initialPersonas);
-    const [personaType, setPersonaType] = useState<string | number>(initialPersonas[0]?.id || "");
+    const [personaType, setPersonaType] = useState<string | number>("");
     const [platforms] = useState<Platform[]>(initialPlatforms);
     
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(initialPlatforms[0] ? [initialPlatforms[0].id] : []);
@@ -47,6 +60,9 @@ export function CopywriterClient({
     const [viewingDossier, setViewingDossier] = useState<any | null>(null);
     const [loadingDossier, setLoadingDossier] = useState(false);
     
+    // Dossier logic centralized in hook
+    const { dossier, isLoading: dossierLoading, fetchDossier } = usePersonaDossier(personaType);
+
     // AI SDK Hook for streaming objects
     const { object, submit, isLoading: loading, error: aiError } = useObject({
         api: "/api/copywriter",
@@ -55,42 +71,14 @@ export function CopywriterClient({
 
     const isFirstChunkRef = useRef(true);
 
-    // Refs for scrolling
-    const identityRef = useRef<HTMLDivElement>(null);
-    const inputRef = useRef<HTMLDivElement>(null);
-    const resultsRef = useRef<HTMLDivElement>(null);
-
-    const stepRefs = {
-        identity: identityRef,
-        input: inputRef,
-        results: resultsRef,
-    };
-
-    const scrollToStep = (step: Step) => {
-        setTimeout(() => {
-            const target = stepRefs[step].current;
-            if (target) {
-                const yOffset = -20;
-                const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({
-                    top: y,
-                    behavior: "smooth"
-                });
-            }
-        }, 500);
-    };
-
     // Auto-expand results when streaming starts
     useEffect(() => {
         if (object && isFirstChunkRef.current) {
-            setCurrentStep('results');
-            if (!completedSteps.includes('input')) {
-                setCompletedSteps(prev => [...prev, 'input']);
-            }
+            completeStep('channels');
+            goToStep('results');
             isFirstChunkRef.current = false;
-            scrollToStep('results');
         }
-    }, [object, completedSteps]);
+    }, [object, completeStep, goToStep]);
 
     useEffect(() => {
         if (aiError) {
@@ -98,12 +86,12 @@ export function CopywriterClient({
         }
     }, [aiError]);
 
-    const handleContinueToInput = (newPersonaId?: string | number) => {
+    const handleContinueToStrategy = (newPersonaId?: string | number) => {
         const currentId = newPersonaId || personaType;
         if (currentId) {
-            setCompletedSteps(prev => Array.from(new Set([...prev, 'identity'])));
-            setCurrentStep('input');
-            scrollToStep('input');
+            setPersonaType(currentId);
+            completeStep('identity');
+            goToStep('strategy');
         }
     };
 
@@ -111,14 +99,8 @@ export function CopywriterClient({
         if (loadingDossier) return;
         setLoadingDossier(true);
         try {
-            const res = await fetch(`/api/personas/${encodeURIComponent(id)}`);
-            if (!res.ok) throw new Error("Failed to fetch persona data");
-            const data = await res.json();
-            if (data.persona) {
-                setViewingDossier(data.persona);
-            }
-        } catch (err) {
-            console.error("Dossier fetch failed", err);
+            const persona = await fetchDossier(id);
+            if (persona) setViewingDossier(persona);
         } finally {
             setLoadingDossier(false);
         }
@@ -144,7 +126,6 @@ export function CopywriterClient({
               })
             );
 
-            // Update active tab if we removed the current one
             if (activeTab === id) {
                 setActiveTab(next[0] || "");
             }
@@ -152,16 +133,13 @@ export function CopywriterClient({
             return next;
           }
 
-          // Adding a platform: Auto-select its first format
           const platform = platforms.find(p => p.id === id);
           if (platform && platform.formats.length > 0) {
               const firstFormatId = platform.formats[0].id;
               setSelectedFormats(prevF => [...prevF, firstFormatId]);
           }
 
-          // Set as active tab
           setActiveTab(id);
-
           return [...prev, id];
         });
     };
@@ -201,13 +179,13 @@ export function CopywriterClient({
         object.outputs.forEach((o) => {
             if (!o) return;
           lines.push(`--- ${o.platformName || "Platform"} / ${o.formatName || "Format"} ---`);
-          lines.push(`${t("copywriter.output.primary")}: ${o.primaryCopy || ""}`);
-          if (o.alternateCopy) lines.push(`${t("copywriter.output.alternate")}: ${o.alternateCopy}`);
-          if (o.cta) lines.push(`${t("copywriter.output.cta")}: ${o.cta}`);
-          if (o.hashtags?.length) lines.push(`${t("copywriter.output.hashtags")}: ${o.hashtags.join(" ")}`);
-          if (o.notes?.length) {
-            lines.push(`${t("copywriter.output.notes")}:`);
-            o.notes.forEach((n) => lines.push(`- ${n}`));
+          
+          if (o.fields) {
+            Object.entries(o.fields).forEach(([label, value]) => {
+                lines.push(`${label.replace(/_/g, ' ').toUpperCase()}:`);
+                lines.push(value || "");
+                lines.push(``);
+            });
           }
           lines.push(``);
         });
@@ -221,66 +199,220 @@ export function CopywriterClient({
         document.body.removeChild(link);
     };
 
-    const selectedPersonaName = personaLookup[personaType] || t("stress.default_persona");
+    const selectedPersona = personas.find(p => p.id === personaType || p.id.toString() === personaType.toString());
+    const personaDisplayName = selectedPersona?.name || "";
+    const nameParts = personaDisplayName.split(' — ');
+    const personaNameOnly = nameParts[0] || "";
+    const personaRoleOnly = nameParts[1] || "Decisor";
 
     const outputs = (object?.outputs || []) as CopyOutput[];
 
+    const isBriefingValid = message.trim().length >= FIELD_LIMITS.message.min &&
+                           goal.trim().length >= FIELD_LIMITS.goal.min;
+
     return (
-        <div className="bg-[#0a0a0a] text-[#ededed] px-6 py-8 md:py-12 min-h-screen selection:bg-indigo-500/30">
-            <div className="max-w-6xl mx-auto relative">
-                
-                <IntelligenceBar
-                    isVisible={currentStep !== 'identity' && completedSteps.includes('identity')}
-                    personaName={personas.find(p => p.id === personaType)?.name.split(' — ')[0]}
-                    personaRole={personas.find(p => p.id === personaType)?.name.split(' — ')[1] || "Decisor"}
-                    personaCluster={personas.find(p => p.id === personaType)?.cluster}
-                    personaPhotoUrl={personas.find(p => p.id === personaType)?.photo_url}
-                    onViewDossier={() => handleViewDossier(personaType)}
-                    onChangePersona={() => {
-                        setCurrentStep('identity');
-                        scrollToStep('identity');
-                    }}
-                />
+        <StepWizardContainer>
+            <AnimatePresence mode="wait">
+                {/* Step 1: Identity Selection */}
+                {currentStep === 'identity' && (
+                    <StepWizardLayout stepKey="identity">
+                        <IdentitySection
+                            personas={personas}
+                            personaType={personaType}
+                            setPersonaType={setPersonaType}
+                            onContinue={handleContinueToStrategy}
+                            onViewDossier={handleViewDossier}
+                            confirmTitleKey="copywriter.persona.confirm_title"
+                        />
+                    </StepWizardLayout>
+                )}
 
-                <div className="space-y-0">
-                    {/* Section 1: Identity */}
-                    <div ref={identityRef} className="relative z-40">
-                        <CollapsibleStep
-                            stepNumber={1}
-                            title={t("copywriter.step.identity")}
-                            isExpanded={currentStep === 'identity'}
-                            isCompleted={completedSteps.includes('identity')}
-                            summary={completedSteps.includes('identity') ? `${t("stress.identity.summary_target")}: ${selectedPersonaName.split(' — ')[0]}` : undefined}
-                            onToggle={() => {
-                                setCurrentStep('identity');
-                                scrollToStep('identity');
-                            }}
-                        >
-                            <PersonaSection
-                                personas={personas}
-                                personaType={personaType}
-                                setPersonaType={setPersonaType}
-                                onContinue={handleContinueToInput}
-                                onViewDossier={handleViewDossier}
+                {/* Step 2: Strategic Briefing */}
+                {currentStep === 'strategy' && (
+                    <StepWizardLayout 
+                        stepKey="strategy"
+                        header={{
+                            title: t("copywriter.step.strategy"),
+                            description: t("copywriter.step.strategy_desc"),
+                            onBack: () => goToStep('identity'),
+                            backLabel: "Cambiar Persona"
+                        }}
+                        sidebar={(
+                            <PersonaSidebar
+                                persona={selectedPersona || null}
+                                dossier={dossier}
+                                isLoading={dossierLoading}
                             />
-                        </CollapsibleStep>
-                    </div>
+                        )}
+                    >
+                        <div className="space-y-6">
+                            {/* 1. Contexto */}
+                            <div className="relative">
+                                <div className="flex items-center gap-2 mb-3 relative group">
+                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                                        {t("copywriter.field.context")}
+                                    </label>
+                                    <div 
+                                        className="cursor-help"
+                                        onMouseEnter={() => setActiveTooltip('context')}
+                                        onMouseLeave={() => setActiveTooltip(null)}
+                                    >
+                                        <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                                    </div>
+                                    <AnimatePresence>
+                                        {activeTooltip === 'context' && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                className="absolute left-[150px] top-0 z-50 pointer-events-none"
+                                            >
+                                                <FieldTooltip 
+                                                    title={t("copywriter.tooltip.context.title")}
+                                                    expectation={t("copywriter.tooltip.context.expectation")}
+                                                    mechanism={t("copywriter.tooltip.context.mechanism")}
+                                                    example={t("copywriter.tooltip.context.example")}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                                <textarea
+                                    value={context}
+                                    onChange={(e) => setContext(e.target.value)}
+                                    placeholder={t("copywriter.placeholder.context")}
+                                    rows={4}
+                                    className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                />
+                                <span className={clsx(
+                                    "block text-[10px] font-bold text-right mt-2 tracking-widest",
+                                    context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-red-400" : "text-white/20"
+                                )}>
+                                    {context.length}/{FIELD_LIMITS.context.max}
+                                </span>
+                            </div>
 
-                    {/* Section 2: Input & Platforms */}
-                    <div ref={inputRef} className="relative z-30">
-                        <CollapsibleStep
-                            stepNumber={2}
-                            title={t("copywriter.step.input")}
-                            isExpanded={currentStep === 'input'}
-                            isCompleted={completedSteps.includes('input')}
-                            summary={completedSteps.includes('input') ? `${selectedPlatforms.length} platforms | ${selectedFormats.length} formats` : undefined}
-                            disabled={!completedSteps.includes('identity')}
-                            onToggle={() => {
-                                setCurrentStep('input');
-                                scrollToStep('input');
-                            }}
-                        >
+                            {/* 2. Qué queremos comunicar */}
+                            <div className="relative">
+                                <div className="flex items-center gap-2 mb-3 relative group">
+                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                                        {t("copywriter.field.message")}
+                                    </label>
+                                    <div 
+                                        className="cursor-help"
+                                        onMouseEnter={() => setActiveTooltip('message')}
+                                        onMouseLeave={() => setActiveTooltip(null)}
+                                    >
+                                        <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                                    </div>
+                                    <AnimatePresence>
+                                        {activeTooltip === 'message' && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                className="absolute left-[150px] top-0 z-50 pointer-events-none"
+                                            >
+                                                <FieldTooltip 
+                                                    title={t("copywriter.tooltip.message.title")}
+                                                    expectation={t("copywriter.tooltip.message.expectation")}
+                                                    mechanism={t("copywriter.tooltip.message.mechanism")}
+                                                    example={t("copywriter.tooltip.message.example")}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                                <textarea
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    placeholder={t("copywriter.placeholder.message")}
+                                    rows={6}
+                                    className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                />
+                                <span className={clsx(
+                                    "block text-[10px] font-bold text-right mt-2 tracking-widest",
+                                    message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-red-400" : "text-white/20"
+                                )}>
+                                    {message.length}/{FIELD_LIMITS.message.max}
+                                </span>
+                            </div>
+
+                            {/* 3. Meta / Objetivo */}
+                            <div className="relative">
+                                <div className="flex items-center gap-2 mb-3 relative group">
+                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                                        {t("copywriter.field.goal")}
+                                    </label>
+                                    <div 
+                                        className="cursor-help"
+                                        onMouseEnter={() => setActiveTooltip('goal')}
+                                        onMouseLeave={() => setActiveTooltip(null)}
+                                    >
+                                        <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                                    </div>
+                                    <AnimatePresence>
+                                        {activeTooltip === 'goal' && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                className="absolute left-[180px] top-0 z-50 pointer-events-none"
+                                            >
+                                                <FieldTooltip 
+                                                    title={t("copywriter.tooltip.goal.title")}
+                                                    expectation={t("copywriter.tooltip.goal.expectation")}
+                                                    mechanism={t("copywriter.tooltip.goal.mechanism")}
+                                                    example={t("copywriter.tooltip.goal.example")}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                                <textarea
+                                    value={goal}
+                                    onChange={(e) => setGoal(e.target.value)}
+                                    placeholder={t("copywriter.placeholder.goal")}
+                                    rows={3}
+                                    className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                />
+                                <span className={clsx(
+                                    "block text-[10px] font-bold text-right mt-2 tracking-widest",
+                                    goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-red-400" : "text-white/20"
+                                )}>
+                                    {goal.length}/{FIELD_LIMITS.goal.max}
+                                </span>
+                            </div>
+
+                            <div className="pt-4 flex justify-end">
+                                <button
+                                    disabled={!isBriefingValid}
+                                    onClick={() => {
+                                        completeStep('strategy');
+                                        goToStep('channels');
+                                    }}
+                                    className="px-12 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 text-white transition-all flex items-center gap-3 font-black uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-indigo-500/20"
+                                >
+                                    Siguiente <ArrowRight className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </StepWizardLayout>
+                )}
+
+                {/* Step 3: Channel Matrix */}
+                {currentStep === 'channels' && (
+                    <StepWizardLayout 
+                        stepKey="channels"
+                        header={{
+                            title: t("copywriter.step.channels"),
+                            description: t("copywriter.step.channels_desc"),
+                            onBack: () => goToStep('strategy')
+                        }}
+                    >
+                        <div className="bg-white/[0.01] border border-white/5 rounded-3xl p-8 shadow-inner">
                             <InputSection
+                                hideStrategicInputs={true}
                                 context={context}
                                 setContext={setContext}
                                 message={message}
@@ -297,63 +429,56 @@ export function CopywriterClient({
                                 setActiveTab={setActiveTab}
                                 loading={loading}
                                 onSubmit={handleSubmit}
-                                selectedPersonaName={selectedPersonaName}
+                                selectedPersonaName={personaDisplayName}
                             />
-                        </CollapsibleStep>
-                    </div>
+                        </div>
 
-                    {/* Section 3: Intelligence Output */}
-                    <div ref={resultsRef} className="relative z-20">
-                        <CollapsibleStep
-                            stepNumber={3}
-                            title={t("copywriter.step.results")}
-                            isExpanded={currentStep === 'results'}
-                            isCompleted={outputs.length > 0 && !loading}
-                            summary={outputs.length > 0 ? `${outputs.length} variants generated` : undefined}
-                            disabled={outputs.length === 0 && !loading}
-                            onToggle={() => {
-                                setCurrentStep('results');
-                                scrollToStep('results');
-                            }}
-                        >
-                            {loading && outputs.length === 0 ? (
-                                <div className="space-y-12 animate-pulse">
-                                    <div className="h-12 bg-white/5 rounded-full w-48" />
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
-                                        <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
-                                    </div>
-                                </div>
-                            ) : outputs.length > 0 ? (
-                                <div className="space-y-12">
-                                    <ResultSection
-                                        outputs={outputs}
-                                        loading={loading}
-                                    />
-                                    
-                                    {!loading && (
-                                        <div className="flex flex-wrap items-center justify-between gap-6 pt-10 border-t border-white/5">
-                                            <button
-                                                onClick={handleExport}
-                                                className="inline-flex items-center gap-3 px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-white/40 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:text-white transition-all shadow-sm"
-                                            >
-                                                <Download className="w-4 h-4 text-zinc-500" />
-                                                {t("copywriter.button.export")}
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : null}
-                        </CollapsibleStep>
-                    </div>
-                </div>
-
-                {error && (
-                    <div className="glass border border-red-500/30 bg-red-500/5 p-4 rounded-2xl text-red-400 text-sm text-center animate-shake">
-                        {error}
-                    </div>
+                        <div className="flex justify-between pt-8 border-t border-white/5">
+                            <button
+                                onClick={() => goToStep('strategy')}
+                                className="px-8 py-4 rounded-2xl bg-white/5 text-zinc-400 hover:text-white transition-all flex items-center gap-2 font-black uppercase text-[10px] tracking-widest"
+                            >
+                                <ArrowLeft className="w-4 h-4" /> Volver
+                            </button>
+                        </div>
+                    </StepWizardLayout>
                 )}
-            </div>
+
+                {/* Step 4: Output Factory */}
+                {currentStep === 'results' && (
+                    <StepWizardLayout 
+                        stepKey="results"
+                        header={{
+                            title: t("copywriter.step.results"),
+                            description: t("copywriter.step.results_desc"),
+                            actions: (
+                                <>
+                                    <button
+                                        onClick={() => goToStep('channels')}
+                                        className="px-6 py-3 rounded-xl bg-white/5 text-zinc-400 hover:text-white border border-white/5 transition-all text-[10px] font-black uppercase tracking-widest"
+                                    >
+                                        Ajustar Canales
+                                    </button>
+                                    <button
+                                        onClick={handleExport}
+                                        disabled={loading || outputs.length === 0}
+                                        className="px-6 py-3 rounded-xl bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20 transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2"
+                                    >
+                                        <Download className="w-3.5 h-3.5" /> Exportar Plan
+                                    </button>
+                                </>
+                            )
+                        }}
+                    >
+                        <ResultSection
+                            outputs={outputs}
+                            loading={loading}
+                            selectedFormats={selectedFormats}
+                            platforms={platforms}
+                        />
+                    </StepWizardLayout>
+                )}
+            </AnimatePresence>
 
             {viewingDossier && (
                 <PersonaDossier
@@ -361,6 +486,16 @@ export function CopywriterClient({
                     onClose={() => setViewingDossier(null)}
                 />
             )}
-        </div>
+
+            <style jsx global>{`
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
+        </StepWizardContainer>
     );
 }
