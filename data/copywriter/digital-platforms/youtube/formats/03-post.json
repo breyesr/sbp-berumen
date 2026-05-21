@@ -1,7 +1,7 @@
 {
   "id": "youtube_post",
   "platform_id": "youtube",
-  "name": "YouTube Community Post",
+  "name": "Community Post",
   "content_type_group": "community_feed",
   "strategic_objective": "Lightweight touchpoints between uploads: updates, conversation starters, and quick engagement with subscribers.",
   "system_directives": {

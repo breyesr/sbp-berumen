@@ -304,30 +304,31 @@ export function InputSection({
           <div className="space-y-8">
             {/* Task 15.2: Platform Tab System */}
             <div className="flex items-center gap-1.5 p-1.5 bg-white/[0.03] rounded-2xl border border-white/5 overflow-x-auto custom-scrollbar no-scrollbar">
-              {selectedPlatforms.map((pid) => {
-                const plat = platforms.find((p) => p.id === pid);
-                if (!plat) return null;
-                const isActive = activeTab === pid;
-                const color = platformColors[plat.id] || platformColors.default;
-                const selCount = selectedFormats.filter(fid => plat.formats.some(f => f.id === fid)).length;
+              {platforms
+                .filter(p => selectedPlatforms.includes(p.id))
+                .map((plat) => {
+                  const pid = plat.id;
+                  const isActive = activeTab === pid;
+                  const color = platformColors[plat.id] || platformColors.default;
+                  const selCount = selectedFormats.filter(fid => plat.formats.some(f => f.id === fid)).length;
 
-                return (
-                  <button
-                    key={pid}
-                    onClick={() => setActiveTab(pid)}
-                    className={clsx(
-                      "flex items-center gap-2.5 px-5 py-3 rounded-xl transition-all whitespace-nowrap",
-                      isActive ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white/60 hover:bg-white/5"
-                    )}
-                  >
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: isActive ? color : 'transparent', border: !isActive ? `1px solid ${color}40` : 'none' }} />
-                    <span className="text-[11px] font-black uppercase tracking-widest">{plat.name}</span>
-                    {selCount > 0 && (
-                      <span className="text-[10px] font-bold opacity-60">({selCount})</span>
-                    )}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={pid}
+                      onClick={() => setActiveTab(pid)}
+                      className={clsx(
+                        "flex items-center gap-2.5 px-5 py-3 rounded-xl transition-all whitespace-nowrap",
+                        isActive ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white/60 hover:bg-white/5"
+                      )}
+                    >
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: isActive ? color : 'transparent', border: !isActive ? `1px solid ${color}40` : 'none' }} />
+                      <span className="text-[11px] font-black uppercase tracking-widest">{plat.name}</span>
+                      {selCount > 0 && (
+                        <span className="text-[10px] font-bold opacity-60">({selCount})</span>
+                      )}
+                    </button>
+                  );
+                })}
             </div>
 
             {/* Task 15.3 & 15.4: Format Chip Grid & Bulk Controls */}

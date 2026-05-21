@@ -1,7 +1,7 @@
 {
   "id": "tiktok_standard_video",
   "platform_id": "tiktok",
-  "name": "TikTok Standard Video",
+  "name": "Standard Video",
   "content_type_group": "short_video",
   "strategic_objective": "Discovery, entertainment, and fast micro-education driven by the For You page.",
   "system_directives": {

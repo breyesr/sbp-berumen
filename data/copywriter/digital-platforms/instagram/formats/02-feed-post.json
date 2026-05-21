@@ -1,7 +1,7 @@
 {
   "id": "instagram_feed_post",
   "platform_id": "instagram",
-  "name": "Instagram Feed Post",
+  "name": "Feed Post",
   "content_type_group": "feed",
   "strategic_objective": "Visual storytelling, brand positioning, education, and engagement through static or swipeable content.",
   "system_directives": {

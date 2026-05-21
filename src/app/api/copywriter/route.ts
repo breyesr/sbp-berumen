@@ -155,11 +155,14 @@ export async function loadPlatforms(): Promise<PlatformWithFormats[]> {
       withFileTypes: true,
     });
 
+    // Sort platforms by directory name to respect numerical prefixes
+    const sortedEntries = entries
+      .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+
     const platforms: PlatformWithFormats[] = [];
 
-    for (const entry of entries) {
-      if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
-
+    for (const entry of sortedEntries) {
       const platformDir = path.join(PATHS.platformsRoot, entry.name);
       const platform = await readJson<PlatformFile>(
         path.join(platformDir, "platform.json")
@@ -172,14 +175,19 @@ export async function loadPlatforms(): Promise<PlatformWithFormats[]> {
         const formatFiles = await fs.readdir(formatsDir, {
           withFileTypes: true,
         });
-        const jsonFiles = formatFiles.filter(
-          (f) =>
-            f.isFile() &&
-            f.name.toLowerCase().endsWith(".json") &&
-            !f.name.startsWith(".")
-        );
+        
+        // Sort format files to respect numerical prefixes (e.g. 01-feed-post.json)
+        const sortedFormatFiles = formatFiles
+          .filter(
+            (f) =>
+              f.isFile() &&
+              f.name.toLowerCase().endsWith(".json") &&
+              !f.name.startsWith(".")
+          )
+          .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+
         const parsedFormats = await Promise.all(
-          jsonFiles.map((file) =>
+          sortedFormatFiles.map((file) =>
             readJson<FormatFile>(path.join(formatsDir, file.name))
           )
         );

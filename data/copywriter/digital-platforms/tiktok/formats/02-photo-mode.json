@@ -1,7 +1,7 @@
 {
   "id": "tiktok_photo_mode",
   "platform_id": "tiktok",
-  "name": "TikTok Photo Mode",
+  "name": "Photo Mode",
   "content_type_group": "carousel",
   "strategic_objective": "Sequential visual storytelling and breakdowns using images instead of continuous video.",
   "system_directives": {

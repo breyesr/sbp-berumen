@@ -1,7 +1,7 @@
 {
   "id": "instagram_story",
   "platform_id": "instagram",
-  "name": "Instagram Story",
+  "name": "Story",
   "content_type_group": "story",
   "strategic_objective": "Immediate engagement, real-time presence, behind-the-scenes access, and low-friction interaction.",
   "system_directives": {

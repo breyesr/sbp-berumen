@@ -1,7 +1,7 @@
 {
   "id": "facebook_feed_post",
   "platform_id": "facebook",
-  "name": "Facebook Feed Post",
+  "name": "Feed Post",
   "content_type_group": "feed",
   "strategic_objective": "Community interaction, storytelling, conversation, and relationship-building through flexible post formats.",
   "system_directives": {

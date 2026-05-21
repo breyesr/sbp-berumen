@@ -1,7 +1,7 @@
 {
   "id": "facebook_reel",
   "platform_id": "facebook",
-  "name": "Facebook Reel",
+  "name": "Reel",
   "content_type_group": "short_video",
   "strategic_objective": "Organic reach expansion, fast discovery, entertainment, and lightweight education inside the Facebook ecosystem.",
   "system_directives": {
