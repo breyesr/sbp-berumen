@@ -134,6 +134,17 @@
 - [x] **Task 25.6**: **Utility Centralization**: Move report formatting and export logic to a shared utility helper (e.g., `src/lib/utils/export.ts`). [DONE]
 - [x] **Task 25.7**: **Legacy Deprecation**: Remove accordion components and unify routes. [DONE]
 
+
+## Epic 26: Login Experience & Feedback Optimization (High Priority)
+**Owner**: Frontend & UX/UI
+*Goal: Eliminate the "Feedback Vacuum" during the login process by implementing explicit loading states and preventing redundant submissions.*
+
+**Tasks:**
+- [ ] **Task 26.1**: **Execution State Tracking**: Implement `isLoading` state in `LoginPageContent` to track the lifecycle of the `signIn` and `getSession` requests.
+- [ ] **Task 26.2**: **Button State Machine**: Redesign the login button to include a "Processing" state (disabled, opacity change, and a localized "Signing in..." label with a CSS spinner).
+- [ ] **Task 26.3**: **Input Lock-down**: Disable email and password inputs while `isLoading` is true to prevent accidental edits and provide clear visual hierarchy of the "Processing" state.
+- [ ] **Task 26.4**: **Redirect Optimization**: Ensure the UI provides a final "Success" feedback or transition indicator immediately after `signIn` succeeds, even before `router.push` completes.
+
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend
 - [ ] **Task 6.1**: Implement Graph Traversal logic.
