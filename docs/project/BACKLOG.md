@@ -306,3 +306,5 @@
 - [x] **Task 28.5**: **Theme Toggle UI**: Build and integrate a premium toggle component into the `AppHeader`.
 - [x] **Task 28.6**: **Validation Audit**: Perform a DOM-diff audit during theme toggling to confirm zero layout shift.
 
+> **Note on Experimental Theme**: The `experimental` (Indigo/Tech) theme remains in the CSS for reference but has been removed from the UI toggle to focus on the Institutional Brand Kit. It may be fully removed in future cycles.
+

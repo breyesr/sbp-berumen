@@ -76,21 +76,21 @@ html[data-theme='brand'],
 /* BRAND DARK THEME (Institutional Dark) */
 html[data-theme='brand-dark'] {
   /* Core Colors */
-  --background: #030213; /* Agent Black */
-  --surface: #0a0a1a;
-  --surface-elevated: rgba(255, 255, 255, 0.05);
-  --surface-hover: rgba(255, 255, 255, 0.12);
+  --background: #0e0e10; /* Matte Charcoal */
+  --surface: #141416;
+  --surface-elevated: rgba(255, 255, 255, 0.03);
+  --surface-hover: rgba(255, 255, 255, 0.06);
 
   /* Text Colors */
-  --foreground: #FAFAF8; /* Warm Alabaster */
-  --foreground-muted: #cbced4;
-  --foreground-subtle: #717182;
+  --foreground: #e4e4e7; /* INSTITUTIONAL NEUTRAL (Softer white) */
+  --foreground-muted: #a1a1aa;
+  --foreground-subtle: #52525b;
 
   /* Brand Colors (Preserve Gold) */
   --primary: #B8975A; /* Bison Gold */
   --primary-hover: #A68549;
-  --primary-light: rgba(184, 151, 90, 0.1);
-  --primary-foreground: #030213;
+  --primary-light: rgba(184, 151, 90, 0.08);
+  --primary-foreground: #0e0e10;
 
   /* Semantic Colors */
   --success: #6B8E7B;
@@ -110,9 +110,9 @@ html[data-theme='brand-dark'] {
   --info-border: rgba(59, 130, 246, 0.3);
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.1);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-strong: rgba(255, 255, 255, 0.2);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.03);
+  --border-strong: rgba(255, 255, 255, 0.1);
 
   /* Typography */
   --font-brand: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;

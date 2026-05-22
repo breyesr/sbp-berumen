@@ -20,15 +20,11 @@ export function ThemeToggle() {
   }
 
   const toggleTheme = () => {
-    if (theme === "brand") setTheme("brand-dark")
-    else if (theme === "brand-dark") setTheme("experimental")
-    else setTheme("brand")
+    setTheme(theme === "brand" ? "brand-dark" : "brand")
   }
 
   const getThemeTitle = () => {
-    if (theme === "brand") return "Switch to Institutional Dark"
-    if (theme === "brand-dark") return "Switch to Experimental (Tech)"
-    return "Switch to Institutional Bright"
+    return theme === "brand" ? "Switch to Institutional Dark" : "Switch to Institutional Bright"
   }
 
   return (
@@ -46,12 +42,7 @@ export function ThemeToggle() {
         />
         <Moon 
           className={`absolute inset-0 transition-all duration-500 ease-out ${
-            theme === "brand-dark" ? "translate-y-0 opacity-100 rotate-0" : theme === "brand" ? "-translate-y-8 opacity-0 rotate-90" : "translate-y-8 opacity-0 -rotate-90"
-          } text-primary`} 
-        />
-        <Sparkles 
-          className={`absolute inset-0 transition-all duration-500 ease-out ${
-            theme === "experimental" ? "translate-y-0 opacity-100 rotate-0" : "-translate-y-8 opacity-0 rotate-90"
+            theme === "brand-dark" ? "translate-y-0 opacity-100 rotate-0" : "-translate-y-8 opacity-0 rotate-90"
           } text-primary`} 
         />
       </div>
