@@ -62,18 +62,34 @@ function LoginPageContent() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900">
-      <div className="px-8 py-6 mt-4 text-left bg-gray-800 shadow-lg rounded-lg w-full max-w-md">
-        <h3 className="text-2xl font-bold text-center text-white">{t("auth.login.title")}</h3>
-        {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mt-4">
-            <div>
-              <label className="block text-white font-medium" htmlFor="email">{t("auth.login.email_label")}</label>
+    <div className="flex items-center justify-center min-h-screen bg-background font-body">
+      <div className="px-10 py-12 text-left bg-surface border border-border shadow-2xl rounded-[2.5rem] w-full max-w-md animate-fade-in">
+        <div className="flex flex-col items-center mb-10">
+            <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shadow-sm">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 3L35 11.66V28.34L20 37L5 28.34V11.66L20 3Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
+                    <path d="M20 10L28 14.5V25.5L20 30L12 25.5V14.5L20 10Z" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 4" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
+                    <circle cx="20" cy="20" r="3.5" fill="currentColor" className="text-primary"></circle>
+                </svg>
+            </div>
+            <h3 className="text-3xl font-bold text-center text-foreground font-brand uppercase tracking-tighter">{t("auth.login.title")}</h3>
+            <p className="text-[10px] text-foreground-subtle font-bold uppercase tracking-[0.3em] mt-2 font-brand">Intelligence Factory Terminal</p>
+        </div>
+
+        {error && (
+            <div className="mb-6 p-4 rounded-xl bg-error/10 border border-error/20 text-error text-xs font-bold font-brand uppercase tracking-widest text-center shadow-sm">
+                {error}
+            </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle px-1 font-brand" htmlFor="email">{t("auth.login.email_label")}</label>
               <input
                 type="email"
                 placeholder={t("auth.login.placeholder_email")}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-700 text-white border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full px-5 py-4 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/40 bg-background text-foreground placeholder:text-foreground-subtle disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -81,12 +97,12 @@ function LoginPageContent() {
                 disabled={isLoading || isSuccess}
               />
             </div>
-            <div className="mt-4">
-              <label className="block text-white font-medium" htmlFor="password">{t("auth.login.password_label")}</label>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle px-1 font-brand" htmlFor="password">{t("auth.login.password_label")}</label>
               <input
                 type="password"
                 placeholder={t("auth.login.placeholder_password")}
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-700 text-white border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full px-5 py-4 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/40 bg-background text-foreground placeholder:text-foreground-subtle disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -94,29 +110,37 @@ function LoginPageContent() {
                 disabled={isLoading || isSuccess}
               />
             </div>
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-6 pt-4">
               <button
                 type="submit"
                 disabled={isLoading || isSuccess}
-                className="flex items-center justify-center w-full px-6 py-2 mt-6 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none disabled:bg-blue-800 disabled:cursor-not-allowed transition-all font-semibold"
+                className={clsx(
+                    "flex items-center justify-center w-full px-6 py-4 rounded-2xl font-bold uppercase text-[10px] tracking-[0.3em] transition-all active:scale-95 shadow-lg font-brand",
+                    isSuccess 
+                        ? "bg-success text-white" 
+                        : "bg-primary text-primary-foreground hover:bg-primary-hover shadow-primary/20"
+                )}
               >
                 {isSuccess ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin text-green-400" />
+                    <Loader2 className="w-4 h-4 mr-3 animate-spin" />
                     {t("auth.login.button_success")}
                   </>
                 ) : isLoading ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    <Loader2 className="w-4 h-4 mr-3 animate-spin" />
                     {t("auth.login.button_loading")}
                   </>
                 ) : (
                   t("auth.login.button_submit")
                 )}
               </button>
-              <p className="text-sm text-center text-gray-400">
-                {t("auth.login.need_account_admin")}
-              </p>
+              
+              <div className="pt-6 border-t border-border">
+                <p className="text-[10px] font-bold text-center text-foreground-subtle uppercase tracking-widest font-brand">
+                    {t("auth.login.need_account_admin")}
+                </p>
+              </div>
             </div>
           </div>
         </form>
