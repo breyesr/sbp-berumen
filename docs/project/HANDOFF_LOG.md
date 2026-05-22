@@ -340,3 +340,4 @@ This file serves as a permanent historical record of all development sessions. E
 - **Surgical Sync**: Using 'git checkout [branch] -- [path]' is the safest way to sync assets (like images) across production branches without triggering full code merges.
 
 - **May 21, 2026 (Lead/Frontend)**: Implemented Epic 28 (Multi-Theme Architecture). Launched the official IntelAgent Brand Kit (Institutional Alabaster) with zero layout shift. Standardized typography and integrated official SVG assets. Audited and refactored core UI components for full theme-awareness.
+- **May 21, 2026 (Lead/Frontend)**: Refined persona card hover states. Fixed group-hover bleed bug and restored card-level highlight contrast in bright theme.

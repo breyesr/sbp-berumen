@@ -13,9 +13,10 @@
 ## 🏆 Accomplishments
 1.  **Multi-Theme Architecture**: Switched from hardcoded hex values to a dynamic CSS Variable system managed by `next-themes`.
 2.  **Institutional Brand Kit**: Translated the `brand-kit-live` specifications into a machine-readable `BRAND_KIT.json` and a functional CSS "skin".
-3.  **Total UI Audit**: Removed all legacy `bg-zinc-900` and `text-white` hardcodings across the codebase.
-4.  **Premium Toggle**: Implemented an animated Sun/Moon toggle in the `AppHeader` with hydration-safe mounting.
-5.  **Dossier Refactor**: Refactored the high-density `PersonaDossier` to look like a premium academic whitepaper in bright mode.
+3.  **Hover State Isolation**: Fixed a bug where nested group-hovers caused collective highlighting in persona rows. Implemented **Named Groups** (`group/row`, `group/card`) to ensure individual component focus. Restored full-card hover highlights by mapping `surface-hover` tokens in Tailwind v4.
+4.  **Total UI Audit**: Removed all legacy `bg-zinc-900` and `text-white` hardcodings across the codebase.
+5.  **Premium Toggle**: Implemented an animated Sun/Moon toggle in the `AppHeader` with hydration-safe mounting.
+6.  **Dossier Refactor**: Refactored the high-density `PersonaDossier` to look like a premium academic whitepaper in bright mode.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Task 27.1 (Epic 27)**: Proceed with the concurrent session detection implementation as brainstormed in the previous session.
