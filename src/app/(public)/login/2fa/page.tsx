@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { Loader2 } from "lucide-react";
+import { clsx } from "clsx";
 
 function TwoFaVerificationPageContent() {
   const { t } = useI18n();
