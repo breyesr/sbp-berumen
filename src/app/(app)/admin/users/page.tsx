@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
 import { isAdminRole, type UserRole } from "@/lib/rbac";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { clsx } from "clsx";
@@ -200,15 +201,15 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 animate-fade-in font-body">
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight text-white">
+        <h2 className="text-3xl font-bold tracking-tighter text-foreground font-brand uppercase">
           {t("admin.users.title")}
         </h2>
 
         <form
           onSubmit={handleCreateUser}
-          className="glass border border-white/10 rounded-2xl p-6 space-y-4"
+          className="bg-surface border border-border rounded-2xl p-6 space-y-4 shadow-sm"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
@@ -216,7 +217,7 @@ export default function AdminUsersPage() {
               value={createEmail}
               onChange={(e) => setCreateEmail(e.target.value)}
               placeholder={t("admin.create_user.email_placeholder")}
-              className="bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500/50 transition-all"
+              className="bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
               required
             />
             <input
@@ -224,43 +225,48 @@ export default function AdminUsersPage() {
               value={createPassword}
               onChange={(e) => setCreatePassword(e.target.value)}
               placeholder={t("admin.create_user.password_placeholder")}
-              className="bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500/50 transition-all"
+              className="bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
               required
             />
-            <select
-              value={createRole}
-              onChange={(e) => setCreateRole(e.target.value as UserRole)}
-              className="bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500/50 transition-all"
-            >
-              <option value="user">{t("role.user")}</option>
-              <option value="admin">{t("role.admin")}</option>
-            </select>
+            <div className="relative">
+                <select
+                value={createRole}
+                onChange={(e) => setCreateRole(e.target.value as UserRole)}
+                className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all appearance-none cursor-pointer"
+                >
+                <option value="user">{t("role.user")}</option>
+                <option value="admin">{t("role.admin")}</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground-subtle">
+                    <ChevronDown className="w-4 h-4" />
+                </div>
+            </div>
           </div>
-          <Button type="submit" disabled={submittingCreate}>
+          <Button type="submit" disabled={submittingCreate} className="h-12 px-10">
             {submittingCreate ? t("common.loading") : t("admin.create_user.button")}
           </Button>
         </form>
 
-        {error && <p className="text-sm text-red-400 font-medium px-1">{error}</p>}
-        {message && <p className="text-sm text-emerald-400 font-medium px-1">{message}</p>}
+        {error && <p className="text-sm text-error font-bold font-brand uppercase tracking-widest px-1">{error}</p>}
+        {message && <p className="text-sm text-success font-bold font-brand uppercase tracking-widest px-1">{message}</p>}
 
         {loadingUsers ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
           </div>
         ) : (
-          <div className="glass border border-white/10 rounded-2xl overflow-hidden overflow-x-auto">
+          <div className="bg-surface border border-border rounded-2xl overflow-hidden overflow-x-auto shadow-sm">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="border-b border-white/10 text-left text-[#a1a1aa]">
-                  <th className="px-6 py-4">{t("admin.table.email")}</th>
-                  <th className="px-6 py-4">{t("admin.table.twofa")}</th>
-                  <th className="px-6 py-4">{t("admin.table.role")}</th>
-                  <th className="px-6 py-4">{t("admin.table.clusters")}</th>
-                  <th className="px-6 py-4">{t("admin.table.actions")}</th>
+                <tr className="border-b border-border text-left text-foreground-subtle bg-surface-elevated/30">
+                  <th className="px-6 py-4 font-bold uppercase tracking-widest text-[10px] font-brand">{t("admin.table.email")}</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-widest text-[10px] font-brand">{t("admin.table.twofa")}</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-widest text-[10px] font-brand">{t("admin.table.role")}</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-widest text-[10px] font-brand">{t("admin.table.clusters")}</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-widest text-[10px] font-brand text-right">{t("admin.table.actions")}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-border">
                 {users.map((user) => {
                   const selectedRole = draftRoles[user.id] ?? (user.roles.includes("admin") ? "admin" : "user");
                   const selectedClusters = draftClusters[user.id] || [];
@@ -268,31 +274,38 @@ export default function AdminUsersPage() {
                   const busy = Boolean(rowBusy[user.id]);
 
                   return (
-                    <tr key={user.id} className="text-zinc-300 hover:bg-white/[0.02] transition-colors">
+                    <tr key={user.id} className="text-foreground-muted hover:bg-surface-hover transition-colors group">
                       <td className="px-6 py-4 font-medium">{user.email}</td>
                       <td className="px-6 py-4">
                         <span className={clsx(
-                          "text-[10px] font-bold uppercase tracking-widest",
-                          user.two_factor_enabled ? "text-emerald-400" : "text-amber-400"
+                          "text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border",
+                          user.two_factor_enabled 
+                            ? "bg-success/10 text-success border-success/20" 
+                            : "bg-warning/10 text-warning border-warning/20"
                         )}>
                           {user.two_factor_enabled ? t("common.status.enabled") : t("common.status.disabled")}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <select
-                          value={selectedRole}
-                          onChange={(e) =>
-                            setDraftRoles((current) => ({
-                              ...current,
-                              [user.id]: e.target.value as UserRole,
-                            }))
-                          }
-                          className="bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500/50 transition-all"
-                          disabled={busy}
-                        >
-                          <option value="user">{t("role.user")}</option>
-                          <option value="admin">{t("role.admin")}</option>
-                        </select>
+                        <div className="relative group/select w-32">
+                            <select
+                            value={selectedRole}
+                            onChange={(e) =>
+                                setDraftRoles((current) => ({
+                                ...current,
+                                [user.id]: e.target.value as UserRole,
+                                }))
+                            }
+                            className="w-full appearance-none bg-background border border-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all cursor-pointer"
+                            disabled={busy}
+                            >
+                            <option value="user">{t("role.user")}</option>
+                            <option value="admin">{t("role.admin")}</option>
+                            </select>
+                            <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-foreground-subtle">
+                                <ChevronDown className="w-3 h-3" />
+                            </div>
+                        </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1.5 max-h-32 overflow-y-auto pr-2 custom-scrollbar">
@@ -303,9 +316,9 @@ export default function AdminUsersPage() {
                                 checked={selectedClusters.includes(cluster.id)}
                                 onChange={() => toggleCluster(user.id, cluster.id)}
                                 disabled={busy}
-                                className="rounded border-white/20 bg-black/40 text-indigo-500 focus:ring-0 focus:ring-offset-0 transition-all"
+                                className="rounded border-border bg-background text-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer"
                               />
-                              <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 group-hover/item:text-zinc-300 transition-colors">
+                              <span className="text-[10px] uppercase font-bold tracking-widest text-foreground-subtle group-hover/item:text-foreground transition-colors font-brand">
                                 {cluster.name}
                               </span>
                             </label>
@@ -313,17 +326,18 @@ export default function AdminUsersPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-end gap-3">
                           <Button
                             onClick={() => void handleUpdateUser(user.id)}
                             disabled={busy}
+                            className="h-8 px-4 text-[9px]"
                           >
                             {busy ? t("admin.button.saving") : t("admin.button.save_role")}
                           </Button>
                           {!isSelf && (
                             <button
                               onClick={() => void handleDeleteUser(user.id, user.email)}
-                              className="text-xs text-zinc-500 hover:text-red-400 transition-colors font-bold uppercase tracking-widest disabled:opacity-50"
+                              className="text-[9px] text-foreground-subtle hover:text-error transition-colors font-bold uppercase tracking-widest disabled:opacity-50 font-brand"
                               disabled={busy}
                             >
                               {t("admin.button.delete")}

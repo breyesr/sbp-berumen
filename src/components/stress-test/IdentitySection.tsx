@@ -56,13 +56,13 @@ function CarouselRow({ personas, personaType, onSelect, onViewDossier }: {
       {/* Floating Buttons */}
       <button 
         onClick={() => scroll('left')}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 w-10 h-10 rounded-full bg-[#18181b] border border-white/10 text-white/70 hover:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:bg-[#27272a] hover:scale-105"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 w-10 h-10 rounded-full bg-surface border border-border text-foreground-muted hover:text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-105 shadow-lg"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
       <button 
         onClick={() => scroll('right')}
-        className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 w-10 h-10 rounded-full bg-[#18181b] border border-white/10 text-white/70 hover:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:bg-[#27272a] hover:scale-105"
+        className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 w-10 h-10 rounded-full bg-surface border border-border text-foreground-muted hover:text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-105 shadow-lg"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
@@ -147,10 +147,10 @@ export function IdentitySection({
       {/* Header & Cluster Selection */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-            <h2 className="text-3xl font-black uppercase tracking-tighter text-white mb-2">
+            <h2 className="text-3xl font-bold uppercase tracking-tighter text-foreground mb-2 font-brand">
                 Elige a tu Persona
             </h2>
-            <p className="text-base text-zinc-400 font-medium tracking-wide">
+            <p className="text-base text-foreground-muted font-medium tracking-wide font-body">
                 Selecciona con quién quieres poner a prueba tu idea.
             </p>
         </div>
@@ -158,43 +158,43 @@ export function IdentitySection({
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
           {levels && challengeLevelId && setChallengeLevelId && (
             <div className="relative group min-w-[200px]">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400/50 group-focus-within:text-indigo-400 transition-colors">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary/50 group-focus-within:text-primary transition-colors">
                 <Sparkles className="w-4 h-4" />
               </div>
               <select
                 value={challengeLevelId}
                 onChange={(e) => setChallengeLevelId(e.target.value)}
-                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer hover:border-white/20 text-white shadow-xl"
+                className="w-full bg-surface border border-border rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all appearance-none cursor-pointer hover:border-primary/50 text-foreground shadow-sm font-brand uppercase tracking-widest"
               >
                 {levels.map(level => (
-                  <option key={level.id} value={level.id} className="bg-[#0a0a0a] text-white py-2">
+                  <option key={level.id} value={level.id} className="bg-surface text-foreground py-2">
                     {level.name}
                   </option>
                 ))}
               </select>
-              <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within:text-indigo-400 transition-colors">
+              <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-foreground-subtle group-focus-within:text-primary transition-colors">
                 <ChevronDown className="w-4 h-4 stroke-[3px]" />
               </div>
             </div>
           )}
 
           <div className="relative group min-w-[200px]">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400/50 group-focus-within:text-indigo-400 transition-colors">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary/50 group-focus-within:text-primary transition-colors">
               <Filter className="w-4 h-4" />
             </div>
             <select
               value={selectedCluster}
               onChange={(e) => setSelectedCluster(e.target.value)}
-              className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer hover:border-white/20 text-white shadow-xl"
+              className="w-full bg-surface border border-border rounded-xl pl-10 pr-10 py-3 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all appearance-none cursor-pointer hover:border-primary/50 text-foreground shadow-sm font-brand uppercase tracking-widest"
             >
-              <option value="all" className="bg-[#0a0a0a] text-white py-2">{t("stress.identity.all_clusters")}</option>
+              <option value="all" className="bg-surface text-foreground py-2">{t("stress.identity.all_clusters")}</option>
               {clusters.map(cluster => (
-                <option key={cluster} value={cluster} className="bg-[#0a0a0a] text-white py-2">
+                <option key={cluster} value={cluster} className="bg-surface text-foreground py-2">
                   {cluster.replace("-", " & ")}
                 </option>
               ))}
             </select>
-            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 group-focus-within:text-indigo-400 transition-colors">
+            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-foreground-subtle group-focus-within:text-primary transition-colors">
               <ChevronDown className="w-4 h-4 stroke-[3px]" />
             </div>
           </div>
@@ -206,11 +206,12 @@ export function IdentitySection({
         {Object.entries(groupedPersonas).map(([cluster, clusterPersonas]) => (
           <div key={cluster} className="space-y-6">
             <div className="flex items-center gap-4 px-1 group">
-              <h3 className="text-xl font-semibold tracking-tight text-white whitespace-nowrap capitalize">
+              <h3 className="text-xl font-bold tracking-tight text-foreground whitespace-nowrap capitalize font-brand">
                 {cluster.replace("-", " & ")}
               </h3>
-              <div className="h-px w-full bg-white/5" />
+              <div className="h-px w-full bg-border" />
             </div>
+
             
             <CarouselRow 
               personas={clusterPersonas}
@@ -225,39 +226,39 @@ export function IdentitySection({
       {/* Confirmation Modal */}
       {confirmPersonaId !== null && (
         <div 
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-background/90 backdrop-blur-md animate-fade-in"
           onClick={handleCancel}
         >
           <div 
-            className="bg-[#09090b] border border-white/10 rounded-3xl w-full max-w-sm p-8 shadow-2xl animate-scale-in"
+            className="bg-surface border border-border rounded-3xl w-full max-w-sm p-8 shadow-2xl animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             {confirmPersona && (
                 <div className="flex flex-col items-center gap-4 mb-8">
                     {confirmPersona.photo_url ? (
-                        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-indigo-500/30">
+                        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/30 shadow-lg">
                             <img src={confirmPersona.photo_url} alt={confirmPersona.name} className="w-full h-full object-cover" />
                         </div>
                     ) : (
-                        <div className="w-24 h-24 rounded-full bg-indigo-500/10 border-4 border-indigo-500/20 flex items-center justify-center">
-                            <User className="w-12 h-12 text-indigo-400/50" />
+                        <div className="w-24 h-24 rounded-full bg-primary/10 border-4 border-primary/20 flex items-center justify-center shadow-lg">
+                            <User className="w-12 h-12 text-primary/50" />
                         </div>
                     )}
-                    <div className="text-center space-y-1">
-                        <h3 className="text-xl font-bold tracking-tight text-white leading-snug whitespace-pre-line">
+                    <div className="text-center space-y-1 font-brand">
+                        <h3 className="text-xl font-bold tracking-tight text-foreground leading-snug whitespace-pre-line">
                             {(() => {
                                 const template = t(confirmTitleKey as any);
                                 const parts = template.split('{{name}}');
                                 return (
                                     <>
                                         {parts[0]}
-                                        <span className="text-indigo-400">{confirmPersona.name.split(' — ')[0]}</span>
+                                        <span className="text-primary">{confirmPersona.name.split(' — ')[0]}</span>
                                         {parts[1]}
                                     </>
                                 );
                             })()}
                         </h3>
-                        <p className="text-xs text-zinc-400 mt-2 italic">
+                        <p className="text-xs text-foreground-muted mt-2 italic font-body">
                             {confirmPersona.name.split(' — ')[1] || "Decisor"}
                         </p>
                     </div>
@@ -267,13 +268,13 @@ export function IdentitySection({
             <div className="flex flex-col gap-3">
               <button
                 onClick={handleConfirm}
-                className="w-full px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all"
+                className="w-full px-6 py-4 rounded-xl bg-primary hover:bg-primary-hover text-white font-bold text-sm transition-all shadow-md active:scale-95 font-brand uppercase tracking-widest"
               >
                 {t("stress.persona.confirm_ok")}
               </button>
               <button
                 onClick={handleCancel}
-                className="w-full px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 font-medium text-sm transition-all"
+                className="w-full px-6 py-4 rounded-xl bg-background border border-border text-foreground-muted hover:text-foreground font-bold text-sm transition-all font-brand uppercase tracking-widest"
               >
                 {t("stress.persona.confirm_cancel")}
               </button>

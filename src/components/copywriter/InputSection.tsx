@@ -98,8 +98,8 @@ export function InputSection({
       {!hideStrategicInputs && (
         <div className="space-y-10">
           <div className="flex items-center gap-3 px-1">
-            <Target className="w-4 h-4 text-indigo-400/50" />
-            <label className="block text-xs font-black uppercase tracking-[0.4em] text-white/20">
+            <Target className="w-4 h-4 text-primary/50" />
+            <label className="block text-xs font-bold uppercase tracking-[0.4em] text-foreground-subtle font-brand">
               Phase 1: Strategic Briefing
             </label>
           </div>
@@ -109,12 +109,12 @@ export function InputSection({
             <div className="relative">
               <div className="flex justify-between items-center mb-3">
                 <div className="flex items-center gap-2">
-                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
                     {t("copywriter.field.context")}
                   </label>
                   <button 
                     onClick={() => setActiveTooltip(activeTooltip === 'context' ? null : 'context')}
-                    className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
+                    className="p-1 hover:text-primary text-foreground-subtle transition-colors"
                   >
                     <Info className="w-3.5 h-3.5" />
                   </button>
@@ -137,11 +137,11 @@ export function InputSection({
                 onChange={(e) => setContext(e.target.value)}
                 placeholder={t("copywriter.placeholder.context")}
                 rows={3}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+                className="w-full bg-surface border border-border rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all resize-none leading-relaxed text-foreground font-body shadow-sm"
               />
               <span className={clsx(
-                "block text-[10px] font-bold text-right mt-2 tracking-widest",
-                context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-red-400" : "text-white/20"
+                "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+                context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-error" : "text-foreground-subtle"
               )}>
                 {context.length}/{FIELD_LIMITS.context.max}
               </span>
@@ -151,12 +151,12 @@ export function InputSection({
             <div className="relative">
               <div className="flex justify-between items-center mb-3">
                 <div className="flex items-center gap-2">
-                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
                     {t("copywriter.field.message")}
                   </label>
                   <button 
                     onClick={() => setActiveTooltip(activeTooltip === 'message' ? null : 'message')}
-                    className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
+                    className="p-1 hover:text-primary text-foreground-subtle transition-colors"
                   >
                     <Info className="w-3.5 h-3.5" />
                   </button>
@@ -179,11 +179,11 @@ export function InputSection({
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t("copywriter.placeholder.message")}
                 rows={4}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+                className="w-full bg-surface border border-border rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all resize-none leading-relaxed text-foreground font-body shadow-sm"
               />
               <span className={clsx(
-                "block text-[10px] font-bold text-right mt-2 tracking-widest",
-                message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-red-400" : "text-white/20"
+                "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+                message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-error" : "text-foreground-subtle"
               )}>
                 {message.length}/{FIELD_LIMITS.message.max}
               </span>
@@ -193,12 +193,12 @@ export function InputSection({
             <div className="relative">
               <div className="flex justify-between items-center mb-3">
                 <div className="flex items-center gap-2">
-                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                  <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
                     {t("copywriter.field.goal")}
                   </label>
                   <button 
                     onClick={() => setActiveTooltip(activeTooltip === 'goal' ? null : 'goal')}
-                    className="p-1 hover:text-indigo-400 text-white/20 transition-colors"
+                    className="p-1 hover:text-primary text-foreground-subtle transition-colors"
                   >
                     <Info className="w-3.5 h-3.5" />
                   </button>
@@ -221,11 +221,11 @@ export function InputSection({
                 onChange={(e) => setGoal(e.target.value)}
                 placeholder={t("copywriter.placeholder.goal")}
                 rows={3}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none leading-relaxed text-white/90"
+                className="w-full bg-surface border border-border rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all resize-none leading-relaxed text-foreground font-body shadow-sm"
               />
               <span className={clsx(
-                "block text-[10px] font-bold text-right mt-2 tracking-widest",
-                goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-red-400" : "text-white/20"
+                "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+                goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-error" : "text-foreground-subtle"
               )}>
                 {goal.length}/{FIELD_LIMITS.goal.max}
               </span>
@@ -237,8 +237,8 @@ export function InputSection({
       {/* 2. Platform Selection (Full Width Grid) */}
       <div className="space-y-10">
         <div className="flex items-center gap-3 px-1">
-          <CheckSquare className="w-4 h-4 text-indigo-400/50" />
-          <label className="block text-xs font-black uppercase tracking-[0.4em] text-white/20">
+          <CheckSquare className="w-4 h-4 text-primary/50" />
+          <label className="block text-xs font-bold uppercase tracking-[0.4em] text-foreground-subtle font-brand">
             Phase 2: Network Propagation
           </label>
         </div>
@@ -249,35 +249,35 @@ export function InputSection({
               key={platform.id}
               onClick={() => togglePlatform(platform.id)}
               className={clsx(
-                "flex flex-col gap-3 p-5 rounded-2xl border transition-all text-left group relative overflow-hidden",
+                "flex flex-col gap-3 p-5 rounded-2xl border transition-all text-left group relative overflow-hidden shadow-sm",
                 selectedPlatforms.includes(platform.id)
-                  ? "bg-indigo-500/10 border-indigo-500/30 ring-1 ring-indigo-500/20"
-                  : "bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10"
+                  ? "bg-primary/10 border-primary/40 ring-1 ring-primary/20"
+                  : "bg-surface border-border hover:bg-surface-hover hover:border-primary/20"
               )}
             >
               <div className="flex items-center justify-between relative z-10">
                 <span className={clsx(
-                    "text-[10px] font-black uppercase tracking-widest",
-                    selectedPlatforms.includes(platform.id) ? "text-indigo-400" : "text-white/40 group-hover:text-white/60"
+                    "text-[10px] font-bold uppercase tracking-widest font-brand",
+                    selectedPlatforms.includes(platform.id) ? "text-primary" : "text-foreground-subtle group-hover:text-foreground-muted"
                 )}>
                     {platform.name}
                 </span>
                 {selectedPlatforms.includes(platform.id) && (
                     <div className="flex items-center gap-2">
-                       <span className="text-[9px] font-bold bg-indigo-500/20 text-indigo-400 px-1.5 py-0.5 rounded-full border border-indigo-500/30">
+                       <span className="text-[9px] font-bold bg-primary/20 text-primary px-1.5 py-0.5 rounded-full border border-primary/30 font-brand">
                          {selectedFormats.filter(fid => platform.formats.some(f => f.id === fid)).length}/{platform.formats.length}
                        </span>
-                       <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                       <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                     </div>
                 )}
               </div>
-              <p className="text-[10px] text-white/30 leading-tight line-clamp-2 font-medium relative z-10">
+              <p className="text-[10px] text-foreground-muted leading-tight line-clamp-2 font-medium relative z-10 font-body italic">
                 {platform.copy_guidelines_summary || platform.platform_purpose || t("copywriter.platform.guidance_fallback")}
               </p>
               
               {/* Decorative background wash */}
               <div 
-                className="absolute inset-0 opacity-[0.03] transition-opacity group-hover:opacity-[0.05]"
+                className="absolute inset-0 opacity-[0.03] transition-opacity group-hover:opacity-[0.06]"
                 style={{ backgroundColor: platformColors[platform.id] || platformColors.default }}
               />
             </button>
@@ -288,22 +288,22 @@ export function InputSection({
       {/* 3. Format Matrix (Full Width below Grid) */}
       <div className="space-y-10">
         <div className="flex items-center gap-3 px-1">
-          <AlignJustify className="w-4 h-4 text-indigo-400/50" />
-          <label className="block text-xs font-black uppercase tracking-[0.4em] text-white/20">
+          <AlignJustify className="w-4 h-4 text-primary/50" />
+          <label className="block text-xs font-bold uppercase tracking-[0.4em] text-foreground-subtle font-brand">
             Phase 3: Intelligence Matrix
           </label>
         </div>
 
         {selectedPlatforms.length === 0 ? (
-          <div className="p-12 rounded-3xl border border-white/5 bg-white/[0.02] border-dashed text-center">
-            <p className="text-sm text-white/20 font-medium italic">
+          <div className="p-12 rounded-3xl border border-border bg-surface/50 border-dashed text-center">
+            <p className="text-sm text-foreground-subtle font-bold italic font-brand">
                 {t("copywriter.formats.select_platform_first")}
             </p>
           </div>
         ) : (
           <div className="space-y-8">
             {/* Task 15.2: Platform Tab System */}
-            <div className="flex items-center gap-1.5 p-1.5 bg-white/[0.03] rounded-2xl border border-white/5 overflow-x-auto custom-scrollbar no-scrollbar">
+            <div className="flex items-center gap-1.5 p-1.5 bg-surface border border-border rounded-2xl overflow-x-auto custom-scrollbar no-scrollbar shadow-inner">
               {platforms
                 .filter(p => selectedPlatforms.includes(p.id))
                 .map((plat) => {
@@ -318,13 +318,13 @@ export function InputSection({
                       onClick={() => setActiveTab(pid)}
                       className={clsx(
                         "flex items-center gap-2.5 px-5 py-3 rounded-xl transition-all whitespace-nowrap",
-                        isActive ? "bg-white/10 text-white shadow-sm" : "text-white/40 hover:text-white/60 hover:bg-white/5"
+                        isActive ? "bg-primary text-white shadow-md" : "text-foreground-muted hover:text-foreground hover:bg-surface-hover"
                       )}
                     >
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: isActive ? color : 'transparent', border: !isActive ? `1px solid ${color}40` : 'none' }} />
-                      <span className="text-[11px] font-black uppercase tracking-widest">{plat.name}</span>
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: isActive ? 'white' : color, border: !isActive ? `1px solid ${color}40` : 'none' }} />
+                      <span className="text-[11px] font-bold uppercase tracking-widest font-brand">{plat.name}</span>
                       {selCount > 0 && (
-                        <span className="text-[10px] font-bold opacity-60">({selCount})</span>
+                        <span className="text-[10px] font-bold opacity-70">({selCount})</span>
                       )}
                     </button>
                   );
@@ -354,12 +354,12 @@ export function InputSection({
               return (
                 <div className="space-y-8 animate-in fade-in slide-in-from-left-2 duration-300">
                   <div className="flex items-center justify-between px-2">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground-subtle font-brand">
                       {plat.name} Distribution Channels
                     </span>
                     <button 
                       onClick={toggleAll}
-                      className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 hover:text-indigo-300 transition-colors"
+                      className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:text-primary-hover transition-colors font-brand"
                     >
                       {allSelected ? "Deselect All" : "Select All"}
                     </button>
@@ -373,22 +373,22 @@ export function InputSection({
                           key={format.id}
                           onClick={() => toggleFormat(format.id)}
                           className={clsx(
-                            "flex items-center justify-between p-5 rounded-2xl border transition-all text-left",
+                            "flex items-center justify-between p-5 rounded-2xl border transition-all text-left shadow-sm",
                             isSelected
-                              ? "bg-white/10 border-white/20 shadow-[inset_0_0_12px_rgba(255,255,255,0.02)]"
-                              : "bg-white/[0.02] border-white/5 hover:bg-white/[0.05]"
+                              ? "bg-primary/10 border-primary/30"
+                              : "bg-surface border-border hover:bg-surface-hover"
                           )}
                         >
                           <span className={clsx(
-                              "text-xs font-bold",
-                              isSelected ? "text-white" : "text-white/40"
+                              "text-xs font-bold font-brand",
+                              isSelected ? "text-primary" : "text-foreground-muted"
                           )}>
                               {format.name}
                           </span>
                           <div 
                             className={clsx(
                                 "w-4.5 h-4.5 rounded-lg border flex items-center justify-center transition-all",
-                                isSelected ? "border-transparent" : "border-white/10"
+                                isSelected ? "border-transparent" : "border-border"
                             )}
                             style={{ backgroundColor: isSelected ? color : 'transparent' }}
                           >
@@ -409,19 +409,19 @@ export function InputSection({
 
       {/* Task 15.6: Factory Ledger Footer & Action Button */}
       {selectedPlatforms.length > 0 && (
-        <div className="mt-12 pt-10 border-t border-white/5">
-          <div className="flex items-center justify-between px-6 py-4 rounded-3xl bg-white/[0.02] border border-white/5 shadow-2xl pl-10 pr-4">
+        <div className="mt-12 pt-10 border-t border-border">
+          <div className="flex items-center justify-between px-6 py-4 rounded-3xl bg-surface border border-border shadow-lg pl-10 pr-4">
              <div className="flex items-center gap-8">
                 <div className="flex items-center gap-3">
-                  <CheckSquare className="w-5 h-5 text-indigo-400/60" />
-                  <span className="text-xs font-black uppercase tracking-widest text-white/40">
+                  <CheckSquare className="w-5 h-5 text-primary/60" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-foreground-muted font-brand">
                     {selectedPlatforms.length} Networks
                   </span>
                 </div>
-                <div className="w-px h-6 bg-white/10" />
+                <div className="w-px h-6 bg-border" />
                 <div className="flex items-center gap-3">
-                  <AlignJustify className="w-5 h-5 text-indigo-400/60" />
-                  <span className="text-xs font-black uppercase tracking-widest text-white/40">
+                  <AlignJustify className="w-5 h-5 text-primary/60" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-foreground-muted font-brand">
                     {selectedFormats.length} Formats
                   </span>
                 </div>
@@ -432,10 +432,10 @@ export function InputSection({
                  onClick={onSubmit}
                  disabled={selectedFormats.length === 0 || loading}
                  className={clsx(
-                   "py-3.5 px-10 rounded-2xl font-black text-[10px] tracking-[0.3em] uppercase transition-all shadow-xl active:scale-95",
+                   "py-3.5 px-10 rounded-2xl font-bold text-[10px] tracking-[0.3em] uppercase transition-all shadow-xl active:scale-95 font-brand",
                    selectedFormats.length > 0 && !loading
-                     ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20"
-                     : "bg-white/5 text-white/20 cursor-not-allowed border border-white/5"
+                     ? "bg-primary hover:bg-primary-hover text-white shadow-primary/20"
+                     : "bg-surface-hover text-foreground-subtle cursor-not-allowed border border-border"
                  )}
                >
                  {loading ? (
@@ -456,15 +456,15 @@ export function InputSection({
       )}
 
       {!hideStrategicInputs && (
-        <div className="pt-12 border-t border-white/5">
+        <div className="pt-12 border-t border-border">
           <button
             onClick={onSubmit}
             disabled={!isFormValid || loading}
             className={clsx(
-              "w-full py-6 px-10 rounded-3xl font-black text-sm tracking-[0.3em] uppercase transition-all shadow-2xl",
+              "w-full py-6 px-10 rounded-3xl font-bold text-sm tracking-[0.3em] uppercase transition-all shadow-xl active:scale-[0.99] font-brand",
               isFormValid && !loading
-                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.99] hover:shadow-indigo-500/40"
-                : "bg-white/5 text-white/20 cursor-not-allowed"
+                ? "bg-primary hover:bg-primary-hover text-white shadow-primary/30"
+                : "bg-surface-hover text-foreground-subtle cursor-not-allowed border border-border"
             )}
           >
             {loading ? (

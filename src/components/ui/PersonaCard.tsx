@@ -28,10 +28,10 @@ export function PersonaCard({
       onClick={() => isReady && onSelect(persona.id)}
       className={clsx(
         "group relative flex flex-col p-5 rounded-2xl border transition-all h-full",
-        isReady ? "cursor-pointer bg-white/[0.02] hover:bg-white/[0.04]" : "cursor-not-allowed bg-zinc-900/50 border-white/5",
+        isReady ? "cursor-pointer bg-surface hover:bg-surface-hover" : "cursor-not-allowed bg-surface/40 border-border/50",
         isSelected
-          ? "border-indigo-500/50 bg-indigo-500/5 shadow-[0_0_30px_rgba(79,70,229,0.1)]"
-          : isReady ? "border-white/5 hover:border-white/10" : "opacity-60 grayscale"
+          ? "border-primary/50 bg-primary/5 shadow-lg shadow-primary/5"
+          : isReady ? "border-border hover:border-primary/30" : "opacity-60 grayscale"
       )}
     >
       <div className="flex items-start justify-between mb-4">
@@ -45,9 +45,9 @@ export function PersonaCard({
           }}
           className={clsx(
             "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all overflow-hidden",
-            isSelected ? "bg-indigo-500/20 text-indigo-400" : "bg-white/5 text-white/20 group-hover:bg-white/40",
-            !isReady && "bg-zinc-800 text-zinc-600 cursor-default",
-            isReady && "cursor-pointer hover:ring-2 hover:ring-indigo-500/50"
+            isSelected ? "bg-primary/20 text-primary" : "bg-background border border-border text-foreground-subtle group-hover:text-primary group-hover:border-primary/30",
+            !isReady && "bg-surface-elevated text-foreground-subtle cursor-default",
+            isReady && "cursor-pointer hover:ring-2 hover:ring-primary/50"
         )}>
           {persona.photo_url ? (
             <img src={persona.photo_url} alt={name} className="w-full h-full object-cover" />
@@ -62,7 +62,7 @@ export function PersonaCard({
         <div className="flex items-center gap-3">
           <button
             onClick={(e) => onViewDossier(e, persona.id)}
-            className="p-2.5 rounded-xl bg-white/5 border border-white/5 text-zinc-500 hover:text-indigo-400 hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all shadow-sm"
+            className="p-2.5 rounded-xl bg-background border border-border text-foreground-muted hover:text-primary hover:bg-primary/5 hover:border-primary/20 transition-all shadow-sm"
             title="Ver Dossier"
           >
             <Info className="w-5 h-5" />
@@ -71,12 +71,12 @@ export function PersonaCard({
           {isReady ? (
             <div className={clsx(
                 "w-6 h-6 rounded-full flex items-center justify-center shadow-lg transition-all",
-                isSelected ? "bg-indigo-600 scale-100 rotate-0" : "bg-white/5 scale-0 rotate-12"
+                isSelected ? "bg-primary scale-100 rotate-0" : "bg-surface scale-0 rotate-12"
             )}>
-                <Check className="w-4 h-4 text-white stroke-[3px]" />
+                <Check className="w-4 h-4 text-primary-foreground stroke-[3px]" />
             </div>
           ) : (
-            <div className="px-2 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-[9px] font-black text-amber-500 uppercase tracking-widest">
+            <div className="px-2 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-[9px] font-bold text-amber-500 uppercase tracking-widest font-brand">
                 Training
             </div>
           )}
@@ -86,30 +86,30 @@ export function PersonaCard({
       {/* Info */}
       <div className="space-y-1.5 flex-1">
         <h4 className={clsx(
-          "text-base font-bold tracking-tight transition-colors leading-tight truncate",
-          isSelected ? "text-white" : isReady ? "text-zinc-300 group-hover:text-white" : "text-zinc-600"
+          "text-base font-bold tracking-tight transition-colors leading-tight truncate font-brand",
+          isSelected ? "text-primary" : isReady ? "text-foreground group-hover:text-primary" : "text-foreground-subtle"
         )}>
           {name}
         </h4>
         <div className="space-y-1">
           <p className={clsx(
-            "text-[10px] font-black uppercase tracking-[0.2em]",
-            isReady ? "text-indigo-400/80" : "text-zinc-700"
+            "text-[10px] font-bold uppercase tracking-[0.2em] font-brand",
+            isReady ? "text-primary/80" : "text-foreground-subtle"
           )}>
             {persona.cluster?.replace("-", " & ") || "General"}
           </p>
-          <p className="text-xs italic text-zinc-500 group-hover:text-zinc-400 line-clamp-2 leading-relaxed transition-colors">
+          <p className="text-xs italic text-foreground-muted group-hover:text-foreground line-clamp-2 leading-relaxed transition-colors font-body">
             {isReady ? role : "Intelligence training in progress..."}
           </p>
         </div>
       </div>
 
       {!isReady && (
-        <div className="absolute inset-0 bg-black/40 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
-            <div className="bg-zinc-900 border border-white/10 p-3 rounded-xl shadow-2xl max-w-[80%] text-center">
+        <div className="absolute inset-0 bg-background/60 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
+            <div className="bg-surface border border-border p-4 rounded-xl shadow-2xl max-w-[80%] text-center">
                 <BrainCircuit className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-                <p className="text-[10px] font-black text-white uppercase tracking-widest mb-1">Not Ready</p>
-                <p className="text-[9px] text-zinc-400 leading-tight">This persona is currently being synced with its knowledge base.</p>
+                <p className="text-[10px] font-bold text-foreground uppercase tracking-widest mb-1 font-brand">Not Ready</p>
+                <p className="text-[9px] text-foreground-muted leading-tight font-body">This persona is currently being synced with its knowledge base.</p>
             </div>
         </div>
       )}

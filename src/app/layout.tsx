@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { cookies, headers } from "next/headers";
 import AuthProvider from "@/components/auth/AuthProvider";
 import { auth } from "@/lib/auth";
 import { DEFAULT_LOCALE } from "@/lib/i18n/config";
 import { resolveRequestLocale } from "@/lib/i18n/server";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -37,11 +38,18 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang={(initialLocale ?? DEFAULT_LOCALE).toLowerCase()}>
+    <html lang={(initialLocale ?? DEFAULT_LOCALE).toLowerCase()} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${plusJakarta.variable} ${inter.variable} antialiased`}
       >
-        <AuthProvider initialLocale={initialLocale}>{children}</AuthProvider>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="brand"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <AuthProvider initialLocale={initialLocale}>{children}</AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

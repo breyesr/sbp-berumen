@@ -353,14 +353,14 @@ ${refinedPitch}
                                         footer={result && (
                                             <div>
                                                 <div className={clsx(
-                                                    "text-5xl font-black tracking-tighter",
+                                                    "text-5xl font-bold tracking-tighter font-brand",
                                                     getConfidenceBadgeColor(result.confidenceScore || 0)
                                                 )}>
                                                     {result.confidenceScore && result.confidenceScore > 0 
                                                         ? `${result.confidenceScore}%`
                                                         : "..."}
                                                 </div>
-                                                <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-500 mt-2 block">
+                                                <span className="text-xs font-bold uppercase tracking-[0.2em] text-foreground-subtle mt-2 block font-brand">
                                                     De Confianza
                                                 </span>
                                             </div>
@@ -384,11 +384,11 @@ ${refinedPitch}
                             <div ref={resultsRef}>
                                 {loading && !result ? (
                                     <div className="space-y-6 animate-pulse">
-                                        <div className="h-32 bg-white/5 rounded-2xl border border-white/10" />
-                                        <div className="h-48 bg-white/5 rounded-2xl border border-white/10" />
+                                        <div className="h-32 bg-surface border border-border rounded-2xl" />
+                                        <div className="h-48 bg-surface border border-border rounded-2xl" />
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
-                                            <div className="h-64 bg-white/5 rounded-2xl border border-white/10" />
+                                            <div className="h-64 bg-surface border border-border rounded-2xl" />
+                                            <div className="h-64 bg-surface border border-border rounded-2xl" />
                                         </div>
                                     </div>
                                 ) : result ? (
@@ -406,19 +406,19 @@ ${refinedPitch}
                                         <DebugPanel result={result} showDebug={showDebug} />
                                         
                                         {!loading && (
-                                            <div className="flex flex-wrap items-center justify-between gap-6 pt-10 border-t border-white/5">
+                                            <div className="flex flex-wrap items-center justify-between gap-6 pt-10 border-t border-border">
                                                 <button
                                                     onClick={handleExport}
-                                                    className="inline-flex items-center gap-3 px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-white/40 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:text-white transition-all shadow-sm"
+                                                    className="inline-flex items-center gap-3 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted bg-surface border border-border rounded-2xl hover:bg-surface-hover hover:text-foreground transition-all shadow-sm font-brand"
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-foreground-subtle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                                     {t("stress.download.analysis")}
                                                 </button>
 
                                                 <button
                                                     onClick={() => void handleRefine()}
                                                     disabled={refineLoading}
-                                                    className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-black text-xs tracking-[0.3em] uppercase transition-all shadow-[0_10px_30px_rgba(34,211,238,0.1)] hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:shadow-[0_15px_40px_rgba(34,211,238,0.2)] active:scale-95 disabled:opacity-50"
+                                                    className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-primary/10 border border-primary/30 text-primary font-bold text-xs tracking-[0.3em] uppercase transition-all shadow-lg hover:bg-primary/20 hover:border-primary/50 active:scale-95 disabled:opacity-50 font-brand"
                                                 >
                                                     {refineLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 animate-pulse" />}
                                                     {t("stress.refine.button_simple")}
@@ -447,44 +447,44 @@ ${refinedPitch}
                                 variant="compact"
                                 footer={(
                                     <div className="space-y-6">
-                                        <div className="pt-6 border-t border-white/5">
+                                        <div className="pt-6 border-t border-border">
                                             <div className={clsx(
-                                                "text-5xl font-black tracking-tighter",
+                                                "text-5xl font-bold tracking-tighter font-brand",
                                                 getConfidenceBadgeColor(result.confidenceScore || 0)
                                             )}>
                                                 {result.confidenceScore && result.confidenceScore > 0 
                                                     ? `${result.confidenceScore}%`
                                                     : "..."}
                                             </div>
-                                            <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-500 mt-2 block">
+                                            <span className="text-xs font-bold uppercase tracking-[0.2em] text-foreground-subtle mt-2 block font-brand">
                                                 De Confianza
                                             </span>
                                         </div>
 
                                         {/* Dynamic Context Box (Restored to Sidebar Footer to match staging) */}
                                         {!refinedPitch ? (
-                                            <div className="bg-white/[0.02] border border-white/5 rounded-[2rem] p-8 shadow-xl animate-fade-in space-y-6">
-                                                <div className="flex items-center gap-3 border-b border-white/5 pb-4">
-                                                    <Info className="w-5 h-5 text-indigo-400" />
-                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-indigo-400">
+                                            <div className="bg-surface border border-border rounded-[2rem] p-8 shadow-xl animate-fade-in space-y-6">
+                                                <div className="flex items-center gap-3 border-b border-border pb-4">
+                                                    <Info className="w-5 h-5 text-primary" />
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-primary font-brand">
                                                         Contexto del Análisis
                                                     </h3>
                                                 </div>
                                                 
                                                 {result.personaReaction && (
                                                     <div className="space-y-2">
-                                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 block">Reacción</span>
-                                                        <p className="text-xs text-zinc-300 leading-relaxed italic border-l-2 border-indigo-500/30 pl-3">"{result.personaReaction}"</p>
+                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle block font-brand">Reacción</span>
+                                                        <p className="text-xs text-foreground-muted leading-relaxed italic border-l-2 border-primary/30 pl-3 font-body">"{result.personaReaction}"</p>
                                                     </div>
                                                 )}
 
                                                 {result.gaps && result.gaps.length > 0 && (
                                                     <div className="space-y-2">
-                                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 block">Puntos a Mejorar</span>
-                                                        <ul className="space-y-2">
+                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle block font-brand">Puntos a Mejorar</span>
+                                                        <ul className="space-y-2 font-body">
                                                             {result.gaps.map((gap, idx) => (
-                                                                <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
-                                                                    <span className="text-amber-500/50 flex-shrink-0 mt-0.5">•</span>
+                                                                <li key={idx} className="flex items-start gap-2 text-xs text-foreground-muted">
+                                                                    <span className="text-warning/50 flex-shrink-0 mt-0.5">•</span>
                                                                     <span className="leading-relaxed">{gap}</span>
                                                                 </li>
                                                             ))}
@@ -493,18 +493,18 @@ ${refinedPitch}
                                                 )}
                                             </div>
                                         ) : (
-                                            <div className="bg-gradient-to-br from-green-500/5 to-transparent border-2 border-green-500/10 rounded-[2rem] p-8 shadow-xl animate-fade-in">
+                                            <div className="bg-gradient-to-br from-success/5 to-transparent border-2 border-success/10 rounded-[2rem] p-8 shadow-xl animate-fade-in">
                                                 <div className="flex items-center gap-3 mb-6">
-                                                    <CheckCircle2 className="w-5 h-5 text-green-400" />
-                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-green-400">
+                                                    <CheckCircle2 className="w-5 h-5 text-success" />
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-success font-brand">
                                                         Cambios Clave
                                                     </h3>
                                                 </div>
-                                                <ul className="space-y-4">
+                                                <ul className="space-y-4 font-body">
                                                     {refineChanges.map((change, idx) => (
-                                                        <li key={idx} className="flex items-start gap-3 text-sm text-zinc-300">
-                                                            <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                                                <CheckCircle2 className="w-3 h-3 text-green-400" />
+                                                        <li key={idx} className="flex items-start gap-3 text-sm text-foreground-muted">
+                                                            <div className="w-5 h-5 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                                <CheckCircle2 className="w-3 h-3 text-success" />
                                                             </div>
                                                             <span className="leading-relaxed">{change}</span>
                                                         </li>

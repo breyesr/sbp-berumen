@@ -83,67 +83,67 @@ export default function ProfileSecurityPage() {
   };
 
   if (!session?.user) {
-    return <p className="text-sm text-[#a1a1aa]">{t("security.loading")}</p>;
+    return <p className="text-sm text-foreground-muted font-brand">{t("security.loading")}</p>;
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-6">
-      <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
+    <div className="mx-auto w-full max-w-3xl space-y-8 animate-fade-in font-body">
+      <section className="rounded-[2rem] border border-border bg-surface p-8 shadow-sm">
         <ProfileSectionNav />
-        <h1 className="mt-4 text-2xl font-semibold text-white">{t("security.title")}</h1>
-        <p className="mt-2 text-sm text-[#a1a1aa]">
+        <h1 className="mt-8 text-3xl font-bold text-foreground font-brand uppercase tracking-tighter">{t("security.title")}</h1>
+        <p className="mt-2 text-base text-foreground-muted font-medium">
           {t("security.subtitle")}
         </p>
 
-        <div className="mt-5 rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-          <p className="text-xs uppercase tracking-wide text-[#71717a]">{t("profile.twofa_status")}</p>
-          <p className="mt-1 text-sm font-semibold">
-            <span className={is2FAEnabled ? "text-emerald-400" : "text-amber-400"}>
+        <div className="mt-8 rounded-2xl border border-border bg-background p-6 shadow-inner">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle font-brand mb-1">{t("profile.twofa_status")}</p>
+          <p className="text-sm font-bold">
+            <span className={is2FAEnabled ? "text-success" : "text-warning"}>
               {is2FAEnabled ? t("common.status.enabled") : t("common.status.disabled")}
             </span>
           </p>
         </div>
       </section>
 
-      <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
-        <h2 className="text-lg font-semibold text-white">{t("i18n.profile_section_title")}</h2>
-        <p className="mt-2 text-sm text-[#a1a1aa]">{t("i18n.profile_section_description")}</p>
-        <div className="mt-4">
+      <section className="rounded-[2rem] border border-border bg-surface p-8 shadow-sm">
+        <h2 className="text-xl font-bold text-foreground font-brand uppercase tracking-tight mb-2">{t("i18n.profile_section_title")}</h2>
+        <p className="text-sm text-foreground-muted mb-6">{t("i18n.profile_section_description")}</p>
+        <div className="max-w-xs">
           <LanguageSwitch />
         </div>
-        <p className="mt-3 text-xs text-[#8f8f96]">{t("i18n.profile_sync_note")}</p>
+        <p className="mt-6 text-[10px] text-foreground-subtle font-bold uppercase tracking-widest font-brand border-t border-border pt-4">{t("i18n.profile_sync_note")}</p>
       </section>
 
-      <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
-        <h2 className="text-lg font-semibold text-white">{t("security.change_password.title")}</h2>
-        <p className="mt-2 text-sm text-[#a1a1aa]">
+      <section className="rounded-[2rem] border border-border bg-surface p-8 shadow-sm">
+        <h2 className="text-xl font-bold text-foreground font-brand uppercase tracking-tight mb-2">{t("security.change_password.title")}</h2>
+        <p className="text-sm text-foreground-muted mb-8">
           {t("security.change_password.subtitle")}
         </p>
 
         {!is2FAEnabled && (
-          <div className="mt-4 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-3 text-sm text-amber-200">
+          <div className="mb-8 rounded-xl border border-warning/30 bg-warning/5 px-5 py-4 text-sm text-warning font-medium">
             <p>{t("security.change_password.locked")}</p>
-            <Link href="/profile" className="mt-2 inline-block underline">
+            <Link href="/profile" className="mt-2 inline-block underline font-bold">
               {t("security.change_password.goto_2fa")}
             </Link>
           </div>
         )}
 
         {passwordError && (
-          <p className="mt-4 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+          <p className="mb-8 rounded-xl border border-error/30 bg-error/5 px-4 py-3 text-sm text-error font-bold font-brand uppercase tracking-widest">
             {passwordError}
           </p>
         )}
 
         {passwordMessage && (
-          <p className="mt-4 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300">
+          <p className="mb-8 rounded-xl border border-success/30 bg-success/5 px-4 py-3 text-sm text-success font-bold font-brand uppercase tracking-widest">
             {passwordMessage}
           </p>
         )}
 
-        <form onSubmit={handlePasswordChange} className="mt-4 grid gap-3 sm:max-w-lg">
-          <div>
-            <label htmlFor="current-password" className="block text-sm text-[#d4d4d8]">
+        <form onSubmit={handlePasswordChange} className="grid gap-6 sm:max-w-lg">
+          <div className="space-y-2">
+            <label htmlFor="current-password" className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle px-1 font-brand">
               {t("common.fields.current_password")}
             </label>
             <input
@@ -152,12 +152,12 @@ export default function ProfileSecurityPage() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
-              className="mt-1 w-full rounded-md border border-white/15 bg-[#0d0e10] px-3 py-2 text-sm text-white outline-none ring-blue-500/40 focus:ring"
+              className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
             />
           </div>
 
-          <div>
-            <label htmlFor="new-password" className="block text-sm text-[#d4d4d8]">
+          <div className="space-y-2">
+            <label htmlFor="new-password" className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle px-1 font-brand">
               {t("common.fields.new_password")}
             </label>
             <input
@@ -167,12 +167,12 @@ export default function ProfileSecurityPage() {
               onChange={(e) => setNewPassword(e.target.value)}
               required
               minLength={10}
-              className="mt-1 w-full rounded-md border border-white/15 bg-[#0d0e10] px-3 py-2 text-sm text-white outline-none ring-blue-500/40 focus:ring"
+              className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
             />
           </div>
 
-          <div>
-            <label htmlFor="confirm-new-password" className="block text-sm text-[#d4d4d8]">
+          <div className="space-y-2">
+            <label htmlFor="confirm-new-password" className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle px-1 font-brand">
               {t("common.fields.confirm_new_password")}
             </label>
             <input
@@ -182,12 +182,12 @@ export default function ProfileSecurityPage() {
               onChange={(e) => setConfirmNewPassword(e.target.value)}
               required
               minLength={10}
-              className="mt-1 w-full rounded-md border border-white/15 bg-[#0d0e10] px-3 py-2 text-sm text-white outline-none ring-blue-500/40 focus:ring"
+              className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
             />
           </div>
 
-          <div>
-            <label htmlFor="password-2fa-code" className="block text-sm text-[#d4d4d8]">
+          <div className="space-y-2">
+            <label htmlFor="password-2fa-code" className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle px-1 font-brand">
               {t("common.fields.two_fa_code")}
             </label>
             <input
@@ -199,14 +199,15 @@ export default function ProfileSecurityPage() {
               value={password2faCode}
               onChange={(e) => setPassword2faCode(e.target.value)}
               required
-              placeholder={t("profile.setup.step3.verify_placeholder")}
-              className="mt-1 w-full rounded-md border border-white/15 bg-[#0d0e10] px-3 py-2 text-sm tracking-widest text-white outline-none ring-blue-500/40 focus:ring"
+              placeholder="000000"
+              className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm tracking-[0.3em] font-bold text-foreground outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all text-center"
             />
           </div>
 
-          <div>
+          <div className="pt-4">
             <Button
               type="submit"
+              className="w-full h-12"
               disabled={
                 isChangingPassword ||
                 !is2FAEnabled ||
@@ -222,7 +223,7 @@ export default function ProfileSecurityPage() {
         </form>
       </section>
 
-      <div>
+      <div className="pt-4">
         <SignOutButton />
       </div>
     </div>

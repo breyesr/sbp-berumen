@@ -15,8 +15,8 @@ export default function ProfileSectionNav() {
   const { t } = useI18n();
 
   return (
-    <nav aria-label={t("profile_nav.aria")} className="rounded-lg border border-white/10 bg-[#0d0e10] p-2">
-      <ul className="flex flex-wrap gap-2">
+    <nav aria-label={t("profile_nav.aria")} className="rounded-xl border border-border bg-surface p-1.5 shadow-sm">
+      <ul className="flex flex-wrap gap-1.5">
         {links.map((link) => {
           const isActive = pathname === link.href;
 
@@ -25,10 +25,10 @@ export default function ProfileSectionNav() {
               <Link
                 href={link.href}
                 className={clsx(
-                  "inline-flex rounded-md px-3 py-2 text-sm transition-colors",
+                  "inline-flex rounded-lg px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all duration-200 font-brand",
                   isActive
-                    ? "bg-[#4F46E5]/20 text-[#ededed]"
-                    : "text-[#a1a1aa] hover:bg-white/5 hover:text-[#ededed]"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-foreground-subtle hover:text-foreground hover:bg-surface-hover"
                 )}
               >
                 {t(link.labelKey)}

@@ -81,7 +81,7 @@ export function IdeaSection({
         {/* Pitch Field */}
         <div className="relative">
           <div className="flex items-center gap-2 mb-3 relative group">
-            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
               {t("stress.field.idea")}
             </label>
             <div 
@@ -89,7 +89,7 @@ export function IdeaSection({
                 onMouseEnter={() => setActiveTooltip('idea')}
                 onMouseLeave={() => setActiveTooltip(null)}
             >
-                <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                <Info className="w-4 h-4 text-foreground-subtle hover:text-primary transition-colors" />
             </div>
             <AnimatePresence>
                 {activeTooltip === 'idea' && (
@@ -109,11 +109,11 @@ export function IdeaSection({
             onChange={(e) => setIdea(e.target.value)}
             placeholder={t("stress.placeholder.idea")}
             rows={8}
-            className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+            className="w-full bg-surface border border-border rounded-3xl px-6 py-5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
           />
           <span className={clsx(
-            "block text-[10px] font-bold text-right mt-2 tracking-widest",
-            idea.length < FIELD_LIMITS.idea.min || idea.length > FIELD_LIMITS.idea.max ? "text-red-400" : "text-white/20"
+            "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+            idea.length < FIELD_LIMITS.idea.min || idea.length > FIELD_LIMITS.idea.max ? "text-error" : "text-foreground-subtle"
           )}>
             {idea.length}/{FIELD_LIMITS.idea.max}
           </span>
@@ -122,7 +122,7 @@ export function IdeaSection({
         {/* Goal Field */}
         <div className="relative">
           <div className="flex items-center gap-2 mb-3 relative group">
-            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
               {t("stress.field.goal")}
             </label>
             <div 
@@ -130,7 +130,7 @@ export function IdeaSection({
                 onMouseEnter={() => setActiveTooltip('goal')}
                 onMouseLeave={() => setActiveTooltip(null)}
             >
-                <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                <Info className="w-4 h-4 text-foreground-subtle hover:text-primary transition-colors" />
             </div>
             <AnimatePresence>
                 {activeTooltip === 'goal' && (
@@ -150,11 +150,11 @@ export function IdeaSection({
             onChange={(e) => setGoal(e.target.value)}
             placeholder={t("stress.placeholder.goal")}
             rows={3}
-            className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+            className="w-full bg-surface border border-border rounded-3xl px-6 py-5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
           />
           <span className={clsx(
-            "block text-[10px] font-bold text-right mt-2 tracking-widest",
-            goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-red-400" : "text-white/20"
+            "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+            goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-error" : "text-foreground-subtle"
           )}>
             {goal.length}/{FIELD_LIMITS.goal.max}
           </span>
@@ -163,7 +163,7 @@ export function IdeaSection({
         {/* Focus Field */}
         <div className="relative">
           <div className="flex items-center gap-2 mb-3 relative group">
-            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+            <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
               {t("stress.field.focus")}
             </label>
             <div 
@@ -171,7 +171,7 @@ export function IdeaSection({
                 onMouseEnter={() => setActiveTooltip('focus')}
                 onMouseLeave={() => setActiveTooltip(null)}
             >
-                <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                <Info className="w-4 h-4 text-foreground-subtle hover:text-primary transition-colors" />
             </div>
             <AnimatePresence>
                 {activeTooltip === 'focus' && (
@@ -192,18 +192,18 @@ export function IdeaSection({
               onChange={(e) => setEvaluationFocus(e.target.value)}
               placeholder={t("stress.placeholder.focus")}
               rows={2}
-              className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 pr-14 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+              className="w-full bg-surface border border-border rounded-3xl px-6 py-5 pr-14 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
             />
             <button
               type="button"
-              className="absolute right-4 top-4 p-2.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 transition-all group"
+              className="absolute right-4 top-4 p-2.5 rounded-xl bg-primary/10 hover:bg-primary/20 transition-all group"
             >
-              <Sparkles className="w-4 h-4 text-indigo-400 group-hover:text-indigo-300" />
+              <Sparkles className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
             </button>
           </div>
           <span className={clsx(
-            "block text-[10px] font-bold text-right mt-2 tracking-widest",
-            evaluationFocus.length < FIELD_LIMITS.evaluationFocus.min || evaluationFocus.length > FIELD_LIMITS.evaluationFocus.max ? "text-red-400" : "text-white/20"
+            "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+            evaluationFocus.length < FIELD_LIMITS.evaluationFocus.min || evaluationFocus.length > FIELD_LIMITS.evaluationFocus.max ? "text-error" : "text-foreground-subtle"
           )}>
             {evaluationFocus.length}/{FIELD_LIMITS.evaluationFocus.max}
           </span>
@@ -214,10 +214,10 @@ export function IdeaSection({
             onClick={onSubmit}
             disabled={!isFormValid || loading}
             className={clsx(
-              "py-4 px-10 rounded-2xl font-black text-xs tracking-[0.2em] uppercase transition-all shadow-xl",
+              "py-4 px-12 rounded-2xl font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl font-brand",
               isFormValid && !loading
-                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.98]"
-                : "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
+                ? "bg-primary hover:bg-primary-hover text-white shadow-primary/20 active:scale-[0.98]"
+                : "bg-surface border border-border text-foreground-subtle cursor-not-allowed"
             )}
           >
             {loading ? (

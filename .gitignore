@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Gemini temporary files
 .gemini-clipboard/stagingbackup_before_epic20.sql
+
+# brand kit and wireframes
+docs/architecture/wireframes/

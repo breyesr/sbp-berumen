@@ -23,27 +23,27 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, o
   if (!persona) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex justify-end bg-background/80 backdrop-blur-md animate-fade-in font-body">
       {/* Backdrop Area (Click to close) */}
       <div className="flex-1" onClick={onClose} />
 
       {/* Drawer */}
-      <div className="w-full max-w-xl bg-[#09090b] border-l border-white/10 shadow-2xl flex flex-col animate-slide-in-right">
+      <div className="w-full max-w-xl bg-background border-l border-border shadow-2xl flex flex-col animate-slide-in-right">
         {/* Header */}
-        <div className="p-6 border-b border-white/10 flex items-center justify-between bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent">
+        <div className="p-6 border-b border-border flex items-center justify-between bg-gradient-to-br from-primary/5 via-transparent to-transparent">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary">
                 {mode === 'train' ? <Brain className="w-5 h-5" /> : <Pencil className="w-5 h-5" />}
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white tracking-tight">
+              <h2 className="text-xl font-bold text-foreground tracking-tight font-brand uppercase">
                 {mode === 'train' ? `Entrenar: ${persona.name}` : `Editar Persona`}
               </h2>
-              <p className="text-xs text-zinc-500 font-medium uppercase tracking-widest mt-0.5">Intelligence Studio v1.0</p>
+              <p className="text-[10px] text-foreground-subtle font-bold uppercase tracking-[0.2em] mt-0.5 font-brand">Intelligence Studio v1.0</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full transition-colors">
-            <X className="w-6 h-6 text-zinc-500" />
+          <button onClick={onClose} className="p-2 hover:bg-surface-hover rounded-full transition-colors group">
+            <X className="w-6 h-6 text-foreground-subtle group-hover:text-foreground" />
           </button>
         </div>
 
@@ -51,26 +51,26 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, o
         <div className="flex-1 overflow-y-auto p-8 space-y-10">
           {mode === 'train' ? (
             <div className="space-y-6">
-              <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-4">
-                <div className="flex items-center gap-2 text-indigo-300">
+              <div className="p-6 rounded-2xl bg-surface border border-border space-y-4 shadow-sm">
+                <div className="flex items-center gap-2 text-primary">
                     <Sparkles className="w-4 h-4" />
-                    <h3 className="text-sm font-bold uppercase tracking-wider">Inyección de Conocimiento</h3>
+                    <h3 className="text-sm font-bold uppercase tracking-wider font-brand">Inyección de Conocimiento</h3>
                 </div>
-                <p className="text-sm text-zinc-400 leading-relaxed">
+                <p className="text-sm text-foreground-muted leading-relaxed font-medium">
                   Sube documentos estratégicos para que la persona aprenda nuevos comportamientos, sesgos y conocimientos técnicos.
                 </p>
                 <KnowledgeDropzone personaId={persona.id} onUploadSuccess={onUploadSuccess} />
               </div>
               
-              <div className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
-                 <h4 className="text-xs font-black text-indigo-300 uppercase tracking-[0.2em] mb-3">Health Status</h4>
+              <div className="p-6 rounded-2xl bg-primary/5 border border-primary/10">
+                 <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-4 font-brand">Health Status</h4>
                  <div className="space-y-3">
                     <div className="flex justify-between items-end">
-                        <span className="text-xs text-zinc-400">Contextual Depth</span>
-                        <span className="text-xs font-bold text-white">Advanced</span>
+                        <span className="text-xs text-foreground-muted font-medium">Contextual Depth</span>
+                        <span className="text-xs font-bold text-foreground uppercase tracking-widest font-brand">Advanced</span>
                     </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full w-4/5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(79,70,229,0.5)]" />
+                    <div className="h-1.5 w-full bg-background rounded-full overflow-hidden border border-border/50 shadow-inner">
+                        <div className="h-full w-4/5 bg-primary rounded-full shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]" />
                     </div>
                  </div>
               </div>
@@ -84,73 +84,73 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, o
               />
 
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                    <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Nombre de la Persona</label>
-                    <span className="text-[10px] text-zinc-600 font-bold">{(form.name || '').length}/40</span>
+                <div className="flex justify-between items-center px-1">
+                    <label className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest font-brand">Nombre de la Persona</label>
+                    <span className="text-[9px] text-foreground-subtle font-bold">{(form.name || '').length}/40</span>
                 </div>
                 <input
                   type="text"
                   value={form.name}
                   maxLength={40}
                   onChange={(e) => setForm({ ...form, name: e.target.value.slice(0, 40) })}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500/50 transition-colors"
+                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 transition-colors shadow-sm"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Cluster Organizacional</label>
+                <label className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest px-1 font-brand">Cluster Organizacional</label>
                 <div className="relative">
                     <select
                         value={form.cluster}
                         onChange={(e) => setForm({ ...form, cluster: e.target.value })}
-                        className="w-full bg-[#0d0e10] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500/50 transition-colors appearance-none cursor-pointer"
+                        className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 transition-colors appearance-none cursor-pointer shadow-sm font-medium"
                     >
-                        {clusters.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                        {clusters.map(c => <option key={c.id} value={c.name} className="bg-background">{c.name}</option>)}
                     </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-subtle pointer-events-none" />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Rol / Profesión</label>
+                <label className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest px-1 font-brand">Rol / Profesión</label>
                 <input
                   type="text"
                   value={form.role}
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500/50 transition-colors"
+                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 transition-colors shadow-sm italic"
                 />
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/10 group">
+              <div className="flex items-center justify-between p-5 rounded-2xl bg-surface border border-border group shadow-sm">
                 <div className="space-y-1">
-                    <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Estado del Agente</label>
-                    <p className="text-[10px] text-zinc-600 font-medium tracking-tight">Los agentes desactivados no aparecerán en los selectores.</p>
+                    <label className="text-[10px] font-bold text-foreground uppercase tracking-widest font-brand">Estado del Agente</label>
+                    <p className="text-[10px] text-foreground-subtle font-medium tracking-tight">Los agentes desactivados no aparecerán en los selectores.</p>
                 </div>
                 <button 
                     type="button"
                     onClick={() => setForm({ ...form, is_active: !form.is_active })}
                     className={clsx(
-                        "flex items-center gap-2 px-4 py-2 rounded-xl border transition-all",
+                        "flex items-center gap-2 px-4 py-2 rounded-xl border transition-all font-brand",
                         form.is_active 
-                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(52,211,153,0.1)]" 
-                            : "bg-zinc-500/10 text-zinc-500 border-zinc-500/20"
+                            ? "bg-success/10 text-success border-success/20 shadow-sm" 
+                            : "bg-foreground/5 text-foreground-subtle border-border"
                     )}
                 >
                     {form.is_active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                    <span className="text-xs font-bold uppercase tracking-wider">{form.is_active ? "Activo" : "Desactivado"}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider">{form.is_active ? "Activo" : "Desactivado"}</span>
                 </button>
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center px-1">
-                    <label className="text-xs font-black text-zinc-500 uppercase tracking-widest">Profundidad Estratégica</label>
-                    <span className="text-[10px] text-zinc-600 font-bold">{(form.context || '').length} chars</span>
+                    <label className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest font-brand">Profundidad Estratégica</label>
+                    <span className="text-[9px] text-foreground-subtle font-bold">{(form.context || '').length} chars</span>
                 </div>
                 <textarea
                   value={form.context || ''}
                   onChange={(e) => setForm({ ...form, context: e.target.value })}
                   rows={10}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500/50 transition-colors text-sm leading-relaxed resize-none font-mono"
+                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-primary/40 transition-colors text-sm leading-relaxed resize-none font-mono shadow-inner"
                   placeholder="Aquí aparecerá el núcleo de la IA una vez sintetizado. También puedes escribirlo manualmente..."
                 />
               </div>
@@ -159,7 +159,7 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, o
                 <Button 
                     onClick={() => onSave(form)} 
                     disabled={submitting} 
-                    className="w-full h-12 text-md font-bold shadow-indigo-500/20 shadow-lg"
+                    className="w-full h-14 font-bold shadow-lg"
                 >
                   {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Save className="w-5 h-5 mr-2" /> Guardar Cambios</>}
                 </Button>
@@ -169,8 +169,8 @@ export function IntelligenceDrawer({ persona, clusters, mode, onClose, onSave, o
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-white/10 bg-white/[0.02]">
-            <p className="text-[10px] text-zinc-600 text-center uppercase tracking-widest font-medium">
+        <div className="p-6 border-t border-border bg-surface">
+            <p className="text-[10px] text-foreground-subtle text-center uppercase tracking-widest font-bold font-brand">
                 IntelAgent Systems • Access Restricted to Administrator
             </p>
         </div>

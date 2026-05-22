@@ -1,25 +1,27 @@
-# Handoff State: [2026-05-21] - Epic 26: Login Experience & Feedback Optimization
+# Handoff State: [2026-05-21] - Epic 28 (Multi-Theme Architecture)
 
-## Current Phase: Epic 26 (UX Refinement - Auth)
-**Target Branch**: `feature/ux/epic-26-login-feedback` (Merged to `staging`)
+## Current Phase: Epic 28 Completed & Ready for Integration
+**Target Branch**: `staging`
 **Last Verified State**: 
-- **Auth UX**: High-fidelity loading and success states implemented in `/login` and `/login/2fa`.
-- **System Status**: Explicit "Signing in..." and "Success! Redirecting..." labels with spinning loaders eliminate the "UI silence" during authentication.
-- **Safety**: Inputs and buttons are locked during the request lifecycle to prevent redundant submissions.
-- **I18n**: Full support for new status keys in Spanish and English.
-- **Stability**: `npm run build` and `npm run lint` verified success.
+- **Theme Engine (Epic 28)**: Full implementation of the Multi-Theme engine. Toggling between "Brand" (Institutional Alabaster) and "Experimental" (Tech Dark) is verified.
+- **Visual Identity**: Official SVG Logo integrated into the header. Typography standardized to **Plus Jakarta Sans** (Brand) and **Inter** (Body).
+- **Layout Integrity**: "Layout Lock" strategy successful; switching themes causes zero pixel-shift in the DOM.
+- **Component Coverage**: 100% of core app flows (Stress Test, Copywriter, Profile, Admin) are now theme-aware and use CSS Design Tokens.
+- **Accessibility**: Introduced `primary-foreground` token to ensure readable text on brand-colored backgrounds in both themes.
+- **Stability**: `npm run build` verified.
 
 ## 🏆 Accomplishments
-1.  **Eliminated Feedback Vacuum**: Refactored the login process to provide immediate, state-driven visual feedback.
-2.  **Auth State Machine**: Introduced `isLoading` and `isSuccess` tracking for primary auth and 2FA verification.
-3.  **Cross-Flow Consistency**: Unified the UX standards between the main login page and the 2FA verification step.
-4.  **Repository Hygiene**: Pruned 17+ stale/merged branches to maintain a lean development environment.
-5.  **Branch Synchronization**: Fully synced `main`, `staging`, and active feature branches.
+1.  **Multi-Theme Architecture**: Switched from hardcoded hex values to a dynamic CSS Variable system managed by `next-themes`.
+2.  **Institutional Brand Kit**: Translated the `brand-kit-live` specifications into a machine-readable `BRAND_KIT.json` and a functional CSS "skin".
+3.  **Total UI Audit**: Removed all legacy `bg-zinc-900` and `text-white` hardcodings across the codebase.
+4.  **Premium Toggle**: Implemented an animated Sun/Moon toggle in the `AppHeader` with hydration-safe mounting.
+5.  **Dossier Refactor**: Refactored the high-density `PersonaDossier` to look like a premium academic whitepaper in bright mode.
 
 ## 🚀 Immediate Next Steps
+- [ ] **Task 27.1 (Epic 27)**: Proceed with the concurrent session detection implementation as brainstormed in the previous session.
 - [ ] **Task 21.9 (Backend)**: **Resolve RAG Orphanage**: Refactor the incremental embedder to prevent knowledge loss when personas are re-created with new IDs.
-- [ ] **Task 23.4 (UX/UI)**: **Intelligence Bar**: Build a global context bar showing active persona and market metadata using the new `StepWizardLayout` hooks.
-- [ ] **Finalize PRs**: Ensure all local changes for Epic 26 are pushed and the branch is deleted (if preferred post-merge).
+- [ ] **Market Expansion**: Add a third theme option (e.g., "High Contrast") to further test the scalability of the token system.
 
 ## ⚠️ Known Issues
 - **RAG Orphanage**: Task 21.9 still pending (incremental embedder logic bug).
+- **Legacy Components**: While core flows are 100% covered, secondary/internal admin tools (e.g., Clusters management) may require minor contrast tweaks in future cycles.

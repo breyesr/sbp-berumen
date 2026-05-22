@@ -18,13 +18,13 @@ interface StepHeaderProps {
  */
 export function StepHeader({ title, description, onBack, backLabel, actions }: StepHeaderProps) {
     return (
-        <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+        <div className="flex items-center justify-between mb-8 border-b border-border pb-6">
             <div>
-                <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-2">
+                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-foreground mb-2 font-brand">
                     {title}
                 </h2>
                 {description && (
-                    <p className="text-sm md:text-base text-zinc-400 font-medium tracking-wide">
+                    <p className="text-sm md:text-base text-foreground-muted font-medium tracking-wide font-body">
                         {description}
                     </p>
                 )}
@@ -34,7 +34,7 @@ export function StepHeader({ title, description, onBack, backLabel, actions }: S
                 {onBack && (
                     <button
                         onClick={onBack}
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all text-xs font-bold"
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border hover:border-primary/50 text-foreground-muted hover:text-foreground transition-all text-xs font-bold font-brand uppercase tracking-widest"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         {backLabel || "Volver"}
@@ -111,7 +111,7 @@ export function StepWizardLayout({
  */
 export function StepWizardContainer({ children, className }: { children: React.ReactNode; className?: string }) {
     return (
-        <div className={clsx("bg-[#0a0a0a] text-[#ededed] px-6 py-8 md:py-12 min-h-screen selection:bg-indigo-500/30", className)}>
+        <div className={clsx("bg-background text-foreground px-6 py-8 md:py-12 min-h-[50vh] selection:bg-primary/30 transition-colors duration-300", className)}>
             <div className="max-w-6xl mx-auto relative">
                 <div className="space-y-0 transition-all relative z-40">
                     {children}

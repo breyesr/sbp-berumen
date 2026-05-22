@@ -10,7 +10,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#ededed]">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <AppHeader />
       <div className="mx-auto flex w-full flex-1 gap-6 px-4 py-6 lg:px-6">
         <aside className="hidden shrink-0 lg:block transition-all duration-300">

@@ -282,3 +282,27 @@
 - [ ] **Task 19.5**: **The History Ledger**: Build a unified "Recent Activity" or "History" UI component (Sidebar or Dashboard) to allow users to quickly switch between active and past sessions.
 - [ ] **Task 19.6**: **Contextual Resume**: Implement logic to detect when a user is returning to a session and restore the "Intelligence Factory" step progress automatically.
 
+
+## Epic 27: Account Integrity & Session Management (High Priority)
+**Owner**: Backend & AppSec
+*Goal: Prevent unauthorized account sharing and ensure session integrity across the platform.*
+
+- [ ] **Task 27.1**: **Concurrent Session Detection & Enforcement**: Implement a mechanism to detect and prevent simultaneous account usage across multiple browsers or devices, ensuring that a new login invalidates or blocks existing sessions. (Strategy to be defined: JWT versioning vs. DB-backed sessions).
+
+
+## Epic 28: Multi-Theme Architecture & Layout Lock (Completed: May 21, 2026)
+**Owner**: Frontend & UX/UI
+*Goal: Implement a toggleable theme system (Brand vs. Experimental) with zero layout shift, ensuring visual flexibility without structural instability.*
+
+**Mandates:**
+1. **Layout Lock**: Structural variables (spacing, sizing) must remain immutable across themes.
+2. **Contract-First**: Use CSS variables for all visual properties to allow seamless swapping.
+
+**Tasks:**
+- [x] **Task 28.1**: **Theme Infrastructure**: Install `next-themes` and implement the `ThemeProvider` in the root layout.
+- [x] **Task 28.2**: **CSS Tokenization**: Refactor `globals.css` to separate structural tokens from visual tokens (Brand vs. Experimental).
+- [x] **Task 28.3**: **Brand Kit Implementation**: Map the formalized `BRAND_KIT.json` colors to the `[data-theme='brand']` scope.
+- [x] **Task 28.4**: **Experimental Skin Design**: Define the "Tech/Dark" skin tokens for the `[data-theme='experimental']` scope.
+- [x] **Task 28.5**: **Theme Toggle UI**: Build and integrate a premium toggle component into the `AppHeader`.
+- [x] **Task 28.6**: **Validation Audit**: Perform a DOM-diff audit during theme toggling to confirm zero layout shift.
+

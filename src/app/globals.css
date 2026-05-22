@@ -1,7 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
+  /* --- STRUCTURAL TOKENS (LAYOUT LOCK) --- */
+  /* These are immutable across themes to ensure zero layout shift. */
+  
+  /* Spacing Scale */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 9999px;
+
+  /* Shadows (Structural component) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* --- VISUAL TOKENS (SKIN) --- */
+
+/* BRAND KIT THEME (Institutional) */
+html[data-theme='brand'], 
+:root:not([data-theme]) {
+  /* Core Colors */
+  --background: #FAFAF8; /* Warm Alabaster */
+  --foreground: #030213; /* Agent Black */
+  --surface: #E9EBEF;    /* Institutional Neutral */
+  --surface-elevated: rgba(3, 2, 19, 0.05);
+  --surface-hover: rgba(3, 2, 19, 0.08);
+
+  /* Text Colors */
+  --foreground-muted: #475569; /* Methodology Slate */
+  --foreground-subtle: #717182;
+
+  /* Brand Colors */
+  --primary: #B8975A; /* Bison Gold */
+  --primary-hover: #A68549;
+  --primary-light: rgba(184, 151, 90, 0.1);
+
+  /* Semantic Colors */
+  --success: #6B8E7B; /* Validation Sage */
+  --success-light: rgba(107, 142, 123, 0.1);
+  --success-border: rgba(107, 142, 123, 0.3);
+
+  --warning: #f59e0b;
+  --warning-light: rgba(245, 158, 11, 0.1);
+  --warning-border: rgba(245, 158, 11, 0.3);
+
+  --error: #D4183D; /* Alert Terracotta */
+  --error-light: rgba(212, 24, 61, 0.1);
+  --error-border: rgba(212, 24, 61, 0.3);
+
+  --info: #3b82f6;
+  --info-light: rgba(59, 130, 246, 0.1);
+  --info-border: rgba(59, 130, 246, 0.3);
+
+  /* Borders */
+  --border: rgba(3, 2, 19, 0.1);
+  --border-subtle: rgba(3, 2, 19, 0.05);
+  --border-strong: rgba(3, 2, 19, 0.2);
+
+  /* Typography */
+  --font-brand: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  }
+
+  /* EXPERIMENTAL THEME (Dark/Tech) */
+  html[data-theme='experimental'] {
   /* Core Colors */
   --background: #0a0a0a;
   --surface: #171717;
@@ -13,7 +86,7 @@
   --foreground-muted: #a1a1aa;
   --foreground-subtle: #71717a;
 
-  /* Brand Colors */
+  /* Brand Colors (Indigo-based for Experimental) */
   --primary: #4F46E5;
   --primary-hover: #6366F1;
   --primary-light: rgba(79, 70, 229, 0.1);
@@ -40,110 +113,70 @@
   --border-subtle: rgba(255, 255, 255, 0.05);
   --border-strong: rgba(255, 255, 255, 0.2);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  /* Typography (Stays consistent for Brand ID) */
+  --font-brand: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  }
 
-  /* Spacing Scale */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-
-  /* Border Radius */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-full: 9999px;
-}
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
   --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
   --color-surface-elevated: var(--surface-elevated);
+  --color-error: var(--error);
+  --color-success: var(--success);
+  --font-brand: var(--font-brand);
+  --font-body: var(--font-body);
+}
+
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-feature-settings: 'cv11', 'ss01';
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-brand);
+}
+
 /* Animation Utilities */
 @keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.animate-slide-in-up {
-  animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
+.animate-slide-in-up { animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+.animate-scale-in { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Stagger animation delays */
-.stagger-1 {
-  animation-delay: 0.05s;
-}
-
-.stagger-2 {
-  animation-delay: 0.1s;
-}
-
-.stagger-3 {
-  animation-delay: 0.15s;
-}
-
-.stagger-4 {
-  animation-delay: 0.2s;
-}
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
 
 /* Glassmorphism */
 .glass {

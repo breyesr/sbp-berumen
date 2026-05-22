@@ -39,32 +39,32 @@ export function PersonaSidebar({
 
     if (variant === 'compact') {
         return (
-            <div className={clsx("bg-white/[0.02] border border-white/5 rounded-[2rem] p-8 shadow-2xl flex flex-col gap-6", className)}>
+            <div className={clsx("bg-surface border border-border rounded-[2rem] p-8 shadow-2xl flex flex-col gap-6", className)}>
                 <div className="flex items-start gap-4">
                     {persona.photo_url ? (
-                        <div className="w-16 h-16 rounded-2xl overflow-hidden border border-indigo-500/30 flex-shrink-0">
+                        <div className="w-16 h-16 rounded-2xl overflow-hidden border border-primary/30 flex-shrink-0">
                             <img src={persona.photo_url} alt={personaName} className="w-full h-full object-cover" />
                         </div>
                     ) : (
-                        <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
-                            <User className="w-8 h-8 text-indigo-400/50" />
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                            <User className="w-8 h-8 text-primary/50" />
                         </div>
                     )}
                     <div>
-                        <span className="text-[9px] font-black tracking-[0.2em] uppercase text-indigo-400 block mb-1">
+                        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary block mb-1 font-brand">
                             {persona.cluster || "Cluster"}
                         </span>
-                        <h3 className="text-lg font-black text-white leading-tight uppercase">
+                        <h3 className="text-lg font-bold text-foreground leading-tight uppercase font-brand">
                             {personaName}
                         </h3>
-                        <p className="text-xs text-zinc-500 font-medium italic">
+                        <p className="text-xs text-foreground-muted font-medium italic font-body">
                             {personaRole}
                         </p>
                     </div>
                 </div>
 
                 {footer && (
-                    <div className="pt-6 border-t border-white/5">
+                    <div className="pt-6 border-t border-border">
                         {footer}
                     </div>
                 )}
@@ -73,27 +73,27 @@ export function PersonaSidebar({
     }
 
     return (
-        <div className={clsx("rounded-[2rem] bg-white/[0.02] border border-white/5 flex flex-col shadow-2xl overflow-hidden", className)}>
+        <div className={clsx("rounded-[2rem] bg-surface border border-border flex flex-col shadow-2xl overflow-hidden", className)}>
             {/* Header: Identity */}
-            <div className="p-6 border-b border-white/5 bg-gradient-to-br from-indigo-500/5 to-transparent">
+            <div className="p-6 border-b border-border bg-gradient-to-br from-primary/5 to-transparent">
                 <div className="flex items-center gap-4">
                     {persona.photo_url ? (
-                        <div className="w-16 h-16 rounded-2xl overflow-hidden border border-indigo-500/30 flex-shrink-0">
+                        <div className="w-16 h-16 rounded-2xl overflow-hidden border border-primary/30 flex-shrink-0">
                             <img src={persona.photo_url} alt={personaName} className="w-full h-full object-cover" />
                         </div>
                     ) : (
-                        <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
-                            <User className="w-8 h-8 text-indigo-400/50" />
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                            <User className="w-8 h-8 text-primary/50" />
                         </div>
                     )}
                     <div>
-                        <span className="text-[9px] font-black tracking-[0.2em] uppercase text-indigo-400 block mb-1">
+                        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary block mb-1 font-brand">
                             {persona.cluster || "Cluster"}
                         </span>
-                        <h3 className="text-lg font-black text-white leading-tight uppercase">
+                        <h3 className="text-lg font-bold text-foreground leading-tight uppercase font-brand">
                             {personaName}
                         </h3>
-                        <p className="text-xs text-zinc-500 font-medium italic">
+                        <p className="text-xs text-foreground-muted font-medium italic font-body">
                             {personaRole}
                         </p>
                     </div>
@@ -104,30 +104,30 @@ export function PersonaSidebar({
             <div className="p-6 space-y-8">
                 {isLoading ? (
                     <div className="space-y-4 animate-pulse">
-                        <div className="h-2 w-24 bg-white/5 rounded-full" />
-                        <div className="h-20 bg-white/5 rounded-2xl" />
+                        <div className="h-2 w-24 bg-foreground/5 rounded-full" />
+                        <div className="h-20 bg-foreground/5 rounded-2xl" />
                     </div>
                 ) : (dossier && !hideIntelligence) ? (
                     <>
                         <div className="space-y-3">
-                            <div className="flex items-center gap-2 text-indigo-400">
+                            <div className="flex items-center gap-2 text-primary">
                                 <Sparkles className="w-4 h-4" />
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em]">Síntesis Ejecutiva</h4>
+                                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] font-brand">Síntesis Ejecutiva</h4>
                             </div>
-                            <p className="text-xs leading-relaxed text-zinc-300 p-4 bg-black/40 rounded-2xl border border-white/5">
+                            <p className="text-xs leading-relaxed text-foreground-muted p-4 bg-background/40 rounded-2xl border border-border font-body shadow-inner">
                                 {metadata.strategic_synthesis || metadata.synthesis || "Análisis estratégico no disponible."}
                             </p>
                         </div>
 
                         {metadata.pains && metadata.pains.length > 0 && (
                             <div className="space-y-3">
-                                <div className="flex items-center gap-2 text-amber-400">
+                                <div className="flex items-center gap-2 text-error">
                                     <Zap className="w-4 h-4" />
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em]">Dolores Principales</h4>
+                                    <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] font-brand">Dolores Principales</h4>
                                 </div>
                                 <ul className="space-y-2">
                                     {metadata.pains.slice(0,3).map((p: string, i: number) => (
-                                        <li key={i} className="text-xs text-zinc-400 p-3 rounded-xl bg-amber-500/5 border border-amber-500/10">{p}</li>
+                                        <li key={i} className="text-xs text-foreground-muted p-3 rounded-xl bg-error/5 border border-error/10 font-body">{p}</li>
                                     ))}
                                 </ul>
                             </div>
@@ -135,13 +135,13 @@ export function PersonaSidebar({
 
                         {metadata.goals && metadata.goals.length > 0 && (
                             <div className="space-y-3">
-                                <div className="flex items-center gap-2 text-emerald-400">
+                                <div className="flex items-center gap-2 text-success">
                                     <Target className="w-4 h-4" />
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em]">Metas Estratégicas</h4>
+                                    <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] font-brand">Metas Estratégicas</h4>
                                 </div>
                                 <ul className="space-y-2">
                                     {metadata.goals.slice(0,3).map((g: string, i: number) => (
-                                        <li key={i} className="text-xs text-zinc-400 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">{g}</li>
+                                        <li key={i} className="text-xs text-foreground-muted p-3 rounded-xl bg-success/5 border border-success/10 font-body">{g}</li>
                                     ))}
                                 </ul>
                             </div>
@@ -150,7 +150,7 @@ export function PersonaSidebar({
                 ) : null}
 
                 {footer && (
-                    <div className="pt-6 border-t border-white/5">
+                    <div className="pt-6 border-t border-border">
                         {footer}
                     </div>
                 )}

@@ -248,97 +248,97 @@ export default function AdminPersonasPage() {
   if (status === "loading") {
     return (
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-            <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-            <p className="text-sm text-zinc-500 animate-pulse font-medium tracking-widest uppercase text-center">IntelAgent Systems Loading...</p>
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+            <p className="text-sm text-foreground-subtle animate-pulse font-bold tracking-widest uppercase text-center font-brand">IntelAgent Systems Loading...</p>
         </div>
     );
   }
 
   if (!session?.user || !isAdmin) {
     return (
-      <div className="mx-auto w-full max-w-4xl rounded-3xl border border-red-500/20 bg-red-500/5 p-8 text-center backdrop-blur-md mt-10">
-        <h1 className="text-2xl font-bold text-red-200">Acceso Restringido</h1>
-        <p className="mt-2 text-zinc-400">Esta terminal está reservada para el protocolo de administración.</p>
+      <div className="mx-auto w-full max-w-4xl rounded-3xl border border-error/20 bg-error/5 p-8 text-center backdrop-blur-md mt-10">
+        <h1 className="text-2xl font-bold text-error font-brand uppercase tracking-tight">Acceso Restringido</h1>
+        <p className="mt-2 text-foreground-muted font-medium">Esta terminal está reservada para el protocolo de administración.</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 pb-20 px-4">
+    <div className="max-w-7xl mx-auto space-y-6 pb-20 px-4 animate-fade-in font-body">
       {/* High-Performance Header */}
-      <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-md">
+      <div className="bg-surface border border-border rounded-3xl p-6 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-6">
           <div className="space-y-1">
-            <h1 className="text-2xl font-black text-white tracking-tighter uppercase">Intelligence Factory</h1>
+            <h1 className="text-3xl font-bold text-foreground tracking-tighter uppercase font-brand">Intelligence Factory</h1>
             <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <p className="text-[10px] text-zinc-500 font-black tracking-[0.2em] uppercase">Control Center Active</p>
+                <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+                <p className="text-[10px] text-foreground-subtle font-bold tracking-[0.2em] uppercase font-brand">Control Center Active</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
              {/* Sync Button */}
              <Button 
                 onClick={handleSync}
                 disabled={syncing}
-                className="rounded-xl h-10 border-white/10 bg-transparent hover:bg-white/5 text-zinc-400 hover:text-white transition-all shadow-none border"
+                className="rounded-xl h-10 border-border bg-background hover:bg-surface-hover text-foreground-muted hover:text-foreground transition-all shadow-sm border px-4"
                 title="Sincronizar con archivos del repositorio"
             >
                 {syncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCcw className="w-4 h-4" />}
-                <span className="ml-2 hidden md:inline">Sincronizar DB</span>
+                <span className="ml-2 hidden md:inline font-brand uppercase text-[10px] tracking-widest">Sincronizar DB</span>
             </Button>
 
              {/* Search */}
              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground-subtle" />
                 <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchBar(e.target.value)}
                     placeholder="Search agents..."
-                    className="bg-black/20 border border-white/10 rounded-xl pl-9 pr-4 py-2.5 text-xs text-white outline-none focus:border-indigo-500/40 w-48 md:w-64 transition-all"
+                    className="bg-background border border-border rounded-xl pl-9 pr-4 py-2.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-primary/40 w-48 md:w-64 transition-all shadow-sm"
                 />
             </div>
             
             <div className="relative group">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground-subtle" />
                 <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value as any)}
-                    className="bg-black/20 border border-white/10 rounded-xl pl-9 pr-10 py-2.5 text-xs text-zinc-300 outline-none hover:border-white/20 transition-colors appearance-none cursor-pointer w-full md:w-auto"
+                    className="bg-background border border-border rounded-xl pl-9 pr-10 py-2.5 text-xs text-foreground outline-none hover:border-primary/30 transition-colors appearance-none cursor-pointer w-full md:w-auto shadow-sm font-medium"
                 >
                     <option value="all">All Status</option>
                     <option value="active">Active Only</option>
                     <option value="inactive">Inactive Only</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-foreground-subtle pointer-events-none" />
             </div>
 
             <div className="relative group">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground-subtle" />
                 <select
                     value={filterCluster}
                     onChange={(e) => setFilterCluster(e.target.value)}
-                    className="bg-black/20 border border-white/10 rounded-xl pl-9 pr-10 py-2.5 text-xs text-zinc-300 outline-none hover:border-white/20 transition-colors appearance-none cursor-pointer w-full md:w-auto"
+                    className="bg-background border border-border rounded-xl pl-9 pr-10 py-2.5 text-xs text-foreground outline-none hover:border-primary/30 transition-colors appearance-none cursor-pointer w-full md:w-auto shadow-sm font-medium"
                 >
                     <option value="all">All Clusters</option>
                     {availableClusters.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-500 pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-foreground-subtle pointer-events-none" />
             </div>
 
             <Link href="/admin/clusters">
                 <Button 
-                    className="rounded-xl h-10 border-white/10 bg-transparent hover:bg-white/5 text-zinc-400 hover:text-white transition-all shadow-none border"
+                    className="rounded-xl h-10 border-border bg-background hover:bg-surface-hover text-foreground-muted hover:text-foreground transition-all shadow-sm border px-4"
                 >
                     <LayoutGrid className="w-4 h-4 mr-2" />
-                    <span className="hidden md:inline">Clusters</span>
+                    <span className="hidden md:inline font-brand uppercase text-[10px] tracking-widest">Clusters</span>
                 </Button>
             </Link>
 
             <Button 
                 onClick={() => setIsAddingPersona(true)}
-                className="rounded-xl h-10 px-6 font-bold shadow-lg shadow-indigo-500/20"
+                className="rounded-xl h-10 px-6 font-bold shadow-lg"
             >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Agent
@@ -348,46 +348,46 @@ export default function AdminPersonasPage() {
       </div>
 
       {/* Modern High-Density Table */}
-      <section className="bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+      <section className="bg-surface border border-border rounded-3xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
                 <thead>
-                    <tr className="bg-white/[0.03] border-b border-white/10">
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-white transition-colors" onClick={() => { setSortBy("name"); setSortOrder(sortOrder === "asc" ? "desc" : "asc"); }}>
+                    <tr className="bg-surface-elevated/30 border-b border-border">
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest cursor-pointer hover:text-foreground transition-colors font-brand" onClick={() => { setSortBy("name"); setSortOrder(sortOrder === "asc" ? "desc" : "asc"); }}>
                             <div className="flex items-center gap-2">
                                 Agent
                                 <ArrowUpDown className="w-3 h-3" />
                             </div>
                         </th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Intelligence</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Status</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Cluster</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Core Role</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-white transition-colors" onClick={() => { setSortBy("updated_at"); setSortOrder(sortOrder === "asc" ? "desc" : "asc"); }}>
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest font-brand">Intelligence</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest font-brand">Status</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest font-brand">Cluster</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest font-brand">Core Role</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest cursor-pointer hover:text-foreground transition-colors font-brand" onClick={() => { setSortBy("updated_at"); setSortOrder(sortOrder === "asc" ? "desc" : "asc"); }}>
                             <div className="flex items-center gap-2">
                                 Last Sync
                                 <ArrowUpDown className="w-3 h-3" />
                             </div>
                         </th>
-                        <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest text-right">Actions</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-foreground-subtle uppercase tracking-widest text-right font-brand">Actions</th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-border">
                     {loading ? (
                         [1,2,3,4,5].map(i => (
                             <tr key={i} className="animate-pulse">
-                                <td colSpan={7} className="px-6 py-8"><div className="h-4 bg-white/5 rounded-full w-full" /></td>
+                                <td colSpan={7} className="px-6 py-8"><div className="h-4 bg-foreground/5 rounded-full w-full" /></td>
                             </tr>
                         ))
                     ) : filteredPersonas.map((p) => (
-                        <tr key={p.id} className="hover:bg-white/[0.02] transition-colors group">
+                        <tr key={p.id} className="hover:bg-surface-hover transition-colors group">
                             <td className="px-6 py-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-indigo-500/10 border border-white/10 flex-shrink-0 flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-primary/10 border border-border flex-shrink-0 flex items-center justify-center">
                                         {(p as any).photo_url ? (
                                             <img src={(p as any).photo_url} alt={p.name} className="w-full h-full object-cover" />
                                         ) : (
-                                            <User className="w-5 h-5 text-indigo-400/50" />
+                                            <User className="w-5 h-5 text-primary/50" />
                                         )}
                                     </div>
                                     <div className="flex flex-col min-w-0">
@@ -399,14 +399,14 @@ export default function AdminPersonasPage() {
                                                 onChange={(e) => setEditValue(e.target.value)}
                                                 onBlur={handleBlur}
                                                 onKeyDown={handleKeyDown}
-                                                className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-bold text-white outline-none w-full py-0.5"
+                                                className="bg-primary/10 border-b border-primary text-sm font-bold text-foreground outline-none w-full py-0.5"
                                             />
                                         ) : (
                                             <div 
                                                 onClick={() => handleStartEdit(p, 'name')}
-                                                className="cursor-pointer hover:bg-white/5 rounded px-1 -ml-1 transition-colors"
+                                                className="cursor-pointer hover:bg-background/50 rounded px-1 -ml-1 transition-colors"
                                             >
-                                                <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">{p.name}</span>
+                                                <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors font-brand">{p.name}</span>
                                             </div>
                                         )}
                                     </div>
@@ -414,13 +414,13 @@ export default function AdminPersonasPage() {
                             </td>
                             <td className="px-6 py-4">
                                 <div className={clsx(
-                                    "flex items-center gap-2 px-2.5 py-1 rounded-full border transition-all w-fit",
+                                    "flex items-center gap-2 px-2.5 py-1 rounded-full border transition-all w-fit font-brand",
                                     p.has_rag 
-                                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
-                                        : "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                                        ? "bg-success/10 text-success border-success/20" 
+                                        : "bg-warning/10 text-warning border-warning/20"
                                 )}>
                                     <Brain className="w-3 h-3" />
-                                    <span className="text-[9px] font-black tracking-widest uppercase">
+                                    <span className="text-[9px] font-bold tracking-widest uppercase">
                                         {p.has_rag ? "Ready" : "Training"}
                                     </span>
                                 </div>
@@ -429,14 +429,14 @@ export default function AdminPersonasPage() {
                                 <button 
                                     onClick={() => handleToggleStatus(p.id, p.is_active)}
                                     className={clsx(
-                                        "flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all",
+                                        "flex items-center gap-1.5 px-2.5 py-1 rounded-full border transition-all font-brand",
                                         p.is_active 
-                                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20" 
-                                            : "bg-zinc-500/10 text-zinc-500 border-zinc-500/20 hover:bg-zinc-500/20 opacity-60"
+                                            ? "bg-success/10 text-success border-success/20 hover:bg-success/20" 
+                                            : "bg-foreground/5 text-foreground-subtle border-border hover:bg-foreground/10 opacity-60"
                                     )}
                                 >
                                     {p.is_active ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-                                    <span className="text-[9px] font-black tracking-widest uppercase">{p.is_active ? "Active" : "Disabled"}</span>
+                                    <span className="text-[9px] font-bold tracking-widest uppercase">{p.is_active ? "Active" : "Disabled"}</span>
                                 </button>
                             </td>
                             <td className="px-6 py-4">
@@ -444,15 +444,15 @@ export default function AdminPersonasPage() {
                                     <select
                                         value={p.cluster}
                                         onChange={(e) => handleInlineUpdate(p.id, { cluster: e.target.value })}
-                                        className="appearance-none bg-indigo-500/5 hover:bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/40 px-2.5 py-1 pr-7 rounded-full text-[9px] font-black tracking-widest uppercase cursor-pointer transition-all outline-none"
+                                        className="appearance-none bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 hover:border-primary/40 px-2.5 py-1 pr-7 rounded-full text-[9px] font-bold tracking-widest uppercase cursor-pointer transition-all outline-none font-brand"
                                     >
                                         {availableClusters.map(c => (
-                                            <option key={c} value={c} className="bg-[#09090b] text-white lowercase tracking-normal font-sans">
+                                            <option key={c} value={c} className="bg-background text-foreground lowercase tracking-normal font-sans">
                                                 {c}
                                             </option>
                                         ))}
                                     </select>
-                                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-indigo-400/50 pointer-events-none group-hover/select:text-indigo-400" />
+                                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-primary/50 pointer-events-none group-hover/select:text-primary" />
                                 </div>
                             </td>
                             <td className="px-6 py-4">
@@ -464,32 +464,32 @@ export default function AdminPersonasPage() {
                                         onChange={(e) => setEditValue(e.target.value)}
                                         onBlur={handleBlur}
                                         onKeyDown={handleKeyDown}
-                                        className="bg-indigo-500/10 border-b border-indigo-500/50 text-sm font-medium italic text-zinc-300 outline-none w-full py-0.5"
+                                        className="bg-primary/10 border-b border-primary text-sm font-medium italic text-foreground-muted outline-none w-full py-0.5 font-body"
                                     />
                                 ) : (
                                     <div 
                                         onClick={() => handleStartEdit(p, 'role')}
-                                        className="cursor-pointer hover:bg-white/5 rounded px-1 -ml-1 transition-colors"
+                                        className="cursor-pointer hover:bg-background/50 rounded px-1 -ml-1 transition-colors"
                                     >
-                                        <span className="text-sm text-zinc-400 font-medium italic">{p.role || "—"}</span>
+                                        <span className="text-sm text-foreground-muted font-medium italic font-body">{p.role || "—"}</span>
                                     </div>
                                 )}
                             </td>
                             <td className="px-6 py-4">
-                                <span className="text-[11px] text-zinc-500 font-medium">{formatDate(p.updated_at)}</span>
+                                <span className="text-[11px] text-foreground-subtle font-medium font-body">{formatDate(p.updated_at)}</span>
                             </td>
                             <td className="px-6 py-4">
                                 <div className="flex justify-end gap-1">
-                                    <button onClick={() => setViewingDossier(p)} title="Dossier" className="p-2 text-zinc-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-xl transition-all">
+                                    <button onClick={() => setViewingDossier(p)} title="Dossier" className="p-2 text-foreground-subtle hover:text-primary hover:bg-primary/10 rounded-xl transition-all">
                                         <FileText className="w-4 h-4" />
                                     </button>
-                                    <button onClick={() => { setActivePersona(p); setDrawerMode('train'); }} title="Entrenar" className="p-2 text-zinc-500 hover:text-emerald-400 hover:bg-emerald-500/10 rounded-xl transition-all">
+                                    <button onClick={() => { setActivePersona(p); setDrawerMode('train'); }} title="Entrenar" className="p-2 text-foreground-subtle hover:text-success hover:bg-success/10 rounded-xl transition-all">
                                         <Brain className="w-4 h-4" />
                                     </button>
-                                    <button onClick={() => { setActivePersona(p); setDrawerMode('edit'); }} title="Editar" className="p-2 text-zinc-500 hover:text-white hover:bg-white/10 rounded-xl transition-all">
+                                    <button onClick={() => { setActivePersona(p); setDrawerMode('edit'); }} title="Editar" className="p-2 text-foreground-subtle hover:text-foreground hover:bg-foreground/5 rounded-xl transition-all">
                                         <Pencil className="w-4 h-4" />
                                     </button>
-                                    <button onClick={() => handleDeletePersona(p.id, p.name)} title="Borrar" className="p-2 text-zinc-600 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all">
+                                    <button onClick={() => handleDeletePersona(p.id, p.name)} title="Borrar" className="p-2 text-foreground-subtle hover:text-error hover:bg-error/10 rounded-xl transition-all">
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
@@ -500,10 +500,10 @@ export default function AdminPersonasPage() {
             </table>
             {!loading && filteredPersonas.length === 0 && (
                 <div className="py-20 text-center space-y-3">
-                    <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto">
-                        <Search className="w-5 h-5 text-zinc-600" />
+                    <div className="w-12 h-12 bg-foreground/5 rounded-full flex items-center justify-center mx-auto">
+                        <Search className="w-5 h-5 text-foreground-subtle" />
                     </div>
-                    <p className="text-zinc-500 text-sm font-medium tracking-tight">No intelligence nodes found for current parameters.</p>
+                    <p className="text-foreground-subtle text-sm font-medium tracking-tight">No intelligence nodes found for current parameters.</p>
                 </div>
             )}
         </div>
@@ -511,43 +511,43 @@ export default function AdminPersonasPage() {
 
       {/* Modals & Drawer */}
       {isAddingPersona && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#09090b] border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-scale-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-surface border border-border rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-scale-in">
             <div className="p-8 space-y-6">
                 <div className="space-y-1">
-                    <h2 className="text-2xl font-bold text-white tracking-tight">Add Cognitive Agent</h2>
-                    <p className="text-sm text-zinc-500">Initialize a new persona in the factory.</p>
+                    <h2 className="text-2xl font-bold text-foreground tracking-tight font-brand uppercase">Add Cognitive Agent</h2>
+                    <p className="text-sm text-foreground-muted font-medium">Initialize a new persona in the factory.</p>
                 </div>
                 <form onSubmit={handleCreatePersona} className="space-y-5">
-                    <div className="space-y-2">
+                    <div className="space-y-2 font-brand">
                         <div className="flex justify-between items-center px-1">
-                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Nombre</label>
-                            <span className="text-[9px] text-zinc-600 font-bold">{createName.length}/40</span>
+                            <label className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest">Nombre</label>
+                            <span className="text-[9px] text-foreground-subtle font-bold">{createName.length}/40</span>
                         </div>
                         <input 
                             type="text" 
                             value={createName} 
                             onChange={(e) => setCreateName(e.target.value.slice(0, 40))} 
                             maxLength={40}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors" 
+                            className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 transition-colors" 
                         />
                     </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Cluster</label>
+                    <div className="space-y-2 font-brand">
+                        <label className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest px-1">Cluster</label>
                         <div className="relative">
                             <select
                                 value={createCluster}
                                 onChange={(e) => setCreateCluster(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-indigo-500/50 transition-colors appearance-none"
+                                className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40 transition-colors appearance-none cursor-pointer"
                             >
                                 {availableClusters.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
-                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-subtle pointer-events-none" />
                         </div>
                     </div>
                     <div className="flex gap-3 pt-4">
-                        <Button type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-white/10 bg-transparent hover:bg-white/5 text-white shadow-none">Cancel</Button>
-                        <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-indigo-500/20 shadow-lg">Initialize</Button>
+                        <Button type="button" onClick={() => setIsAddingPersona(false)} className="flex-1 h-12 rounded-xl border border-border bg-background text-foreground-muted hover:bg-surface-hover hover:text-foreground shadow-none">Cancel</Button>
+                        <Button type="submit" disabled={submitting} className="flex-1 h-12 rounded-xl shadow-lg">Initialize</Button>
                     </div>
                 </form>
             </div>

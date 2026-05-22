@@ -22,7 +22,7 @@ export default function LanguageSwitch({
         role="group"
         aria-label={t("i18n.switch_aria_label")}
         className={clsx(
-          "inline-flex items-center rounded-md border border-white/20 bg-[#0d0e10]",
+          "inline-flex items-center rounded-lg border border-border bg-surface shadow-sm",
           compact ? "p-0.5" : "p-1"
         )}
       >
@@ -34,10 +34,10 @@ export default function LanguageSwitch({
               type="button"
               onClick={() => void setLocale(option.locale)}
               className={clsx(
-                "rounded px-2 py-1 text-xs transition-colors",
+                "rounded-md px-3 py-1 text-[10px] font-bold uppercase tracking-widest transition-all duration-200 font-brand",
                 isActive
-                  ? "bg-[#4F46E5]/30 text-white"
-                  : "text-[#a1a1aa] hover:text-[#ededed]"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-foreground-subtle hover:text-foreground hover:bg-surface-hover"
               )}
               disabled={isSavingLocale}
             >
@@ -47,10 +47,10 @@ export default function LanguageSwitch({
         })}
       </div>
       {isSavingLocale ? (
-        <p className="text-[10px] text-[#a1a1aa]">{t("i18n.saving")}</p>
+        <p className="text-[9px] text-foreground-subtle font-brand uppercase tracking-tighter">{t("i18n.saving")}</p>
       ) : null}
       {!isSavingLocale && localeSaveError ? (
-        <p className="max-w-52 text-right text-[10px] text-amber-300">{localeSaveError}</p>
+        <p className="max-w-52 text-right text-[9px] text-error font-bold uppercase tracking-tighter">{localeSaveError}</p>
       ) : null}
     </div>
   );

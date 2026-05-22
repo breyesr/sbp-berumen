@@ -239,8 +239,8 @@ export default function IntakeForm({ personas = [] }: Props) {
   const noPersonas = personas.length === 0;
 
   return (
-    <div className="w-full max-w-2xl p-4 rounded-2xl border border-gray-200 shadow-sm space-y-4">
-      <h2 className="text-lg font-semibold">Aquí empieza tu crecimiento: cuéntanos sobre tu negocio</h2>
+    <div className="w-full max-w-2xl p-4 rounded-2xl border border-border bg-surface shadow-sm space-y-4">
+      <h2 className="text-lg font-bold font-brand text-foreground">Aquí empieza tu crecimiento: cuéntanos sobre tu negocio</h2>
 
       {/* Persona + Industria + Ciudad */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -266,11 +266,11 @@ export default function IntakeForm({ personas = [] }: Props) {
       <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Clientes/mes */}
         <label className="space-y-1">
-          <span className="text-sm">Clientes/mes</span>
+          <span className="text-sm font-medium text-foreground-muted font-brand uppercase tracking-wider">Clientes/mes</span>
           <input
             type="text"
             inputMode="numeric"
-            className="w-full rounded-xl border p-2"
+            className="w-full rounded-xl border border-border bg-background p-2 text-foreground font-body focus:ring-2 focus:ring-primary/30 outline-none"
             value={customersPerMonth}
             onChange={(e) => setCustomersPerMonth(digitsOnly(e.target.value))}
             onKeyDown={(e) => { if (!isAllowedKey(e)) e.preventDefault(); }}
@@ -282,17 +282,17 @@ export default function IntakeForm({ personas = [] }: Props) {
             placeholder="Ej. 15"
           />
           {(customersPerMonth === "" || customersNum <= 0) && (
-            <p className="text-xs text-red-600">Debes ingresar un número mayor a 0.</p>
+            <p className="text-[10px] text-error font-bold uppercase tracking-widest px-1">Ingresa un número &gt; 0</p>
           )}
         </label>
 
         {/* Ticket promedio */}
         <label className="space-y-1">
-          <span className="text-sm">Ticket promedio (MX$)</span>
+          <span className="text-sm font-medium text-foreground-muted font-brand uppercase tracking-wider">Ticket promedio (MX$)</span>
           <input
             type="text"
             inputMode="numeric"
-            className="w-full rounded-xl border p-2"
+            className="w-full rounded-xl border border-border bg-background p-2 text-foreground font-body focus:ring-2 focus:ring-primary/30 outline-none"
             value={avgTicket}
             onChange={(e) => setAvgTicket(digitsOnly(e.target.value))}
             onKeyDown={(e) => { if (!isAllowedKey(e)) e.preventDefault(); }}
@@ -304,37 +304,37 @@ export default function IntakeForm({ personas = [] }: Props) {
             placeholder="Ej. 300"
           />
           {(avgTicket === "" || ticketNum <= 0) && (
-            <p className="text-xs text-red-600">Debes ingresar un número mayor a 0.</p>
+            <p className="text-[10px] text-error font-bold uppercase tracking-widest px-1">Ingresa un número &gt; 0</p>
           )}
         </label>
 
         {/* ¿Dónde te encuentran más? */}
         <label className="space-y-1 sm:col-span-2">
-          <span className="text-sm">¿Dónde te encuentran más?</span>
+          <span className="text-sm font-medium text-foreground-muted font-brand uppercase tracking-wider">¿Dónde te encuentran más?</span>
           <select
-            className="w-full rounded-xl border p-2"
+            className="w-full rounded-xl border border-border bg-background p-2 text-foreground font-body focus:ring-2 focus:ring-primary/30 outline-none appearance-none"
             value={mainDiscovery}
             onChange={(e) => setMainDiscovery(e.target.value)}
           >
             {CHANNEL_OPTIONS.map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
+              <option key={c.value} value={c.value} className="bg-background">{c.label}</option>
             ))}
           </select>
         </label>
 
         {/* Canales de apoyo */}
         <div className="sm:col-span-2 space-y-2">
-          <p className="text-sm">¿Dónde más tienes presencia? (canales de apoyo)</p>
+          <p className="text-sm font-medium text-foreground-muted font-brand uppercase tracking-wider">¿Dónde más tienes presencia?</p>
           <div className="flex flex-wrap gap-3">
             {CHANNEL_OPTIONS.map((c) => (
-              <label key={`chk-${c.value}`} className="inline-flex items-center gap-2 text-sm">
+              <label key={`chk-${c.value}`} className="inline-flex items-center gap-2 text-sm cursor-pointer group">
                 <input
                   type="checkbox"
-                  className="rounded"
+                  className="rounded border-border bg-background text-primary focus:ring-primary/30 transition-all cursor-pointer"
                   checked={supportChannels.includes(c.value)}
                   onChange={() => toggleSupportChannel(c.value)}
                 />
-                <span>{c.label}</span>
+                <span className="text-foreground-muted group-hover:text-foreground transition-colors font-body">{c.label}</span>
               </label>
             ))}
           </div>
@@ -342,11 +342,11 @@ export default function IntakeForm({ personas = [] }: Props) {
 
         {/* Inversión mensual */}
         <label className="space-y-1">
-          <span className="text-sm">Inversión mensual en anuncios (MX$)</span>
+          <span className="text-sm font-medium text-foreground-muted font-brand uppercase tracking-wider">Inversión mensual (MX$)</span>
           <input
             type="text"
             inputMode="numeric"
-            className="w-full rounded-xl border p-2"
+            className="w-full rounded-xl border border-border bg-background p-2 text-foreground font-body focus:ring-2 focus:ring-primary/30 outline-none"
             value={adSpend}
             onChange={(e) => setAdSpend(digitsOnly(e.target.value))}
             onKeyDown={(e) => { if (!isAllowedKey(e)) e.preventDefault(); }}
@@ -358,18 +358,18 @@ export default function IntakeForm({ personas = [] }: Props) {
             placeholder="Ej. 2000"
           />
           {(adSpend === "" || spendNum <= 0) && (
-            <p className="text-xs text-red-600">Debes ingresar un número mayor a 0.</p>
+            <p className="text-[10px] text-error font-bold uppercase tracking-widest px-1">Ingresa un número &gt; 0</p>
           )}
         </label>
 
         {/* Repetición */}
         <div className="space-y-1">
-          <span className="text-sm block">De 10 clientes nuevos, ¿cuántos vuelven / compran otra vez?</span>
+          <span className="text-sm font-medium text-foreground-muted font-brand uppercase tracking-wider block">Retención (de 10 clientes)</span>
           <div className="flex items-center gap-3">
             <input
               type="text"
               inputMode="numeric"
-              className="w-28 rounded-xl border p-2"
+              className="w-28 rounded-xl border border-border bg-background p-2 text-foreground font-body focus:ring-2 focus:ring-primary/30 outline-none"
               value={repeatCount}
               onChange={(e) => {
                 const v = digitsOnly(e.target.value);
@@ -385,28 +385,29 @@ export default function IntakeForm({ personas = [] }: Props) {
               disabled={false}
               placeholder="0–10"
             />
-            <label className="inline-flex items-center gap-2 text-sm">
+            <label className="inline-flex items-center gap-2 text-sm cursor-pointer group">
               <input
                 type="checkbox"
+                className="rounded border-border bg-background text-primary focus:ring-primary/30 transition-all cursor-pointer"
                 checked={repeatUnknown}
                 onChange={(e) => setRepeatUnknown(e.target.checked)}
               />
-              <span>No sé</span>
+              <span className="text-foreground-muted group-hover:text-foreground transition-colors font-body">No sé</span>
             </label>
           </div>
         </div>
 
         {/* Submit */}
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-2 pt-2">
           <button
             type="submit"
             disabled={loading || noPersonas || blockSubmit}
-            className="rounded-xl bg-indigo-600 text-white px-4 py-2 text-sm disabled:opacity-60"
+            className="w-full rounded-xl bg-primary hover:bg-primary-hover text-white px-6 py-3 text-sm font-bold font-brand uppercase tracking-widest transition-all disabled:opacity-50 shadow-md active:scale-95"
           >
             {loading ? "Calculando..." : "Generar scorecard"}
           </button>
           {(noPersonas || blockSubmit) && (
-            <p className="mt-2 text-xs text-amber-700">
+            <p className="mt-2 text-[10px] text-amber-600 font-bold uppercase tracking-widest px-1">
               {noPersonas ? "Carga al menos una persona para continuar." : "Completa los campos requeridos con valores mayores a 0."}
             </p>
           )}
@@ -418,37 +419,46 @@ export default function IntakeForm({ personas = [] }: Props) {
 
       {/* SCORECARD */}
       {result && (
-        <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5 text-gray-800 space-y-5">
-          <h2 className="text-xl font-semibold">Tu resultado</h2>
-          <p className="text-base">
-            <span className="font-semibold">Eficiencia general:</span> {result.efficiencyScore}/10
-          </p>
+        <div className="mt-6 rounded-2xl border border-border bg-surface p-6 text-foreground space-y-5 shadow-inner">
+          <div className="flex items-center justify-between border-b border-border pb-4">
+            <h2 className="text-xl font-bold font-brand uppercase tracking-tight">Tu resultado</h2>
+            <div className="flex flex-col items-end">
+              <span className="text-[10px] font-bold text-foreground-subtle uppercase tracking-widest">Eficiencia</span>
+              <span className="text-3xl font-black text-primary leading-none">{result.efficiencyScore}<span className="text-sm text-foreground-muted font-normal">/10</span></span>
+            </div>
+          </div>
+
           {Array.isArray(result.narratives) && result.narratives.length > 0 && (
-            <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-              {result.narratives.map((line, i) => <li key={`narr-${i}`}>{line}</li>)}
+            <ul className="space-y-3">
+              {result.narratives.map((line, i) => (
+                <li key={`narr-${i}`} className="flex gap-3 text-sm text-foreground-muted font-body">
+                  <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-primary mt-1.5" />
+                  {line}
+                </li>
+              ))}
             </ul>
           )}
 
-          <div className="pt-2 border-t">
-            <p className="text-sm mb-2">¿Qué quieres mejorar primero?</p>
+          <div className="pt-4 border-t border-border">
+            <p className="text-[10px] font-bold text-foreground-subtle uppercase tracking-[0.2em] mb-3 font-brand">¿Qué quieres mejorar primero?</p>
             <div className="flex flex-wrap gap-2">
               <button
-                className={`px-3 py-1.5 rounded-xl text-sm border ${focus === "efficiency" ? "bg-indigo-600 text-white border-indigo-600" : "bg-white text-gray-800"}`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold font-brand uppercase tracking-widest transition-all border ${focus === "efficiency" ? "bg-primary text-white border-primary shadow-md" : "bg-background text-foreground-muted border-border hover:border-primary/50 hover:text-foreground"}`}
                 onClick={() => setFocus("efficiency")}
               >
-                Mejorar mi estrategia de medios
+                Estrategia de medios
               </button>
               <button
-                className={`px-3 py-1.5 rounded-xl text-sm border ${focus === "conversion" ? "bg-indigo-600 text-white border-indigo-600" : "bg-white text-gray-800"}`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold font-brand uppercase tracking-widest transition-all border ${focus === "conversion" ? "bg-primary text-white border-primary shadow-md" : "bg-background text-foreground-muted border-border hover:border-primary/50 hover:text-foreground"}`}
                 onClick={() => setFocus("conversion")}
               >
-                Lograr más clientes de regreso
+                Fidelización
               </button>
               <button
-                className={`px-3 py-1.5 rounded-xl text-sm border ${focus === "insight" ? "bg-indigo-600 text-white border-indigo-600" : "bg-white text-gray-800"}`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold font-brand uppercase tracking-widest transition-all border ${focus === "insight" ? "bg-primary text-white border-primary shadow-md" : "bg-background text-foreground-muted border-border hover:border-primary/50 hover:text-foreground"}`}
                 onClick={() => setFocus("insight")}
               >
-                Conocer mejor a mis clientes
+                User Insights
               </button>
             </div>
           </div>
@@ -456,10 +466,10 @@ export default function IntakeForm({ personas = [] }: Props) {
       )}
 
       {/* Q&A */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {focus && (
-          <>
-            <p className="text-sm text-gray-900">
+          <div className="p-6 rounded-2xl border border-primary/20 bg-primary/5 space-y-4">
+            <p className="text-sm font-bold font-brand text-foreground uppercase tracking-widest">
               Pregunta a {personaAns?.personaName ?? "tu cliente"}
             </p>
 
@@ -470,10 +480,10 @@ export default function IntakeForm({ personas = [] }: Props) {
               ).map((s, idx) => (
                 <button
                   key={`sq-${idx}`}
-                  className="text-left text-sm px-3 py-2 rounded-xl border hover:bg-gray-50"
+                  className="text-left text-sm px-4 py-3 rounded-xl border border-border bg-background hover:bg-surface-hover hover:border-primary/30 text-foreground-muted hover:text-foreground transition-all font-body italic"
                   onClick={() => handleStarterClick(s)}
                 >
-                  {s}
+                  "{s}"
                 </button>
               ))}
             </div>
@@ -483,100 +493,145 @@ export default function IntakeForm({ personas = [] }: Props) {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="Escribe tu pregunta…"
-                className="flex-1 rounded-xl border p-2 text-sm"
+                className="flex-1 rounded-xl border border-border bg-background p-3 text-sm text-foreground font-body focus:ring-2 focus:ring-primary/30 outline-none"
               />
               <button
                 onClick={() => askPersona(question)}
                 disabled={!question || qnaLoading}
-                className="rounded-xl bg-indigo-600 text-white px-4 py-2 text-sm disabled:opacity-60"
+                className="rounded-xl bg-primary hover:bg-primary-hover text-white px-6 py-2 text-sm font-bold font-brand uppercase tracking-widest transition-all disabled:opacity-50"
               >
-                {qnaLoading ? "Preguntando…" : "Preguntar"}
+                {qnaLoading ? "..." : "Preguntar"}
               </button>
             </div>
 
-            {qnaError && <p className="text-sm text-red-600">Error: {qnaError}</p>}
-          </>
+            {qnaError && <p className="text-xs text-error font-bold font-brand uppercase">{qnaError}</p>}
+          </div>
         )}
 
         {personaAns && (
-          <div className="mt-2 rounded-2xl border border-gray-200 bg-white p-5 space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">
-              Respuestas de {personaAns.personaName ?? "tu cliente"} — {personaAns.industryName ?? businessType} en {city}
-            </h3>
-
-            {/* Echo the asked question and a direct answer */}
-            
-            {personaAns.answerToQuestion && (
-              <p className="text-sm text-gray-900">
-                {personaAns.answerToQuestion}
+          <div className="mt-2 rounded-2xl border border-border bg-surface p-6 space-y-6 shadow-lg animate-fade-in">
+            <div className="border-b border-border pb-4">
+              <h3 className="text-lg font-bold font-brand text-foreground leading-tight">
+                Respuestas de {personaAns.personaName ?? "tu cliente"}
+              </h3>
+              <p className="text-[10px] text-foreground-subtle font-bold uppercase tracking-widest mt-1">
+                {personaAns.industryName ?? businessType} • {city}
               </p>
+            </div>
+
+            {personaAns.answerToQuestion && (
+              <div className="p-4 bg-background border border-border rounded-xl">
+                <p className="text-base text-foreground font-body leading-relaxed">
+                  "{personaAns.answerToQuestion}"
+                </p>
+              </div>
             )}
 
-            <div className="space-y-3">
-              <div>
-                <p className="font-medium text-sm text-gray-900">
-                  Dudas de {personaAns.personaName ?? "la persona"}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <p className="text-xs font-bold text-primary uppercase tracking-[0.2em] font-brand">
+                  Dudas críticas
                 </p>
-                <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-                  {personaAns.dudasCliente.map((d, i) => <li key={`duda-${i}`}>{d}</li>)}
+                <ul className="space-y-2">
+                  {personaAns.dudasCliente.map((d, i) => (
+                    <li key={`duda-${i}`} className="flex gap-3 text-sm text-foreground-muted font-body leading-tight">
+                      <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-error/40 mt-1.5" />
+                      {d}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
-              <div>
-                <p className="font-medium text-sm text-gray-900">
-                  Qué le daría confianza a {personaAns.personaName ?? "la persona"}
+              <div className="space-y-3">
+                <p className="text-xs font-bold text-success uppercase tracking-[0.2em] font-brand">
+                  Señales de confianza
                 </p>
-                <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-                  {personaAns.sugerencias.map((s, i) => <li key={`sug-${i}`}>{s}</li>)}
+                <ul className="space-y-2">
+                  {personaAns.sugerencias.map((s, i) => (
+                    <li key={`sug-${i}`} className="flex gap-3 text-sm text-foreground-muted font-body leading-tight">
+                      <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-success/40 mt-1.5" />
+                      {s}
+                    </li>
+                  ))}
                 </ul>
               </div>
+            </div>
 
-              <div>
-                <p className="font-medium text-sm text-gray-900">Probabilidad de comprar</p>
-                <p className="text-sm text-gray-900">{personaAns.conversionLikelihood}/10</p>
+            <div className="pt-4 border-t border-border flex items-center justify-between">
+              <span className="text-sm font-bold font-brand text-foreground-muted uppercase tracking-widest">Probabilidad de conversión</span>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-32 bg-background border border-border rounded-full overflow-hidden">
+                  <div className="h-full bg-primary transition-all duration-1000 ease-out" style={{ width: `${personaAns.conversionLikelihood * 10}%` }} />
+                </div>
+                <span className="text-lg font-black text-primary font-brand">{personaAns.conversionLikelihood}<span className="text-xs text-foreground-muted font-normal">/10</span></span>
               </div>
             </div>
 
             {/* INSIGHTS */}
             {personaAns.insights && (
-              <div className="mt-3 border-t pt-3 space-y-3">
-                <h4 className="text-base font-semibold text-gray-900">
-                  Insight accionable (con tus números + lo que dice {personaAns.personaName ?? "tu cliente"})
-                </h4>
-
-                <div>
-                  <p className="font-medium text-sm text-gray-900">Lo que {personaAns.personaName ?? "tu cliente"} está pidiendo</p>
-                  <p className="text-sm text-gray-700">{personaAns.insights.whatClientWantsSummary}</p>
+              <div className="mt-6 pt-6 border-t border-border space-y-6">
+                <div className="flex items-center gap-2">
+                  <div className="px-2 py-1 rounded bg-primary text-white text-[10px] font-black uppercase tracking-widest font-brand shadow-sm">
+                    Intelligence Insight
+                  </div>
                 </div>
 
-                <div>
-                  <p className="font-medium text-sm text-gray-900">Qué podrías accionar (pasos simples)</p>
-                  <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-                    {personaAns.insights.whatToDoThisWeek.map((l, i) => <li key={`do-${i}`}>{l}</li>)}
-                  </ul>
+                <div className="space-y-2">
+                  <p className="text-xs font-bold text-foreground-subtle uppercase tracking-widest font-brand">Lo que está pidiendo</p>
+                  <p className="text-sm text-foreground font-body leading-relaxed bg-primary/5 p-4 rounded-xl border border-primary/10">{personaAns.insights.whatClientWantsSummary}</p>
                 </div>
 
-                <div>
-                  <p className="font-medium text-sm text-gray-900">Impacto esperado (aproximado)</p>
-                  <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-                    {personaAns.insights.expectedImpact.map((l, i) => <li key={`impact-${i}`}>{l}</li>)}
-                  </ul>
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-xs font-bold text-foreground uppercase tracking-widest font-brand mb-2">Pasos accionables</p>
+                      <ul className="space-y-2">
+                        {personaAns.insights.whatToDoThisWeek.map((l, i) => (
+                          <li key={`do-${i}`} className="flex gap-3 text-sm text-foreground-muted font-body italic">
+                            <span className="shrink-0 text-primary font-bold">{i+1}.</span>
+                            {l}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                <div>
-                  <p className="font-medium text-sm text-gray-900">Cómo sabrás que funciona (2–3 semanas)</p>
-                  <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-                    {personaAns.insights.howToKnow.map((l, i) => <li key={`know-${i}`}>{l}</li>)}
-                  </ul>
-                </div>
+                    <div>
+                      <p className="text-xs font-bold text-foreground uppercase tracking-widest font-brand mb-2">Impacto esperado</p>
+                      <ul className="space-y-2">
+                        {personaAns.insights.expectedImpact.map((l, i) => (
+                          <li key={`impact-${i}`} className="text-sm text-foreground-muted font-body flex gap-2">
+                            <span className="text-primary">→</span>
+                            {l}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
 
-                <div>
-                  <p className="font-medium text-sm text-gray-900">
-                    Cómo hablarle a {personaAns.personaName ?? "tu cliente"}
-                  </p>
-                  <ul className="list-disc ml-5 text-sm text-gray-700 space-y-1">
-                    {personaAns.insights.howToTalk.map((l, i) => <li key={`talk-${i}`}>{l}</li>)}
-                  </ul>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-xs font-bold text-foreground uppercase tracking-widest font-brand mb-2">KPI de validación (2-3 semanas)</p>
+                      <ul className="space-y-2">
+                        {personaAns.insights.howToKnow.map((l, i) => (
+                          <li key={`know-${i}`} className="text-sm text-foreground-muted font-body flex gap-2">
+                            <span className="text-success text-xs mt-0.5">●</span>
+                            {l}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="p-4 bg-surface-elevated rounded-2xl border border-border shadow-inner">
+                      <p className="text-xs font-bold text-primary uppercase tracking-[0.2em] font-brand mb-3">Tone of Voice Strategy</p>
+                      <ul className="space-y-2">
+                        {personaAns.insights.howToTalk.map((l, i) => (
+                          <li key={`talk-${i}`} className="text-sm text-foreground font-body leading-snug">
+                            {l}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -584,5 +639,5 @@ export default function IntakeForm({ personas = [] }: Props) {
         )}
       </div>
     </div>
-  );
-}
+    );
+    }

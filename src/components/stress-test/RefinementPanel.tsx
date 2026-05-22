@@ -69,23 +69,23 @@ export function RefinementPanel({
                 
                 {/* STATE A: REFINAR PITCH (FORM) */}
                 {!isRefinado && (
-                    <div className="space-y-8">
+                    <div className="space-y-8 font-body">
                         <div>
-                            <p className="text-lg text-zinc-300 font-medium tracking-wide">
+                            <p className="text-lg text-foreground-muted font-medium tracking-wide">
                                 {personaName} necesita algunos detalles más para poder ajustar mejor el pitch.
                             </p>
                         </div>
 
                         {refineError && (
-                            <div className="text-sm text-red-400 p-5 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                            <div className="text-sm text-error p-5 bg-error/10 border border-error/20 rounded-2xl font-brand font-bold uppercase tracking-widest">
                                 {refineError}
                             </div>
                         )}
 
-                        <div className="space-y-6">
+                        <div className="space-y-8">
                             {refineQuestions.map((question, idx) => (
                                 <div key={idx} className="space-y-4">
-                                    <label className="block text-sm font-semibold text-indigo-200 leading-relaxed">
+                                    <label className="block text-sm font-bold text-primary leading-relaxed font-brand uppercase tracking-wider">
                                         {question}
                                     </label>
                                     <textarea
@@ -96,7 +96,7 @@ export function RefinementPanel({
                                             setRefineAnswers(next);
                                         }}
                                         rows={4}
-                                        className="w-full bg-white/[0.02] border border-white/10 rounded-3xl px-6 py-5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                        className="w-full bg-surface border border-border rounded-3xl px-6 py-5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
                                         placeholder={t("stress.refine.answer_placeholder")}
                                     />
                                 </div>
@@ -108,10 +108,10 @@ export function RefinementPanel({
                                 onClick={handleRefineClick}
                                 disabled={refineLoading || refineAnswers.some((answer) => !answer.trim())}
                                 className={clsx(
-                                    "py-5 px-12 rounded-2xl font-black text-xs tracking-[0.2em] uppercase transition-all shadow-xl",
+                                    "py-5 px-12 rounded-2xl font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl font-brand",
                                     refineLoading || refineAnswers.some((answer) => !answer.trim())
-                                        ? "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
-                                        : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/20 active:scale-[0.98]"
+                                        ? "bg-surface border border-border text-foreground-subtle cursor-not-allowed"
+                                        : "bg-primary hover:bg-primary-hover text-white shadow-primary/20 active:scale-[0.98]"
                                 )}
                             >
                                 {refineLoading ? (
@@ -129,41 +129,44 @@ export function RefinementPanel({
 
                 {/* STATE B: REFINADO (RESULT) */}
                 {isRefinado && (
-                    <div className="space-y-8 animate-slide-in-up">
+                    <div className="space-y-8 animate-slide-in-up font-body">
                         <div>
-                            <p className="text-lg text-zinc-300 font-medium tracking-wide">
+                            <p className="text-lg text-foreground-muted font-medium tracking-wide">
                                 El pitch ha sido ajustado según el feedback de {personaName}.
                             </p>
                         </div>
 
                         <div className="flex flex-col gap-6">
                             {/* Refined Pitch (Top) */}
-                            <div className="bg-gradient-to-br from-indigo-500/10 to-transparent border border-indigo-500/20 rounded-[2rem] p-8 shadow-2xl flex flex-col">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <Sparkles className="w-5 h-5 text-indigo-400" />
-                                    <h3 className="text-sm font-bold uppercase tracking-wider text-indigo-400">
+                            <div className="bg-surface border border-primary/20 rounded-[2rem] p-8 shadow-lg flex flex-col relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-4 opacity-5">
+                                    <Sparkles className="w-24 h-24 text-primary" />
+                                </div>
+                                <div className="flex items-center gap-3 mb-6 relative z-10">
+                                    <Sparkles className="w-5 h-5 text-primary" />
+                                    <h3 className="text-sm font-bold uppercase tracking-wider text-primary font-brand">
                                         Pitch Refinado
                                     </h3>
                                 </div>
-                                <div className="text-base text-white leading-relaxed font-medium whitespace-pre-wrap">
+                                <div className="text-base text-foreground leading-relaxed font-medium whitespace-pre-wrap relative z-10">
                                     {refinedPitch}
                                 </div>
                             </div>
 
                             {/* Original Pitch (Bottom, Collapsible) */}
-                            <div className="bg-white/[0.02] border border-white/5 rounded-[2rem] shadow-xl overflow-hidden transition-all">
+                            <div className="bg-surface/40 border border-border rounded-[2rem] shadow-sm overflow-hidden transition-all">
                                 <button 
                                     onClick={() => setIsOriginalExpanded(!isOriginalExpanded)}
-                                    className="w-full flex items-center justify-between p-6 hover:bg-white/[0.02] transition-colors focus:outline-none"
+                                    className="w-full flex items-center justify-between p-6 hover:bg-surface-hover transition-colors focus:outline-none"
                                 >
-                                    <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500">
+                                    <h3 className="text-sm font-bold uppercase tracking-wider text-foreground-subtle font-brand">
                                         Ver Pitch Original
                                     </h3>
-                                    <ChevronDown className={clsx("w-5 h-5 text-zinc-500 transition-transform", isOriginalExpanded && "rotate-180")} />
+                                    <ChevronDown className={clsx("w-5 h-5 text-foreground-subtle transition-transform", isOriginalExpanded && "rotate-180")} />
                                 </button>
                                 {isOriginalExpanded && (
-                                    <div className="p-6 pt-0 mt-2 border-t border-white/5">
-                                        <div className="mt-6 text-sm text-zinc-400 leading-relaxed italic whitespace-pre-wrap">
+                                    <div className="p-6 pt-0 mt-2 border-t border-border">
+                                        <div className="mt-6 text-sm text-foreground-muted leading-relaxed italic whitespace-pre-wrap font-body">
                                             {originalIdea}
                                         </div>
                                     </div>
@@ -174,7 +177,7 @@ export function RefinementPanel({
                         <div className="pt-8 flex justify-end">
                             <button
                                 onClick={onExportRefined}
-                                className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-white text-black font-black text-xs tracking-[0.2em] uppercase transition-all shadow-xl hover:bg-zinc-200 active:scale-[0.98]"
+                                className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-foreground text-background font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl hover:opacity-90 active:scale-[0.98] font-brand"
                             >
                                 <Download className="w-4 h-4" />
                                 Descargar Análisis Completo

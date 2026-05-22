@@ -84,11 +84,14 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 font-body">
       <div 
-        className={`relative border-2 border-dashed rounded-xl p-8 transition-colors text-center
-          ${files.length > 0 ? 'border-indigo-500/50 bg-indigo-500/5' : 'border-white/10 hover:border-white/20 bg-white/[0.02]'}
-        `}
+        className={clsx(
+          "relative border-2 border-dashed rounded-2xl p-8 transition-all text-center cursor-pointer group",
+          files.length > 0 
+            ? "border-primary/50 bg-primary/5" 
+            : "border-border bg-background hover:border-primary/30 hover:bg-surface-hover"
+        )}
       >
         <input
           type="file"
@@ -99,26 +102,28 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
           multiple
         />
         
-        <div className="flex flex-col items-center justify-center space-y-2">
-          <Upload className="w-10 h-10 text-[#71717a]" />
-          <p className="text-sm text-[#ededed]">Haz clic o arrastra archivos aquí</p>
-          <p className="text-xs text-[#a1a1aa]">PDF, TXT, DOCX, MD o JSON (Máx. 10MB c/u)</p>
+        <div className="flex flex-col items-center justify-center space-y-3">
+          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <Upload className="w-6 h-6 text-primary" />
+          </div>
+          <p className="text-sm text-foreground font-bold font-brand uppercase tracking-widest">Haz clic o arrastra archivos aquí</p>
+          <p className="text-xs text-foreground-subtle font-medium">PDF, TXT, DOCX, MD o JSON (Máx. 10MB c/u)</p>
         </div>
       </div>
 
       {/* Selected Files List */}
       {files.length > 0 && (
-        <div className="space-y-2 max-h-40 overflow-y-auto px-1">
+        <div className="space-y-2 max-h-40 overflow-y-auto px-1 custom-scrollbar">
             {files.map((f, i) => (
-                <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10">
-                    <div className="flex items-center gap-2 overflow-hidden">
-                        <FileText className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-                        <span className="text-xs text-zinc-300 truncate">{f.name}</span>
-                        <span className="text-[10px] text-zinc-500 flex-shrink-0">({(f.size / 1024).toFixed(0)} KB)</span>
+                <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-surface border border-border animate-in slide-in-from-left-2 duration-200 shadow-sm">
+                    <div className="flex items-center gap-3 overflow-hidden">
+                        <FileText className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="text-xs text-foreground font-medium truncate">{f.name}</span>
+                        <span className="text-[10px] text-foreground-subtle flex-shrink-0">({(f.size / 1024).toFixed(0)} KB)</span>
                     </div>
                     {!uploading && (
-                        <button onClick={() => removeFile(i)} className="p-1 hover:bg-white/10 rounded transition-colors">
-                            <X className="w-3 h-3 text-zinc-500" />
+                        <button onClick={() => removeFile(i)} className="p-1.5 hover:bg-foreground/5 rounded-lg transition-colors text-foreground-subtle hover:text-error">
+                            <X className="w-3.5 h-3.5" />
                         </button>
                     )}
                 </div>
@@ -130,11 +135,11 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
         <Button 
           onClick={handleUpload} 
           disabled={uploading}
-          className="w-full shadow-lg h-12 font-bold"
+          className="w-full shadow-lg h-14 font-bold"
         >
           {uploading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="mr-3 h-5 w-5 animate-spin" />
               Procesando ({processedCount}/{files.length})...
             </>
           ) : (
@@ -144,16 +149,16 @@ export function KnowledgeDropzone({ personaId, onUploadSuccess }: KnowledgeDropz
       )}
 
       {success && (
-        <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm animate-fade-in">
-          <CheckCircle2 className="w-4 h-4" />
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-success/10 border border-success/20 text-success text-sm font-bold font-brand uppercase tracking-widest animate-fade-in shadow-sm">
+          <CheckCircle2 className="w-5 h-5" />
           Conocimiento integrado correctamente.
         </div>
       )}
 
       {error && (
-        <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm animate-fade-in">
-          <AlertCircle className="w-4 h-4" />
-          Error: {error}
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-error/10 border border-error/20 text-error text-sm font-bold font-brand uppercase tracking-widest animate-fade-in shadow-sm">
+          <AlertCircle className="w-5 h-5" />
+          {error}
         </div>
       )}
     </div>

@@ -5,6 +5,12 @@
 - **Status**: **STABLE & FEATURE-COMPLETE (Production Release Epic 20/21)**
 
 ## Latest Deployments
+- **Epic 28: Multi-Theme Engine & Institutional Branding (May 21, 2026)**:
+    - **Multi-Theme Architecture**: Launched a robust theme engine using `next-themes` and CSS Design Tokens.
+    - **Institutional "Brand" Mode**: Implemented the official IntelAgent Brand Kit (Alabaster, Bison Gold, Agent Black) with a premium "Digital Editorial" aesthetic.
+    - **Layout Lock Technology**: Engineered a strict separation of structural and visual tokens, guaranteeing zero layout shift during theme toggling.
+    - **Official Brand Assets**: Integrated the official SVG logo and established **Plus Jakarta Sans** as the core brand typeface.
+    - **Global Refactor**: Audited and refactored over 15+ core components (Stress Test, Copywriter, Profile, Admin Suite) to be fully theme-aware, eliminating all hardcoded legacy styles.
 - **Copywriter 2.0 & Linear UI (May 19, 2026)**:
     - **Linear UI Prototype**: Deployed high-fidelity, 4-step wizard at `/copywriter/linear` matching the Stress Test aesthetic.
     - **Intelligence Engine 2.0**: Full migration to dynamic, directive-based architecture with "What? So What? Now What?" persuasion logic.

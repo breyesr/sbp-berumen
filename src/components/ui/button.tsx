@@ -9,9 +9,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={clsx(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-          "bg-blue-600 text-white shadow hover:bg-blue-600/90", // Basic styling
-          "h-9 px-4 py-2", // Default size
+          "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 active:scale-95 font-brand",
+          "bg-primary text-primary-foreground shadow-md hover:bg-primary-hover hover:shadow-lg",
+          "h-10 px-6 py-2", // Premium sizing
           className
         )}
         ref={ref}

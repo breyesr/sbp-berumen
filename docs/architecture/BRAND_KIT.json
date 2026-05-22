@@ -1,0 +1,62 @@
+{
+  "brand": "IntelAgent",
+  "version": "1.0.0",
+  "philosophy": {
+    "aesthetic": "Institutional Contemporary",
+    "tone": "Academic, Rigorous, High-End",
+    "metaphor": "Digital Editorial (Premium Paper & Ink)"
+  },
+  "palette": {
+    "primary": {
+      "name": "Bison Gold",
+      "hex": "#B8975A",
+      "usage": "Primary brand accents, highlighting, and active states."
+    },
+    "backgrounds": {
+      "paper": {
+        "name": "Warm Alabaster",
+        "hex": "#FAFAF8",
+        "usage": "Main application background to reduce eye strain and provide an editorial feel."
+      },
+      "surface": {
+        "name": "Institutional Neutral",
+        "hex": "#E9EBEF",
+        "usage": "Subtle card backgrounds and secondary surfaces."
+      }
+    },
+    "ink": {
+      "primary": {
+        "name": "Agent Black",
+        "hex": "#030213",
+        "usage": "High-contrast text and primary structural lines."
+      },
+      "secondary": {
+        "name": "Methodology Slate",
+        "hex": "#475569",
+        "usage": "Secondary text, labels, and icons."
+      }
+    },
+    "semantic": {
+      "success": {
+        "name": "Validation Sage",
+        "hex": "#6B8E7B",
+        "usage": "Correct validations and positive feedback."
+      },
+      "error": {
+        "name": "Alert Terracotta",
+        "hex": "#D4183D",
+        "usage": "Critical errors and system alerts."
+      }
+    }
+  },
+  "typography": {
+    "primary": "Plus Jakarta Sans",
+    "secondary": "Google Sans",
+    "logic": "Use Plus Jakarta for headings and UI controls; Google Sans for body copy and data visualization."
+  },
+  "logo_variants": [
+    "Primary Horizontal",
+    "Vertical Lockup",
+    "Negative Lockup"
+  ]
+}

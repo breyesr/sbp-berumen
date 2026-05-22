@@ -59,16 +59,16 @@ export function ScoringBreakdown({ confidenceScore, breakdown, rationale, hideSc
   ];
 
   return (
-    <div className="bg-[#171717] border border-[rgba(255,255,255,0.1)] rounded-xl overflow-hidden shadow-2xl">
-      <div className="p-5 border-b border-[rgba(255,255,255,0.1)] bg-gradient-to-r from-[#1f1f1f] to-transparent flex items-center justify-between">
+    <div className="bg-surface border border-border rounded-xl overflow-hidden shadow-lg">
+      <div className="p-5 border-b border-border bg-gradient-to-r from-surface-elevated to-transparent flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Info className="w-5 h-5 text-[#4F46E5]" />
-          <h3 className="text-sm font-bold uppercase tracking-wider text-[#ededed]">
+          <Info className="w-5 h-5 text-primary" />
+          <h3 className="text-sm font-bold uppercase tracking-wider text-foreground font-brand">
             Desglose de Confianza (DSE)
           </h3>
         </div>
         {!hideScore && (
-            <div className={clsx("text-lg font-black", getScoreColor(confidenceScore))}>
+            <div className={clsx("text-lg font-black font-brand", getScoreColor(confidenceScore))}>
             {confidenceScore}%
             </div>
         )}
@@ -79,33 +79,33 @@ export function ScoringBreakdown({ confidenceScore, breakdown, rationale, hideSc
           <div key={idx} className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <m.icon className="w-4 h-4 text-[#a1a1aa]" />
-                <span className="text-sm font-medium text-[#ededed]">{m.label}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-white/40 font-bold uppercase tracking-tighter border border-white/10">
+                <m.icon className="w-4 h-4 text-foreground-muted" />
+                <span className="text-sm font-bold text-foreground font-brand">{m.label}</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-background text-foreground-subtle font-bold uppercase tracking-tighter border border-border">
                   W: {m.weight}
                 </span>
               </div>
-              <span className={clsx("text-sm font-bold", getScoreColor(m.score))}>
+              <span className={clsx("text-sm font-bold font-brand", getScoreColor(m.score))}>
                 {m.score}/100
               </span>
             </div>
             
-            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+            <div className="h-2 w-full bg-background rounded-full overflow-hidden border border-border/50">
               <div 
                 className={clsx("h-full transition-all duration-1000 ease-out rounded-full", getBarColor(m.score))}
                 style={{ width: `${m.score}%` }}
               />
             </div>
             
-            <p className="text-xs text-[#a1a1aa] leading-relaxed italic bg-white/5 p-3 rounded-lg border border-white/5">
+            <p className="text-xs text-foreground-muted leading-relaxed italic bg-background/50 p-4 rounded-xl border border-border font-body shadow-inner">
               “{m.desc}”
             </p>
           </div>
         ))}
       </div>
       
-      <div className="px-6 py-4 bg-white/[0.02] border-t border-white/5">
-        <p className="text-[10px] text-[#a1a1aa] uppercase tracking-widest text-center">
+      <div className="px-6 py-4 bg-surface-elevated/30 border-t border-border">
+        <p className="text-[10px] text-foreground-subtle font-bold uppercase tracking-widest text-center font-brand">
           Motor de Puntuación Determinista v1.0
         </p>
       </div>

@@ -249,7 +249,7 @@ export function CopywriterClient({
                             {/* 1. Contexto */}
                             <div className="relative">
                                 <div className="flex items-center gap-2 mb-3 relative group">
-                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
                                         {t("copywriter.field.context")}
                                     </label>
                                     <div 
@@ -257,7 +257,7 @@ export function CopywriterClient({
                                         onMouseEnter={() => setActiveTooltip('context')}
                                         onMouseLeave={() => setActiveTooltip(null)}
                                     >
-                                        <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                                        <Info className="w-3.5 h-3.5 text-foreground-subtle hover:text-primary transition-colors" />
                                     </div>
                                     <AnimatePresence>
                                         {activeTooltip === 'context' && (
@@ -282,11 +282,11 @@ export function CopywriterClient({
                                     onChange={(e) => setContext(e.target.value)}
                                     placeholder={t("copywriter.placeholder.context")}
                                     rows={4}
-                                    className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                    className="w-full bg-surface border border-border rounded-3xl px-6 py-5 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
                                 />
                                 <span className={clsx(
-                                    "block text-[10px] font-bold text-right mt-2 tracking-widest",
-                                    context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-red-400" : "text-white/20"
+                                    "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+                                    context.length < FIELD_LIMITS.context.min || context.length > FIELD_LIMITS.context.max ? "text-error" : "text-foreground-subtle"
                                 )}>
                                     {context.length}/{FIELD_LIMITS.context.max}
                                 </span>
@@ -295,7 +295,7 @@ export function CopywriterClient({
                             {/* 2. Qué queremos comunicar */}
                             <div className="relative">
                                 <div className="flex items-center gap-2 mb-3 relative group">
-                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
                                         {t("copywriter.field.message")}
                                     </label>
                                     <div 
@@ -303,7 +303,7 @@ export function CopywriterClient({
                                         onMouseEnter={() => setActiveTooltip('message')}
                                         onMouseLeave={() => setActiveTooltip(null)}
                                     >
-                                        <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                                        <Info className="w-3.5 h-3.5 text-foreground-subtle hover:text-primary transition-colors" />
                                     </div>
                                     <AnimatePresence>
                                         {activeTooltip === 'message' && (
@@ -328,11 +328,11 @@ export function CopywriterClient({
                                     onChange={(e) => setMessage(e.target.value)}
                                     placeholder={t("copywriter.placeholder.message")}
                                     rows={6}
-                                    className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                    className="w-full bg-surface border border-border rounded-3xl px-6 py-5 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
                                 />
                                 <span className={clsx(
-                                    "block text-[10px] font-bold text-right mt-2 tracking-widest",
-                                    message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-red-400" : "text-white/20"
+                                    "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+                                    message.length < FIELD_LIMITS.message.min || message.length > FIELD_LIMITS.message.max ? "text-error" : "text-foreground-subtle"
                                 )}>
                                     {message.length}/{FIELD_LIMITS.message.max}
                                 </span>
@@ -341,7 +341,7 @@ export function CopywriterClient({
                             {/* 3. Meta / Objetivo */}
                             <div className="relative">
                                 <div className="flex items-center gap-2 mb-3 relative group">
-                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                                    <label className="block text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted font-brand">
                                         {t("copywriter.field.goal")}
                                     </label>
                                     <div 
@@ -349,7 +349,7 @@ export function CopywriterClient({
                                         onMouseEnter={() => setActiveTooltip('goal')}
                                         onMouseLeave={() => setActiveTooltip(null)}
                                     >
-                                        <Info className="w-4 h-4 text-white/20 hover:text-white/60 transition-colors" />
+                                        <Info className="w-3.5 h-3.5 text-foreground-subtle hover:text-primary transition-colors" />
                                     </div>
                                     <AnimatePresence>
                                         {activeTooltip === 'goal' && (
@@ -374,11 +374,11 @@ export function CopywriterClient({
                                     onChange={(e) => setGoal(e.target.value)}
                                     placeholder={t("copywriter.placeholder.goal")}
                                     rows={3}
-                                    className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-5 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none leading-relaxed text-white/90 shadow-inner"
+                                    className="w-full bg-surface border border-border rounded-3xl px-6 py-5 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none leading-relaxed font-body shadow-sm"
                                 />
                                 <span className={clsx(
-                                    "block text-[10px] font-bold text-right mt-2 tracking-widest",
-                                    goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-red-400" : "text-white/20"
+                                    "block text-[10px] font-bold text-right mt-2 tracking-widest font-brand",
+                                    goal.length < FIELD_LIMITS.goal.min || goal.length > FIELD_LIMITS.goal.max ? "text-error" : "text-foreground-subtle"
                                 )}>
                                     {goal.length}/{FIELD_LIMITS.goal.max}
                                 </span>
@@ -391,7 +391,7 @@ export function CopywriterClient({
                                         completeStep('strategy');
                                         goToStep('channels');
                                     }}
-                                    className="px-12 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 text-white transition-all flex items-center gap-3 font-black uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-indigo-500/20"
+                                    className="px-12 py-4 rounded-2xl bg-primary hover:bg-primary-hover disabled:opacity-30 text-white transition-all flex items-center gap-3 font-bold uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-primary/20 font-brand"
                                 >
                                     Siguiente <ArrowRight className="w-4 h-4" />
                                 </button>
@@ -410,7 +410,7 @@ export function CopywriterClient({
                             onBack: () => goToStep('strategy')
                         }}
                     >
-                        <div className="bg-white/[0.01] border border-white/5 rounded-3xl p-8 shadow-inner">
+                        <div className="bg-surface/30 border border-border rounded-3xl p-8 shadow-inner">
                             <InputSection
                                 hideStrategicInputs={true}
                                 context={context}
@@ -433,10 +433,10 @@ export function CopywriterClient({
                             />
                         </div>
 
-                        <div className="flex justify-between pt-8 border-t border-white/5">
+                        <div className="flex justify-between pt-8 border-t border-border">
                             <button
                                 onClick={() => goToStep('strategy')}
-                                className="px-8 py-4 rounded-2xl bg-white/5 text-zinc-400 hover:text-white transition-all flex items-center gap-2 font-black uppercase text-[10px] tracking-widest"
+                                className="px-8 py-4 rounded-2xl bg-surface text-foreground-muted hover:text-foreground border border-border transition-all flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest font-brand"
                             >
                                 <ArrowLeft className="w-4 h-4" /> Volver
                             </button>
@@ -455,14 +455,14 @@ export function CopywriterClient({
                                 <>
                                     <button
                                         onClick={() => goToStep('channels')}
-                                        className="px-6 py-3 rounded-xl bg-white/5 text-zinc-400 hover:text-white border border-white/5 transition-all text-[10px] font-black uppercase tracking-widest"
+                                        className="px-6 py-3 rounded-xl bg-surface text-foreground-muted hover:text-foreground border border-border transition-all text-[10px] font-bold uppercase tracking-widest font-brand"
                                     >
                                         Ajustar Canales
                                     </button>
                                     <button
                                         onClick={handleExport}
                                         disabled={loading || outputs.length === 0}
-                                        className="px-6 py-3 rounded-xl bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20 transition-all text-[10px] font-black uppercase tracking-widest flex items-center gap-2"
+                                        className="px-6 py-3 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-all text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 font-brand"
                                     >
                                         <Download className="w-3.5 h-3.5" /> Exportar Plan
                                     </button>

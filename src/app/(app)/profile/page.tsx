@@ -168,29 +168,29 @@ export default function ProfilePage() {
   };
 
   if (!session?.user) {
-    return <p className="text-sm text-[#a1a1aa]">{t("profile.loading")}</p>;
+    return <p className="text-sm text-foreground-muted font-brand">{t("profile.loading")}</p>;
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-6">
-      <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
+    <div className="mx-auto w-full max-w-3xl space-y-8 animate-fade-in font-body">
+      <section className="rounded-[2rem] border border-border bg-surface p-8 shadow-sm">
         <ProfileSectionNav />
-        <h1 className="mt-4 text-2xl font-semibold text-white">{t("profile.title")}</h1>
-        <p className="mt-2 text-sm text-[#a1a1aa]">
+        <h1 className="mt-8 text-3xl font-bold text-foreground font-brand uppercase tracking-tighter">{t("profile.title")}</h1>
+        <p className="mt-2 text-base text-foreground-muted font-medium">
           {t("profile.description")}
         </p>
 
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-            <p className="text-xs uppercase tracking-wide text-[#71717a]">{t("common.fields.email")}</p>
-            <p className="mt-1 text-sm text-[#e4e4e7]">{session.user.email}</p>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          <div className="rounded-2xl border border-border bg-background p-5 shadow-inner">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle font-brand mb-1">{t("common.fields.email")}</p>
+            <p className="text-sm font-semibold text-foreground">{session.user.email}</p>
           </div>
-          <div className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-            <p className="text-xs uppercase tracking-wide text-[#71717a]">{t("profile.twofa_status")}</p>
-            <p className="mt-1 text-sm font-semibold">
+          <div className="rounded-2xl border border-border bg-background p-5 shadow-inner">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle font-brand mb-1">{t("profile.twofa_status")}</p>
+            <p className="text-sm font-bold">
               <span
                 className={
-                  is2FAEnabled ? "text-emerald-400" : "text-amber-400"
+                  is2FAEnabled ? "text-success" : "text-warning"
                 }
               >
                 {is2FAEnabled ? t("common.status.enabled") : t("common.status.disabled")}
@@ -200,62 +200,64 @@ export default function ProfilePage() {
         </div>
 
         {error && (
-          <p className="mt-4 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+          <p className="mt-6 rounded-xl border border-error/30 bg-error/5 px-4 py-3 text-sm text-error font-bold font-brand uppercase tracking-widest">
             {error}
           </p>
         )}
 
         {message && (
-          <p className="mt-4 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300">
+          <p className="mt-6 rounded-xl border border-success/30 bg-success/5 px-4 py-3 text-sm text-success font-bold font-brand uppercase tracking-widest">
             {message}
           </p>
         )}
       </section>
 
       {!is2FAEnabled && !setup2FA && (
-        <section className="rounded-xl border border-white/10 bg-[#111214] p-6">
-          <h2 className="text-lg font-semibold text-white">{t("profile.setup.title")}</h2>
-          <p className="mt-2 text-sm text-[#a1a1aa]">
+        <section className="rounded-[2rem] border border-border bg-surface p-8 shadow-sm">
+          <h2 className="text-xl font-bold text-foreground font-brand uppercase tracking-tight">{t("profile.setup.title")}</h2>
+          <p className="mt-2 text-sm text-foreground-muted">
             {t("profile.setup.subtitle")}
           </p>
 
-          <div className="mt-4 space-y-4">
-            <div className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-              <p className="text-sm font-semibold text-white">{t("profile.setup.step1.title")}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-8 space-y-6">
+            <div className="rounded-2xl border border-border bg-background p-6">
+              <p className="text-xs font-bold text-foreground uppercase tracking-widest font-brand mb-4">{t("profile.setup.step1.title")}</p>
+              <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
                   onClick={() => handleSelectPlatform("ios")}
-                  className={`rounded-md border px-3 py-2 text-sm ${
+                  className={clsx(
+                    "rounded-xl border px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all font-brand",
                     devicePlatform === "ios"
-                      ? "border-blue-500 bg-blue-500/20 text-blue-200"
-                      : "border-white/20 bg-transparent text-[#d4d4d8]"
-                  }`}
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-surface text-foreground-muted hover:text-foreground hover:border-primary/50"
+                  )}
                 >
                   {t("profile.setup.step1.ios")}
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSelectPlatform("android")}
-                  className={`rounded-md border px-3 py-2 text-sm ${
+                  className={clsx(
+                    "rounded-xl border px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all font-brand",
                     devicePlatform === "android"
-                      ? "border-blue-500 bg-blue-500/20 text-blue-200"
-                      : "border-white/20 bg-transparent text-[#d4d4d8]"
-                  }`}
+                      ? "border-primary bg-primary text-primary-foreground shadow-md"
+                      : "border-border bg-surface text-foreground-muted hover:text-foreground hover:border-primary/50"
+                  )}
                 >
                   {t("profile.setup.step1.android")}
                 </button>
               </div>
 
               {!setup2FA && (
-                <div className="mt-4 border-t border-white/5 pt-3">
+                <div className="mt-6 border-t border-border pt-4">
                   <button
                     type="button"
                     onClick={async () => {
                       if (!devicePlatform) setDevicePlatform("ios");
                       await handleContinueStep2();
                     }}
-                    className="text-xs font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                    className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:text-primary-hover transition-colors font-brand"
                   >
                     {t("profile.setup.step1.fast_track")}
                   </button>
@@ -264,15 +266,15 @@ export default function ProfilePage() {
             </div>
 
             {didConfirmPlatform && (
-              <div ref={step2Ref} className="rounded-lg border border-white/10 bg-[#0d0e10] p-4">
-                <p className="text-sm font-semibold text-white">{t("profile.setup.step2.title")}</p>
-                <p className="mt-2 text-sm text-[#a1a1aa]">
+              <div ref={step2Ref} className="rounded-2xl border border-border bg-background p-6 animate-fade-in">
+                <p className="text-xs font-bold text-foreground uppercase tracking-widest font-brand mb-2">{t("profile.setup.step2.title")}</p>
+                <p className="text-sm text-foreground-muted mb-6">
                   {t("profile.setup.step2.pick_app")}
                 </p>
 
                 {selectedAuthenticator && (
-                  <div className="mt-4 rounded-lg border border-white/10 bg-[#111214] p-4">
-                    <p className="text-sm font-medium text-[#d4d4d8]">
+                  <div className="mb-8 rounded-2xl border border-border bg-surface p-6 shadow-inner">
+                    <p className="text-sm font-bold text-foreground font-brand uppercase tracking-wider mb-4">
                       {selectedAuthenticator.name}
                     </p>
                     {accessDevice === "mobile" ? (
@@ -281,37 +283,37 @@ export default function ProfilePage() {
                           href={selectedAuthenticator.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center rounded-md border border-blue-500/40 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 hover:bg-blue-500/25"
+                          className="inline-flex items-center rounded-xl bg-primary px-6 py-3 text-xs font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary-hover transition-all shadow-md font-brand"
                         >
                           {t("profile.setup.step2.open_store_link")}
                         </a>
                       </div>
                     ) : (
-                      <div className="mt-3">
-                        <div className="rounded-md border border-blue-500/30 bg-blue-500/10 px-4 py-3">
-                          <div className="flex items-center gap-3">
-                            <div className="rounded-full bg-blue-500/20 p-2 text-blue-400">
-                              <Camera className="h-5 w-5" />
+                      <div className="mt-3 space-y-6">
+                        <div className="rounded-xl border border-primary/20 bg-primary/5 px-5 py-4">
+                          <div className="flex items-center gap-4">
+                            <div className="rounded-full bg-primary/10 p-3 text-primary">
+                              <Camera className="h-6 w-6" />
                             </div>
                             <div>
-                              <p className="text-sm font-bold uppercase tracking-wide text-blue-200">
+                              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary font-brand">
                                 {t("profile.setup.step2.camera_mode")}
                               </p>
-                              <p className="text-xs text-blue-100/80">
+                              <p className="text-xs text-foreground-muted font-medium mt-0.5">
                                 {t("profile.setup.step2.camera_hint")}
                               </p>
                             </div>
                           </div>
-                          <p className="mt-3 border-t border-blue-500/20 pt-2 text-xs font-medium text-amber-300">
-                            <AlertTriangle className="mr-1 inline-block h-3 w-3 align-text-bottom" />
+                          <p className="mt-4 border-t border-primary/10 pt-3 text-[10px] font-bold text-warning uppercase tracking-widest font-brand">
+                            <AlertTriangle className="mr-1.5 inline-block h-3.5 w-3.5 align-text-bottom" />
                             {t("profile.setup.step2.download_qr_warning")}
                           </p>
                         </div>
-                        <div className="mt-3 inline-block rounded-md bg-white p-2">
+                        <div className="inline-block rounded-2xl bg-white p-4 shadow-xl border border-border">
                           <img
                             src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(selectedAuthenticator.href)}`}
                             alt={t("profile.setup.step2.download_qr_alt", { app: selectedAuthenticator.name })}
-                            className="h-52 w-52"
+                            className="h-48 w-48"
                           />
                         </div>
                       </div>
@@ -320,14 +322,14 @@ export default function ProfilePage() {
                 )}
 
                 <Button
-                  className="mt-6 w-full transition-transform active:scale-[0.98]"
+                  className="w-full h-14"
                   type="button"
                   disabled={isGenerating}
                   onClick={() => void handleContinueStep2()}
                 >
                   {isGenerating ? t("profile.setup.step2.preparing") : t("profile.setup.step2.continue")}
                 </Button>
-                {step2Hint && <p className="mt-2 text-xs text-emerald-300">{step2Hint}</p>}
+                {step2Hint && <p className="mt-4 text-xs font-bold text-success uppercase tracking-widest font-brand">{step2Hint}</p>}
               </div>
             )}
           </div>
@@ -335,35 +337,37 @@ export default function ProfilePage() {
       )}
 
       {!is2FAEnabled && showStep3 && (
-        <section ref={completeSetupRef} className="rounded-xl border border-white/10 bg-[#111214] p-6">
-          <h2 className="text-lg font-semibold text-white">{t("profile.setup.step3.title")}</h2>
+        <section ref={completeSetupRef} className="rounded-[2rem] border border-border bg-surface p-8 shadow-sm">
+          <h2 className="text-xl font-bold text-foreground font-brand uppercase tracking-tight mb-6">{t("profile.setup.step3.title")}</h2>
 
-          <div className="mt-4 rounded-md border border-amber-500/30 bg-amber-500/10 px-4 py-3">
-            <div className="flex items-center gap-3">
-              <div className="rounded-full bg-amber-500/20 p-2 text-amber-400">
-                <ShieldCheck className="h-5 w-5" />
+          <div className="rounded-xl border border-warning/20 bg-warning/5 px-5 py-4 mb-8">
+            <div className="flex items-center gap-4">
+              <div className="rounded-full bg-warning/10 p-3 text-warning">
+                <ShieldCheck className="h-6 w-6" />
               </div>
               <div>
-                <p className="text-sm font-bold uppercase tracking-wide text-amber-200">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-warning font-brand">
                   {t("profile.setup.step3.authenticator_mode")}
                 </p>
-                <p className="text-xs text-amber-100/80">
+                <p className="text-xs text-foreground-muted font-medium mt-0.5">
                   {t("profile.setup.step3.authenticator_hint")}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 flex flex-col items-center justify-center rounded-lg border border-white/10 bg-white/5 p-6 text-center transition-all duration-500 min-h-[400px]">
+          <div className="flex flex-col items-center justify-center rounded-3xl border border-border bg-background p-10 text-center transition-all duration-500 min-h-[450px] shadow-inner">
             {!isReadyToScan ? (
               <div className="flex flex-col items-center animate-in fade-in duration-500">
-                <ShieldCheck className="mb-4 h-12 w-12 text-amber-500/50" />
-                <p className="max-w-xs text-sm text-[#a1a1aa]">
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                    <ShieldCheck className="h-10 w-10 text-primary/40" />
+                </div>
+                <p className="max-w-xs text-sm text-foreground-muted font-medium leading-relaxed">
                   {t("profile.setup.step3.ready_check")}
                 </p>
                 <Button
                   type="button"
-                  className="mt-6 bg-amber-600 font-bold text-white hover:bg-amber-700 active:scale-[0.98]"
+                  className="mt-8 h-12 px-10"
                   disabled={isGenerating}
                   onClick={async () => {
                     await handleGenerate2FA();
@@ -380,73 +384,78 @@ export default function ProfilePage() {
               setup2FA && (
                 <div className="w-full flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
                   {accessDevice === "mobile" ? (
-                    <>
-                      <p className="text-sm text-[#d4d4d8]">
+                    <div className="w-full max-w-sm space-y-6">
+                      <p className="text-sm text-foreground-muted font-medium italic">
                         {t("profile.setup.step3.mobile_1")}
                       </p>
-                      <p className="mt-2 text-sm text-[#d4d4d8]">
+                      <p className="text-sm text-foreground-muted font-medium italic">
                         {t("profile.setup.step3.mobile_2")}
                       </p>
-                      <p className="mt-3 w-full max-w-sm break-all rounded-md bg-[#0d0e10] px-3 py-3 font-mono text-xs text-[#e4e4e7] border border-white/5">
-                        {setup2FA.secret}
-                      </p>
-                      <div className="mt-4 flex flex-col items-center gap-2">
+                      <div className="rounded-xl bg-surface border border-border p-5 shadow-inner">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-foreground-subtle mb-2 font-brand">Setup Key</p>
+                          <p className="break-all font-mono text-sm text-primary font-bold tracking-wider">
+                            {setup2FA.secret}
+                          </p>
+                      </div>
+                      <div className="flex flex-col items-center gap-4">
                         <Button
                           type="button"
-                          className="transition-transform active:scale-[0.98]"
+                          className="h-11 px-8"
                           onClick={handleCopySetupKey}
                         >
                           {setupKeyCopyState === "copied" ? t("profile.setup.step3.copy_key_done") : t("profile.setup.step3.copy_key")}
                         </Button>
                         {setupKeyCopyState === "copied" && (
-                          <p className="text-xs text-emerald-300">{t("profile.setup.step3.copy_key_success")}</p>
+                          <p className="text-xs font-bold text-success uppercase tracking-widest font-brand">{t("profile.setup.step3.copy_key_success")}</p>
                         )}
                         {setupKeyCopyState === "failed" && (
-                          <p className="text-xs text-red-300">
+                          <p className="text-xs font-bold text-error uppercase tracking-widest font-brand">
                             {t("profile.setup.step3.copy_key_error")}
                           </p>
                         )}
                       </div>
                       <Button
                         type="button"
-                        className="mt-6 w-full max-w-xs bg-[#1f2937] transition-transform hover:bg-[#374151] active:scale-[0.98]"
+                        className="w-full h-12 bg-foreground text-background hover:opacity-90 mt-4"
                         onClick={handleContinueSetupComplete}
                       >
                         {t("profile.setup.step3.done")}
                       </Button>
-                    </>
+                    </div>
                   ) : (
-                    <>
-                      <p className="text-sm text-[#d4d4d8]">
+                    <div className="w-full flex flex-col items-center space-y-8">
+                      <p className="text-sm text-foreground-muted font-medium italic">
                         {t("profile.setup.step3.desktop_1")}
                       </p>
-                      <div className="mt-4 inline-block rounded-lg bg-white p-3 shadow-xl">
-                        <img src={setup2FA.qrCodeDataUrl} alt={t("profile.setup.step3.qr_alt")} className="h-48 w-48" />
+                      <div className="inline-block rounded-2xl bg-white p-5 shadow-2xl border border-border">
+                        <img src={setup2FA.qrCodeDataUrl} alt={t("profile.setup.step3.qr_alt")} className="h-52 w-52" />
                       </div>
 
-                      <div className="mt-6 w-full max-w-sm">
-                        <p className="text-xs uppercase tracking-widest text-[#71717a] font-bold">
+                      <div className="w-full max-w-sm">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle mb-2 font-brand">
                           {t("profile.setup.step3.desktop_2")}
                         </p>
-                        <p className="mt-2 break-all rounded-md bg-[#0d0e10] px-3 py-3 font-mono text-sm text-[#e4e4e7] border border-white/5">
-                          {setup2FA.secret}
-                        </p>
+                        <div className="rounded-xl bg-surface border border-border p-4 shadow-inner">
+                            <p className="break-all font-mono text-sm text-primary font-bold tracking-wider">
+                              {setup2FA.secret}
+                            </p>
+                        </div>
                       </div>
 
                       <Button
                         type="button"
-                        className="mt-8 w-full max-w-xs bg-blue-600 hover:bg-blue-700 transition-transform active:scale-[0.98]"
+                        className="w-full max-w-xs h-12"
                         onClick={handleContinueSetupComplete}
                       >
                         {t("profile.setup.step3.done")}
                       </Button>
-                    </>
+                    </div>
                   )}
 
                   {didScanQr && (
-                    <form ref={verifyStepRef} onSubmit={handleVerify2FA} className="mt-8 w-full max-w-xs space-y-4 border-t border-white/10 pt-8">
+                    <form ref={verifyStepRef} onSubmit={handleVerify2FA} className="mt-12 w-full max-w-xs space-y-6 border-t border-border pt-10">
                       <div className="text-left">
-                        <label htmlFor="verificationCode" className="block text-xs font-bold uppercase tracking-wider text-[#a1a1aa]">
+                        <label htmlFor="verificationCode" className="block text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-subtle font-brand">
                           {t("profile.setup.step3.verify_label")}
                         </label>
                         <input
@@ -458,26 +467,26 @@ export default function ProfilePage() {
                           minLength={6}
                           maxLength={6}
                           inputMode="numeric"
-                          className="mt-2 w-full rounded-md border border-white/15 bg-[#0d0e10] px-4 py-3 text-center text-xl font-bold tracking-[0.5em] text-white outline-none ring-blue-500/40 placeholder:text-[#3f3f46] focus:ring"
+                          className="mt-3 w-full rounded-2xl border border-border bg-surface px-4 py-4 text-center text-2xl font-bold tracking-[0.5em] text-foreground outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-foreground-subtle shadow-sm transition-all"
                           placeholder="000000"
                         />
                       </div>
-                      <div className="flex flex-col gap-3">
+                      <div className="flex flex-col gap-4">
                         <Button
                           type="submit"
-                          className="w-full bg-emerald-600 font-bold hover:bg-emerald-700 transition-transform active:scale-[0.98]"
+                          className="w-full h-12 bg-success text-white hover:opacity-90"
                           disabled={isVerifying || verificationCode.length !== 6}
                         >
                           {isVerifying ? t("profile.setup.step3.verifying") : t("profile.setup.step3.verify_button")}
                         </Button>
-                        <Button
+                        <button
                           type="button"
-                          className="w-full bg-transparent border border-white/10 text-[#a1a1aa] text-xs hover:bg-white/5 transition-transform active:scale-[0.98]"
+                          className="w-full py-2 text-[10px] font-bold uppercase tracking-widest text-foreground-subtle hover:text-foreground transition-colors font-brand"
                           onClick={handleGenerate2FA}
                           disabled={isGenerating}
                         >
                           {accessDevice === "mobile" ? t("profile.setup.step3.regenerate_key") : t("profile.setup.step3.regenerate_qr")}
-                        </Button>
+                        </button>
                       </div>
                     </form>
                   )}
@@ -486,11 +495,12 @@ export default function ProfilePage() {
             )}
           </div>
 
-          <div className="mt-5 rounded-md border border-white/10 bg-[#0d0e10] px-3 py-3 text-xs text-[#c4c4cc]">
-            <p className="font-semibold text-[#e4e4e7]">{t("profile.setup.troubleshoot.title")}</p>
-            <p className="mt-1">{t("profile.setup.troubleshoot.item1")}</p>
-            <p className="mt-1">{t("profile.setup.troubleshoot.item2")}</p>
-            <p className="mt-1">
+          <div className="mt-8 rounded-2xl border border-border bg-background p-5 text-xs text-foreground-muted shadow-inner font-body">
+            <p className="font-bold text-foreground font-brand uppercase tracking-wider mb-2">{t("profile.setup.troubleshoot.title")}</p>
+            <p className="mt-1 flex gap-2"><span className="text-primary font-bold">1.</span> {t("profile.setup.troubleshoot.item1")}</p>
+            <p className="mt-1 flex gap-2"><span className="text-primary font-bold">2.</span> {t("profile.setup.troubleshoot.item2")}</p>
+            <p className="mt-1 flex gap-2">
+              <span className="text-primary font-bold">3.</span>
               {t("profile.setup.troubleshoot.item3", {
                 action: accessDevice === "mobile" ? t("profile.setup.step3.regenerate_key") : t("profile.setup.step3.regenerate_qr"),
               })}
@@ -500,18 +510,18 @@ export default function ProfilePage() {
       )}
 
       {is2FAEnabled && (
-        <section className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-6">
-          <h2 className="text-lg font-semibold text-emerald-300">{t("profile.setup.success.title")}</h2>
-          <p className="mt-2 text-sm text-emerald-100/90">
+        <section className="rounded-[2rem] border border-success/30 bg-success/5 p-8 shadow-sm">
+          <h2 className="text-xl font-bold text-success font-brand uppercase tracking-tight">{t("profile.setup.success.title")}</h2>
+          <p className="mt-3 text-base text-foreground font-medium font-body leading-relaxed">
             {t("profile.setup.success.body")}
           </p>
-          <p className="mt-2 text-xs text-emerald-100/80">
+          <p className="mt-4 text-sm text-foreground-muted font-medium italic border-t border-success/20 pt-4">
             {t("profile.setup.success.note")}
           </p>
         </section>
       )}
 
-      <div>
+      <div className="pt-4">
         <SignOutButton />
       </div>
     </div>

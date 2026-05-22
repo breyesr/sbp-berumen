@@ -70,10 +70,10 @@ export function PersonaPhotoUpload({ personaId, currentPhotoUrl, onUploadSuccess
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-4">
+    <div className="space-y-4 font-body">
+      <div className="flex items-center gap-6">
         <div 
-          className="relative w-24 h-24 rounded-2xl bg-[#1c1c1c] border border-[#27272a] overflow-hidden group cursor-pointer"
+          className="relative w-28 h-28 rounded-2xl bg-surface border border-border overflow-hidden group cursor-pointer shadow-sm hover:ring-2 hover:ring-primary/50 transition-all"
           onClick={triggerUpload}
         >
           {preview ? (
@@ -83,45 +83,45 @@ export function PersonaPhotoUpload({ personaId, currentPhotoUrl, onUploadSuccess
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-[#71717a]">
+            <div className="w-full h-full flex flex-col items-center justify-center text-foreground-subtle">
               <Camera className="w-8 h-8 mb-1" />
-              <span className="text-[10px] font-medium uppercase tracking-wider">Photo</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest font-brand">Photo</span>
             </div>
           )}
           
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute inset-0 bg-background/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
             {uploading ? (
-              <Loader2 className="w-6 h-6 text-white animate-spin" />
+              <Loader2 className="w-8 h-8 text-primary animate-spin" />
             ) : (
-              <Upload className="w-6 h-6 text-white" />
+              <Upload className="w-8 h-8 text-primary" />
             )}
           </div>
         </div>
 
         <div className="flex-1 space-y-1">
-          <h4 className="text-sm font-medium text-[#f4f4f5]">Persona Avatar</h4>
-          <p className="text-xs text-[#a1a1aa]">
+          <h4 className="text-sm font-bold text-foreground font-brand uppercase tracking-wider">Persona Avatar</h4>
+          <p className="text-xs text-foreground-subtle font-medium">
             Recommended: Square image, min 400x400px.
           </p>
           
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2 mt-4">
             <button
               onClick={triggerUpload}
               disabled={uploading}
-              className="text-xs px-3 py-1.5 bg-[#27272a] hover:bg-[#3f3f46] text-[#f4f4f5] rounded-lg transition-colors disabled:opacity-50"
+              className="text-[10px] font-bold uppercase tracking-widest px-4 py-2 bg-surface hover:bg-surface-hover text-foreground border border-border rounded-xl transition-all shadow-sm disabled:opacity-50 font-brand"
             >
               Change Photo
             </button>
             
             {success && (
-              <div className="flex items-center gap-1 text-[#22c55e] text-[10px] font-medium uppercase">
+              <div className="flex items-center gap-1.5 text-success text-[10px] font-bold uppercase tracking-widest font-brand bg-success/10 px-2 py-1 rounded-lg">
                 <CheckCircle2 className="w-3 h-3" />
                 Updated
               </div>
             )}
             
             {error && (
-              <div className="flex items-center gap-1 text-[#ef4444] text-[10px] font-medium uppercase">
+              <div className="flex items-center gap-1.5 text-error text-[10px] font-bold uppercase tracking-widest font-brand bg-error/10 px-2 py-1 rounded-lg">
                 <AlertCircle className="w-3 h-3" />
                 Error
               </div>
