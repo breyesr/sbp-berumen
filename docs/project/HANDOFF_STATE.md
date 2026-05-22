@@ -18,6 +18,7 @@
 5.  **Icon clipping Fix**: Resolved an issue where Sun/Moon icons were being cropped during transitions by expanding the container and refining the animation.
 6.  **Total UI Audit**: Removed all legacy `bg-zinc-900` and `text-white` hardcodings across the entire application, including Login and Auth Gates.
 7.  **Brand Identity Parity**: Corrected and standardized the official SVG logo lockup across all entry points (Login, 2FA, AuthGate) for 100% visual consistency.
+8.  **Adaptive Favicon**: Replaced legacy `.ico` with a modern adaptive SVG icon that automatically synchronizes its visibility (strokes) with the user's browser/system theme.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Task 27.1 (Epic 27)**: Proceed with the concurrent session detection implementation as brainstormed in the previous session.
