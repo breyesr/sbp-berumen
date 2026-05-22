@@ -71,9 +71,55 @@ html[data-theme='brand'],
   /* Typography */
   --font-brand: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
-  }
+}
 
-  /* EXPERIMENTAL THEME (Dark/Tech) */
+/* BRAND DARK THEME (Institutional Dark) */
+html[data-theme='brand-dark'] {
+  /* Core Colors */
+  --background: #030213; /* Agent Black */
+  --surface: #0a0a1a;
+  --surface-elevated: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.12);
+
+  /* Text Colors */
+  --foreground: #FAFAF8; /* Warm Alabaster */
+  --foreground-muted: #cbced4;
+  --foreground-subtle: #717182;
+
+  /* Brand Colors (Preserve Gold) */
+  --primary: #B8975A; /* Bison Gold */
+  --primary-hover: #A68549;
+  --primary-light: rgba(184, 151, 90, 0.1);
+  --primary-foreground: #030213;
+
+  /* Semantic Colors */
+  --success: #6B8E7B;
+  --success-light: rgba(107, 142, 123, 0.1);
+  --success-border: rgba(107, 142, 123, 0.3);
+
+  --warning: #f59e0b;
+  --warning-light: rgba(245, 158, 11, 0.1);
+  --warning-border: rgba(245, 158, 11, 0.3);
+
+  --error: #D4183D;
+  --error-light: rgba(212, 24, 61, 0.1);
+  --error-border: rgba(212, 24, 61, 0.3);
+
+  --info: #3b82f6;
+  --info-light: rgba(59, 130, 246, 0.1);
+  --info-border: rgba(59, 130, 246, 0.3);
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  /* Typography */
+  --font-brand: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+}
+
+/* EXPERIMENTAL THEME (Dark/Tech) */
   html[data-theme='experimental'] {
   /* Core Colors */
   --background: #0a0a0a;
