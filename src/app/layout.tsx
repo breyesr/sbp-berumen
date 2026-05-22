@@ -25,13 +25,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IntelAgent | Idea Stress Test",
     description: "Validate your business ideas with AI-powered strategic analysis.",
-    url: "/",
+    url: "https://staging-sbp.vercel.app",
     siteName: "IntelAgent",
     images: [
       {
-        url: "/icon.svg",
-        width: 800,
-        height: 600,
+        url: "/logo-preview.svg",
+        secureUrl: "https://staging-sbp.vercel.app/logo-preview.svg",
+        width: 1200,
+        height: 630,
+        type: "image/svg+xml",
         alt: "IntelAgent Logo",
       },
     ],

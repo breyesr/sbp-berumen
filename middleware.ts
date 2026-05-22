@@ -52,5 +52,5 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   // Match all routes including API, excluding static files, images, and brand icons
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png|logo-preview.svg).*)'],
 };
