@@ -271,10 +271,10 @@ ${refinedPitch}
     const selectedPersona = personas.find(p => p.id === personaType || p.id.toString() === personaType.toString());
 
     const getConfidenceBadgeColor = (score: number) => {
-        if (score === 0) return 'text-gray-400';
-        if (score >= 70) return 'text-green-400';
-        if (score >= 40) return 'text-yellow-400';
-        return 'text-red-400';
+        if (score === 0) return 'text-foreground-subtle';
+        if (score >= 70) return 'text-success';
+        if (score >= 40) return 'text-warning';
+        return 'text-error';
     };
 
     const result: StressResult | null = object ? {
@@ -544,7 +544,7 @@ ${refinedPitch}
 
             {error && (
                 <div className="max-w-6xl mx-auto mt-6">
-                    <div className="glass border border-red-500/30 bg-red-500/5 p-4 rounded-2xl text-red-400 text-sm text-center animate-shake">
+                    <div className="bg-error/10 border border-error/20 p-4 rounded-2xl text-error text-sm text-center animate-shake font-bold font-brand uppercase tracking-widest shadow-sm">
                         {error}
                     </div>
                 </div>
