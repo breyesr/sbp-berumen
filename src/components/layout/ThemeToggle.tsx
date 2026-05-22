@@ -34,15 +34,17 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
       title={getThemeTitle()}
     >
-      <div className="relative w-5 h-5 overflow-hidden">
+      <div className="relative w-6 h-6 flex items-center justify-center">
         <Sun 
-          className={`absolute inset-0 transition-all duration-500 ease-out ${
-            theme === "brand" ? "translate-y-0 opacity-100 rotate-0" : "translate-y-8 opacity-0 -rotate-90"
+          size={20}
+          className={`absolute transition-all duration-500 ease-out ${
+            theme === "brand" ? "scale-100 opacity-100 rotate-0" : "scale-0 opacity-0 -rotate-90"
           } text-primary`} 
         />
         <Moon 
-          className={`absolute inset-0 transition-all duration-500 ease-out ${
-            theme === "brand-dark" ? "translate-y-0 opacity-100 rotate-0" : "-translate-y-8 opacity-0 rotate-90"
+          size={20}
+          className={`absolute transition-all duration-500 ease-out ${
+            theme === "brand-dark" ? "scale-100 opacity-100 rotate-0" : "scale-0 opacity-0 rotate-90"
           } text-primary`} 
         />
       </div>
