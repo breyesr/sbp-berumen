@@ -17,6 +17,7 @@
 4.  **Hover State Isolation**: Fixed a bug where nested group-hovers caused collective highlighting in persona rows. Implemented **Named Groups** (`group/row`, `group/card`) to ensure individual component focus. 
 5.  **Icon clipping Fix**: Resolved an issue where Sun/Moon icons were being cropped during transitions by expanding the container and refining the animation.
 6.  **Total UI Audit**: Removed all legacy `bg-zinc-900` and `text-white` hardcodings across the entire application, including Login and Auth Gates.
+7.  **Brand Identity Parity**: Corrected and standardized the official SVG logo lockup across all entry points (Login, 2FA, AuthGate) for 100% visual consistency.
 
 ## 🚀 Immediate Next Steps
 - [ ] **Task 27.1 (Epic 27)**: Proceed with the concurrent session detection implementation as brainstormed in the previous session.
