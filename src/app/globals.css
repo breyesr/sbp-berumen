@@ -35,7 +35,7 @@ html[data-theme='brand'],
   --foreground: #030213; /* Agent Black */
   --surface: #E9EBEF;    /* Institutional Neutral */
   --surface-elevated: rgba(3, 2, 19, 0.05);
-  --surface-hover: rgba(3, 2, 19, 0.08);
+  --surface-hover: rgba(3, 2, 19, 0.12);
 
   /* Text Colors */
   --foreground-muted: #475569; /* Methodology Slate */
@@ -79,7 +79,7 @@ html[data-theme='brand'],
   --background: #0a0a0a;
   --surface: #171717;
   --surface-elevated: rgba(255, 255, 255, 0.05);
-  --surface-hover: rgba(255, 255, 255, 0.08);
+  --surface-hover: rgba(255, 255, 255, 0.12);
 
   /* Text Colors */
   --foreground: #ededed;
@@ -122,6 +122,7 @@ html[data-theme='brand'],
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
