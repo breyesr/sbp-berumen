@@ -73,6 +73,7 @@ function TwoFaVerificationPageContent() {
                     <path d="M20 3L35 11.66V28.34L20 37L5 28.34V11.66L20 3Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
                     <path d="M20 10L28 14.5V25.5L20 30L12 25.5V14.5L20 10Z" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 4" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
                     <circle cx="20" cy="20" r="3.5" fill="currentColor" className="text-primary"></circle>
+                    <path d="M20 3V10M35 11.66L28 14.5M35 28.34L28 25.5M20 37V30M5 28.34L12 25.5M5 11.66L12 14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
                 </svg>
                 <div className="text-2xl font-bold tracking-tight text-foreground font-brand">IntelAgent</div>
             </div>
