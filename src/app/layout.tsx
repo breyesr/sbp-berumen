@@ -21,14 +21,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Idea Stress Test",
   description: "Validate before you execute. AI-powered strategic analysis.",
-  icons: {
-    icon: [
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-  },
 };
 
 export default async function RootLayout({
