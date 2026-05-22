@@ -36,7 +36,7 @@ function CarouselRow({ personas, personaType, onSelect, onViewDossier }: {
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group/row">
       <div 
         ref={scrollRef}
         className="flex overflow-x-auto snap-x gap-6 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-6 px-6"
@@ -56,13 +56,13 @@ function CarouselRow({ personas, personaType, onSelect, onViewDossier }: {
       {/* Floating Buttons */}
       <button 
         onClick={() => scroll('left')}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 w-10 h-10 rounded-full bg-surface border border-border text-foreground-muted hover:text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-105 shadow-lg"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 w-10 h-10 rounded-full bg-surface border border-border text-foreground-muted hover:text-primary flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-all z-10 hover:scale-105 shadow-lg"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
       <button 
         onClick={() => scroll('right')}
-        className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 w-10 h-10 rounded-full bg-surface border border-border text-foreground-muted hover:text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 hover:scale-105 shadow-lg"
+        className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 w-10 h-10 rounded-full bg-surface border border-border text-foreground-muted hover:text-primary flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-all z-10 hover:scale-105 shadow-lg"
       >
         <ChevronRight className="w-5 h-5" />
       </button>

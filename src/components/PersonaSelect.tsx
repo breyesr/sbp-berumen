@@ -109,12 +109,12 @@ export default function PersonaSelect({ options, value, onChange, className, lab
             type="button"
             onClick={() => setIsOpen(!isOpen)}
             className={clsx(
-              "flex-1 flex items-center justify-between bg-surface border border-border rounded-xl px-4 py-3 text-sm text-foreground hover:border-primary/30 transition-all group shadow-sm",
+              "flex-1 flex items-center justify-between bg-surface border border-border rounded-xl px-4 py-3 text-sm text-foreground hover:border-primary/30 transition-all group/trigger shadow-sm",
               isOpen && "ring-2 ring-primary/40 border-primary/50"
             )}
         >
             <div className="flex items-center gap-3 truncate">
-                <div className="w-8 h-8 rounded-lg overflow-hidden bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                <div className="w-8 h-8 rounded-lg overflow-hidden bg-primary/10 flex items-center justify-center border border-primary/20 group-hover/trigger:bg-primary/20 transition-colors">
                     {selectedPersona?.photo_url ? (
                         <img src={selectedPersona.photo_url} alt={selectedPersona.name} className="w-full h-full object-cover" />
                     ) : (
@@ -132,7 +132,7 @@ export default function PersonaSelect({ options, value, onChange, className, lab
                     )}
                 </div>
             </div>
-            <ChevronDown className={clsx("w-4 h-4 text-foreground-subtle group-hover:text-foreground-muted transition-all", isOpen && "rotate-180 text-primary")} />
+            <ChevronDown className={clsx("w-4 h-4 text-foreground-subtle group-hover/trigger:text-foreground-muted transition-all", isOpen && "rotate-180 text-primary")} />
         </button>
 
         {selectedPersona && (
@@ -217,7 +217,7 @@ export default function PersonaSelect({ options, value, onChange, className, lab
                                                     setIsOpen(false);
                                                 }}
                                                 className={clsx(
-                                                    "group relative p-3 rounded-2xl transition-all border",
+                                                    "group/item relative p-3 rounded-2xl transition-all border",
                                                     !isReady ? "bg-surface/40 border-border cursor-not-allowed opacity-60" : "cursor-pointer",
                                                     isReady && (value === opt.id 
                                                         ? "bg-primary/10 border-primary/30 shadow-sm" 
@@ -255,7 +255,7 @@ export default function PersonaSelect({ options, value, onChange, className, lab
                                                                 <Check className="w-3 h-3" />
                                                             </div>
                                                         ) : isReady ? (
-                                                            <ChevronRight className="w-3.5 h-3.5 text-foreground-subtle transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                                                            <ChevronRight className="w-3.5 h-3.5 text-foreground-subtle transition-transform group-hover/item:translate-x-1 group-hover/item:text-primary" />
                                                         ) : (
                                                             <Info className="w-3.5 h-3.5 text-foreground-subtle" />
                                                         )}

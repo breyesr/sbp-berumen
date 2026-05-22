@@ -22,9 +22,9 @@ export function PersonaCard({ persona, onEdit, onTrain, onViewDossier, onDelete 
   const { formatDate } = useI18n();
 
   return (
-    <div className="group relative bg-surface hover:bg-surface-hover border border-border hover:border-primary/30 rounded-2xl p-5 transition-all duration-300 shadow-sm hover:shadow-lg flex flex-col justify-between overflow-hidden font-body">
+    <div className="group/admincard relative bg-surface hover:bg-surface-hover border border-border hover:border-primary/30 rounded-2xl p-5 transition-all duration-300 shadow-sm hover:shadow-lg flex flex-col justify-between overflow-hidden font-body">
       {/* Decorative Gradient Background */}
-      <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 blur-3xl group-hover:bg-primary/10 transition-colors" />
+      <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 blur-3xl group-hover/admincard:bg-primary/10 transition-colors" />
 
       <div className="space-y-4 relative z-10">
         {/* Cluster Badge */}
@@ -32,7 +32,7 @@ export function PersonaCard({ persona, onEdit, onTrain, onViewDossier, onDelete 
           <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-bold uppercase tracking-widest font-brand">
             {persona.cluster}
           </span>
-          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex gap-1 opacity-0 group-hover/admincard:opacity-100 transition-opacity">
             <button 
               onClick={onDelete} 
               className="p-1.5 text-foreground-subtle hover:text-error hover:bg-error/10 rounded-md transition-colors"
@@ -45,7 +45,7 @@ export function PersonaCard({ persona, onEdit, onTrain, onViewDossier, onDelete 
 
         {/* Content */}
         <div>
-          <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors truncate font-brand">
+          <h3 className="text-lg font-bold text-foreground group-hover/admincard:text-primary transition-colors truncate font-brand">
             {persona.name}
           </h3>
           <p className="text-sm text-foreground-muted line-clamp-1 mt-1 font-medium italic">

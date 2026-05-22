@@ -27,7 +27,7 @@ export function PersonaCard({
     <div
       onClick={() => isReady && onSelect(persona.id)}
       className={clsx(
-        "group relative flex flex-col p-5 rounded-2xl border transition-all h-full",
+        "group/card relative flex flex-col p-5 rounded-2xl border transition-all h-full",
         isReady ? "cursor-pointer bg-surface hover:bg-surface-hover" : "cursor-not-allowed bg-surface/40 border-border/50",
         isSelected
           ? "border-primary/50 bg-primary/5 shadow-lg shadow-primary/5"
@@ -45,7 +45,7 @@ export function PersonaCard({
           }}
           className={clsx(
             "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all overflow-hidden",
-            isSelected ? "bg-primary/20 text-primary" : "bg-background border border-border text-foreground-subtle group-hover:text-primary group-hover:border-primary/30",
+            isSelected ? "bg-primary/20 text-primary" : "bg-background border border-border text-foreground-subtle group-hover/card:text-primary group-hover/card:border-primary/30",
             !isReady && "bg-surface-elevated text-foreground-subtle cursor-default",
             isReady && "cursor-pointer hover:ring-2 hover:ring-primary/50"
         )}>
@@ -87,7 +87,7 @@ export function PersonaCard({
       <div className="space-y-1.5 flex-1">
         <h4 className={clsx(
           "text-base font-bold tracking-tight transition-colors leading-tight truncate font-brand",
-          isSelected ? "text-primary" : isReady ? "text-foreground group-hover:text-primary" : "text-foreground-subtle"
+          isSelected ? "text-primary" : isReady ? "text-foreground group-hover/card:text-primary" : "text-foreground-subtle"
         )}>
           {name}
         </h4>
@@ -98,14 +98,17 @@ export function PersonaCard({
           )}>
             {persona.cluster?.replace("-", " & ") || "General"}
           </p>
-          <p className="text-xs italic text-foreground-muted group-hover:text-foreground line-clamp-2 leading-relaxed transition-colors font-body">
+          <p className={clsx(
+            "text-xs italic text-foreground-muted line-clamp-2 leading-relaxed transition-colors font-body",
+            isReady && "group-hover/card:text-foreground"
+          )}>
             {isReady ? role : "Intelligence training in progress..."}
           </p>
         </div>
       </div>
 
       {!isReady && (
-        <div className="absolute inset-0 bg-background/60 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
+        <div className="absolute inset-0 bg-background/60 rounded-2xl flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity backdrop-blur-[2px]">
             <div className="bg-surface border border-border p-4 rounded-xl shadow-2xl max-w-[80%] text-center">
                 <BrainCircuit className="w-8 h-8 text-amber-500 mx-auto mb-2" />
                 <p className="text-[10px] font-bold text-foreground uppercase tracking-widest mb-1 font-brand">Not Ready</p>
