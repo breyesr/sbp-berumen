@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     siteName: "IntelAgent",
     images: [
       {
-        url: "/logo-preview.svg",
-        secureUrl: "https://staging-sbp.vercel.app/logo-preview.svg",
+        url: "/og-image.png",
+        secureUrl: "https://staging-sbp.vercel.app/og-image.png",
         width: 1200,
         height: 630,
-        type: "image/svg+xml",
+        type: "image/png",
         alt: "IntelAgent Logo",
       },
     ],
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "IntelAgent | Idea Stress Test",
     description: "Validate before you execute. AI-powered strategic analysis.",
-    images: ["/icon.svg"],
+    images: ["/og-image.png"],
   },
 };
 
