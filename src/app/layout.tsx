@@ -19,8 +19,31 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Idea Stress Test",
-  description: "Validate before you execute. AI-powered strategic analysis.",
+  metadataBase: new URL("https://staging-sbp.vercel.app"),
+  title: "IntelAgent | Idea Stress Test",
+  description: "Validate before you execute. AI-powered strategic analysis powered by Berumen's Methodology.",
+  openGraph: {
+    title: "IntelAgent | Idea Stress Test",
+    description: "Validate your business ideas with AI-powered strategic analysis.",
+    url: "/",
+    siteName: "IntelAgent",
+    images: [
+      {
+        url: "/icon.svg",
+        width: 800,
+        height: 600,
+        alt: "IntelAgent Logo",
+      },
+    ],
+    locale: "es_MX",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IntelAgent | Idea Stress Test",
+    description: "Validate before you execute. AI-powered strategic analysis.",
+    images: ["/icon.svg"],
+  },
 };
 
 export default async function RootLayout({
