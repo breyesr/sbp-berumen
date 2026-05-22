@@ -67,15 +67,16 @@ function TwoFaVerificationPageContent() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-background font-body">
       <div className="px-10 py-12 text-left bg-surface border border-border shadow-2xl rounded-[2.5rem] w-full max-w-md animate-fade-in">
-        <div className="flex flex-col items-center mb-10">
-            <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shadow-sm">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className="flex flex-col items-center mb-8">
+            <div className="flex items-center gap-3 mb-8">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 3L35 11.66V28.34L20 37L5 28.34V11.66L20 3Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
                     <path d="M20 10L28 14.5V25.5L20 30L12 25.5V14.5L20 10Z" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 4" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"></path>
                     <circle cx="20" cy="20" r="3.5" fill="currentColor" className="text-primary"></circle>
                 </svg>
+                <div className="text-2xl font-bold tracking-tight text-foreground font-brand">IntelAgent</div>
             </div>
-            <h3 className="text-3xl font-bold text-center text-foreground font-brand uppercase tracking-tighter">{t("auth.twofa.title")}</h3>
+            <h3 className="text-lg font-bold text-center text-foreground font-brand uppercase tracking-tight">{t("auth.twofa.title")}</h3>
             <p className="text-[10px] text-foreground-subtle font-bold uppercase tracking-[0.2em] mt-2 font-brand text-center max-w-xs">
                 {t("auth.twofa.subtitle")}
             </p>
