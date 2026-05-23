@@ -5,6 +5,7 @@ services:
   db:
     image: ankane/pgvector:v0.5.1 # Pinning to a specific version for stability
     restart: always
+    stop_grace_period: 1m
     ports:
       - "5433:5432" # Maps host port 5433 to container port 5432
     environment:

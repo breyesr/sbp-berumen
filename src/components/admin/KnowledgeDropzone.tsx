@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Upload, FileText, CheckCircle2, AlertCircle, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { clsx } from "clsx";
 
 interface KnowledgeDropzoneProps {
   personaId: string;

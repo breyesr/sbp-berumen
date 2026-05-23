@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import ProfileSectionNav from "@/components/profile/ProfileSectionNav";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { Camera, ShieldCheck, AlertTriangle } from "lucide-react";
+import { clsx } from "clsx";
 
 type DevicePlatform = "ios" | "android";
 type AccessDevice = "mobile" | "desktop";
