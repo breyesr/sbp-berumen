@@ -341,3 +341,17 @@ This file serves as a permanent historical record of all development sessions. E
 
 - **May 21, 2026 (Lead/Frontend)**: Implemented Epic 28 (Multi-Theme Architecture). Launched the official IntelAgent Brand Kit (Institutional Alabaster) with zero layout shift. Standardized typography and integrated official SVG assets. Audited and refactored core UI components for full theme-awareness.
 - **May 21, 2026 (Lead/Frontend)**: Refined persona card hover states. Fixed group-hover bleed bug and restored card-level highlight contrast in bright theme.
+
+---
+
+## [2026-05-23] Login Bug Fix & Auth Error Refinement
+**Team:** Backend & PM
+**Accomplishments:**
+- **Task 26.5 (Done)**: Implemented **Auth Error Refinement** to improve the login experience.
+- **Custom Error Codes**: Created `InvalidCredentialsError` in `src/lib/auth.ts` to distinguish standard credential failures from system errors.
+- **Graceful Feedback**: Updated the login page to handle `invalid_credentials` and legacy `credentials` codes, providing specific UI feedback via `t("auth.login.error_invalid_credentials")`.
+- **Console Hygiene**: Replaced `console.error` with `console.warn` for expected authentication failures, eliminating "Console Error" reports in developer tools for normal user errors.
+- **Documentation**: Updated `BACKLOG.md` and `HANDOFF_LOG.md` to reflect the fix.
+**Learnings:**
+- **User Perception of "Errors"**: Developers often log failed attempts as errors for debugging, but end-users (and some monitoring tools) perceive `console.error` as a system bug. Distinguishing between "Expected Failure" (Warn) and "System Failure" (Error) is key for production stability perception.
+- **NextAuth v5 Error Propagation**: Throwing custom classes extending `CredentialsSignin` is the idiomatic way to propagate specific error codes to the client in Auth.js v5.

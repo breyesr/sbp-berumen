@@ -40,13 +40,20 @@ function LoginPageContent() {
       if (result?.error) {
         const isTwoFactorRequired =
           result.error === "CredentialsSignin" && result.code === "2fa_required";
+        const isInvalidCredentials = 
+          result.error === "CredentialsSignin" && 
+          (result.code === "invalid_credentials" || result.code === "credentials");
 
         if (isTwoFactorRequired) {
           setIsSuccess(true);
           router.push(`/login/2fa?email=${encodeURIComponent(email)}`);
+        } else if (isInvalidCredentials) {
+          setError(t("auth.login.error_invalid_credentials"));
+          console.warn("Login attempt failed: Invalid credentials");
+          setIsLoading(false);
         } else {
           setError(t("auth.login.error_try_again"));
-          console.error("Login error details:", result.error, result.code);
+          console.error("Unexpected login error:", result.error, result.code);
           setIsLoading(false);
         }
       } else {
@@ -79,7 +86,7 @@ function LoginPageContent() {
         </div>
 
         {error && (
-            <div className="mb-6 p-4 rounded-xl bg-error/10 border border-error/20 text-error text-xs font-bold font-brand uppercase tracking-widest text-center shadow-sm">
+            <div className="mb-6 p-4 rounded-xl bg-error/10 border border-error/20 text-error text-[10px] font-bold font-brand uppercase tracking-tight text-center shadow-sm">
                 {error}
             </div>
         )}

@@ -144,6 +144,7 @@
 - [x] **Task 26.2**: **Button State Machine**: Redesign the login button to include a "Processing" state (disabled, opacity change, and a localized "Signing in..." label with a CSS spinner). [DONE]
 - [x] **Task 26.3**: **Input Lock-down**: Disable email and password inputs while `isLoading` is true to prevent accidental edits and provide clear visual hierarchy of the "Processing" state. [DONE]
 - [x] **Task 26.4**: **Redirect Optimization**: Ensure the UI provides a final "Success" feedback or transition indicator immediately after `signIn` succeeds, even before `router.push` completes. [DONE]
+- [x] **Task 26.5**: **Auth Error Refinement**: Implement custom `InvalidCredentialsError` and refine login page feedback to avoid console errors on standard failed attempts. [DONE]
 
 ## Epic 6: Relational Intelligence (GraphRAG Evolution)
 **Owner**: AI Engineer & Backend

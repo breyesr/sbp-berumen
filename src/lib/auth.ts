@@ -11,6 +11,10 @@ class TwoFactorRequiredError extends CredentialsSignin {
   code = "2fa_required";
 }
 
+class InvalidCredentialsError extends CredentialsSignin {
+  code = "invalid_credentials";
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PostgresAdapter(db),
   session: { strategy: "jwt" },
@@ -83,21 +87,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         const { email, password, twoFaCode, is2fa } = credentials;
 
-        if (typeof email !== 'string') return null;
+        if (typeof email !== 'string') throw new InvalidCredentialsError();
         
         const userResult = await db.query("SELECT * FROM users WHERE email = $1", [email]);
         const user = userResult.rows[0];
 
-        if (!user) return null;
+        if (!user) throw new InvalidCredentialsError();
 
         if (is2fa) {
-          if (!user.two_factor_secret || typeof twoFaCode !== 'string') return null;
+          if (!user.two_factor_secret || typeof twoFaCode !== 'string') throw new InvalidCredentialsError();
           const isValid = verifyOtp(twoFaCode, user.two_factor_secret);
           if (isValid) return { id: user.id, name: user.name, email: user.email };
-          return null;
+          throw new InvalidCredentialsError();
         }
 
-        if (typeof password !== 'string' || !user.password) return null;
+        if (typeof password !== 'string' || !user.password) throw new InvalidCredentialsError();
         const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if (passwordsMatch) {
@@ -115,7 +119,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return { id: user.id, name: user.name, email: user.email };
         }
 
-        return null;
+        throw new InvalidCredentialsError();
       },
     }),
   ],
