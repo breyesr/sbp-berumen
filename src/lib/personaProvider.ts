@@ -384,7 +384,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             p.photo_url,
             EXISTS (
               SELECT 1 FROM documents d 
-              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
+              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id)
             ) AS has_rag
           FROM personas p
         `;
@@ -396,7 +396,7 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
             conditions.push(`is_active = true`);
             conditions.push(`EXISTS (
               SELECT 1 FROM documents d 
-              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id::int)
+              WHERE d.metadata->'persona_numerical_ids' @> to_jsonb(p.id)
             )`);
             
             // If they have assigned clusters, restrict to those
@@ -412,20 +412,25 @@ export async function listPersonas(options?: { allowedClusters?: string[]; isAdm
 
         query += ` ORDER BY cluster, name ASC`;
 
-        const res = await db.query(query, params);
-        return res.rows.map(r => ({
-            id: r.id,
-            id_text: r.id_text,
-            name: r.name,
-            role: r.role,
-            cluster: r.cluster,
-            is_active: r.is_active,
-            photo_url: r.photo_url,
-            has_rag: r.has_rag
-        }));
-        } catch (err) {
-        console.error("Database error listing personas, falling back to filesystem", err);
+        try {
+          const res = await db.query(query, params);
+          return res.rows.map(r => ({
+              id: r.id,
+              id_text: r.id_text,
+              name: r.name,
+              role: r.role,
+              cluster: r.cluster,
+              is_active: r.is_active,
+              photo_url: r.photo_url,
+              has_rag: r.has_rag
+          }));
+        } catch (dbErr) {
+          console.error("Database query failed in listPersonas, falling back to FS:", dbErr);
+          // Fall through to filesystem fallback below
         }
+    } catch (err) {
+        console.error("Critical error in listPersonas DB logic, falling back to FS:", err);
+    }
 
     // 2. Fallback to filesystem
     try {

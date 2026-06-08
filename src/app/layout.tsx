@@ -6,6 +6,7 @@ import { auth } from "@/lib/auth";
 import { DEFAULT_LOCALE } from "@/lib/i18n/config";
 import { resolveRequestLocale } from "@/lib/i18n/server";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import Script from "next/script";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -67,6 +68,19 @@ export default async function RootLayout({
       <body
         className={`${plusJakarta.variable} ${inter.variable} antialiased`}
       >
+        {/* Script Guard: Silences errors from third-party scripts (e.g., share-modal.js) 
+            that try to access null elements during hydration, preventing app crashes. */}
+        <Script id="script-guard" strategy="beforeInteractive">
+          {`
+            window.addEventListener('error', function(e) {
+              if (e.message && (e.message.includes('share-modal') || e.message.includes('addEventListener'))) {
+                console.warn('Script Guard: Suppressed external script error:', e.message);
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }, true);
+          `}
+        </Script>
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="brand"

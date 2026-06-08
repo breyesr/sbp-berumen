@@ -309,3 +309,14 @@
 
 > **Note on Experimental Theme**: The `experimental` (Indigo/Tech) theme remains in the CSS for reference but has been removed from the UI toggle to focus on the Institutional Brand Kit. It may be fully removed in future cycles.
 
+
+## Epic 29: Production Stability & System Reliability (CRITICAL)
+**Owner**: Frontend & Backend & DevOps
+*Goal: Resolve blocking production errors, including client-side exceptions and database query failures, while hardening the fallback systems.*
+
+**Tasks:**
+- [ ] **Task 29.1**: **Database Query & Fallback Fix**: Resolve the `AggregateError` in `listPersonas` by fixing the SQL ID cast and ensuring the filesystem fallback is robust and tested.
+- [ ] **Task 29.2**: **Production Build Integrity (clsx)**: Investigate and fix the `ReferenceError: clsx is not defined` error occurring in the Vercel production environment, likely due to optimization or transpilation issues.
+- [ ] **Task 29.3**: **External Script Conflict (share-modal.js)**: Identify the source of `share-modal.js` (likely a third-party tracking or sharing script) and fix the `null (reading 'addEventListener')` error causing client-side crashes.
+- [ ] **Task 29.4**: **Error Boundary Hardening**: Implement global and component-level error boundaries to prevent single-component failures from crashing the entire application during render.
+
