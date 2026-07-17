@@ -59,6 +59,8 @@ export function CopywriterClient({
     const [error, setError] = useState<string | null>(null);
     const [viewingDossier, setViewingDossier] = useState<any | null>(null);
     const [loadingDossier, setLoadingDossier] = useState(false);
+    const [exportLoading, setExportLoading] = useState(false);
+
     
     // Dossier logic centralized in hook
     const { dossier, isLoading: dossierLoading, fetchDossier } = usePersonaDossier(personaType);
@@ -164,40 +166,56 @@ export function CopywriterClient({
         });
     };
 
-    const handleExport = () => {
+    const handleExport = async () => {
         if (!object?.outputs) return;
-        const selectedPersonaName = personas.find(p => p.id === personaType)?.name || personaType;
-        const date = formatDate(new Date(), { dateStyle: "medium" });
-        const lines: string[] = [];
-        lines.push(t("copywriter.report.header"));
-        lines.push(`${t("copywriter.report.generated")}: ${date}`);
-        lines.push(`${t("copywriter.report.persona")}: ${selectedPersonaName}`);
-        if (context) lines.push(`${t("copywriter.field.context")}: ${context}`);
-        lines.push(`${t("copywriter.field.goal")}: ${goal}`);
-        lines.push(`${t("copywriter.field.message")}: ${message}`);
-        lines.push(``);
-        object.outputs.forEach((o) => {
-            if (!o) return;
-          lines.push(`--- ${o.platformName || "Platform"} / ${o.formatName || "Format"} ---`);
-          
-          if (o.fields) {
-            Object.entries(o.fields).forEach(([label, value]) => {
-                lines.push(`${label.replace(/_/g, ' ').toUpperCase()}:`);
-                lines.push(value || "");
-                lines.push(``);
-            });
-          }
-          lines.push(``);
-        });
-        const blob = new Blob([lines.join("\n")], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `copywriter-${date}.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        setExportLoading(true);
+        setError(null);
+        try {
+            // Lazy load utility and PDF presentation template
+            const { downloadPDF } = await import("@/lib/pdf/download");
+            const { CopywriterPDF } = await import("./CopywriterPDF");
+
+            const selectedPersonaName = personas.find(p => p.id === personaType)?.name || personaType.toString();
+            const dateStr = formatDate(new Date(), { dateStyle: "medium" });
+
+            const pdfDoc = (
+                <CopywriterPDF
+                    personaName={selectedPersonaName}
+                    goal={goal}
+                    context={context}
+                    message={message}
+                    outputs={outputs}
+                    date={dateStr}
+                    labels={{
+                        title: t("copywriter.report.header") || "Reporte de Copys - IntelAgent",
+                        generated: t("copywriter.report.generated") || "Generado",
+                        persona: t("copywriter.report.persona") || "Persona",
+                        goal: t("copywriter.field.goal") || "Objetivo",
+                        context: t("copywriter.field.context") || "Contexto",
+                        message: t("copywriter.field.message") || "Mensaje",
+                        platform: t("copywriter.step.channels") || "Canal",
+                        format: "Formato",
+                        anchors: "Anclas Utilizadas",
+                        triggers: "Triggers Abordados",
+                        reasoning: "Razonamiento Estratégico",
+                        footerText: "IntelAgent Analytics & Copywriter Reports",
+                        pageOf: "Página {current} de {total}",
+                    }}
+                />
+            );
+
+            const cleanPersonaName = selectedPersonaName.split(" — ")[0].trim().replace(/\s+/g, "_");
+            const fileName = `IntelAgent-Copywriter-${cleanPersonaName}-${new Date().toISOString().slice(0, 10)}.pdf`;
+
+            await downloadPDF(pdfDoc, fileName);
+        } catch (err) {
+            console.error("PDF export failed:", err);
+            setError(err instanceof Error ? err.message : "Error al exportar PDF");
+        } finally {
+            setExportLoading(false);
+        }
     };
+
 
     const selectedPersona = personas.find(p => p.id === personaType || p.id.toString() === personaType.toString());
     const personaDisplayName = selectedPersona?.name || "";
@@ -461,11 +479,17 @@ export function CopywriterClient({
                                     </button>
                                     <button
                                         onClick={handleExport}
-                                        disabled={loading || outputs.length === 0}
+                                        disabled={loading || exportLoading || outputs.length === 0}
                                         className="px-6 py-3 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-all text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 font-brand"
                                     >
-                                        <Download className="w-3.5 h-3.5" /> Exportar Plan
+                                        {exportLoading ? (
+                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                        ) : (
+                                            <Download className="w-3.5 h-3.5" />
+                                        )}
+                                        {exportLoading ? "Generando PDF..." : "Exportar Plan"}
                                     </button>
+
                                 </>
                             )
                         }}

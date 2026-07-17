@@ -20,7 +20,9 @@ interface RefinementPanelProps {
     selectedPersonaName: string;
     originalIdea: string;
     onExportRefined: () => void;
+    exportLoading?: boolean;
     personas: PersonaOption[];
+
     personaId: string;
     isMainColumnOnly?: boolean;
 }
@@ -38,6 +40,7 @@ export function RefinementPanel({
     selectedPersonaName,
     originalIdea,
     onExportRefined,
+    exportLoading = false,
     personas,
     personaId,
     isMainColumnOnly = false,
@@ -177,11 +180,17 @@ export function RefinementPanel({
                         <div className="pt-8 flex justify-end">
                             <button
                                 onClick={onExportRefined}
-                                className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-foreground text-background font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl hover:opacity-90 active:scale-[0.98] font-brand"
+                                disabled={exportLoading}
+                                className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-foreground text-background font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-xl hover:opacity-90 active:scale-[0.98] disabled:opacity-50 font-brand"
                             >
-                                <Download className="w-4 h-4" />
-                                Descargar Análisis Completo
+                                {exportLoading ? (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                    <Download className="w-4 h-4" />
+                                )}
+                                {exportLoading ? "Generando PDF..." : "Descargar Pitch Refinado"}
                             </button>
+
                         </div>
                     </div>
                 )}

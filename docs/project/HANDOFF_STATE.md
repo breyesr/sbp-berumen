@@ -1,31 +1,56 @@
-# Handoff State: [2026-05-23] - Auth Error Refinement
+# Handoff State: [2026-07-16] - Production Stability & Client-Side PDF Export Engine Planning
 
-## Current Phase: Epic 26 Refinement & Epic 28 Integration
-**Target Branch**: `staging`
+## Current Phase: Epic 29 (Production Stability) & Epic 30 (Client-Side PDF Export)
+**Target Branch**: `staging` (merged to `main`)
 **Last Verified State**: 
-- **Auth Error Handling (Task 26.5)**: Improved feedback loop for failed login attempts. Eliminated "Console Error" noise for normal user errors.
-- **Theme Engine (Epic 28)**: Full implementation of the Multi-Theme engine. Focused on a 2-way toggle: **Institutional Bright** (☀️) and **Institutional Matte Dark** (🌙).
-- **Visual Identity**: Official SVG Logo integrated into the header. Typography standardized to **Plus Jakarta Sans** (Brand) and **Inter** (Body).
-- **Layout Integrity**: "Layout Lock" strategy successful; switching themes causes zero pixel-shift in the DOM.
-- **Component Coverage**: 100% of core app flows (Stress Test, Copywriter, Profile, Admin) are now theme-aware and use CSS Design Tokens.
-- **Accessibility**: Introduced `primary-foreground` token to ensure readable text on brand-colored backgrounds.
-- **Stability**: `npm run build` verified.
+- **Production Stabilization (Epic 29)**: Resolved blocking errors on `main` and hardened the system against external script failures and DB connectivity issues.
+- **Database Fallback (Task 29.1)**: Implemented nested `try/catch` in `personaProvider.ts` to ensure 100% filesystem fallback.
+- **Script Guard (Task 29.3)**: Added an inline error-trapping script in `layout.tsx` to prevent `share-modal.js` from crashing React hydration.
+- **Build Integrity (Task 29.2)**: Standardized `clsx` imports, resolving Vercel build failures.
+- **Epic 30 Scoped and Refined**: Formally integrated Epic 30 into the backlog, expanding it to cover all 3 `.txt` export touchpoints in the codebase.
+- **Grill-Me Alignment Complete**: Resolved all architectural decisions:
+  - **Engine**: Dedicated parallel React components using `@react-pdf/renderer` (lazy-loaded).
+  - **Logo**: Mapped official SVG logo pathways to react-pdf SVG primitives.
+  - **Localization**: Dynamic i18n label mapping using the active user locale context.
+  - **Visuals**: Styled key-value callout box with a colored border for the Confidence Score.
+  - **Typography**: Dynamically registered Outfit & Inter fonts via Google Fonts CDNs with Helvetica fallback.
+  - **UX**: Button-level loading state ("Generando PDF...") with background compilation and programmatic download triggers.
+- **UX Layout Stabilization & Professional Grid Redesign**: Audited and fixed visual defects:
+  - **Overlap resolved**: Added explicit `lineHeight` rules (`1.15` and `1.3`) for titles & subtitles in `styles.tsx`.
+  - **Label wraps resolved**: Increased `metadataLabel` width to `130` and set stacked card labels to `width: "auto"`.
+  - **Buggy borders resolved**: Replaced semi-transparent `rgba()` card border styles with solid Hex codes.
+  - **Muted theme applied**: Implemented a desaturated status color palette (Sage, Bronze-Gold, and Terracotta) for card borders and text.
+  - **Screen-Aligned Stress Test PDF Redesign**: Re-engineered `StressTestPDF.tsx` to match the exact dual-column rich dashboard presentation delivered on-screen:
+    - **Vector Iconography**: Embedded 7 custom Lucide SVG icon paths (`UserIcon`, `SparklesIcon`, `TrendingUpIcon`, `AlertTriangleIcon`, `TargetIcon`, `MessageSquareIcon`, `HelpCircleIcon`) inside `styles.tsx` as scalable print-ready elements.
+    - **Header Metadata Grid**: Moved metadata block to a full-width header block with row-based alignment (labels positioned above text values), displaying three balanced columns for the Persona's **Nombre** (Name), **Segmento** (Segment/Cluster), and **Perfil** (Profile/Role) instead of Nivel de Reto. This provides a rich and descriptive layout of the evaluating buyer persona.
+    - **Balanced Page 1 Columns**: Placed both the **Veredicto** and the **Persona Reaction** cards in the left column, balancing height perfectly against the right column.
+
+    - **Layout Overlap Resolved**: Removed `flex: 1` settings from both `cardValue` and `reactionBlock` which previously triggered a circular height calculation bug in react-pdf's layout engine. The cards now expand dynamically and stack naturally without any vertical bleeding.
+    - **Section Cards & Headers**: Integrated modular `SectionHeader` elements with matching icon placeholders.
+
+    - **Page 2 Detailed breakdown**: Side-by-side Strengths/Gaps columns with custom tinted border/background cards, numbered Action Plan badges, and the complete **Preguntas de Seguimiento** block.
+
+
+  - **Layout height optimized**: Tightened margins/paddings by 116pt–138pt, pulling the entire Stress Test report onto a single balanced page and removing the empty page 2.
+
 
 ## 🏆 Accomplishments (Recent)
-1.  **Auth Error Refinement (Task 26.5)**: Resolved the "CredentialsSignin" console error. Refactored the `authorize` callback to use custom `CredentialsSignin` classes for robust, idiomatic error propagation.
-2.  **Multi-Theme Architecture (Epic 28)**: Switched from hardcoded hex values to a dynamic CSS Variable system managed by `next-themes`.
-3.  **Institutional Brand Kit**: Translated the `brand-kit-live` specifications into a machine-readable `BRAND_KIT.json` and a functional CSS "skin".
-4.  **Matte Dark Aesthetic**: Refined the dark mode to a "Matte Charcoal" look with neutralized backgrounds (#0E0E10) and receded surfaces.
-5.  **Hover State Isolation**: Fixed a bug where nested group-hovers caused collective highlighting in persona rows.
-6.  **Icon clipping Fix**: Resolved an issue where Sun/Moon icons were being cropped during transitions.
-7.  **Total UI Audit**: Removed all legacy `bg-zinc-900` and `text-white` hardcodings across the entire application.
-8.  **Brand Identity Parity**: Corrected and standardized the official SVG logo lockup across all entry points.
-9.  **Adaptive Favicon**: Replaced legacy `.ico` with a modern adaptive SVG icon.
+1. **DB Fallback Hardening**: The app no longer crashes when Postgres is unresponsive.
+2. **External Script Protection**: Implemented a "Script Guard" to silence rogue third-party script errors.
+3. **Vercel Build Resolution**: Fixed missing `clsx` imports.
+4. **Epic 30 Formulated**: Added the PDF Export epic directly into `BACKLOG.md` with explicit DoD and scope.
 
 ## 🚀 Immediate Next Steps
-- [ ] **Task 27.1 (Epic 27)**: Proceed with the concurrent session detection implementation as brainstormed in the previous session.
+- [ ] **Task 29.4**: **Error Boundary Hardening**: Implement React Error Boundaries at the component level to isolate future UI failures.
+- [ ] **Task 27.1 (Epic 27)**: Proceed with concurrent session detection.
 - [ ] **Task 21.9 (Backend)**: **Resolve RAG Orphanage**: Refactor the incremental embedder to prevent knowledge loss when personas are re-created with new IDs.
-- [ ] **Market Expansion**: The `experimental` (Indigo) theme remains in CSS; consider if it should be fully purged or kept for "Developer Mode."
+- [x] **Task 30.1**: **Library Setup & Shared Infrastructure** — Add `@react-pdf/renderer` to `package.json`. Scaffold shared `lib/pdf/` utility module with base brand styles. Configure lazy `import()` to load only on export trigger. (Done)
+- [x] **Task 30.2**: **Copywriter PDF Export** — Replace `handleExport()` in `CopywriterClient.tsx`. (Done)
+- [x] **Task 30.3**: **Stress Test Analysis PDF Export** — Replace `handleExport()` in `StressTestClient.tsx`. (Done)
+- [x] **Task 30.4**: **Refined Pitch PDF Export** — Replace `handleExportRefined()` in `StressTestClient.tsx`. (Done)
+
 
 ## ⚠️ Known Issues
 - **RAG Orphanage**: Task 21.9 still pending (incremental embedder logic bug).
+- **External Dependency**: `share-modal.js` continues to trigger warnings in the console (silenced by Script Guard).
+, suggesting a need to identify its injection source (Vercel/GTM).

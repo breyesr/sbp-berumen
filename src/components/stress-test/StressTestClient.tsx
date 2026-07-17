@@ -66,6 +66,10 @@ export function StressTestClient({
     const [refinedPitch, setRefinedPitch] = useState<string | null>(null);
     const [refineChanges, setRefineChanges] = useState<string[]>([]);
     
+    const [exportLoading, setExportLoading] = useState(false);
+    const [exportRefinedLoading, setExportRefinedLoading] = useState(false);
+
+    
     const [showDebug, setShowDebug] = useState(false);
     const isFirstChunkRef = useRef(true);
 
@@ -216,55 +220,100 @@ export function StressTestClient({
         }
     };
 
-    const handleExport = () => {
+    const handleExport = async () => {
         if (!result) return;
-        let content = `ANÁLISIS DE STRESS TEST ESTRATÉGICOn`;
-        content += `Fecha: ${formatDate(new Date())}\n`;
-        content += `Persona: ${result.persona}\n`;
-        content += `Idea Original: ${idea}\n`;
-        content += `Nivel de Reto: ${selectedLevelName}\n\n`;
-        content += `VEREDICTO: ${result.verdict}\n`;
-        content += `CONFIANZA: ${result.confidenceScore}%\n\n`;
-        content += `REACCIÓN DE LA PERSONA:\n${result.personaReaction}\n\n`;
-        content += `FORTALEZAS:\n- ${result.strengths.join('\n- ')}\n\n`;
-        content += `BRECHAS Y RIESGOS:\n- ${result.gaps.join('\n- ')}\n\n`;
-        content += `PLAN DE ACCIÓN:\n- ${result.actionPlan.join('\n- ')}\n`;
+        setExportLoading(true);
+        setError(null);
+        try {
+            // Lazy load renderer and analysis PDF template
+            const { downloadPDF } = await import("@/lib/pdf/download");
+            const { StressTestPDF } = await import("./StressTestPDF");
 
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `stress-test-${personaType}-${new Date().getTime()}.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            const dateStr = formatDate(new Date(), { dateStyle: "medium" });
+
+            const selectedPersona = personas.find(p => p.id === personaType || p.id.toString() === personaType.toString());
+            const personaSegment = selectedPersona?.cluster || "";
+            const personaProfile = selectedPersona?.role || "";
+
+            const pdfDoc = (
+                <StressTestPDF
+                    result={result}
+                    idea={idea}
+                    personaSegment={personaSegment}
+                    personaProfile={personaProfile}
+                    date={dateStr}
+                    labels={{
+                        title: "Reporte de Stress Test de Idea",
+                        persona: "Persona Evaluadora",
+                        idea: "Idea de Negocio",
+                        personaSegment: "Segmento",
+                        personaProfile: "Perfil",
+                        verdict: "Veredicto",
+                        confidence: "Confianza",
+                        reaction: "Reacción de la Persona",
+                        strengths: "Fortalezas Detectadas",
+                        gaps: "Brechas y Riesgos",
+                        actionPlan: "Plan de Acción Sugerido",
+                        footerText: "IntelAgent Analytics & Stress Test Reports",
+                        pageOf: "Página {current} de {total}",
+                    }}
+                />
+            );
+
+            const cleanPersonaName = result.persona.split(" — ")[0].trim().replace(/\s+/g, "_");
+            const fileName = `IntelAgent-StressTest-${cleanPersonaName}-${new Date().toISOString().slice(0, 10)}.pdf`;
+
+            await downloadPDF(pdfDoc, fileName);
+        } catch (err) {
+            console.error("PDF export failed:", err);
+            setError(err instanceof Error ? err.message : "Error al exportar PDF");
+        } finally {
+            setExportLoading(false);
+        }
     };
 
-    const handleExportRefined = () => {
+    const handleExportRefined = async () => {
         if (!refinedPitch) return;
-        const date = formatDate(new Date(), { dateStyle: "medium" });
-        const report = `${t("stress.report.refined_header")} ${selectedPersonaName}
-${t("stress.report.generated")}: ${date}
+        setExportRefinedLoading(true);
+        setError(null);
+        try {
+            // Lazy load renderer and refined pitch PDF template
+            const { downloadPDF } = await import("@/lib/pdf/download");
+            const { RefinedPitchPDF } = await import("./RefinedPitchPDF");
 
-[ ${t("stress.report.goal")} ]
-${goal}
+            const dateStr = formatDate(new Date(), { dateStyle: "medium" });
 
-[ ${t("stress.report.refined_pitch")} ]
-${refinedPitch}
-`;
-        const blob = new Blob([report], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        const safePersona = (selectedPersonaName || "persona")
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/(^-|-$)/g, "");
-        link.download = `refined-pitch-${safePersona}-${new Date().toISOString().slice(0, 10)}.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            const pdfDoc = (
+                <RefinedPitchPDF
+                    personaName={selectedPersonaName}
+                    goal={goal}
+                    refinedPitch={refinedPitch}
+                    date={dateStr}
+                    labels={{
+                        title: "Reporte de Pitch Refinado",
+                        persona: "Persona Objetivo",
+                        goal: "Objetivo del Pitch",
+                        refinedPitch: "Pitch Comercial Optimizado",
+                        footerText: "IntelAgent Refined Pitch Reports",
+                        pageOf: "Página {current} de {total}",
+                    }}
+                />
+            );
+
+            const cleanPersonaName = (selectedPersonaName || "persona")
+                .split(" — ")[0].trim()
+                .replace(/\s+/g, "_");
+            const fileName = `IntelAgent-RefinedPitch-${cleanPersonaName}-${new Date().toISOString().slice(0, 10)}.pdf`;
+
+            await downloadPDF(pdfDoc, fileName);
+        } catch (err) {
+            console.error("PDF export failed:", err);
+            setError(err instanceof Error ? err.message : "Error al exportar PDF");
+        } finally {
+            setExportRefinedLoading(false);
+        }
     };
+
 
     const selectedPersonaName = personaLookup[personaType] || t("stress.default_persona");
     const selectedLevelName = levels.find(l => l.id === challengeLevelId)?.name || "";
@@ -409,11 +458,17 @@ ${refinedPitch}
                                             <div className="flex flex-wrap items-center justify-between gap-6 pt-10 border-t border-border">
                                                 <button
                                                     onClick={handleExport}
-                                                    className="inline-flex items-center gap-3 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted bg-surface border border-border rounded-2xl hover:bg-surface-hover hover:text-foreground transition-all shadow-sm font-brand"
+                                                    disabled={exportLoading}
+                                                    className="inline-flex items-center gap-3 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-foreground-muted bg-surface border border-border rounded-2xl hover:bg-surface-hover hover:text-foreground transition-all shadow-sm disabled:opacity-50 font-brand"
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-foreground-subtle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                                    {t("stress.download.analysis")}
+                                                    {exportLoading ? (
+                                                        <Loader2 className="w-[18px] h-[18px] animate-spin text-foreground-subtle" />
+                                                    ) : (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-foreground-subtle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                                    )}
+                                                    {exportLoading ? "Generando PDF..." : t("stress.download.analysis")}
                                                 </button>
+
 
                                                 <button
                                                     onClick={() => void handleRefine()}
@@ -532,6 +587,7 @@ ${refinedPitch}
                                     selectedPersonaName={selectedPersonaName}
                                     originalIdea={idea}
                                     onExportRefined={handleExportRefined}
+                                    exportLoading={exportRefinedLoading}
                                     personas={personas}
                                     personaId={personaType as string}
                                     isMainColumnOnly={true}

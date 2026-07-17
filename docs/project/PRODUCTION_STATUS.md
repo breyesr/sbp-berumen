@@ -2,9 +2,14 @@
 
 ## Environment Summary
 - **Current Stack**: Next.js 16, Postgres with pgvector, Vercel Node.js Functions, OpenAI API, Upstash Redis.
-- **Status**: **STABLE & FEATURE-COMPLETE (Production Release Epic 20/21)**
+- **Status**: **STABLE & HARDENED (Production Release Epic 29)**
 
 ## Latest Deployments
+- **Epic 29: Production Stability & System Reliability (June 8, 2026)**:
+    - **Database Fallback Hardening**: Refactored the core data provider to ensure absolute 100% fallback to the filesystem on any database failure (connection refusal, timeouts, or query errors).
+    - **Client-Side Script Guard**: Implemented an inline protection script in the root layout to catch and silence errors from external third-party scripts (like `share-modal.js`) before they can crash the React hydration process.
+    - **Build Failure Resolution**: Standardized `clsx` imports and synchronized branches, resolving the blocking TypeScript errors on the `main` branch.
+    - **Production Sync**: Merged and deployed all recent improvements from `staging` to `main`, including the refined login feedback and theme engine updates.
 - **Epic 28: Multi-Theme Engine & Institutional Branding (May 21, 2026)**:
     - **Multi-Theme Architecture**: Launched a robust theme engine using `next-themes` and CSS Design Tokens.
     - **Institutional "Brand" Mode**: Implemented the official IntelAgent Brand Kit (Alabaster, Bison Gold, Agent Black) with a premium "Digital Editorial" aesthetic.
