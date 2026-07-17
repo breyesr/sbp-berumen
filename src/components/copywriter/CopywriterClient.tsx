@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { Download, Loader2, ArrowLeft, ArrowRight, Sparkles, Send, Target, Info, User, Zap } from 'lucide-react';
+import { Download, Loader2, ArrowLeft, ArrowRight, Sparkles, Send, Target, Info, User, Zap, ChevronDown, FileSpreadsheet, FileText, Check } from 'lucide-react';
+import { downloadCSV } from "@/lib/csv/download";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { usePersonaDossier } from "@/lib/hooks/usePersonaDossier";
 import { useWorkflowState } from "@/lib/hooks/useWorkflowState";
@@ -60,6 +61,19 @@ export function CopywriterClient({
     const [viewingDossier, setViewingDossier] = useState<any | null>(null);
     const [loadingDossier, setLoadingDossier] = useState(false);
     const [exportLoading, setExportLoading] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [csvSuccess, setCsvSuccess] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     
     // Dossier logic centralized in hook
@@ -213,6 +227,39 @@ export function CopywriterClient({
             setError(err instanceof Error ? err.message : "Error al exportar PDF");
         } finally {
             setExportLoading(false);
+        }
+    };
+
+    const handleExportCSV = () => {
+        if (!object?.outputs) return;
+        setError(null);
+        try {
+            const selectedPersonaName = personas.find(p => p.id === personaType)?.name || personaType.toString();
+            const cleanPersonaName = selectedPersonaName.split(" — ")[0].trim();
+            const dateStr = formatDate(new Date(), { dateStyle: "medium" });
+            const dateISO = new Date().toISOString().slice(0, 10);
+            const fileName = `IntelAgent-Copy-${cleanPersonaName.replace(/\s+/g, "_")}-${dateISO}.csv`;
+
+            downloadCSV(
+                outputs,
+                cleanPersonaName,
+                dateStr,
+                fileName,
+                {
+                    persona: t("copywriter.report.persona") || "Persona",
+                    date: t("copywriter.report.date") || "Fecha",
+                    platform: t("copywriter.step.channels") || "Canal",
+                    format: "Formato",
+                    cta: "CTA",
+                    hashtags: "Hashtags"
+                }
+            );
+
+            setCsvSuccess(true);
+            setTimeout(() => setCsvSuccess(false), 2000);
+        } catch (err) {
+            console.error("CSV export failed:", err);
+            setError(err instanceof Error ? err.message : "Error al exportar CSV");
         }
     };
 
@@ -470,27 +517,74 @@ export function CopywriterClient({
                             title: t("copywriter.step.results"),
                             description: t("copywriter.step.results_desc"),
                             actions: (
-                                <>
+                                <div className="flex gap-2.5 items-center relative" ref={dropdownRef}>
                                     <button
                                         onClick={() => goToStep('channels')}
                                         className="px-6 py-3 rounded-xl bg-surface text-foreground-muted hover:text-foreground border border-border transition-all text-[10px] font-bold uppercase tracking-widest font-brand"
                                     >
                                         Ajustar Canales
                                     </button>
-                                    <button
-                                        onClick={handleExport}
-                                        disabled={loading || exportLoading || outputs.length === 0}
-                                        className="px-6 py-3 rounded-xl bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-all text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 font-brand"
-                                    >
-                                        {exportLoading ? (
-                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                                        ) : (
-                                            <Download className="w-3.5 h-3.5" />
+                                    
+                                    {/* Split Button Group */}
+                                    <div className="relative flex items-center">
+                                        <button
+                                            onClick={handleExport}
+                                            disabled={loading || exportLoading || outputs.length === 0}
+                                            className="px-5 py-3 rounded-l-xl bg-primary/10 text-primary hover:bg-primary/20 border-y border-l border-primary/20 transition-all text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 font-brand disabled:opacity-50 h-[38px]"
+                                        >
+                                            {csvSuccess ? (
+                                                <Check className="w-3.5 h-3.5" />
+                                            ) : exportLoading ? (
+                                                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                            ) : (
+                                                <Download className="w-3.5 h-3.5" />
+                                            )}
+                                            {csvSuccess ? (t("copywriter.export.csv_success") || "✓ CSV Descargado") : exportLoading ? "Generando PDF..." : "Exportar Plan"}
+                                        </button>
+                                        
+                                        <button
+                                            onClick={() => setDropdownOpen(!dropdownOpen)}
+                                            disabled={loading || exportLoading || outputs.length === 0}
+                                            aria-haspopup="true"
+                                            aria-expanded={dropdownOpen}
+                                            aria-label={t("copywriter.export.dropdown_aria") || "Opciones de exportación"}
+                                            className="px-2.5 py-3 rounded-r-xl bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 border-l-0 transition-all flex items-center justify-center disabled:opacity-50 h-[38px]"
+                                        >
+                                            <ChevronDown className="w-3.5 h-3.5" />
+                                        </button>
+                                        
+                                        {/* Dropdown Menu */}
+                                        {dropdownOpen && (
+                                            <div 
+                                                role="menu"
+                                                className="absolute right-0 top-full mt-2 w-56 rounded-xl bg-surface border border-border shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                                            >
+                                                <button
+                                                    role="menuitem"
+                                                    onClick={() => {
+                                                        setDropdownOpen(false);
+                                                        handleExport();
+                                                    }}
+                                                    className="w-full px-4 py-2.5 text-left text-xs text-foreground hover:bg-foreground/5 flex items-center gap-2 transition-colors font-medium font-brand uppercase tracking-wider text-[10px]"
+                                                >
+                                                    <FileText className="w-3.5 h-3.5 text-foreground-muted" />
+                                                    <span>{t("copywriter.export.pdf_label") || "PDF — Reporte Visual"}</span>
+                                                </button>
+                                                <button
+                                                    role="menuitem"
+                                                    onClick={() => {
+                                                        setDropdownOpen(false);
+                                                        handleExportCSV();
+                                                    }}
+                                                    className="w-full px-4 py-2.5 text-left text-xs text-foreground hover:bg-foreground/5 flex items-center gap-2 transition-colors font-medium font-brand uppercase tracking-wider text-[10px]"
+                                                >
+                                                    <FileSpreadsheet className="w-3.5 h-3.5 text-foreground-muted" />
+                                                    <span>{t("copywriter.export.csv_label") || "CSV — Para Programación"}</span>
+                                                </button>
+                                            </div>
                                         )}
-                                        {exportLoading ? "Generando PDF..." : "Exportar Plan"}
-                                    </button>
-
-                                </>
+                                    </div>
+                                </div>
                             )
                         }}
                     >

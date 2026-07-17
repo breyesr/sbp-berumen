@@ -93,7 +93,7 @@ const localStyles = StyleSheet.create({
     padding: 12,
   },
   reactionText: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 9,
     lineHeight: 1.5,
     color: colors.foreground,
@@ -162,7 +162,7 @@ const localStyles = StyleSheet.create({
     color: colors.foregroundMuted,
   },
   metricScore: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontWeight: "bold",
     fontSize: 7.5,
   },
@@ -182,7 +182,7 @@ const localStyles = StyleSheet.create({
     top: 0,
   },
   metricDesc: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 7,
     color: colors.foregroundSubtle,
     fontStyle: "italic",
@@ -245,7 +245,7 @@ const localStyles = StyleSheet.create({
     padding: 8,
   },
   questionText: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 8,
     color: colors.foregroundMuted,
     fontStyle: "italic",

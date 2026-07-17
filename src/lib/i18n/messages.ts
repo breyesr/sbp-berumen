@@ -268,6 +268,10 @@ export const enUSMessages = {
   "copywriter.report.goal": "Goal",
   "copywriter.report.message": "Message",
   "copywriter.report.context": "Context",
+  "copywriter.export.pdf_label": "PDF — Visual Report",
+  "copywriter.export.csv_label": "CSV — For Scheduling",
+  "copywriter.export.csv_success": "✓ CSV Downloaded",
+  "copywriter.export.dropdown_aria": "Export options",
   "stress.title": "Stress Test",
   "stress.subtitle":
     "Test your pitch under pressure and get structured feedback before presenting it.",
@@ -655,6 +659,10 @@ export const esMXMessages: TranslationDictionary = {
   "copywriter.report.goal": "Meta",
   "copywriter.report.message": "Mensaje",
   "copywriter.report.context": "Contexto",
+  "copywriter.export.pdf_label": "PDF — Reporte Visual",
+  "copywriter.export.csv_label": "CSV — Para Programación",
+  "copywriter.export.csv_success": "✓ CSV Descargado",
+  "copywriter.export.dropdown_aria": "Opciones de exportación",
   "stress.title": "Stress Test",
   "stress.subtitle":
     "Prueba tu pitch bajo presión y recibe retroalimentación estructurada antes de presentarlo.",

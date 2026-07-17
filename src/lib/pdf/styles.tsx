@@ -225,6 +225,57 @@ export const HelpCircleIcon = ({ size = 12, color = colors.foregroundMuted }) =>
   </Svg>
 );
 
+// 8. LinkIcon (for CTAs)
+export const LinkIcon = ({ size = 12, color = colors.foregroundMuted }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path
+      d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+      stroke={color}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <Path
+      d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+      stroke={color}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </Svg>
+);
+
+// 9. HashIcon (for Hashtags)
+export const HashIcon = ({ size = 12, color = colors.foregroundMuted }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path
+      d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"
+      stroke={color}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </Svg>
+);
+
+// 10. FileTextIcon (for General text fields)
+export const FileTextIcon = ({ size = 12, color = colors.foregroundMuted }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path
+      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+      stroke={color}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <Path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke={color} strokeWidth={2} strokeLinecap="round" fill="none" />
+  </Svg>
+);
+
 // Standardized PDF Document Styles
 export const pdfStyles = StyleSheet.create({
   page: {
@@ -232,7 +283,7 @@ export const pdfStyles = StyleSheet.create({
     paddingBottom: 45,
     paddingHorizontal: 40,     // Expanded slightly to allow more content width
     backgroundColor: colors.background,
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 9,
     lineHeight: 1.45,
     color: colors.foreground,
@@ -263,7 +314,7 @@ export const pdfStyles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   dateText: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 7.5,
     color: colors.foregroundSubtle,
   },
@@ -276,7 +327,7 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 4,
   },
   subtitle: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 9.5,
     lineHeight: 1.3,
     color: colors.foregroundMuted,
@@ -341,7 +392,7 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 2,
   },
   metadataValueText: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 8.5,
     color: colors.foreground,
     lineHeight: 1.35,
@@ -367,7 +418,7 @@ export const pdfStyles = StyleSheet.create({
   },
   metadataValue: {
     flex: 1,
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     color: colors.foreground,
     fontSize: 8.5,
   },
@@ -417,7 +468,7 @@ export const pdfStyles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   cardValue: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     color: colors.foreground,
   },
   bulletList: {
@@ -437,7 +488,7 @@ export const pdfStyles = StyleSheet.create({
   },
   bulletText: {
     flex: 1,
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     color: colors.foreground,
     fontSize: 8.5,
   },
@@ -455,7 +506,7 @@ export const pdfStyles = StyleSheet.create({
     alignItems: "center",
   },
   footerText: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 7.5,
     color: colors.foregroundSubtle,
   },

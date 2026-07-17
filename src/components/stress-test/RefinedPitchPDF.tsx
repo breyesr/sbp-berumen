@@ -72,7 +72,7 @@ export function RefinedPitchPDF({
         >
           <Text
             style={{
-              fontFamily: "Inter",
+              fontFamily: "Helvetica",
               fontSize: 10,
               color: colors.foreground,
               whiteSpace: "pre-wrap",
