@@ -304,7 +304,6 @@ export const pdfStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
   },
   logoText: {
     fontFamily: "Outfit",
@@ -312,6 +311,7 @@ export const pdfStyles = StyleSheet.create({
     fontSize: 13,
     color: colors.foreground,
     letterSpacing: 0.5,
+    marginLeft: 8,
   },
   dateText: {
     fontFamily: "Helvetica",
@@ -344,26 +344,24 @@ export const pdfStyles = StyleSheet.create({
     marginBottom: 16,
     display: "flex",
     flexDirection: "column",
-    gap: 8,
   },
   metadataRow: {
     display: "flex",
     flexDirection: "row",
-    gap: 16,
+    marginBottom: 8,
   },
   metadataCell: {
     flex: 1,
     display: "flex",
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 6,
+    marginRight: 12,
   },
   metadataFullCell: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 6,
     borderTopWidth: 1,
     borderTopColor: colors.borderSubtle,
     paddingTop: 8,
@@ -376,6 +374,7 @@ export const pdfStyles = StyleSheet.create({
     width: 18,
     height: 18,
     borderRadius: 4,
+    marginRight: 6,
   },
   contentWrapper: {
     flex: 1,

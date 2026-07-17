@@ -43,27 +43,24 @@ const localStyles = StyleSheet.create({
   columnsContainer: {
     display: "flex",
     flexDirection: "row",
-    gap: 15,
     marginBottom: 12,
   },
   leftColumn: {
     flex: 3,
     display: "flex",
     flexDirection: "column",
-    gap: 10,
+    marginRight: 15,
   },
   rightColumn: {
     flex: 2,
     display: "flex",
     flexDirection: "column",
-    gap: 10,
   },
   // Section Header Component Styles (Mirrors screen section titles)
   sectionHeaderContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.borderSubtle,
@@ -76,6 +73,7 @@ const localStyles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 4,
+    marginRight: 6,
   },
   sectionHeaderTitle: {
     fontFamily: "Outfit",
@@ -86,7 +84,7 @@ const localStyles = StyleSheet.create({
   },
   // Reaction Block Layout (Soft Primary background tint)
   reactionBlock: {
-    backgroundColor: "rgba(184, 151, 90, 0.05)",
+    backgroundColor: colors.verdictBg,
     borderLeftWidth: 4,
     borderLeftColor: colors.primary,
     borderRadius: 6,
@@ -108,6 +106,7 @@ const localStyles = StyleSheet.create({
     padding: 12,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 10,
   },
   bigScore: {
     fontFamily: "Outfit",
@@ -192,7 +191,6 @@ const localStyles = StyleSheet.create({
   gridContainer: {
     display: "flex",
     flexDirection: "row",
-    gap: 15,
     marginBottom: 12,
   },
   successCard: {
@@ -202,6 +200,7 @@ const localStyles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     flex: 1,
+    marginRight: 15,
   },
   errorCard: {
     backgroundColor: colors.alert.bg,
@@ -235,7 +234,6 @@ const localStyles = StyleSheet.create({
   questionsContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: 6,
   },
   questionRow: {
     backgroundColor: colors.white,
@@ -243,6 +241,7 @@ const localStyles = StyleSheet.create({
     borderColor: colors.borderSubtle,
     borderRadius: 6,
     padding: 8,
+    marginBottom: 6,
   },
   questionText: {
     fontFamily: "Helvetica",

@@ -88,8 +88,10 @@ const localStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
     marginBottom: 4,
+  },
+  fieldHeaderIconWrapper: {
+    marginRight: 6,
   },
   primaryFieldLabel: {
     fontFamily: "Outfit",
@@ -121,7 +123,6 @@ const localStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
     marginBottom: 4,
   },
   secondaryFieldLabel: {
@@ -142,7 +143,6 @@ const localStyles = StyleSheet.create({
   hashtagContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 4,
     marginTop: 2,
   },
   hashtagBadge: {
@@ -150,6 +150,8 @@ const localStyles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 6,
     borderRadius: 4,
+    marginRight: 4,
+    marginBottom: 4,
   },
   hashtagText: {
     fontFamily: "Helvetica",
@@ -262,7 +264,6 @@ export function CopywriterPDF({
                   borderTopColor: platformColor,
                 },
               ]}
-              wrap={false} // Avoid page breaks inside individual copy blocks
             >
               {/* Card Header */}
               <View style={localStyles.cardHeader}>
@@ -305,7 +306,7 @@ export function CopywriterPDF({
                         ]}
                       >
                         <View style={localStyles.primaryFieldHeader}>
-                          {fieldIcon}
+                          <View style={localStyles.fieldHeaderIconWrapper}>{fieldIcon}</View>
                           <Text style={localStyles.primaryFieldLabel}>{displayLabel}</Text>
                         </View>
                         <Text style={localStyles.primaryFieldValue}>{fieldValue}</Text>
@@ -317,7 +318,7 @@ export function CopywriterPDF({
                     return (
                       <View key={fieldLabel} style={localStyles.secondaryFieldContainer}>
                         <View style={localStyles.secondaryFieldHeader}>
-                          {fieldIcon}
+                          <View style={localStyles.fieldHeaderIconWrapper}>{fieldIcon}</View>
                           <Text style={localStyles.secondaryFieldLabel}>{displayLabel}</Text>
                         </View>
                         <View style={localStyles.hashtagContainer}>
@@ -335,7 +336,7 @@ export function CopywriterPDF({
                     return (
                       <View key={fieldLabel} style={localStyles.secondaryFieldContainer}>
                         <View style={localStyles.secondaryFieldHeader}>
-                          {fieldIcon}
+                          <View style={localStyles.fieldHeaderIconWrapper}>{fieldIcon}</View>
                           <Text style={localStyles.secondaryFieldLabel}>{displayLabel}</Text>
                         </View>
                         <Text style={localStyles.secondaryFieldValue}>{fieldValue}</Text>
@@ -352,13 +353,14 @@ export function CopywriterPDF({
                     borderTopColor: colors.borderSubtle,
                     paddingTop: 10,
                     marginTop: 6,
-                    gap: 6,
                   }}
                 >
                   {output.strategicAlignment.anchorsUsed &&
                     output.strategicAlignment.anchorsUsed.length > 0 && (
-                      <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 6 }}>
-                        <TargetIcon size={8} color={colors.primary} />
+                      <View style={{ flexDirection: "row", alignItems: "flex-start", marginBottom: 6 }}>
+                        <View style={{ marginRight: 6 }}>
+                          <TargetIcon size={8} color={colors.primary} />
+                        </View>
                         <View style={{ flex: 1 }}>
                           <Text style={pdfStyles.cardLabel}>{labels.anchors}:</Text>
                           <Text style={[pdfStyles.cardValue, { fontSize: 8, color: colors.foregroundMuted }]}>
@@ -370,8 +372,10 @@ export function CopywriterPDF({
 
                   {output.strategicAlignment.triggersAddressed &&
                     output.strategicAlignment.triggersAddressed.length > 0 && (
-                      <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 6 }}>
-                        <SparklesIcon size={8} color={colors.warning.text} />
+                      <View style={{ flexDirection: "row", alignItems: "flex-start", marginBottom: 6 }}>
+                        <View style={{ marginRight: 6 }}>
+                          <SparklesIcon size={8} color={colors.warning.text} />
+                        </View>
                         <View style={{ flex: 1 }}>
                           <Text style={pdfStyles.cardLabel}>{labels.triggers}:</Text>
                           <Text style={[pdfStyles.cardValue, { fontSize: 8, color: colors.foregroundMuted }]}>
@@ -382,8 +386,10 @@ export function CopywriterPDF({
                     )}
 
                   {output.strategicAlignment.reasoning && (
-                    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 6 }}>
-                      <HelpCircleIcon size={8} color={colors.foregroundSubtle} />
+                    <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+                      <View style={{ marginRight: 6 }}>
+                        <HelpCircleIcon size={8} color={colors.foregroundSubtle} />
+                      </View>
                       <View style={{ flex: 1 }}>
                         <Text style={pdfStyles.cardLabel}>{labels.reasoning}:</Text>
                         <Text
